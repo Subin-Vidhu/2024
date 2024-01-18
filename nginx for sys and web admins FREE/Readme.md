@@ -77,6 +77,7 @@ check localhost:80 on browser to see this...
 ## Configuration path
 
 ![Alt text](image.png)
+
 ``
 ls -la /etc/nginx
 ``
