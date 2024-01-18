@@ -99,3 +99,20 @@ ls -la /etc/nginx/modules-enabled/
 
 [video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076650#overview, "Customising...")
 
+# Nginx Serving content Basics
+
+[video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076652#overview, "Reference")
+
+# Nginx Serving content solution
+
+sudo su - [to change to root]
+
+[video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076656#overview)
+
+# Configure nginx and tomcat
+
+[video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076668#overview)
+
+# SSL Setup
+
+[video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076678#overview)
