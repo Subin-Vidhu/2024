@@ -62,4 +62,35 @@ check localhost:80 on browser to see this...
 # Install nginx on CentOS
 [video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076624#overview, "Reference")
 
+# Install nginx on Docker container
+[video1](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076628#overview, "Links")
 
+[video2](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076632#overview, "Links")
+
+# Configuration path
+
+![Alt text](image.png)
+
+ls -la /etc/nginx
+
+more  /etc/nginx/nginx.conf
+
+more  /run/nginx.pid [to get the process id of nginx and to check : ps -ef | grep 510752 (510752 was the result from previous command)]
+
+To check the number of processors:
+
+grep processor /proc/cpuinfo
+
+To check the modules-enabled:
+
+ls -la /etc/nginx/modules-enabled/
+
+# Log files in Nginx
+
+[Video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076646#overview, "Reference")
+
+# Nginx Others
+
+![Alt text](image-1.png)
+
+[video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076650#overview, "Customising...")
