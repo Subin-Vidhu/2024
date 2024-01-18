@@ -2,9 +2,9 @@
 
 ## To check the os:
 
-``
+``````
 uname -a
-``
+``````
 
 ## To install nginx:
 ``
