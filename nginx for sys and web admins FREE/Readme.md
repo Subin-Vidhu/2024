@@ -1,39 +1,42 @@
 # Install nginx on Ubuntu
 
-To check the os:
+## To check the os:
 
+``
 uname -a
+``
 
-To install nginx:
-
+## To install nginx:
+``
 sudo apt-get install nginx
-
-To check if nginx is installed:
-
+``
+## To check if nginx is installed:
+``
 ps -ef | grep nginx
-
-To check whether the service is up and running:
-
+``
+## To check whether the service is up and running:
+``
 sudo systemctl status nginx
-
-To check nginx version:
-
+``
+## To check nginx version:
+``
 nginx -v
-
-To stop nginx:
-
+``
+## To stop nginx:
+``
 sudo systemctl stop nginx
-
-To start nginx after stopping:
-
+``
+## To start nginx after stopping:
+``
 sudo systemctl start nginx
-
-To restart nginx:
-
+``
+## To restart nginx:
+``
 systemctl restart nginx
-
+``
 To validate nginx webserver is running, use curl command[[if curl not found, then : sudo apt install curl], default port: 80]:
 
+``````
 $ curl http://localhost/
 <!DOCTYPE html>
 <html>
@@ -60,59 +63,64 @@ Commercial support is available at
 <p><em>Thank you for using nginx.</em></p>
 </body>
 </html>
-
+``````
 check localhost:80 on browser to see this...
 
-# Install nginx on CentOS
+## Install nginx on CentOS
 [video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076624#overview, "Reference")
 
-# Install nginx on Docker container
+## Install nginx on Docker container
 [video1](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076628#overview, "Links")
 
 [video2](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076632#overview, "Links")
 
-# Configuration path
+## Configuration path
 
 ![Alt text](image.png)
-
+``
 ls -la /etc/nginx
+``
 
+``
 more  /etc/nginx/nginx.conf
+``
 
+``
 more  /run/nginx.pid [to get the process id of nginx and to check : ps -ef | grep 510752 (510752 was the result from previous command)]
+``
 
-To check the number of processors:
-
+## To check the number of processors:
+``
 grep processor /proc/cpuinfo
-
-To check the modules-enabled:
-
+``
+## To check the modules-enabled:
+``
 ls -la /etc/nginx/modules-enabled/
-
-# Log files in Nginx
+``
+## Log files in Nginx
 
 [Video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076646#overview, "Reference")
 
-# Nginx Others
+## Nginx Others
 
 ![Alt text](image-1.png)
 
 [video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076650#overview, "Customising...")
 
-# Nginx Serving content Basics
+## Nginx Serving content Basics
 
 [video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076652#overview, "Reference")
 
-# Nginx Serving content solution
+## Nginx Serving content solution
 
 sudo su - [to change to root]
 
 [video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076656#overview)
 
-# Configure nginx and tomcat
+## Configure nginx and tomcat
 
 [video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076668#overview)
 
-# SSL Setup
+## SSL Setup
 
 [video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076678#overview)
