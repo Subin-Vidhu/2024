@@ -28,6 +28,10 @@ To start nginx after stopping:
 
 sudo systemctl start nginx
 
+To restart nginx:
+
+systemctl restart nginx
+
 To validate nginx webserver is running, use curl command[[if curl not found, then : sudo apt install curl], default port: 80]:
 
 $ curl http://localhost/
@@ -94,3 +98,4 @@ ls -la /etc/nginx/modules-enabled/
 ![Alt text](image-1.png)
 
 [video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076650#overview, "Customising...")
+
