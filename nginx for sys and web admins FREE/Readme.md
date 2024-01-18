@@ -1,4 +1,4 @@
-#Install nginx on Ubuntu
+# Install nginx on Ubuntu
 
 To check the os:
 
@@ -59,6 +59,7 @@ Commercial support is available at
 
 check localhost:80 on browser to see this...
 
-
+# Install nginx on CentOS
+[video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076624#overview, "Reference")
 
 
