@@ -111,3 +111,33 @@ Imagine your computer is a big house, and inside it are your personal treasures.
 Let's say you know your front and back doors are always locked. But what about that tiny window in the basement or the attic door? You might forget about them. In the world of computers, there are many ways to get into a system. So, ethical hackers use enumeration to find every possible entry, even the ones you might not think of.
 
 ### In short: Enumeration is finding all the possible ways (ports) into the system
+
+# What is a Brute Force Attack?
+
+Imagine you lost the key to your house. Instead of looking for the key, you decide to try every key on your keychain, one by one, until one fits. This approach of trying all possibilities until you find the right one is similar to a brute force attack in the world of computers.
+
+# Hydra on Kali Linux?
+
+Now, think of Hydra as a magic keychain that can produce thousands of keys per minute. And Kali Linux? It's like a special backpack filled with tools that hackers (both good and bad) carry around. Inside that backpack, Hydra is one of the favorite tools when they want to rapidly try many keys to unlock a door (or a password).
+
+### In short: Using Hydra on Kali Linux for a brute force attack is like quickly trying thousands of keys from a magic keychain to open a locked door.
+
+# What is SSTI Vulnerability?
+
+Imagine your computer is like a bank, where tellers (your web application) process transactions based on forms customers submit. SSTI, or Server-Side Template Injection, is like a clever customer submitting a deceptive form that tricks the teller into doing unauthorized transactions or revealing confidential information.
+
+# Why SSTI Vulnerability?
+
+In a secure bank, tellers should verify all requests thoroughly before processing them. If they just process every form without checking, malicious individuals can exploit this lapse. In computer terms, when a web application doesn't scrutinize the data users send it and acts on it blindly, it can lead to harmful consequences like unauthorized access or data leaks.
+
+### In short: SSTI Vulnerability is a loophole that allows someone to deceive a web application, much like a crafty customer in a bank fooling a teller.
+
+# ConfigVars
+
+Imagine your computer system as a bank vault. Now, every vault has a combination code that provides access. The configuration variables (ConfigVars) of your system are similar to that combination. An exposed ConfigVar is like accidentally leaving that combination code written on a sticky note attached to the vault door.
+
+# Why is an Exposed ConfigVar Bad?
+
+Just as anyone finding the vault's combination can easily access all the money inside, in the digital world, exposed ConfigVars can provide malicious individuals with critical information or access. This can lead to unauthorized actions, data theft, or even taking control of the entire system.
+
+### In short: An exposed ConfigVar is a dangerous slip, much like leaving the combination of a bank vault out in the open.
