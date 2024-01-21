@@ -76,7 +76,7 @@ check localhost:80 on browser to see this...
 
 ## Configuration path
 
-![Alt text](image.png)
+![image](https://github.com/Subin-Vidhu/2024/assets/85066028/2a305f07-0e7b-4f0f-b881-039b850f6b8d)
 
 ``
 ls -la /etc/nginx
@@ -104,7 +104,7 @@ ls -la /etc/nginx/modules-enabled/
 
 ## Nginx Others
 
-![Alt text](image-1.png)
+![image-1](https://github.com/Subin-Vidhu/2024/assets/85066028/baa05c0a-fb14-4bba-903f-fb6b208922ec)
 
 [video](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/learn/lecture/41076650#overview, "Customising...")
 
