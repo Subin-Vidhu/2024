@@ -1,14 +1,16 @@
 # Flask Hacking Mastery
 
-Create venv [```python -m venv virtualenvName```], activate the venv, install the necessary dependencies.
+ - Create venv [```python -m venv virtualenvName```]
+ - activate the venv
+ - install the necessary dependencies.
 
 # Hello World
 
-First, make sure you've installed Flask.
+ - First, make sure you've installed Flask.
 
-Create a file named hello.py (or any other name you like) and open it in your favorite text editor.
+ - Create a file named hello.py (or any other name you like) and open it in your favorite text editor.
 
-Add the following code to the file:
+ - Add the following code to the file:
 
 ``````
 ## Grab the tools we need from Flask.
@@ -23,11 +25,12 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello, World!'
 
+## Basically, we're setting up a small web page that says "Hello, World!" when you visit it. 🌍👋
 ``````
 
-Basically, we're setting up a small web page that says "Hello, World!" when you visit it. 🌍👋
 
-Run it with python hello.py and open http://127.0.0.1:5000/ with your web browser.
+
+ - Run it with python hello.py and open http://127.0.0.1:5000/ with your web browser.
 
 # Routing explained
 
@@ -74,3 +77,37 @@ In Flask, a dynamic route lets you do this magic. Instead of making a separate r
 When you visit /poke/dog, it's like poking the dog, and you might see "Woof! I'm Dog!". And if you visit /poke/cat, it's like poking the cat, leading to "Meow! I'm Cat!".
 ``````
 So, a dynamic route is like a magical tool that adjusts its behavior based on the pet's name you tell it! ✨
+
+# SSTI Explained
+
+Imagine you're at a store that customizes T-shirts. You provide them with a message, and they print it on the shirt for you.
+
+Usually, you'd give them something simple like "Happy Birthday, Alex!" But one day, you figure out that if you give them a special sequence of symbols or words, their T-shirt machine starts acting weird. Maybe it displays the store's internal records, or perhaps it even starts printing shirts for free.
+
+SSTI, or Server-Side Template Injection, is like finding that special sequence for the T-shirt machine, but for websites. Instead of just displaying what it should, the website starts showing or doing things it wasn't supposed to because of the sneaky input it got.
+
+#   Hacking
+
+In the realm of web applications, even the most streamlined frameworks like Flask can house vulnerabilities. Uncovering these vulnerabilities in Flask applications can aid both in enhancing security measures and understanding potential attack vectors.
+
+
+
+Prerequisites:
+
+ - Kali Linux Live USB
+
+Recommended
+
+Proficiency in Python programming.
+
+A foundational understanding of Flask.
+
+# What is Enumeration?
+
+Imagine your computer is a big house, and inside it are your personal treasures. Enumeration is like someone walking around that house, making a list of all the doors and windows to figure out the best way to get in.
+
+# Why Enumeration?
+
+Let's say you know your front and back doors are always locked. But what about that tiny window in the basement or the attic door? You might forget about them. In the world of computers, there are many ways to get into a system. So, ethical hackers use enumeration to find every possible entry, even the ones you might not think of.
+
+### In short: Enumeration is finding all the possible ways (ports) into the system
