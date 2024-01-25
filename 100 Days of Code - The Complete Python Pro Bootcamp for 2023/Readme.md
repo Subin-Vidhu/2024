@@ -10,3 +10,10 @@
 - 02 - Understanding Data Types and How to Manipulate Strings
 
   https://replit.com/@subinvidhu/day-2-start
+
+
+# Day 3
+
+- 03 - Control Flow and Logical Operators 
+
+  https://replit.com/@subinvidhu/day-3-1-solution#main.py
