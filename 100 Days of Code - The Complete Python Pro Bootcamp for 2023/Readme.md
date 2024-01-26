@@ -17,3 +17,9 @@
 - 03 - Control Flow and Logical Operators 
 
   https://replit.com/@subinvidhu/day-3-1-solution#main.py
+
+# Day 4
+
+- 04 - Randomisation and Python Lists
+
+  https://replit.com/@subinvidhu/day-4-start-1#main.py
