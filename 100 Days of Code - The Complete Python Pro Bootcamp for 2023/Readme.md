@@ -23,3 +23,9 @@
 - 04 - Randomisation and Python Lists
 
   https://replit.com/@subinvidhu/day-4-start-1#main.py
+
+## Day 5
+
+ - 05 - Python Loops
+
+   https://replit.com/@subinvidhu/day-5-start#main.py
