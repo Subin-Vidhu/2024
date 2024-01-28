@@ -29,3 +29,9 @@
  - 05 - Python Loops
 
    https://replit.com/@subinvidhu/day-5-start#main.py
+
+## Day 6
+
+ - 06 - Python Functions & Karel
+   
+   https://reeborg.ca/reeborg.html?lang=en&mode=python&menu=worlds%2Fmenus%2Freeborg_intro_en.json&name=Alone&url=worlds%2Ftutorial_en%2Falone.json
