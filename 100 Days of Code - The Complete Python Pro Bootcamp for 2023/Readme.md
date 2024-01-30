@@ -38,4 +38,12 @@
 
 ## Day 7
 
- - https://replit.com/@subinvidhu/Day-7-Hangman-Final
+ - 07 - Hangman
+ 
+   https://replit.com/@subinvidhu/Day-7-Hangman-Final
+
+## Day 8
+ 
+ - 08 - Function Parameters & Caesar Cipher
+
+   https://replit.com/@subinvidhu/day-8#main.py
