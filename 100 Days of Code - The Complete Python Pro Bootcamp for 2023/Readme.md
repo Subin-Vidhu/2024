@@ -58,3 +58,9 @@
  - 10 - Functions with Outputs
 
    https://replit.com/@subinvidhu/day-10#main.py
+
+### Day 11
+
+ - 11 - The Blackjack Capstone Project
+
+   https://replit.com/@subinvidhu/blackjack-final
