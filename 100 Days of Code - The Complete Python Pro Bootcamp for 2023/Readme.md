@@ -46,3 +46,9 @@
  - 08 - Function Parameters & Caesar Cipher
 
    https://replit.com/@subinvidhu/day-8#main.py
+
+### Day 9
+ 
+ - 09 - Dictionaries, Nesting and the Secret Auction
+
+   https://replit.com/@subinvidhu/day-9#main.py
