@@ -52,3 +52,9 @@
  - 09 - Dictionaries, Nesting and the Secret Auction
 
    https://replit.com/@subinvidhu/day-9#main.py
+
+### Day 10
+
+ - 10 - Functions with Outputs
+
+   https://replit.com/@subinvidhu/day-10#main.py
