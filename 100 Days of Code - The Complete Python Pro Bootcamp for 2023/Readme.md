@@ -70,3 +70,9 @@
  - 12 - Scope & Number Guessing Game
 
    https://replit.com/@subinvidhu/day-12#main.py
+
+### Day 13
+
+ - 13 - Debugging How to Find and Fix Errors in your Code
+
+   https://replit.com/@subinvidhu/day-13#main.py
