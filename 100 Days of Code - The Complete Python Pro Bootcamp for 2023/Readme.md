@@ -64,3 +64,9 @@
  - 11 - The Blackjack Capstone Project
 
    https://replit.com/@subinvidhu/blackjack-final
+
+### Day 12
+
+ - 12 - Scope & Number Guessing Game
+
+   https://replit.com/@subinvidhu/day-12#main.py
