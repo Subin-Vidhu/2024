@@ -39,5 +39,9 @@ if __name__ == "__main__":
 
 Since this is a repository for a tutorial, the code should remain the same as the code that was shown in the tutorial. Any pull requests that don't address security flaws or fixes for language updates will be automatically closed. Style changes, adding libraries, etc are not valid changes for submitting a pull request.
 
+#### For DB:
+1. Start an interactive python shell
+2. from app import db
+3. db.create_all()
 
 Video Referred:  [Link](https://youtu.be/Z1RJmh_OqeA?si=36jr_vb-zLNgX7i7)
