@@ -76,3 +76,9 @@
  - 13 - Debugging How to Find and Fix Errors in your Code
 
    https://replit.com/@subinvidhu/day-13#main.py
+
+### Day 14
+
+ - 14 - Higher Lower Game Project
+
+   https://replit.com/@subinvidhu/higher-lower-final
