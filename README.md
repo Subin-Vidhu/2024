@@ -9,3 +9,4 @@ Courses and Challenges Completed
 5. 2024 Master class on Data Science using Python A-Z for ML [[Link](https://www.udemy.com/course/master-class-on-datascience/)]
 6. Python And Flask Demonstrations Practice Course [[Link](https://www.udemy.com/course/python-and-flask-only-demonstration-course/)]
 7. Flask Hacking Mastery [[Link](https://www.udemy.com/course/flask-hacking-mastery/)]
+8. Nginx for sys and web admins FREE[[Link](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/)]
