@@ -82,3 +82,9 @@
  - 14 - Higher Lower Game Project
 
    https://replit.com/@subinvidhu/higher-lower-final
+
+### Day 15
+
+ - 15 - Local_Development_Environment_Setup_&_the_Coffee_Machine_Part
+
+   https://replit.com/@subinvidhu/coffee-machine-start#main.py
