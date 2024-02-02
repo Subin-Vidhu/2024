@@ -94,3 +94,9 @@
  - 16 - Object Oriented Programming (OOP).
 
    https://replit.com/@subinvidhu/oop-coffee-machine-final
+
+### Day 17
+
+ - 17 - The Quiz Project & the Benefits of OOP
+
+   https://replit.com/@subinvidhu/quiz-game-final#main.py
