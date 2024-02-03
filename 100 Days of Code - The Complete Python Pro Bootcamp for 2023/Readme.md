@@ -107,7 +107,7 @@
 
    https://replit.com/@subinvidhu/day-18?run=true#main.py
 
-### Dya 19
+### Day 19
 
  - 19 - Instances, State and Higher Order Functions
 
