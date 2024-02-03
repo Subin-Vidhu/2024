@@ -106,3 +106,10 @@
  - 18_Turtle_&_the_Graphical_User_Interface_GUI_Part
 
    https://replit.com/@subinvidhu/day-18?run=true#main.py
+
+### Dya 19
+
+ - 19 - Instances, State and Higher Order Functions
+
+   .py files inside the day 19 folder in python files.
+   
