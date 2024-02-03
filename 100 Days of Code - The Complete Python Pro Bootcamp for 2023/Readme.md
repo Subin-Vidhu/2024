@@ -100,3 +100,9 @@
  - 17 - The Quiz Project & the Benefits of OOP
 
    https://replit.com/@subinvidhu/quiz-game-final#main.py
+
+### Day 18
+
+ - 18_Turtle_&_the_Graphical_User_Interface_GUI_Part
+
+   https://replit.com/@subinvidhu/day-18?run=true#main.py
