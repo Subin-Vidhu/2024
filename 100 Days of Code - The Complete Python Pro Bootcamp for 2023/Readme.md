@@ -118,4 +118,12 @@
  - 20 - Build the Snake Game Part 1 Animation & Coordinates.
   
    Files inside the Day 20 folder in python files.
+
+### Day 21
+
+ - 21_Build_the_Snake_Game_Part_2_Inheritance_&_List_Slicing.
+  
+   Folder  - Day 21
+   
+   https://replit.com/@subinvidhu/slicing
    
