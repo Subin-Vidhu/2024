@@ -116,5 +116,6 @@
 ### Day 20
 
  - 20 - Build the Snake Game Part 1 Animation & Coordinates.
-
+  
+   Files inside the Day 20 folder in python files.
    
