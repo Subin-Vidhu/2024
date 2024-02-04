@@ -112,4 +112,9 @@
  - 19 - Instances, State and Higher Order Functions
 
    .py files inside the day 19 folder in python files.
+
+### Day 20
+
+ - 20 - Build the Snake Game Part 1 Animation & Coordinates.
+
    
