@@ -138,3 +138,10 @@
  - 23 - The Turtle Crossing Capstone Project
 
    Folder - Day 23, start: https://replit.com/@subinvidhu/turtle-crossing-start?run=true#main.py
+
+### Day 24
+
+ - 24 - Files, Directories and Paths
+
+   Folder - Day 24, https://replit.com/@subinvidhu/day-24-end#main.py
+   
