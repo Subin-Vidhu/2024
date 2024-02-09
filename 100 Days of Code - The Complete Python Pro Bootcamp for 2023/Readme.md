@@ -145,3 +145,8 @@
 
    Folder - Day 24, https://replit.com/@subinvidhu/day-24-end#main.py
    
+### Day 25
+
+ - 25 - Working with CSV Data and the Pandas Library
+
+    
