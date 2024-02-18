@@ -150,4 +150,11 @@
  - 25 - Working with CSV Data and the Pandas Library
 
    Folder - Day 25
-    
+
+### Day 26
+
+ - 26 - List Comprehension and the NATO Alphabet
+
+   https://replit.com/@subinvidhu/day-26#main.py
+
+   Folder - Day 26
