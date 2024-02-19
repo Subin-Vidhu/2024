@@ -158,3 +158,12 @@
    https://replit.com/@subinvidhu/day-26#main.py
 
    Folder - Day 26
+
+### Day 27
+
+ - 27 - Tkinter,_args,_kwargs_and_Creating_GUI_Programs
+
+   https://replit.com/@subinvidhu/day-27#main.py
+
+   https://replit.com/@subinvidhu/tkinter-widget-demo#main.py 
+   
