@@ -167,3 +167,8 @@
 
    https://replit.com/@subinvidhu/tkinter-widget-demo#main.py 
    
+### Day 28
+
+ - 28_Tkinter,_Dynamic_Typing_and_the_Pomodoro_GUI_Application
+
+   Folder - Day 28
