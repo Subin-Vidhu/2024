@@ -172,3 +172,14 @@
  - 28_Tkinter,_Dynamic_Typing_and_the_Pomodoro_GUI_Application
 
    Folder - Day 28
+
+
+### Day 29
+
+ - 29 - Building a Password Manager GUI App with Tkinter
+
+   https://tkdocs.com/tutorial/canvas.html
+
+   https://replit.com/@subinvidhu/grid-columnspan-demo#main.py
+
+   Folder - Day 29
