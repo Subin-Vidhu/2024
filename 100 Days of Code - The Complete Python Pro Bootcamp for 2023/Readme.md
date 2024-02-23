@@ -183,3 +183,11 @@
    https://replit.com/@subinvidhu/grid-columnspan-demo#main.py
 
    Folder - Day 29
+
+### Day 30
+
+    30 - Errors, Exceptions and JSON Data Improving the Password
+
+    https://replit.com/@subinvidhu/day-30#main.py
+
+    Folder - Day 30
