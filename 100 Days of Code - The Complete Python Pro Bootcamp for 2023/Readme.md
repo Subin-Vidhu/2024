@@ -191,3 +191,9 @@
     https://replit.com/@subinvidhu/day-30#main.py
 
     Folder - Day 30
+
+### Day 31
+
+    31 - Flashcard Capstone
+
+    Folder - Day 31
