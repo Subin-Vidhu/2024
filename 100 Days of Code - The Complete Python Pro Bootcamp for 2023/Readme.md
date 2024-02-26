@@ -197,3 +197,11 @@
     31 - Flashcard Capstone
 
     Folder - Day 31
+
+### Day 32
+
+    32 - Send_Email_smtplib_&_Manage_Dates_datetime
+
+    https://replit.com/@subinvidhu/day-32#main.py
+    
+    Folder - Day 32
