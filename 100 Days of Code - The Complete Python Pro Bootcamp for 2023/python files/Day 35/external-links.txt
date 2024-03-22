@@ -1,0 +1,51 @@
+
+002 Create-a-free-account-on-OpenWeatherMap
+https://home.openweathermap.org/users/sign_up
+
+003 OpenWeatherMap-Current-Weather-API-Documentation
+https://openweathermap.org/current
+
+003 OpenWeatherMap-OneCall-Api-Documentation
+https://openweathermap.org/api/one-call-api
+
+003 Link-to-Your-OpenWeatherMap-API-Key-req.login
+https://home.openweathermap.org/api_keys
+
+003 Find-Your-Latitude-longitude
+https://www.latlong.net/
+
+003 Online-JSON-Viewer
+http://jsonviewer.stack.hu/
+
+004 OpenWeatherMap-Condition-IDs-and-Condition-Codes
+https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2
+
+004 Find-a-Place-thats-raining-using-Ventusky
+https://www.ventusky.com/
+
+004 Python-Slice-Function
+https://www.w3schools.com/python/ref_func_slice.asp
+
+004 Python-Slice-Operator-with-Square-Brackets
+https://stackoverflow.com/questions/509211/understanding-slice-notation
+
+005 Signup-for-Twilio
+https://www.twilio.com/try-twilio
+
+005 Twilio-SMS-Quickstart-Documentation-for-Python
+https://www.twilio.com/docs/sms/quickstart/python
+
+006 PythonAnywhere
+https://www.pythonanywhere.com/
+
+006 How-to-Get-Twilio-to-Work-on-PythonAnywhere-Free-Accounts
+https://help.pythonanywhere.com/pages/TwilioBehindTheProxy/
+
+007 Environment-Variables-Wikipedia-Entry
+https://en.wikipedia.org/wiki/Environment_variable
+
+007 Other-APIs-to-Explore
+https://apilist.fun/
+
+007 Course-Fixes-Report-an-Issue
+https://forms.gle/fpNEQooYBX25gcG67
