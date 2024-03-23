@@ -223,3 +223,7 @@
     35 - Keys,_Authentication_&_Environment_Variables_Send_SMS_Part
 
     Folder - Day 35
+
+### Day 36
+
+    36 - Stock Trading News Alert Project
