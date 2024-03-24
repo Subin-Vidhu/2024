@@ -1,0 +1,15 @@
+
+002 Pixela-Website
+https://pixe.la/
+
+002 Pixela-API-Documentation
+https://docs.pixe.la/
+
+002 Requests-Module-Documentation
+https://requests.readthedocs.io/en/latest/api/
+
+005 w3schools-Python-Date-Formatting-with-strftime
+https://www.w3schools.com/python/python_datetime.asp
+
+006 Course-Fixes-Report-an-Issue
+https://forms.gle/fpNEQooYBX25gcG67
