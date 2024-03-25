@@ -236,6 +236,8 @@
 
     https://pixe.la/v1/users/subinvidhu/graphs/graph1.html
 
+    Folder - Day 37
+
 ### Day 38
 
     38 - Workout Tracking Using Google Sheets
