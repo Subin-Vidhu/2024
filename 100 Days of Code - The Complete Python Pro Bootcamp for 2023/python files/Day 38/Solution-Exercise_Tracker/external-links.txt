@@ -1,0 +1,15 @@
+
+001 OpenAi-GPT-3
+https://openai.com/blog/openai-api/
+
+002 Nutritionix-API
+https://www.nutritionix.com/business/api
+
+003 Nutritionix-API-Documentation
+https://docs.google.com/document/d/1_q-K-ObMTZvO0qUEAxROrN3bwMujwAN25sLHwJzliK0/preview
+
+004 Sheety-API
+https://sheety.co/
+
+007 Course-Fixes-Report-an-Issue
+https://forms.gle/fpNEQooYBX25gcG67
