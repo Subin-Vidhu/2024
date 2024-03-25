@@ -228,6 +228,8 @@
 
     36 - Stock Trading News Alert Project
 
+    Folder - Day 36
+
 ### Day 37
 
     37 - Habit Tracking Project API Post Requests & Headers
