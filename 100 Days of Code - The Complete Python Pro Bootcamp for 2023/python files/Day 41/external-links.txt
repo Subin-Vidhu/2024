@@ -1,0 +1,15 @@
+
+001 Submarine-Cable-Map
+https://www.submarinecablemap.com/
+
+005 MDN-Docs-Headings
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements
+
+005 Unzip-in-Windows
+https://pureinfotech.com/extract-zip-file-windows-11-10/
+
+005 Unzip-on-Mac
+https://support.apple.com/en-gb/guide/mac-help/mchlp2528/mac
+
+007 Diff-Checker
+https://www.diffchecker.com/
