@@ -261,3 +261,9 @@
     41 - Web Foundation - Introduction to HTML
 
     Folder - Day 41
+
+### Day 42
+
+    42 - Web Foundation - Intermediate HTML
+
+    Folder - Day 42
