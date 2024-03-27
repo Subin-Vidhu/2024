@@ -267,9 +267,15 @@
     42 - Web Foundation - Intermediate HTML
 
     Folder - Day 42
-    
+
 ### Day 43
 
     43 - Web Foundation - Introduction to CSS
 
     Folder - Day 43
+
+### Day 44
+
+    44 - Web Foundation - Intermediate CSS
+
+    Folder - Day 44
