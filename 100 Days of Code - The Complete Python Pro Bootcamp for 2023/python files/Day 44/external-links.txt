@@ -1,0 +1,9 @@
+
+001 Named-Colours
+https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
+
+001 RGB-Colour-Mixer
+https://www.csfieldguide.org.nz/en/interactives/rgb-mixer/
+
+003 Pesticide
+https://chrome.google.com/webstore/detail/pesticide-for-chrome/bakpbgckdnepkmkeaiomhmfcnejndkbi
