@@ -279,3 +279,9 @@
     44 - Web Foundation - Intermediate CSS
 
     Folder - Day 44
+
+### Day 45
+
+    45 - Web Scraping with Beautiful Soup
+
+    Folder - Day 45
