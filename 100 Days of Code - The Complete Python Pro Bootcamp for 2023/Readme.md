@@ -285,3 +285,9 @@
     45 - Web Scraping with Beautiful Soup
 
     Folder - Day 45
+
+### Day 46
+
+    46 - Create_a_Spotify_Playlist_using_the_Musical_Time_Machine
+
+    Folder - Day 46
