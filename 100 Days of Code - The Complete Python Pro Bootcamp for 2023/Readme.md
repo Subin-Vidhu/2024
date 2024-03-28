@@ -299,3 +299,10 @@
     47 - Create an Automated Amazon Price Tracker
 
     Folder - Day 47
+
+### Day 48
+
+    48 - Selenium_Webdriver_Browser_and_Game_Playing_Bot_Part_01
+
+    Folder - Day 48
+
