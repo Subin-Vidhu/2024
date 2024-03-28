@@ -1,0 +1,36 @@
+
+001 Addiction-Warning-The-Cookie-Clicker-Game
+https://orteil.dashnet.org/cookieclicker/
+
+002 Download-and-Install-the-Chrome-Browser
+https://www.google.com/intl/en_uk/chrome/
+
+002 Download-and-Install-Selenium-ChromeDriver
+https://chromedriver.chromium.org/downloads
+
+003 w3schools-XPath-Tutorial
+https://www.w3schools.com/xml/xpath_intro.asp
+
+003 Selenium-Documentation
+https://selenium-python.readthedocs.io/
+
+004 Python.org
+https://www.python.org/
+
+005 Wikipedia-Main-Page
+https://en.wikipedia.org/wiki/Main_Page
+
+006 Challenge-URL-Form-Sign-Up
+http://secure-retreat-92358.herokuapp.com/
+
+006 Our-Actual-Newsletter
+https://www.appbrewery.co/p/newsletter
+
+006 My-Web-Dev-Course
+https://www.udemy.com/course/the-complete-web-development-bootcamp/?referralCode=F2958B9D9447BDFC8244
+
+007 The-Cookie-Clicker-Game
+https://orteil.dashnet.org/cookieclicker/
+
+008 Course-Fixes-Report-an-Issue
+https://forms.gle/fpNEQooYBX25gcG67
