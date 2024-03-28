@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 # import lxml
 
-with open("Day045/bs4-start/website.html",encoding="utf8") as file:
+with open("100 Days of Code - The Complete Python Pro Bootcamp for 2023\python files\Day 45\start\website.html",encoding="utf8") as file:
     contents=file.read()
 
 # let us create a BeautifulSoup object and assigns it to the soup variable
