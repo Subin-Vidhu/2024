@@ -293,3 +293,9 @@
     Folder - Day 46
 
     https://replit.com/@subinvidhu/music-time-machine-end-Day-46#main.py
+
+### Day 47
+
+    47 - Create an Automated Amazon Price Tracker
+
+    Folder - Day 47
