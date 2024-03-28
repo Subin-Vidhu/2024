@@ -1,0 +1,15 @@
+
+002 Beautiful-Soup-Documentation
+https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+
+004 Y-Combinator-Hacker-News
+https://news.ycombinator.com/
+
+004 SOLUTION
+https://replit.com/@appbrewery/Day-45-Hacker-News-Solution
+
+006 Course-Fixes-Report-an-Issue
+https://forms.gle/fpNEQooYBX25gcG67
+
+006 Empires-Top-100-Movies-of-All-Time-from-Web-Archive-
+https://web.archive.org/web/20200518073855/https://www.empireonline.com/movies/features/best-movies-2/
