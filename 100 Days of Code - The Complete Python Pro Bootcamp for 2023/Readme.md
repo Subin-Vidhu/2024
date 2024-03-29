@@ -318,3 +318,9 @@
 
     Folder - Day 50
 
+### Day 51
+
+    51 - Internet Speed Twitter Bot
+
+    Folder - Day 51
+
