@@ -312,3 +312,9 @@
 
     Folder - Day 49
 
+### Day 50
+
+    50 - Auto Tinder Bot
+
+    Folder - Day 50
+
