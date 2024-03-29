@@ -306,3 +306,9 @@
 
     Folder - Day 48
 
+### Day 49
+
+    49 - Automating Job Applications on Linkedin
+
+    Folder - Day 49
+
