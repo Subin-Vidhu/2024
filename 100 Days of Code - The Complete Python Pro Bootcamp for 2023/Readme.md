@@ -324,3 +324,9 @@
 
     Folder - Day 51
 
+### Day 52
+
+    52 - Instagram Follower Bot
+
+    Folder - Day 52
+
