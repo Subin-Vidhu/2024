@@ -330,3 +330,9 @@
 
     Folder - Day 52
 
+### Day 53
+
+    53 - Web Scraping Capstone - Data Entry Job Automation
+
+    Folder - Day 53
+
