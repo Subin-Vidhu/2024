@@ -1,0 +1,18 @@
+
+002 Flask-Docs-Rendering-Templates
+https://flask.palletsprojects.com/en/1.1.x/quickstart/#rendering-templates
+
+002 My-CV-Website-Hosted-on-GitHub
+https://angelabauer.github.io/cv/
+
+004 HTML5-UP-Website-Templates
+https://html5up.net/
+
+005 Check-out-html5up.nets-live-demo-sites
+https://html5up.net/
+
+006 Course-Fixes-Report-an-Issue
+https://forms.gle/fpNEQooYBX25gcG67
+
+006 unsplash.com-beautiful-images
+https://unsplash.com/
