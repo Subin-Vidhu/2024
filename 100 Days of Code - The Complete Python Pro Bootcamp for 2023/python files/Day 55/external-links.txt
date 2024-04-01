@@ -1,0 +1,18 @@
+
+002 Flask-Docs-Routing
+https://flask.palletsprojects.com/en/1.1.x/quickstart/#routing
+
+002 Flask-Docs-Variable-Rules
+https://flask.palletsprojects.com/en/1.1.x/quickstart/#variable-rules
+
+003 giphy.com
+https://giphy.com/
+
+004 SOLUTION
+https://gist.github.com/angelabauer/202d58a295c516931a7056c995110596
+
+005 Advanced-Python-Decorators-Repl.it-Code
+https://repl.it/@appbrewery/python-advanced-decorators#main.py
+
+007 Course-Fixes-Report-an-Issue
+https://forms.gle/fpNEQooYBX25gcG67
