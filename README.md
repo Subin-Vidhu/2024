@@ -11,3 +11,4 @@ Courses and Challenges Completed
 7. Flask Hacking Mastery [[Source](https://www.udemy.com/course/flask-hacking-mastery/)]
 8. Nginx for sys and web admins FREE[[Source](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/)]
 9. Understanding and Applying Text Embeddings[[Source](https://learn.deeplearning.ai/google-cloud-vertex-ai)]
+10. SSH [Source -🔅 SSH Crash Course With Some DevOps - Telegram]
