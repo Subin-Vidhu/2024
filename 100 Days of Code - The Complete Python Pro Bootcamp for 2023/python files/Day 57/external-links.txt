@@ -1,0 +1,27 @@
+
+002 Rendering-Templates-in-Flask
+https://flask.palletsprojects.com/en/1.1.x/quickstart/#rendering-templates
+
+002 Jinja-Documentation
+https://jinja.palletsprojects.com/en/2.11.x/templates/
+
+002 Update-Your-Footer
+http://updateyourfooter.com/
+
+003 Genderize-API
+https://genderize.io/
+
+003 Agify-API
+https://agify.io/
+
+004 Flask-Docs-Routing
+https://flask.palletsprojects.com/en/1.1.x/quickstart/#routing
+
+004 npoint-example-blog-data
+https://www.npoint.io/docs/c790b4d5cab58020d391
+
+004 Create-your-own-bin-with-npoint.io
+https://www.npoint.io/
+
+006 Course-Fixes-Report-an-Issue
+https://forms.gle/fpNEQooYBX25gcG67
