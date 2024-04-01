@@ -1,0 +1,30 @@
+
+002 Flask-Quick-Start-Documentation
+https://flask.palletsprojects.com/en/1.1.x/quickstart/
+
+002 Flask-Package-on-PyPi
+https://pypi.org/project/Flask/
+
+003 Windows-Command-Prompt-Cheat-Sheet
+http://www.cs.columbia.edu/~sedwards/classes/2015/1102-fall/Command%20Prompt%20Cheatsheet.pdf
+
+003 Mac-Linux-Terminal-Cheat-Sheet
+https://github.com/appbrewery/terminal-mac-cheatsheet
+
+004 Python-Built-In-Attributes-e.g.name-
+https://docs.python.org/3/library/stdtypes.html?highlight=__name__#special-attributes
+
+004 What-is-main-
+https://docs.python.org/3/library/__main__.html
+
+005 Python-Decorators-Repl.it-Code
+https://repl.it/@appbrewery/python-decorators#main.py
+
+005 Visualising-Nested-Function-Return-on-PythonTutor
+http://www.pythontutor.com/visualize.html#mode=display
+
+006 Interactive-Coding-Exercise-Day-54.1-Decorators
+https://repl.it/@appbrewery/day-54-1-exercise#main.py
+
+007 Course-Fixes-Report-an-Issue
+https://forms.gle/fpNEQooYBX25gcG67
