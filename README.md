@@ -15,3 +15,4 @@ Courses and Challenges Completed
 11. AI FOR GOOD [[Source](https://www.coursera.org/specializations/ai-for-good)]
 12. SSH [Source -🔅 SSH Crash Course With Some DevOps - Telegram]
 13. 100 Days of Code - The Complete Python Pro Bootcamp for 2023 [ongoing...]
+14. Mathematics for ML DL-AI [ongoing...]
