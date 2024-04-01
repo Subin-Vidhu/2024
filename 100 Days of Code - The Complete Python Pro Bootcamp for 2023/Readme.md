@@ -352,3 +352,9 @@
 
     Folder - Day 55
 
+### Day 56
+
+    56 - Rendering HTMLStatic files and Using Website Templates
+
+    Folder - Day 56
+
