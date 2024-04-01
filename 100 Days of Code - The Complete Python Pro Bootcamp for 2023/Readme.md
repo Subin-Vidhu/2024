@@ -358,3 +358,9 @@
 
     Folder - Day 56
 
+### Day 57
+
+    57 - Templating with Jinja in Flask Applications
+
+    Folder - Day 57
+
