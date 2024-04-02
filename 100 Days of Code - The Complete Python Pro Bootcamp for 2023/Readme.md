@@ -376,3 +376,9 @@
 
     Folder - Day 59
 
+### Day 60
+
+    60 - Make POST Requests with Flask and HTML Forms
+
+    Folder - Day 60
+
