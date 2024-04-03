@@ -430,3 +430,9 @@
 
     Folder - Day 68
 
+### Day 69
+
+    69 - Blog Capstone Project Part 4 - Adding Users
+
+    Folder - Day 69
+
