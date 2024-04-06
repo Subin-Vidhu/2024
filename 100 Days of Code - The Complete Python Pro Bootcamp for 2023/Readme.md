@@ -440,5 +440,5 @@
 
     70 - Deploying Your Web Application with Heroku
 
-    Folder - Day 70
+    
 
