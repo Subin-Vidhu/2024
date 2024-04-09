@@ -129,7 +129,7 @@ $ cd home
 $ ls
 ```
 
-3. To grand super-user privilages to the new user
+3. To grand super-user privilages to the new user.
 ```
 $ sudo usermod -aG sudo <name>
 ```
