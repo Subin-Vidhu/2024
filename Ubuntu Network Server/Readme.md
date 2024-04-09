@@ -166,7 +166,7 @@ $ chmod 666 <folder>
 
 1. sftp 
 Enable the sftp option in sshd_config
-2. Add users 
+2. Add users.
 ```
 $ sudo groupadd sftpusers
 $ sudo usermod -aG sftpusers <name>
