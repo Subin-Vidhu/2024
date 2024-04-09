@@ -157,7 +157,7 @@ $ chmod u-rw <filename>
 ```
 $ sudo chown <name>:<name> <filename>
 ```
-8. To change the owner of a folder
+8. To change the owner of a folder.
 ```
 $ chmod 777 <folder>
 $ chmod 666 <folder>
