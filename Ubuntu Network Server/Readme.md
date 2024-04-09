@@ -3,7 +3,7 @@
 ## Commands
 Done wrt to the protos system.
 
-1. To list out the hostname
+1. To list out the hostname.
 
 ```
 $ hostname
