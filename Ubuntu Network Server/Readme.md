@@ -161,4 +161,25 @@ $ sudo chown <name>:<name> <filename>
 ```
 $ chmod 777 <folder>
 $ chmod 666 <folder>
-9.
+```
+## File Transfer
+
+1. sftp 
+Enable the sftp option in sshd_config
+2. Add users 
+```
+$ sudo groupadd sftpusers
+$ sudo usermod -aG sftpusers <name>
+$ sudo service ssh restart
+```
+3. To connect from windows:
+```
+PS C:\Users\Subin-PC> sftp protos@192.168.1.6
+
+```
+4. To Transfer a file:
+```
+sftp> get transfer_move.txt
+```
+5. Use WinSCP or FileZilla for transfering with the help of a UI
+
