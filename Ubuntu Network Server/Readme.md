@@ -181,5 +181,5 @@ PS C:\Users\Subin-PC> sftp protos@192.168.1.6
 ```
 sftp> get transfer_move.txt
 ```
-5. Use WinSCP or FileZilla for transfering with the help of a UI
+5. Use WinSCP or FileZilla for transfering with the help of a UI.
 
