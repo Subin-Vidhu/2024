@@ -97,7 +97,7 @@ Apr 09 14:43:27 protos sshd[182303]: pam_unix(sshd:auth): check pass; user unkn>
 Apr 09 14:43:27 protos sshd[182303]: pam_unix(sshd:auth): authentication failur>
 Apr 09 14:43:28 protos sshd[182303]: Failed password for invalid user admin fro>
 ```
-4. Restart
+4. Restart.
 ```
 $ sudo service ssh restart
 ```
