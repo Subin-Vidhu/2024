@@ -122,7 +122,7 @@ $ sudo addduser <name>
 ```
 Create a password and leave all as default values.
 
-2. To list out the users
+2. To list out the users.
 ```
 $ cd /
 $ cd home
