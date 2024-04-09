@@ -101,7 +101,7 @@ Apr 09 14:43:28 protos sshd[182303]: Failed password for invalid user admin fro>
 ```
 $ sudo service ssh restart
 ```
-5. To enable ssh on system startup
+5. To enable ssh on system startup.
 ```
 sudo systemctl enable ssh
 ```
