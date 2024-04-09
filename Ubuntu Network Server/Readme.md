@@ -116,7 +116,7 @@ ssh protos@192.168.1.6
 ```
 
 ## Users
-1. To add new user
+1. To add new user.
 ```
 $ sudo addduser <name>
 ```
