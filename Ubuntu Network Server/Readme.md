@@ -153,7 +153,7 @@ drwx------ 38 protos protos 4096 Apr  9 14:52 protos
 $ chmod u+rw <filename>
 $ chmod u-rw <filename>
 ```
-7. To change the owner of a file
+7. To change the owner of a file.
 ```
 $ sudo chown <name>:<name> <filename>
 ```
