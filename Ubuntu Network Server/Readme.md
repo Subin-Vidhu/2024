@@ -71,7 +71,7 @@ OpenSSH_8.2p1 Ubuntu-4ubuntu0.11, OpenSSL 1.1.1f  31 Mar 2020
 ```
 sudo apt install openssh-server
 ```
-3. To check the status
+3. To check the status.
 ```
 $ sudo service ssh status
 [sudo] password for protos: 
