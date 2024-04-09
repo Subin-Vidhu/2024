@@ -62,7 +62,7 @@ $ touch
 $ whoami
 ```
 ## Remote Access
-1. SSH
+1. SSH.
 ```
 $ ssh -V
 OpenSSH_8.2p1 Ubuntu-4ubuntu0.11, OpenSSL 1.1.1f  31 Mar 2020
