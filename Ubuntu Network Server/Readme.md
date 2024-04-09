@@ -52,7 +52,7 @@ $ ip a
 ```
 $ sudo apt update
 ```
-4. Some common commands
+4. Some common commands.
 ```
 $ ls
 $ cd / cd ..
