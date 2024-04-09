@@ -436,3 +436,14 @@
 
     Folder - Day 69
 
+### Day 70
+
+    70 - Deploying Your Web Application with Heroku
+
+
+### Day 71
+
+    71 - Data_Exploration_with_Pandas_College_Major_v_s_Your_Salary
+
+    Folder - Day 71   
+
