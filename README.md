@@ -16,3 +16,4 @@ Courses and Challenges Completed
 12. SSH [Source -🔅 SSH Crash Course With Some DevOps - Telegram]
 13. 100 Days of Code - The Complete Python Pro Bootcamp for 2023 [Angela Course - Telegram, ongoing...]
 14. Mathematics for ML DL-AI (ongoing...)[[Source](https://www.coursera.org/specializations/ai-for-good)]
+15. Ubuntu Network Server[[Source](https://www.udemy.com/course/ubuntu-network-server)]
