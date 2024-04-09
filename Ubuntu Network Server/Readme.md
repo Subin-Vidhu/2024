@@ -148,7 +148,7 @@ drwxr-xr-x 22 celsus celsus 4096 Mar 23 11:13 celsus
 drwxr-xr-x 18 chippy chippy 4096 Mar 26 10:19 chippy
 drwx------ 38 protos protos 4096 Apr  9 14:52 protos
 ```
-6. To change settings of a file
+6. To change settings of a file.
 ```
 $ chmod u+rw <filename>
 $ chmod u-rw <filename>
