@@ -133,7 +133,7 @@ $ ls
 ```
 $ sudo usermod -aG sudo <name>
 ```
-4. To change user
+4. To change user.
 ``` 
 $ su - <name>
 ```
