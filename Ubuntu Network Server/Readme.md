@@ -137,7 +137,7 @@ $ sudo usermod -aG sudo <name>
 ``` 
 $ su - <name>
 ```
-5. To see file permissions
+5. To see file permissions.
 ```
 $ ls -l
 
