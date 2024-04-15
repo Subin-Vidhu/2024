@@ -447,3 +447,9 @@
 
     Folder - Day 71   
 
+### Day 72
+
+    72 Data_Visualisation_with_Matplotlib_Programming_Languages
+
+    Folder - Day 72   
+
