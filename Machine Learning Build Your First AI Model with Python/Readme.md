@@ -24,10 +24,4 @@
 
 #### Class 10 - [Link](https://github.com/Subin-Vidhu/2024/blob/main/Machine%20Learning%20Build%20Your%20First%20AI%20Model%20with%20Python/Class%2B10.ipynb)
 
-#### Class 1 - [Link]
-
-#### Class 1 - [Link]
-
-#### Class 1 - [Link]
-
-#### Class 1 - [Link]
+#### Class 11-12 - [Link]()
