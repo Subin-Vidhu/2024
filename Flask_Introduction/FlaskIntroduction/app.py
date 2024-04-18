@@ -8,7 +8,7 @@ db = SQLAlchemy(app)
 
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=False)
+    content = db.Column(db.String(200), nullable=False, unique=True)  # Add unique constraint
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
@@ -19,6 +19,13 @@ class Todo(db.Model):
 def index():
     if request.method == 'POST':
         task_content = request.form['content']
+
+        # Check if task content already exists
+        existing_task = Todo.query.filter_by(content=task_content).first()
+        if existing_task:
+            tasks = Todo.query.order_by(Todo.date_created).all()
+            return render_template('index.html', tasks=tasks ,msg = 'Task already exists')
+
         new_task = Todo(content=task_content)
 
         try:

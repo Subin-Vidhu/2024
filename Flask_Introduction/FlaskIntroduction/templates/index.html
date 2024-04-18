@@ -10,6 +10,7 @@
     {% if tasks|length < 1 %}
     <h4 style="text-align: center">There are no tasks. Create one below!</h4>
     {% else %}
+    
     <table>
         <tr>
             <th>Task</th>
@@ -28,6 +29,9 @@
             </tr>
         {% endfor %}
     </table>
+    {% if msg == "Task already exists" %}
+    <h4 style="text-align: center">Task already exists!</h4>
+    {% endif %}
     {% endif %}
 
     <div class="form">
