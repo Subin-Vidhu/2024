@@ -18,7 +18,7 @@ class Todo(db.Model):
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
-        task_content = request.form['content']
+        task_content = request.form['content'].lower()
 
         # Check if task content already exists
         existing_task = Todo.query.filter_by(content=task_content).first()
