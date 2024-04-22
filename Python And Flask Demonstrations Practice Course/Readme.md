@@ -169,3 +169,149 @@ if __name__ == '__main__':
 </body>
 </html>
 ```
+
+Cookies
+
+ - setcookie.html
+```
+<html>
+<body>
+  <form action = "/setcookie" method= "POST">
+    <p><h3>Enter userID</h3></p>
+    <p><input type = 'text' name = 'nm'/></p>
+    <p><input type = 'submit' value = 'Login'/></p>
+  </form>
+</body>
+</html>
+```
+ - app.py
+```
+from flask import Flask, render_template, request, make_response
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+  return render_template('setcookie.html')
+
+@app.route('/setcookie', methods = ['POST', 'GET'])
+def setcookie():
+  if request.method == 'POST':
+      user = request.form['nm']
+      resp = make_response(render_template('readcookie.html'))
+      resp.set_cookie('userID', user)
+      return resp
+
+@app.route ('/getcookie')
+def getcookie():
+  name = request.cookies.get('userID')
+  return '<h1>welcome '+name+'</h 1>'
+
+if name == '__main__':
+  app.run(debug = True)
+```
+
+ - readcookie.html
+```
+<!doctype html>
+<html>
+<body>
+  <a href="http://localhost:5000/getcookie"><h2>click here to read cookie</h2></a>
+</body>
+</html>
+```
+
+Redirect and Errors
+
+```
+from flask import rlask, redirect, url_for, render_template, request
+app = Flask(__name__)
+
+@app.route ('/')
+def index():
+  return render_template('login.html')
+
+@app.route('/login', methods = ['POST', 'GET'])
+def login():
+  if request.method == 'POST' and request.form['username'] == 'admin' :
+    return redirect(url_for('success'))
+  return redirect(url_for('index'))
+
+@app.route('/success')
+def success():
+  return 'logged in successfully'
+  
+if __name__ == '__main__':
+  app.run (debug = True)
+```
+
+Message Flashing
+```
+from flask import Flask, flash, redirect, render_template, request, url_for
+app = Flask(__name__)
+
+app.secret_key = 'random_string'
+@app.route('/')
+def index():
+  return render_template('index.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+  error = None
+  if request.method == 'POST':
+    if request.form['username'] != 'admin' or \
+      request.form['password'] != 'admin':
+      error = 'Invalid username or password. Please try again!'
+    else:
+      flash('You were successfully logged in')
+      flash('log out before login again')
+      return redirect(url_for('index'))
+  return render_template('log_in.html', error=error)
+
+if __name__ == "__main__":
+  app.run(debug=True)
+```
+
+ - log_in.html
+```
+<html> 
+<body> 
+<hl>Login</h1>
+{% if error %} 
+<p><strong>Error: </strong>{{ error }}
+{% endif %} 
+<form action = "" method = "post">
+<dl>
+<dt>Username: </dt>
+<dd>
+<input type = 'text' name = 'username' value = "{{request.form.username }}">
+</dd>
+<dt>Password: </dt>
+<dd><input type = 'password' name = 'password'></dd>
+</d1>
+<p><input type = 'submit' value = 'Login'></p>
+</form>
+</body>
+</html>
+```
+ - index.html
+```
+<!doctype html>
+<html>
+<head>
+<title>Flask Message flashing</title>
+</head>
+<body>
+<hl>Flask Message Flashing Example</hl>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+{% for message in messages %}
+<1i>{{ message }}</1i>
+{% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+<p>Do you want to <a href="{{ url_for('login') }}"><b>log in?</b></a>
+</body>
+</html>
+```
