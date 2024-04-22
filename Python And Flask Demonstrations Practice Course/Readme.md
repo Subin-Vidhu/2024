@@ -315,3 +315,114 @@ if __name__ == "__main__":
 </body>
 </html>
 ```
+
+
+File Uploading
+
+ - upload.html
+ ```
+<html>
+<body>
+  <form action = "http://localhost:5000/uploader" method = "POST" enctype = "multipart/form-data">
+    <input type = "file" name = "file" />
+    <input type = "submit"/>
+  </form>
+</body>
+</html>
+```
+ - upload.py
+```
+from flask import Flask, render_template, request
+from werkzeug import secure_filename
+
+app = Flask(__name__)
+
+@app.route('/upload')
+def upload():
+  return render_template('upload.html')
+
+@app.route ('/uploader', methods = ['GET', 'POST'])
+def uploader():
+if request.method == 'POST': 
+ f = request.files['file']
+ f.save(secure_filename(f.filename)) 
+ return 'file uploaded successfully' 
+
+if __name__ == '__main__ ': 
+  app.run(debug = True)
+```
+Mail Extension
+```   
+from flask import Flask
+from flask_mail import Mail, Message
+
+app = Flask(__name__)
+
+mail = Mail(app)
+
+app.config['MAIL_SERVER']='smtp.gmail.com"
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = ‘xyz@gmail.com'
+app.config['MAIL_PASSWORD'] = '****'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+
+@app.route("/")
+def index():
+  msg = Message('Hello', sender = 'xyz@gmail.com', recipients = ['abc@gmail.com'])
+  msg.body = "Hello Flask! This message is sent from Flask-Mail"
+  mail.send(msg)
+  return "Message Sent"
+
+if __name__ == '__main__':
+  app.run(debug = True)
+```
+
+WTF Extension
+
+ - forms.py
+```
+from flask_wtf import Form
+from wtforms import TextField, IntegerField, TextAreaField, SubmitField, RadioField, SelectField
+from wtforms import validators, ValidationError
+
+class ContactForm(Form) :
+  name = TextField("Name Of Student", [validators.Required("Please enter your name.")])
+  Gender = RadioField('Gender', choices = [('M','Male'), ('F', 'Female')])
+  Address = TextAreaField("Address")
+  email = TextField("Email", [validators.Required("Please enter your email address."), validators.Email("Please enter your email:)])
+  Age = IntegerField("age")
+  language = SelectField('Languages', choices = [('cpp', 'C++'), ('py', 'Python')])
+  submit = SubmitField ("Send")
+```
+
+  - formexample.py
+
+```
+from flask import Flask, render_template, request, flash
+from forms import ContactForm
+
+app = Flask(__name__)
+
+app.secret_key = "development_key"
+
+@app.route('/contact', methods = ['GET', 'POST'])
+def contact():
+  form = ContactForm()
+  if request.method == 'POST':
+    if form.validate() == False:
+      flash('All fields are required.')
+      return render_template('contact.html', form = form)
+    else:
+      return render_template('success.html')
+  if request.method == 'GET':
+    return render_template('contact.html', form = form)
+
+if __name__ == '__main__':
+  app.run(debug = True)
+```
+ - contact.html
+
+too long, refer video here [Link](https://www.udemy.com/course/python-and-flask-only-demonstration-course/learn/lecture/22468188#overview)
+
