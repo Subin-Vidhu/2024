@@ -426,3 +426,16 @@ if __name__ == '__main__':
 
 too long, refer video here [Link](https://www.udemy.com/course/python-and-flask-only-demonstration-course/learn/lecture/22468188#overview)
 
+SQLite Database
+```
+import sqlite3 as sql
+with sql.connect("database.db") as conn:
+    cur = conn.cursor()
+    cur.execute("INSERT INTO ...")
+    conn.commit()
+```
+for code refer here [Link](https://www.udemy.com/course/python-and-flask-only-demonstration-course/learn/lecture/22468218#overview)
+
+SQL Alchemy
+
+  refer [here](https://www.udemy.com/course/python-and-flask-only-demonstration-course/learn/lecture/22468222#overview) ...
