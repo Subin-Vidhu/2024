@@ -1,4 +1,4 @@
-### Notes on Telegram [Revise]. 
+### Notes on Telegram 
 #### Certificate on Drive.
 
 
