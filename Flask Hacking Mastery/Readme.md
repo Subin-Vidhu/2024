@@ -137,11 +137,11 @@ def hello_world():
 
  - In a secure bank, tellers should verify all requests thoroughly before processing them. If they just process every form without checking, malicious individuals can exploit this lapse. In computer terms, when a web application doesn't scrutinize the data users send it and acts on it blindly, it can lead to harmful consequences like unauthorized access or data leaks.
 
-### In short: SSTI Vulnerability is a loophole that allows someone to deceive a web application, much like a crafty customer in a bank fooling a teller.
+`In short: SSTI Vulnerability is a loophole that allows someone to deceive a web application, much like a crafty customer in a bank fooling a teller.`
 
 # ConfigVars
 
-Imagine your computer system as a bank vault. Now, every vault has a combination code that provides access. The configuration variables (ConfigVars) of your system are similar to that combination. An exposed ConfigVar is like accidentally leaving that combination code written on a sticky note attached to the vault door.
+ - Imagine your computer system as a bank vault. Now, every vault has a combination code that provides access. The configuration variables (ConfigVars) of your system are similar to that combination. An exposed ConfigVar is like accidentally leaving that combination code written on a sticky note attached to the vault door.
 
 # Why is an Exposed ConfigVar Bad?
 
