@@ -82,29 +82,31 @@ def hello_world():
 
  - SSTI, or Server-Side Template Injection, is like finding that special sequence for the T-shirt machine, but for websites. Instead of just displaying what it should, the website starts showing or doing things it wasn't supposed to because of the sneaky input it got.
 
- - Refer Video 
+ - Refer Video [here](https://www.udemy.com/course/flask-hacking-mastery/learn/lecture/39956462#overview)
 
  - [Readme](https://medium.com/@nyomanpradipta120/ssti-in-flask-jinja2-20b068fdaeee)
 
 
 #   Hacking
 
-In the realm of web applications, even the most streamlined frameworks like Flask can house vulnerabilities. Uncovering these vulnerabilities in Flask applications can aid both in enhancing security measures and understanding potential attack vectors.
+- In the realm of web applications, even the most streamlined frameworks like Flask can house vulnerabilities. Uncovering these vulnerabilities in Flask applications can aid both in enhancing security measures and understanding potential attack vectors.
 
- - Prerequisites:
+    - Prerequisites:
 
-    - Kali Linux Live USB
+        - Kali Linux Live USB
 
-- Recommended
+    - Recommended
 
-    - Proficiency in Python programming.
+        - Proficiency in Python programming.
 
-    - A foundational understanding of Flask.
+        - A foundational understanding of Flask.
 
- - Refer Video 
+- Refer Video 
+
 # What is Enumeration?
 
 Imagine your computer is a big house, and inside it are your personal treasures. Enumeration is like someone walking around that house, making a list of all the doors and windows to figure out the best way to get in.
+
 
 # Why Enumeration?
 
