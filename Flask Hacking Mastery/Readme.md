@@ -56,23 +56,23 @@ def hello_world():
 
 # Dynamic routes explained
 
-Imagine you run a magical pet store where each pet says its name when you poke it.
+ - Imagine you run a magical pet store where each pet says its name when you poke it.
 
-A dog would say, "Woof! I'm Dog!"
+    - A dog would say, "Woof! I'm Dog!"
 
-A cat would purr, "Meow! I'm Cat!"
+    - A cat would purr, "Meow! I'm Cat!"
 
-Now, imagine your Flask app is like this store, and each dynamic route is like a magic poke on a pet.
+ - Now, imagine your Flask app is like this store, and each dynamic route is like a magic poke on a pet.
 
-Instead of setting up a special poke for every single pet, you have a magic poke that works on ANY pet. You just say the pet's name, and it responds!
+    - Instead of setting up a special poke for every single pet, you have a magic poke that works on ANY pet. You just say the pet's name, and it responds!
 
-In Flask, a dynamic route lets you do this magic. Instead of making a separate route for dogs, cats, birds, and so on, you make ONE route:
+ - In Flask, a dynamic route lets you do this magic. Instead of making a separate route for dogs, cats, birds, and so on, you make ONE route:
 
-```pythonCopy code
-@app.route('/poke/<pet_name>')
-When you visit /poke/dog, it's like poking the dog, and you might see "Woof! I'm Dog!". And if you visit /poke/cat, it's like poking the cat, leading to "Meow! I'm Cat!".
-``````
-So, a dynamic route is like a magical tool that adjusts its behavior based on the pet's name you tell it! ✨
+    ```pythonCopy code
+    @app.route('/poke/<pet_name>')
+    When you visit /poke/dog, it's like poking the dog, and you might see "Woof! I'm Dog!". And if you visit /poke/cat, it's like poking the cat, leading to "Meow! I'm Cat!".
+    ```
+`So, a dynamic route is like a magical tool that adjusts its behavior based on the pet's name you tell it! ✨`
 
 # SSTI Explained
 
