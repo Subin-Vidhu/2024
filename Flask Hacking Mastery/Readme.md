@@ -117,7 +117,7 @@ def hello_world():
 
 # What is a Brute Force Attack?
 
-Imagine you lost the key to your house. Instead of looking for the key, you decide to try every key on your keychain, one by one, until one fits. This approach of trying all possibilities until you find the right one is similar to a brute force attack in the world of computers.
+ - Imagine you lost the key to your house. Instead of looking for the key, you decide to try every key on your keychain, one by one, until one fits. This approach of trying all possibilities until you find the right one is similar to a brute force attack in the world of computers.
 
 # Hydra on Kali Linux?
 
