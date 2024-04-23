@@ -119,6 +119,8 @@ def hello_world():
 
  - Imagine you lost the key to your house. Instead of looking for the key, you decide to try every key on your keychain, one by one, until one fits. This approach of trying all possibilities until you find the right one is similar to a brute force attack in the world of computers.
 
+ - Refer Video [here](https://www.udemy.com/course/flask-hacking-mastery/learn/lecture/39950396#overview)
+ 
 # Hydra on Kali Linux?
 
 Now, think of Hydra as a magic keychain that can produce thousands of keys per minute. And Kali Linux? It's like a special backpack filled with tools that hackers (both good and bad) carry around. Inside that backpack, Hydra is one of the favorite tools when they want to rapidly try many keys to unlock a door (or a password).
