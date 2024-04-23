@@ -34,29 +34,25 @@ def hello_world():
 
 # Routing explained
 
-Imagine your Flask app is like a house.
+ - Imagine your Flask app is like a house.
 
-Each route is like a door to a room in that house.
+ - Each route is like a door to a room in that house.
 
-When you create a route in Flask:
+ - When you create a route in Flask: You're deciding where a new door goes.
 
-You're deciding where a new door goes.
+ - You're also deciding what visitors will see when they enter through that door.
 
-You're also deciding what visitors will see when they enter through that door.
+ - For example, the @app.route('/'):
 
-For example, the @app.route('/'):
+    - This is like the front door of your house.
 
-This is like the front door of your house.
+    - When visitors come to the front door (main page), they see whatever you decided to show in the associated function, like "Hello, World!".
 
-When visitors come to the front door (main page), they see whatever you decided to show in the associated function, like "Hello, World!".
+ - If you add another route, like @app.route('/kitchen'): Now you have a door to the kitchen.
 
-If you add another route, like @app.route('/kitchen'):
+ - Visitors see something different when they enter the kitchen, maybe "Here's where we make cookies!".
 
-Now you have a door to the kitchen.
-
-Visitors see something different when they enter the kitchen, maybe "Here's where we make cookies!".
-
-So, routing is like setting up doors and deciding what's behind each one! 🚪🏠🍪
+`So, routing is like setting up doors and deciding what's behind each one! 🚪🏠🍪`
 
 # Dynamic routes explained
 
