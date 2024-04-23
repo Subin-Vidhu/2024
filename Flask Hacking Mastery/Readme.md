@@ -83,6 +83,7 @@ def hello_world():
  - SSTI, or Server-Side Template Injection, is like finding that special sequence for the T-shirt machine, but for websites. Instead of just displaying what it should, the website starts showing or doing things it wasn't supposed to because of the sneaky input it got.
 
  - [Readme](https://medium.com/@nyomanpradipta120/ssti-in-flask-jinja2-20b068fdaeee)
+ 
 #   Hacking
 
 In the realm of web applications, even the most streamlined frameworks like Flask can house vulnerabilities. Uncovering these vulnerabilities in Flask applications can aid both in enhancing security measures and understanding potential attack vectors.
