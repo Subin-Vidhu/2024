@@ -76,11 +76,11 @@ def hello_world():
 
 # SSTI Explained
 
-Imagine you're at a store that customizes T-shirts. You provide them with a message, and they print it on the shirt for you.
+ - Imagine you're at a store that customizes T-shirts. You provide them with a message, and they print it on the shirt for you.
 
-Usually, you'd give them something simple like "Happy Birthday, Alex!" But one day, you figure out that if you give them a special sequence of symbols or words, their T-shirt machine starts acting weird. Maybe it displays the store's internal records, or perhaps it even starts printing shirts for free.
+ - Usually, you'd give them something simple like "Happy Birthday, Alex!" But one day, you figure out that if you give them a special sequence of symbols or words, their T-shirt machine starts acting weird. Maybe it displays the store's internal records, or perhaps it even starts printing shirts for free.
 
-SSTI, or Server-Side Template Injection, is like finding that special sequence for the T-shirt machine, but for websites. Instead of just displaying what it should, the website starts showing or doing things it wasn't supposed to because of the sneaky input it got.
+ - SSTI, or Server-Side Template Injection, is like finding that special sequence for the T-shirt machine, but for websites. Instead of just displaying what it should, the website starts showing or doing things it wasn't supposed to because of the sneaky input it got.
 
 #   Hacking
 
