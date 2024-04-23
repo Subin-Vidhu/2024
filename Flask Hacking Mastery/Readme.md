@@ -105,14 +105,15 @@ def hello_world():
 
 # What is Enumeration?
 
-Imagine your computer is a big house, and inside it are your personal treasures. Enumeration is like someone walking around that house, making a list of all the doors and windows to figure out the best way to get in.
+- Imagine your computer is a big house, and inside it are your personal treasures. Enumeration is like someone walking around that house, making a list of all the doors and windows to figure out the best way to get in.
 
+- Refer Video [here](https://www.udemy.com/course/flask-hacking-mastery/learn/lecture/39950224#overview)
 
 # Why Enumeration?
 
-Let's say you know your front and back doors are always locked. But what about that tiny window in the basement or the attic door? You might forget about them. In the world of computers, there are many ways to get into a system. So, ethical hackers use enumeration to find every possible entry, even the ones you might not think of.
+ - Let's say you know your front and back doors are always locked. But what about that tiny window in the basement or the attic door? You might forget about them. In the world of computers, there are many ways to get into a system. So, ethical hackers use enumeration to find every possible entry, even the ones you might not think of.
 
-### In short: Enumeration is finding all the possible ways (ports) into the system
+`In short: Enumeration is finding all the possible ways (ports) into the system`
 
 # What is a Brute Force Attack?
 
