@@ -145,6 +145,6 @@ def hello_world():
 
 # Why is an Exposed ConfigVar Bad?
 
-Just as anyone finding the vault's combination can easily access all the money inside, in the digital world, exposed ConfigVars can provide malicious individuals with critical information or access. This can lead to unauthorized actions, data theft, or even taking control of the entire system.
+ - Just as anyone finding the vault's combination can easily access all the money inside, in the digital world, exposed ConfigVars can provide malicious individuals with critical information or access. This can lead to unauthorized actions, data theft, or even taking control of the entire system.
 
-### In short: An exposed ConfigVar is a dangerous slip, much like leaving the combination of a bank vault out in the open.
+`In short: An exposed ConfigVar is a dangerous slip, much like leaving the combination of a bank vault out in the open.`
