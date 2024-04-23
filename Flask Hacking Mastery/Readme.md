@@ -125,8 +125,7 @@ def hello_world():
 
  - Now, think of Hydra as a magic keychain that can produce thousands of keys per minute. And Kali Linux? It's like a special backpack filled with tools that hackers (both good and bad) carry around. Inside that backpack, Hydra is one of the favorite tools when they want to rapidly try many keys to unlock a door (or a password).
 
- - 
-### In short: Using Hydra on Kali Linux for a brute force attack is like quickly trying thousands of keys from a magic keychain to open a locked door.
+`In short: Using Hydra on Kali Linux for a brute force attack is like quickly trying thousands of keys from a magic keychain to open a locked door.`
 
 # What is SSTI Vulnerability?
 
