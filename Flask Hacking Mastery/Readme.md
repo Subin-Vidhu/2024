@@ -129,7 +129,7 @@ def hello_world():
 
 # What is SSTI Vulnerability?
 
-Imagine your computer is like a bank, where tellers (your web application) process transactions based on forms customers submit. SSTI, or Server-Side Template Injection, is like a clever customer submitting a deceptive form that tricks the teller into doing unauthorized transactions or revealing confidential information.
+ - Imagine your computer is like a bank, where tellers (your web application) process transactions based on forms customers submit. SSTI, or Server-Side Template Injection, is like a clever customer submitting a deceptive form that tricks the teller into doing unauthorized transactions or revealing confidential information.
 
 # Why SSTI Vulnerability?
 
