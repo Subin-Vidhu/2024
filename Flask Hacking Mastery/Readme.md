@@ -131,6 +131,8 @@ def hello_world():
 
  - Imagine your computer is like a bank, where tellers (your web application) process transactions based on forms customers submit. SSTI, or Server-Side Template Injection, is like a clever customer submitting a deceptive form that tricks the teller into doing unauthorized transactions or revealing confidential information.
 
+ - Refer Video [here](https://www.udemy.com/course/flask-hacking-mastery/learn/lecture/39952390#overview)
+
 # Why SSTI Vulnerability?
 
 In a secure bank, tellers should verify all requests thoroughly before processing them. If they just process every form without checking, malicious individuals can exploit this lapse. In computer terms, when a web application doesn't scrutinize the data users send it and acts on it blindly, it can lead to harmful consequences like unauthorized access or data leaks.
