@@ -17,3 +17,4 @@ Courses and Challenges Completed
 13. 100 Days of Code - The Complete Python Pro Bootcamp for 2023 [Angela Course - Telegram, ongoing...]
 14. Mathematics for ML DL-AI (ongoing...)[[Source](https://www.coursera.org/specializations/ai-for-good)]
 15. Ubuntu Network Server[[Source](https://www.udemy.com/course/ubuntu-network-server)]
+16. Learning How to Learn: Powerful mental tools to help you master tough subjects [[Source](https://www.coursera.org/learn/learning-how-to-learn/home/week/1)]
