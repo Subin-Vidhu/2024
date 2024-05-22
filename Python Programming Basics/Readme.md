@@ -264,6 +264,330 @@ It can also span multiple lines.
 
 - Lists are ordered collections of items, such as `[1, 2, 3]`, `["a", "b", "c"]`, etc.
 
+   - You can access individual items in a list using indexing.
+
+    - You can slice lists to get a sublist.
+
+    - Lists are mutable, which means that you can change the value of an item in a list.
+
+    - You can add items to a list using the `append()` method.
+
+      example:
+
+          ```python
+          fruits = ["apple", "banana", "cherry"]
+          fruits.append("orange")
+          print(fruits) # prints ["apple", "banana", "cherry", "orange"]
+          ```
+
+    - You can insert items into a list at a specific position using the `insert()` method.
+
+      example:
+
+          ```python
+          fruits = ["apple", "banana", "cherry"]
+          fruits.insert(1, "orange")
+          print(fruits) # prints ["apple", "orange", "banana", "cherry"]
+          ```
+
+    - You can remove items from a list using the `remove()` method.
+      
+        example:
+  
+            ```python
+            fruits = ["apple", "banana", "cherry"]
+            fruits.remove("banana")
+            print(fruits) # prints ["apple", "cherry"]
+            ```
+
+    - You can remove items from a list by index using the `pop()` method.
+      
+        example:
+  
+            ```python
+            fruits = ["apple", "banana", "cherry"]
+            fruits.pop(1)
+            print(fruits) # prints ["apple", "cherry"]
+            ```
+
+    - You can remove items from a list by value using the `del` keyword.
+      
+        example:
+  
+            ```python
+            fruits = ["apple", "banana", "cherry"]
+            del fruits[1]
+            print(fruits) # prints ["apple", "cherry"]
+            ```
+
+    - You can clear a list using the `clear()` method.
+        
+          example:
+    
+              ```python
+              fruits = ["apple", "banana", "cherry"]
+              fruits.clear()
+              print(fruits) # prints []
+              ```
+
+    - You can copy a list using the `copy()` method.
+
+      example:
+
+          ```python
+          fruits = ["apple", "banana", "cherry"]
+          fruits_copy = fruits.copy()
+          print(fruits_copy) # prints ["apple", "banana", "cherry"]
+          ```
+
+    - You can join two lists using the `extend()` method.
+      
+        example:
+  
+            ```python
+            fruits = ["apple", "banana", "cherry"]
+            more_fruits = ["orange", "mango", "grape"]
+            fruits.extend(more_fruits)
+            print(fruits) # prints ["apple", "banana", "cherry", "orange", "mango", "grape"]
+            ```
+
+    - You can reverse a list using the `reverse()` method.
+        
+          example:
+    
+              ```python
+              fruits = ["apple", "banana", "cherry"]
+              fruits.reverse()
+              print(fruits) # prints ["cherry", "banana", "apple"]
+              ```
+    - You can sort a list using the `sort()` method.
+
+      example:
+
+          ```python
+          fruits = ["banana", "apple", "cherry"]
+          fruits.sort()
+          print(fruits) # prints ["apple", "banana", "cherry"]
+          ```
+    - You can count the occurrences of an item in a list using the `count()` method.
+    
+      example:
+
+          ```python
+          fruits = ["apple", "banana", "cherry", "apple"]
+          count = fruits.count("apple")
+          print(count) # prints 2
+          ```
+    - You can get the index of an item in a list using the `index()` method.
+      
+        example:
+  
+            ```python
+            fruits = ["apple", "banana", "cherry"]
+            index = fruits.index("banana")
+            print(index) # prints 1
+            ``` 
+
+    - You can check if an item is in a list using the `in` operator.
+
+      example:
+
+          ```python
+          fruits = ["apple", "banana", "cherry"]
+          if "banana" in fruits:
+              print("Yes")
+          else:
+              print("No")
+          ``` 
+
+    - You can check if a list is empty using the `bool()` function.
+
+      example:
+
+          ```python
+          fruits = []
+          if fruits:
+              print("Yes")
+          else:
+              print("No")
+          ```
+    - You can convert a list to a string using the `join()` method.
+
+      example:
+
+          ```python
+          fruits = ["apple", "banana", "cherry"]
+          fruits_str = ", ".join(fruits)
+          print(fruits_str) # prints "apple, banana, cherry"
+          ```
+    - You can convert a string to a list using the `split()` method.
+
+      example:
+
+          ```python
+          fruits_str = "apple, banana, cherry"
+          fruits = fruits_str.split(", ")
+          print(fruits) # prints ["apple", "banana", "cherry"]
+          ```
+    - You can create a list using a list comprehension.
+      
+        example:
+  
+            ```python
+            numbers = [1, 2, 3, 4, 5]
+            squares = [x**2 for x in numbers]
+            print(squares) # prints [1, 4, 9, 16, 25]
+            ```
+    - You can create a list using the `range()` function.
+      
+        example:
+  
+            ```python
+            numbers = list(range(1, 6))
+            print(numbers) # prints [1, 2, 3, 4, 5]
+            ``` 
+
+    - You can create a list using the `list()` function.
+
+      example:
+
+          ```python
+          numbers = list((1, 2, 3, 4, 5))
+          print(numbers) # prints [1, 2, 3, 4, 5]
+          ```
+
+    - You can create a list using the `*` operator.
+
+      example:
+
+          ```python
+          numbers = [1, 2, 3] * 3
+          print(numbers) # prints [1, 2, 3, 1, 2, 3, 1, 2, 3]
+          ```
+    - You can create a list using the `append()` method.
+      
+        example:
+  
+            ```python
+            numbers = []
+            numbers.append(1)
+            numbers.append(2)
+            numbers.append(3)
+            print(numbers) # prints [1, 2, 3]
+            ``` 
+
+    - You can create a list using the `insert()` method.
+
+      example:
+
+          ```python
+          numbers = [1, 3]
+          numbers.insert(1, 2)
+          print(numbers) # prints [1, 2, 3]
+          ```
+    - You can create a list using the `remove()` method.
+
+      example:
+
+          ```python
+          numbers = [1, 2, 3]
+          numbers.remove(2)
+          print(numbers) # prints [1, 3]
+          ```
+    - You can create a list using the `pop()` method.
+
+      example:
+
+          ```python
+          numbers = [1, 2, 3]
+          numbers.pop()
+          print(numbers) # prints [1, 2]
+          ``` 
+
+    - You can create a list using the `del` keyword.
+      
+        example:
+  
+            ```python
+            numbers = [1, 2, 3]
+            del numbers[1]
+            print(numbers) # prints [1, 3]
+            ```
+    - You can create a list using the `clear()` method.
+
+      example:
+
+          ```python
+          numbers = [1, 2, 3]
+          numbers.clear()
+          print(numbers) # prints []
+          ``` 
+
+    - You can create a list using the `copy()` method.
+
+      example:
+
+          ```python
+          numbers = [1, 2, 3]
+          numbers_copy = numbers.copy()
+          print(numbers_copy) # prints [1, 2, 3]
+          ``` 
+
+    - You can create a list using the `extend()` method.
+
+      example:
+
+          ```python
+          numbers = [1, 2, 3]
+          more_numbers = [4, 5, 6]
+          numbers.extend(more_numbers)
+          print(numbers) # prints [1, 2, 3, 4, 5, 6]
+          ```
+
+    - You can create a list using the `reverse()` method.
+
+      example:
+
+          ```python
+          numbers = [1, 2, 3]
+          numbers.reverse()
+          print(numbers) # prints [3, 2, 1]
+          ``` 
+
+    - You can create a list using the `sort()` method.
+
+
+      example:
+
+          ```python
+          numbers = [3, 1, 2]
+          numbers.sort()
+          print(numbers) # prints [1, 2, 3]
+          ```
+    - sort vs sorted
+
+      - The `sort()` method sorts the list in place, which means that it modifies the original list.
+
+        example:
+
+            ```python
+            numbers = [3, 1, 2]
+            numbers.sort()
+            print(numbers) # prints [1, 2, 3]
+            ```
+
+      - The `sorted()` function returns a new sorted list without modifying the original list.
+
+        example:
+
+            ```python
+            numbers = [3, 1, 2]
+            sorted_numbers = sorted(numbers)
+            print(numbers) # prints [3, 1, 2]
+            print(sorted_numbers) # prints [1, 2, 3]
+            ```
+
+
 - Tuples are ordered collections of items that cannot be modified, such as `(1, 2, 3)`, `("a", "b", "c")`, etc.
 
 - Dictionaries are unordered collections of key-value pairs, such as `{"name": "Alice", "age": 30}`, `{"a": 1, "b": 2}`, etc.
