@@ -187,6 +187,8 @@ It can also span multiple lines.
 
 - You can use the `return` statement to return a value from a function.
 
+### Functions
+
 
 
 
