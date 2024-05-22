@@ -115,3 +115,38 @@ It can also span multiple lines.
 
 ### Data Types
 
+- Python has several built-in data types, such as integers, floats, strings, lists, tuples, dictionaries, etc.
+
+- Integers are whole numbers, such as `1`, `2`, `3`, etc.
+
+- Floats are numbers with a decimal point, such as `1.0`, `2.5`, `3.14`, etc.
+
+- Strings are sequences of characters, such as `"Hello"`, `"World"`, `"Python"`, etc.
+
+- Lists are ordered collections of items, such as `[1, 2, 3]`, `["a", "b", "c"]`, etc.
+
+- Tuples are ordered collections of items that cannot be modified, such as `(1, 2, 3)`, `("a", "b", "c")`, etc.
+
+- Dictionaries are unordered collections of key-value pairs, such as `{"name": "Alice", "age": 30}`, `{"a": 1, "b": 2}`, etc.
+
+- To check the type of a variable, use the `type()` function.
+
+- To convert a variable to a different type, use the built-in functions `int()`, `float()`, `str()`, `list()`, `tuple()`, `dict()`, etc.
+
+- Booleans are a built-in data type in Python that can have one of two values: `True` or `False`.
+
+  - Values such as empty sequences (lists, tuples, strings, etc.), 0, and None are evaluated as False. Any non-zero number or non-empty sequence is evaluated as True.
+
+  - Booleans are used in conditional statements, such as `if`, `elif`, and `else`.
+
+  - You can use the `bool()` function to convert a value to a boolean.
+
+  - You can use logical operators, such as `and`, `or`, and `not`, to combine boolean values.
+
+  - You can use comparison operators, such as `==`, `!=`, `<`, `>`, `<=`, and `>=`, to compare values.
+
+- None is a special data type in Python that represents the absence of a value.
+
+
+
+
