@@ -113,4 +113,5 @@ It can also span multiple lines.
   CONSTANT_NAME = value
   ```
 
+### Data Types
 
