@@ -1125,10 +1125,10 @@ It can also span multiple lines.
     - example:
   
         ```python
-            def greet(name):
-                print(f"Hello, {name}!")
+        def greet(name):
+            print(f"Hello, {name}!")
 
-            greet("Alice") # Alice is the argument passed to the greet function
+        greet("Alice") # Alice is the argument passed to the greet function
         ```
 
 - keyword parameters vs positional parameters
