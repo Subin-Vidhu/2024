@@ -18,7 +18,7 @@
 
 - Python is a dynamically typed language, which means that you don't have to declare the type of a variable when you create it. This makes it easier to write code quickly.
 
-#### Python Installation
+### Python Installation
 
 - Python can be installed on Windows, macOS, and Linux.
 
@@ -31,5 +31,30 @@
   - Wait for the installation to finish.
   - Click "Close".
 
+### Hello World
+
+- To print "Hello, World!" in Python, use the following code: 
+
+  - Open a terminal or command prompt.
+ Type `python` to open the Python interpreter.
+  Type the following code:
+
+
+    ```python
+    print("Hello, World!")
+    ```
+
+- To run the code, save it in a file with a `.py` extension and run it using the Python interpreter. how?
+  
+    - Open a terminal or command prompt.
+    - Navigate to the directory where the file is saved.
+    - Run the following command:
+  
+      ```bash
+      python filename.py
+      ```
+
+- You can also run the code in an interactive Python shell.
+   
 
   
