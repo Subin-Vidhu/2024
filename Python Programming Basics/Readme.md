@@ -82,4 +82,24 @@ It can also span multiple lines.
 
 ### Variables
 
-  
+- Variables are used to store data in a program. They are created using an assignment operator `=`.
+
+- Variable names can contain letters, numbers, and underscores. They cannot start with a number.
+
+- Python is a dynamically typed language, which means that you don't have to declare the type of a variable when you create it.
+
+- To create a variable in Python, use the following syntax:
+
+  ```python
+  variable_name = value
+  ```
+
+- To access the value of a variable, use the variable name.
+
+- Variables can be of different types, such as integers, floats, strings, lists, tuples, dictionaries, etc.
+
+- To check the type of a variable, use the `type()` function.
+
+- To print the value of a variable, use the `print()` function.
+
+
