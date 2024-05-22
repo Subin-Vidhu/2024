@@ -1437,6 +1437,409 @@ It can also span multiple lines.
 
 ### Classes
 
+- Classes are used to create objects in Python.
+
+- Classes are defined using the `class` keyword followed by the class name.
+ 
+   - example: 
+
+      ```python
+      class Person:
+          pass
+      ```
+
+- You can create an object of a class by calling the class name followed by a pair of parentheses.
+  
+    - example:
+  
+        ```python
+        class Person:
+            pass
+  
+        person = Person()
+        ```
+
+- You can define attributes for a class by assigning values to variables inside the class definition.
+
+    - example:
+
+        ```python
+        class Person:
+            name = "Alice"
+            age = 30
+        ```
+
+- You can access attributes of an object using the dot `.` operator.
+  
+    - example:
+
+        ```python
+        class Person:
+            name = "Alice"
+            age = 30
+
+        person = Person()
+        print(person.name) # prints Alice
+        print(person.age) # prints 30
+        ``` 
+
+- You can define methods for a class by defining functions inside the class definition.
+  
+    - example:
+
+        ```python
+        class Person:
+            def greet(self):
+                print("Hello, World!")
+
+        person = Person()
+        person.greet() # prints Hello, World!
+        ```
+
+- You can pass arguments to a method by placing them inside the parentheses.
+
+    - example:
+
+        ```python
+        class Person:
+            def greet(self, name):
+                print(f"Hello, {name}!")
+
+        person = Person()
+        person.greet("Alice") # prints Hello, Alice!
+        ```
+
+- You can access attributes of an object using the `self` keyword.
+
+    - example:
+
+        ```python
+        class Person:
+            def greet(self):
+                print(f"Hello, {self.name}!")
+
+        person = Person()
+        person.name = "Alice"
+        person.greet() # prints Hello, Alice!
+        ```
+
+- You can define a constructor for a class using the `__init__` method.
+
+  - example:
+
+      ```python
+      class Person:
+          def __init__(self, name, age):
+              self.name = name
+              self.age = age
+
+          def greet(self):
+              print(f"Hello, {self.name}!")
+
+      person = Person("Alice", 30)
+      person.greet() # prints Hello, Alice!
+      ```
+
+- You can define a destructor for a class using the `__del__` method.
+
+  - example:
+
+      ```python
+      class Person:
+          def __del__(self):
+              print("Object deleted")
+
+      person = Person()
+      del person # prints Object deleted
+      ```
+
+- You can define class attributes by assigning values to variables inside the class definition.
+
+  - example:
+
+      ```python
+      class Person:
+          count = 0
+
+          def __init__(self):
+              Person.count += 1
+
+      person1 = Person()
+      person2 = Person()
+      print(Person.count) # prints 2
+      ```
+
+- You can define class methods using the `@classmethod` decorator.
+
+  - example:
+
+      ```python
+      class Person:
+          count = 0
+
+          @classmethod
+          def increment_count(cls):
+              cls.count += 1
+
+      Person.increment_count()
+      Person.increment_count()
+      print(Person.count) # prints 2
+      ```
+
+- You can define static methods using the `@staticmethod` decorator.
+  
+    - example:
+  
+        ```python
+        class Person:
+            @staticmethod
+            def greet():
+                print("Hello, World!")
+  
+        Person.greet() # prints Hello, World!
+        ```
+
+- classmethod vs staticmethod 
+
+  - Class methods take a class as the first argument, while static methods do not take any arguments.
+
+  - Class methods can access class variables, while static methods cannot.
+
+  - Class methods are used to modify class variables, while static methods are used to perform utility functions.
+
+      - example:
+
+          ```python
+          class Person:
+              count = 0
+
+              @classmethod
+              def increment_count(cls):
+                  cls.count += 1
+
+              @staticmethod
+              def greet():
+                  print("Hello, World!")
+
+          Person.increment_count()
+          Person.increment_count()
+          print(Person.count) # prints 2
+
+          Person.greet() # prints Hello, World!
+          ```
+
+- You can define properties for a class using the `@property` decorator.
+
+  - example:
+
+      ```python
+      class Person:
+          def __init__(self, name):
+              self._name = name
+
+          @property
+          def name(self):
+              return self._name
+
+          @name.setter
+          def name(self, value):
+              self._name = value
+
+      person = Person("Alice")
+      print(person.name) # prints Alice
+
+      person.name = "Bob"
+      print(person.name) # prints Bob
+      ```
+
+- You can define class inheritance by passing the parent class as an argument to the child class.
+
+  - example:
+
+      ```python
+      class Person:
+          def greet(self):
+              print("Hello, World!")
+
+      class Student(Person):
+          def study(self):
+              print("Studying...")
+
+      student = Student()
+      student.greet() # prints Hello, World!
+      student.study() # prints Studying...
+      ```
+
+- You can override methods of a parent class in a child class.  
+
+    - example:
+
+        ```python
+        class Person:
+            def greet(self):
+                print("Hello, World!")
+
+        class Student(Person):
+            def greet(self):
+                print("Hello, Student!")
+
+        student = Student()
+        student.greet() # prints Hello, Student!
+        ```
+
+- You can call the parent class constructor
+  - example:
+  
+      ```python
+      class Person:
+          def __init__(self, name):
+              self.name = name
+
+      class Student(Person):
+          def __init__(self, name, grade):
+              super().__init__(name)
+              self.grade = grade
+
+      student = Student("Alice", 10)
+      print(student.name) # prints Alice
+      print(student.grade) # prints 10
+      ```
+
+- You can use multiple inheritance by passing multiple parent classes to the child class.
+
+  - example:
+
+      ```python
+      class A:
+          def greet(self):
+              print("Hello, A!")
+
+      class B:
+          def greet(self):
+              print("Hello, B!")
+
+      class C(A, B):
+          pass
+
+      c = C()
+      c.greet() # prints Hello, A!
+      ```
+
+- You can use the `super()` function to call methods of a parent class.
+
+  - example:
+
+      ```python
+      class A:
+          def greet(self):
+              print("Hello, A!")
+
+      class B(A):
+          def greet(self):
+              super().greet()
+              print("Hello, B!")
+
+      b = B()
+      b.greet() # prints Hello, A! and Hello, B!
+      ```
+
+- You can use the `isinstance()` function to check if an object is an instance of a class.
+
+  - example:
+
+      ```python
+      class Person:
+          pass
+
+      person = Person()
+      print(isinstance(person, Person)) # prints True
+      ```
+- You can use the `issubclass()` function
+
+  - example:
+
+      ```python
+      class A:
+          pass
+
+      class B(A):
+          pass
+
+      print(issubclass(B, A)) # prints True
+      ```
+- You can use the `hasattr()` function to check if an object has an attribute.  
+
+    - example:
+
+        ```python
+        class Person:
+            name = "Alice"
+
+        person = Person()
+        print(hasattr(person, "name")) # prints True
+        ```
+
+- You can use the `getattr()` function to get the value of an attribute.
 
 
-      
+    - example:
+
+        ```python
+        class Person:
+            name = "Alice"
+
+        person = Person()
+        print(getattr(person, "name")) # prints Alice
+        ```
+
+- You can use the `setattr()` function to set the value of an attribute.
+
+    - example:
+
+        ```python
+        class Person:
+            name = "Alice"
+
+        person = Person()
+        setattr(person, "name", "Bob")
+        print(person.name) # prints Bob
+        ```
+
+- You can use the `delattr()` function to delete an attribute.
+
+    - example:
+
+        ```python
+        class Person:
+            name = "Alice"
+
+        person = Person()
+        delattr(person, "name")
+        print(hasattr(person, "name")) # prints False
+        ```
+- You can use the `property()` function to define properties for a class.
+
+    - example:
+
+        ```python
+        class Person:
+            def __init__(self, name):
+                self._name = name
+
+            def get_name(self):
+                return self._name
+
+            def set_name(self, value):
+                self._name = value
+
+            name = property(get_name, set_name)
+
+        person = Person("Alice")
+        print(person.name) # prints Alice
+
+        person.name = "Bob"
+        print(person.name) # prints Bob
+        ```
+
+
+### 
