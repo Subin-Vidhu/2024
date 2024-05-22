@@ -1111,10 +1111,10 @@ It can also span multiple lines.
     - example:
 
         ```python
-            def greet(name):
-                print(f"Hello, {name}!")
-    
-            help(greet)
+        def greet(name):
+            print(f"Hello, {name}!")
+
+        help(greet)
         ```
 - function parameters vs arguments
   
