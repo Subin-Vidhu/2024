@@ -102,4 +102,15 @@ It can also span multiple lines.
 
 - To print the value of a variable, use the `print()` function.
 
+- Constants are variables whose values do not change during the execution of a program. They are usually named using `uppercase` letters.
+
+- If you want to prevent accidental modification of a constant value, you can use the readonly module to create immutable variables. Here's how you can do it:
+
+  ```python
+  from readonly import readonly
+
+  @readonly
+  CONSTANT_NAME = value
+  ```
+
 
