@@ -2307,15 +2307,15 @@ It can also span multiple lines.
         ```
 - You can use the `shutil.copytree()` function to copy a directory.
   
-      - example:
-  
-          ```python
-          import shutil
-  
-          src = "dir"
-          dst = "new_dir"
-          shutil.copytree(src, dst)
-          ```
+    - example:
+
+        ```python
+        import shutil
+
+        src = "dir"
+        dst = "new_dir"
+        shutil.copytree(src, dst)
+        ```
 
 - You can use the `shutil.move()` function to move a file or directory.
 
