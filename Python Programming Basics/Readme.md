@@ -748,7 +748,7 @@ It can also span multiple lines.
         print(keys) # prints dict_keys(["name", "age"])
         ```
 
-        
+
 - To check the type of a variable, use the `type()` function.
 
 - To convert a variable to a different type, use the built-in functions `int()`, `float()`, `str()`, `list()`, `tuple()`, `dict()`, etc.
@@ -827,7 +827,12 @@ It can also span multiple lines.
 
 - You can use the `help()` function to get information about a function.
 
-### Modules
+### Statements
+
+- Statements are used to perform actions in a program.
+
+- Python has several types of statements, such as assignment statements, import statements, print statements, and pass statements.
+
 
 
 
