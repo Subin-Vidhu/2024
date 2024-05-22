@@ -189,6 +189,26 @@ It can also span multiple lines.
 
 ### Functions
 
+- Functions are used to group code into reusable blocks.
+
+- Functions are defined using the `def` keyword, followed by the function name and a pair of parentheses.
+
+- You can pass arguments to a function by placing them inside the parentheses.
+
+- You can return a value from a function using the `return` keyword.
+
+- You can define default values for function arguments by using the assignment operator `=`.
+
+- You can pass a variable number of arguments to a function by using the `*args` and `**kwargs` syntax.
+
+- You can define anonymous functions using the `lambda` keyword.
+
+- You can call a function by using the function name followed by a pair of parentheses.
+
+- You can use the `help()` function to get information about a function.
+
+
+
 
 
 
