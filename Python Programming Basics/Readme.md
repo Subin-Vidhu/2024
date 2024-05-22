@@ -2689,16 +2689,16 @@ It can also span multiple lines.
         ```
 - You can use the `\D` character to match any non-digit.
   
-      - example:
-  
-          ```python
-          import re
-  
-          text = "Hello, 123!"
-          pattern = "\D"
-          matches = re.findall(pattern, text)
-          print(matches) # prints ['H', 'e', 'l', 'l', 'o', ',', ' ', '!']
-          ``` 
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, 123!"
+        pattern = "\D"
+        matches = re.findall(pattern, text)
+        print(matches) # prints ['H', 'e', 'l', 'l', 'o', ',', ' ', '!']
+        ``` 
 
 - You can use the `\w` character to match any word character.
 
