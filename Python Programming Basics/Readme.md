@@ -3312,15 +3312,15 @@ It can also span multiple lines.
         ```
 - You can use the `logging.getLogger()` function to get a logger object.
   
-      - example:
-  
-          ```python
-          import logging
-  
-          logger = logging.getLogger("my_logger")
-          logger.setLevel(logging.DEBUG)
-          logger.debug("This is a debug message")
-          ``` 
+    - example:
+
+        ```python
+        import logging
+
+        logger = logging.getLogger("my_logger")
+        logger.setLevel(logging.DEBUG)
+        logger.debug("This is a debug message")
+        ``` 
 
 - You can use the `logging.Formatter()` class to format log messages.
 
