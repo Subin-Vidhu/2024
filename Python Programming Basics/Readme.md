@@ -143,14 +143,14 @@ It can also span multiple lines.
       a, *b, c = value1, value2, value3, value4
       ```
 
-      example:
+       - example:
 
-      ```python
-      a, *b, c = 1, 2, 3, 4, 5
-      print(a) # prints 1
-      print(b) # prints [2, 3, 4]
-      print(c) # prints 5
-      ```
+          ```python
+          a, *b, c = 1, 2, 3, 4, 5
+          print(a) # prints 1
+          print(b) # prints [2, 3, 4]
+          print(c) # prints 5
+          ```
 
   - You can use the `global` keyword to access a global variable inside a function.
 
@@ -272,7 +272,7 @@ It can also span multiple lines.
 
     - You can add items to a list using the `append()` method.
 
-      example:
+       - example:
 
           ```python
           fruits = ["apple", "banana", "cherry"]
@@ -282,7 +282,7 @@ It can also span multiple lines.
 
     - You can insert items into a list at a specific position using the `insert()` method.
 
-      example:
+      - example:
 
           ```python
           fruits = ["apple", "banana", "cherry"]
@@ -292,7 +292,7 @@ It can also span multiple lines.
 
     - You can remove items from a list using the `remove()` method.
       
-        example:
+        - example:
   
             ```python
             fruits = ["apple", "banana", "cherry"]
@@ -302,7 +302,7 @@ It can also span multiple lines.
 
     - You can remove items from a list by index using the `pop()` method.
       
-        example:
+        - example:
   
             ```python
             fruits = ["apple", "banana", "cherry"]
@@ -312,7 +312,7 @@ It can also span multiple lines.
 
     - You can remove items from a list by value using the `del` keyword.
       
-        example:
+        - example:
   
             ```python
             fruits = ["apple", "banana", "cherry"]
@@ -322,7 +322,7 @@ It can also span multiple lines.
 
     - You can clear a list using the `clear()` method.
         
-          example:
+          - example:
     
               ```python
               fruits = ["apple", "banana", "cherry"]
@@ -332,7 +332,7 @@ It can also span multiple lines.
 
     - You can copy a list using the `copy()` method.
 
-      example:
+      - example:
 
           ```python
           fruits = ["apple", "banana", "cherry"]
@@ -342,7 +342,7 @@ It can also span multiple lines.
 
     - You can join two lists using the `extend()` method.
       
-        example:
+        - example:
   
             ```python
             fruits = ["apple", "banana", "cherry"]
@@ -353,7 +353,7 @@ It can also span multiple lines.
 
     - You can reverse a list using the `reverse()` method.
         
-          example:
+          - example:
     
               ```python
               fruits = ["apple", "banana", "cherry"]
@@ -362,7 +362,7 @@ It can also span multiple lines.
               ```
     - You can sort a list using the `sort()` method.
 
-      example:
+      - example:
 
           ```python
           fruits = ["banana", "apple", "cherry"]
@@ -371,7 +371,7 @@ It can also span multiple lines.
           ```
     - You can count the occurrences of an item in a list using the `count()` method.
     
-      example:
+      - example:
 
           ```python
           fruits = ["apple", "banana", "cherry", "apple"]
@@ -380,7 +380,7 @@ It can also span multiple lines.
           ```
     - You can get the index of an item in a list using the `index()` method.
       
-        example:
+        - example:
   
             ```python
             fruits = ["apple", "banana", "cherry"]
@@ -390,7 +390,7 @@ It can also span multiple lines.
 
     - You can check if an item is in a list using the `in` operator.
 
-      example:
+      - example:
 
           ```python
           fruits = ["apple", "banana", "cherry"]
@@ -402,7 +402,7 @@ It can also span multiple lines.
 
     - You can check if a list is empty using the `bool()` function.
 
-      example:
+      - example:
 
           ```python
           fruits = []
@@ -413,7 +413,7 @@ It can also span multiple lines.
           ```
     - You can convert a list to a string using the `join()` method.
 
-      example:
+      - example:
 
           ```python
           fruits = ["apple", "banana", "cherry"]
@@ -422,7 +422,7 @@ It can also span multiple lines.
           ```
     - You can convert a string to a list using the `split()` method.
 
-      example:
+      - example:
 
           ```python
           fruits_str = "apple, banana, cherry"
@@ -431,7 +431,7 @@ It can also span multiple lines.
           ```
     - You can create a list using a list comprehension.
       
-        example:
+        - example:
   
             ```python
             numbers = [1, 2, 3, 4, 5]
@@ -440,7 +440,7 @@ It can also span multiple lines.
             ```
     - You can create a list using the `range()` function.
       
-        example:
+        - example:
   
             ```python
             numbers = list(range(1, 6))
@@ -449,7 +449,7 @@ It can also span multiple lines.
 
     - You can create a list using the `list()` function.
 
-      example:
+      - example:
 
           ```python
           numbers = list((1, 2, 3, 4, 5))
@@ -458,7 +458,7 @@ It can also span multiple lines.
 
     - You can create a list using the `*` operator.
 
-      example:
+      - example:
 
           ```python
           numbers = [1, 2, 3] * 3
@@ -466,7 +466,7 @@ It can also span multiple lines.
           ```
     - You can create a list using the `append()` method.
       
-        example:
+        - example:
   
             ```python
             numbers = []
@@ -478,7 +478,7 @@ It can also span multiple lines.
 
     - You can create a list using the `insert()` method.
 
-      example:
+      - example:
 
           ```python
           numbers = [1, 3]
@@ -487,7 +487,7 @@ It can also span multiple lines.
           ```
     - You can create a list using the `remove()` method.
 
-      example:
+      - example:
 
           ```python
           numbers = [1, 2, 3]
@@ -496,7 +496,7 @@ It can also span multiple lines.
           ```
     - You can create a list using the `pop()` method.
 
-      example:
+      - example:
 
           ```python
           numbers = [1, 2, 3]
@@ -506,7 +506,7 @@ It can also span multiple lines.
 
     - You can create a list using the `del` keyword.
       
-        example:
+        - example:
   
             ```python
             numbers = [1, 2, 3]
@@ -515,7 +515,7 @@ It can also span multiple lines.
             ```
     - You can create a list using the `clear()` method.
 
-      example:
+      - example:
 
           ```python
           numbers = [1, 2, 3]
@@ -525,7 +525,7 @@ It can also span multiple lines.
 
     - You can create a list using the `copy()` method.
 
-      example:
+      - example:
 
           ```python
           numbers = [1, 2, 3]
@@ -535,7 +535,7 @@ It can also span multiple lines.
 
     - You can create a list using the `extend()` method.
 
-      example:
+      - example:
 
           ```python
           numbers = [1, 2, 3]
@@ -546,7 +546,7 @@ It can also span multiple lines.
 
     - You can create a list using the `reverse()` method.
 
-      example:
+      - example:
 
           ```python
           numbers = [1, 2, 3]
@@ -557,7 +557,7 @@ It can also span multiple lines.
     - You can create a list using the `sort()` method.
 
 
-      example:
+      - example:
 
           ```python
           numbers = [3, 1, 2]
@@ -568,7 +568,7 @@ It can also span multiple lines.
 
       - The `sort()` method sorts the list in place, which means that it modifies the original list.
 
-        example:
+        - example:
 
             ```python
             numbers = [3, 1, 2]
@@ -578,7 +578,7 @@ It can also span multiple lines.
 
       - The `sorted()` function returns a new sorted list without modifying the original list.
 
-        example:
+        - example:
 
             ```python
             numbers = [3, 1, 2]
@@ -621,7 +621,7 @@ It can also span multiple lines.
     - You can create a tuple using the `min()` function.
 
     - tuple to string using the `join()` method.
-       example:
+       - example:
 
           ```python
           fruits = ("apple", "banana", "cherry")
@@ -630,7 +630,7 @@ It can also span multiple lines.
           ```
     - string to tuple using the `split()` method.
       
-        example:
+        - example:
   
             ```python
             fruits_str = "apple, banana, cherry"
@@ -642,7 +642,7 @@ It can also span multiple lines.
 
   - You can access the value of a key in a dictionary using indexing.
 
-    example: 
+    - example: 
 
         ```python
         person = {"name": "Alice", "age": 30}
@@ -652,7 +652,7 @@ It can also span multiple lines.
 
   - You can change the value of a key in a dictionary.
       
-      example:
+      - example:
   
           ```python
           person = {"name": "Alice", "age": 30}
@@ -662,7 +662,7 @@ It can also span multiple lines.
 
   - You can add a new key-value pair to a dictionary.
 
-    example:
+    - example:
 
         ```python
         person = {"name": "Alice", "age": 30}
@@ -673,7 +673,7 @@ It can also span multiple lines.
   - You can remove a key-value pair from a dictionary using the `pop()` method.
 
 
-    example:
+    - example:
 
         ```python
         person = {"name": "Alice", "age": 30}
@@ -682,7 +682,7 @@ It can also span multiple lines.
         ```
   - You can remove a key-value pair from a dictionary using the `del` keyword.
 
-    example:
+    - example:
 
         ```python
         person = {"name": "Alice", "age": 30}
@@ -692,7 +692,7 @@ It can also span multiple lines.
 
   - You can clear a dictionary using the `clear()` method.
 
-    example:
+    - example:
 
         ```python
         person = {"name": "Alice", "age": 30}
@@ -702,7 +702,7 @@ It can also span multiple lines.
 
   - You can copy a dictionary using the `copy()` method.
 
-    example:
+    - example:
 
         ```python
         person = {"name": "Alice", "age": 30}
@@ -712,7 +712,7 @@ It can also span multiple lines.
 
   - You can create a dictionary using the `dict()` function.
 
-    example:
+    - example:
 
         ```python
         person = dict(name="Alice", age=30)
@@ -720,7 +720,7 @@ It can also span multiple lines.
         ```
   - You can create a dictionary using the `fromkeys()` method.
 
-    example:
+    - example:
 
         ```python
         keys = ["name", "age"]
@@ -730,7 +730,7 @@ It can also span multiple lines.
 
   - You can create a dictionary using the `items()` method.
   
-      example:
+      - example:
   
           ```python
           person = {"name": "Alice", "age": 30}
@@ -740,7 +740,7 @@ It can also span multiple lines.
 
   - You can create a dictionary using the `keys()` method.
 
-    example:
+    - example:
 
         ```python
         person = {"name": "Alice", "age": 30}
@@ -843,7 +843,7 @@ It can also span multiple lines.
 
 - You can use the `if` statement to execute code based on a condition.
      
-     example:
+     - example:
 
         ```python
         x = 10
@@ -853,7 +853,7 @@ It can also span multiple lines.
 
 - You can use the `elif` statement to execute code if the previous condition is False.
 
-    example:
+    - example:
 
         ```python
         x = 10
@@ -865,7 +865,7 @@ It can also span multiple lines.
 
 - You can use the `else` statement to execute code if all previous conditions are False.
 
-    example:
+    - example:
 
         ```python
         x = 10
@@ -877,7 +877,7 @@ It can also span multiple lines.
 
 - You can use the `for` statement to iterate over a sequence of items.
 
-    example:
+    - example:
 
         ```python
         fruits = ["apple", "banana", "cherry"]
@@ -887,7 +887,7 @@ It can also span multiple lines.
 
 - You can use the `while` statement to execute code as long as a condition is True.
 
-    example:
+    - example:
 
         ```python
         x = 0
@@ -898,7 +898,7 @@ It can also span multiple lines.
 
 - You can use the `try` statement to catch exceptions in a program.
 
-    example:
+    - example:
 
         ```python
         try:
@@ -909,7 +909,7 @@ It can also span multiple lines.
 
 - You can use the `with` statement to open and close files in a program.
   
-      example:
+      - example:
   
           ```python
           with open("file.txt", "r") as file:
@@ -918,7 +918,7 @@ It can also span multiple lines.
           ```
 - You can use the `assert` statement to check if an expression is True. 
 
-    example:
+    - example:
 
         ```python
         x = 10
@@ -927,7 +927,7 @@ It can also span multiple lines.
 
 - You can use the `yield` statement to return a value from a generator function.
 
-    example:
+    - example:
 
         ```python
         def numbers():
@@ -941,7 +941,7 @@ It can also span multiple lines.
 
 - You can use the `raise` statement to raise an exception in a program.
 
-    example:
+    - example:
 
         ```python
         x = -1
@@ -951,7 +951,7 @@ It can also span multiple lines.
 
 - You can use the `global` statement to access a global variable inside a function.
 
-    example:
+    - example:
 
         ```python
         x = 10
@@ -965,7 +965,7 @@ It can also span multiple lines.
 
 - You can use the `nonlocal` statement to access a variable in the outer scope of a function.
 
-    example:
+    - example:
 
         ```python
         def outer():
@@ -987,7 +987,7 @@ It can also span multiple lines.
 
     - Non-local variables are defined in the outer scope of a function and can be accessed inside nested functions using the `nonlocal` keyword.
 
-        example: 
+        - example: 
 
             ```python
             x = 10
@@ -1025,7 +1025,7 @@ It can also span multiple lines.
 
 - Functions are defined using the `def` keyword, followed by the function name and a pair of parentheses.
 
-     example:
+     - example:
 
         ```python
         def greet():
@@ -1035,7 +1035,7 @@ It can also span multiple lines.
         ```
 - You can pass arguments to a function by placing them inside the parentheses.
 
-    example:
+    - example:
 
         ```python
         def greet(name):
@@ -1045,7 +1045,7 @@ It can also span multiple lines.
         ```
 - You can return a value from a function using the `return` keyword.
 
-    example:
+    - example:
 
         ```python
         def add(a, b):
@@ -1056,7 +1056,7 @@ It can also span multiple lines.
         ```
 - You can define default values for function arguments by using the assignment operator `=`.
   
-      example:
+      - example:
   
           ```python
           def greet(name="World"):
@@ -1068,7 +1068,7 @@ It can also span multiple lines.
 
 - You can pass a variable number of arguments to a function by using the `*args` and `**kwargs` syntax. 
 
-    example:
+    - example:
 
         ```python
         def add(*args):
@@ -1088,7 +1088,7 @@ It can also span multiple lines.
           ```
 - You can define anonymous functions using the `lambda` keyword.  
 
-    example:
+    - example:
 
         ```python
         add = lambda a, b: a + b
@@ -1098,7 +1098,7 @@ It can also span multiple lines.
 
 - You can call a function by using the function name followed by a pair of parentheses.
 
-    example:
+    - example:
 
         ```python
         def greet():
@@ -1108,7 +1108,7 @@ It can also span multiple lines.
         ```
 - You can use the `help()` function to get information about a function.
   
-      example:
+      - example:
   
           ```python
           def greet(name):
@@ -1122,7 +1122,7 @@ It can also span multiple lines.
   
       - Arguments are the values passed to the function when it is called.
   
-          example:
+          - example:
   
               ```python
               def greet(name):
@@ -1137,7 +1137,7 @@ It can also span multiple lines.
   
     - Keyword parameters are passed to a function based on their name in the function call.
   
-        example:
+        - example:
   
             ```python
             def greet(name, age):
@@ -1151,7 +1151,7 @@ It can also span multiple lines.
   
       - Default parameters are used to provide a default value for a parameter if no value is passed to the function.
     
-          example:
+          - example:
     
               ```python
               def greet(name="World"):
@@ -1165,7 +1165,7 @@ It can also span multiple lines.
   
       - You can pass a variable number of arguments to a function by using the `*args` and `**kwargs` syntax.
     
-          example:
+          - example:
     
               ```python
               def add(*args):
@@ -1188,7 +1188,7 @@ It can also span multiple lines.
     
         - You can define anonymous functions using the `lambda` keyword.
       
-            example:
+            - example:
       
                 ```python
                 add = lambda a, b: a + b
@@ -1204,7 +1204,7 @@ It can also span multiple lines.
   
     - Variables defined outside a function are global and can be accessed inside the function using the `global` keyword.
   
-        example:
+        - example:
   
             ```python
             x = 10
@@ -1228,7 +1228,7 @@ It can also span multiple lines.
     
       - The recursive case is the condition that calls the function recursively.
     
-          example:
+          - example:
     
               ```python
               def factorial(n):
@@ -1251,7 +1251,7 @@ It can also span multiple lines.
     
       - Function decorators are used to add functionality to a function without modifying its code.
     
-          example:
+          - example:
     
               ```python
               def uppercase(func):
@@ -1278,7 +1278,7 @@ It can also span multiple lines.
       
         - Function generators are used to generate a sequence of values without storing them in memory.
       
-            example:
+            - example:
       
                 ```python
                 def numbers():
@@ -1298,7 +1298,7 @@ It can also span multiple lines.
       
         - Function annotations are optional and do not affect the behavior of the function.
       
-            example:
+            - example:
       
                 ```python
                 def add(a: int, b: int) -> int:
@@ -1315,7 +1315,7 @@ It can also span multiple lines.
         
           - Function arguments can be passed as a variable number of arguments using the `*args` and `**kwargs` syntax.
         
-              example:
+              - example:
         
                   ```python
                   def greet(name):
@@ -1332,7 +1332,7 @@ It can also span multiple lines.
   
     - Function parameters can be passed by position or by keyword.
   
-        example:
+        - example:
   
             ```python
             def greet(name):
