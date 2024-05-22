@@ -1140,11 +1140,11 @@ It can also span multiple lines.
   - example:
   
       ```python
-            def greet(name, age):
-                print(f"Hello, {name}! You are {age} years old.")
-  
-            greet("Alice", 30) # Alice is the name and 30 is the age
-            greet(age=30, name="Alice") # Alice is the name and 30 is the age
+    def greet(name, age):
+        print(f"Hello, {name}! You are {age} years old.")
+
+    greet("Alice", 30) # Alice is the name and 30 is the age
+    greet(age=30, name="Alice") # Alice is the name and 30 is the age
       ```
 
 - default parameters
@@ -1154,11 +1154,11 @@ It can also span multiple lines.
         - example:
     
             ```python
-              def greet(name="World"):
-                  print(f"Hello, {name}!")
-    
-              greet() # prints Hello, World!
-              greet("Alice") # prints Hello, Alice!
+            def greet(name="World"):
+                print(f"Hello, {name}!")
+
+            greet() # prints Hello, World!
+            greet("Alice") # prints Hello, Alice!
             ```
 
 - variable number of arguments
