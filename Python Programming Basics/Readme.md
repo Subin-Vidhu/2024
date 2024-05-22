@@ -169,4 +169,24 @@ It can also span multiple lines.
 
 ### Control Structures
 
+- Control structures are used to control the flow of a program.
+
+- Python has several types of control structures, such as conditional statements, loops, and function calls.
+
+- Conditional statements are used to execute code based on a condition, such as `if`, `elif`, and `else`.
+
+- Loops are used to execute code repeatedly, such as `for` and `while` loops.
+
+- Function calls are used to execute a block of code that is defined elsewhere in the program.
+
+- You can use the `pass` statement to do nothing in a block of code.
+
+- You can use the `break` statement to exit a loop.
+
+- You can use the `continue` statement to skip the rest of a loop and continue with the next iteration.
+
+- You can use the `return` statement to return a value from a function.
+
+
+
 
