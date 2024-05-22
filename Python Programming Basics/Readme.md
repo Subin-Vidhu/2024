@@ -58,4 +58,28 @@
    
 ### Comments
 
+Single-line comments in Python start with a hash symbol `#`. They are used to explain the code and make it more readable.
+
+```python
+# This is a single-line comment
+
+print("Hello, World!") # This is another single-line comment
+```
+
+Multi-line comments in Python are created using triple quotes `"""` or `'''`.
+
+```python
+"""
+This is a multi-line comment.
+It can span multiple lines.
+"""
+
+'''
+This is another multi-line comment.
+It can also span multiple lines.
+'''
+```
+
+
+
   
