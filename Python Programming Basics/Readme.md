@@ -3126,3 +3126,118 @@ It can also span multiple lines.
 
 
 ### Debugging
+
+- Debugging is the process of finding and fixing errors in a program.
+
+- You can use the `print()` function to print the value of a variable.
+
+    - example:
+
+        ```python
+        x = 1
+        print(x) # prints 1
+        ```
+- You can use the `assert` statement to check if a condition is True.
+
+    - example:
+
+        ```python
+        x = 1
+        assert x == 1
+        ```
+
+- You can use the `pdb` module to debug a program.
+
+- You can use the `pdb.set_trace()` function to set a breakpoint in a program.
+
+    - example:
+
+        ```python
+        import pdb
+
+        x = 1
+        pdb.set_trace()
+        y = 2
+        ```
+- You can use the `pdb` module to step through a program.
+
+- You can use the `n` command to step to the next line.
+
+- You can use the `s` command to step into a function.
+
+- You can use the `c` command to continue running the program.
+
+- You can use the `q` command to quit the debugger.
+
+- You can use the `l` command to list the source code.
+
+- You can use the `p` command to print the value of a variable.
+
+- You can use the `pp` command to pretty-print the value of a variable.
+
+- You can use the `w` command to show the current call stack.
+
+- You can use the `u` command to move up the call stack.
+
+- You can use the `d` command to move down the call stack.
+
+- You can use the `b` command to set a breakpoint.
+
+- You can use the `cl` command to clear a breakpoint.
+
+- You can use the `bt` command to show a traceback.
+
+- You can use the `a` command to print the arguments of the current function.
+
+- You can use the `r` command to return from the current function.
+
+- You can use the `h` command to show help.
+
+- You can use the `?` command to show help.
+
+- You can use the `pdb.run()` function to run a program in the debugger.
+
+    - example:
+
+        ```python
+        import pdb
+
+        def add(x, y):
+            return x + y
+
+        pdb.run("add(1, 2)")
+        ```
+- You can use the `pdb.pm()` function to run a program in the debugger.
+
+    - example:
+
+        ```python
+        import pdb
+
+        def add(x, y):
+            return x + y
+
+        pdb.pm()
+        add(1, 2)
+        ```
+
+- You can use the `pdb.post_mortem()` function to run a program in the debugger after an exception is raised.
+
+    - example:
+
+        ```python
+        import pdb
+
+        def add(x, y):
+            return x + y
+
+        try:
+            add(1, "2")
+        except:
+            pdb.post_mortem()
+        ```
+
+- You can use the `pdb.set_trace()` function to set a breakpoint in a program.
+
+
+### Logging
