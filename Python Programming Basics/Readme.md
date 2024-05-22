@@ -1945,3 +1945,523 @@ It can also span multiple lines.
       ```
 
 ### File I/O
+
+- File I/O is used to read from and write to files in Python.
+
+- You can open a file using the `open()` function.
+
+  - example:
+
+      ```python
+      file = open("file.txt", "r")
+      ```
+- You can read from a file using the `read()` method.
+  
+    - example:
+  
+        ```python
+        file = open("file.txt", "r")
+        content = file.read()
+        print(content)
+        ```
+- You can write to a file using the `write()` method.
+  
+    - example:
+  
+        ```python
+        file = open("file.txt", "w")
+        file.write("Hello, World!")
+        file.close()
+        ```
+- You can read a file line by line using the `readline()` method.
+    
+    - example:
+  
+        ```python
+        file = open("file.txt", "r")
+        line = file.readline()
+        print(line)
+        ```
+- You can write to a file line by line using the `writelines()` method.
+    
+    - example:
+  
+        ```python
+        file = open("file.txt", "w")
+        lines = ["Hello, World!", "Goodbye, World!"]
+        file.writelines(lines)
+        file.close()
+        ```
+
+- You can close a file using the `close()` method.
+
+  - example:
+
+      ```python
+      file = open("file.txt", "r")
+      file.close()
+      ```
+- You can use the `with` statement to open and close files in a program.
+
+  - example:
+
+      ```python
+      with open("file.txt", "r") as file:
+          content = file.read()
+          print(content)
+      ```
+- You can use the `readlines()` method to read all lines from a file into a list.
+
+  - example:
+
+      ```python
+      with open("file.txt", "r") as file:
+          lines = file.readlines()
+          for line in lines:
+              print(line)
+      ```
+- You can use the `seek()` method to change the file cursor position.
+  
+    - example:
+  
+        ```python
+        with open("file.txt", "r") as file:
+            file.seek(5)
+            content = file.read()
+            print(content)
+        ```
+- You can use the `tell()` method to get the current file cursor position.
+
+  - example:
+
+      ```python
+      with open("file.txt", "r") as file:
+          position = file.tell()
+          print(position)
+      ```
+- You can use the `truncate()` method to truncate a file to a specified size.
+  
+    - example:
+  
+        ```python
+        with open("file.txt", "r+") as file:
+            file.truncate(5)
+        ```
+- You can use the `mode` parameter to specify the file mode when opening a file.
+  
+    - example:
+  
+        ```python
+        file = open("file.txt", "r")
+        ```
+- You can use the `encoding` parameter to specify the file encoding when opening a file.
+  
+    - example:
+  
+        ```python
+        file = open("file.txt", "r", encoding="utf-8")
+        ```
+- You can use the `newline` parameter to specify the newline character when opening a file.
+    
+    - example:
+  
+        ```python
+        file = open("file.txt", "r", newline="")
+        ```
+
+- You can use the `os` module to work with files and directories in Python.
+
+- You can use the `os.path` module to work with file paths in Python.
+
+    - example:
+
+        ```python
+        import os
+
+        path = "file.txt"
+        print(os.path.exists(path)) # prints True
+        print(os.path.isfile(path)) # prints True
+        print(os.path.isdir(path)) # prints False
+        ```
+
+- You can use the `os.path.join()` function to join two or more paths.
+
+    - example:
+
+        ```python
+        import os
+
+        path1 = "dir1"
+        path2 = "dir2"
+        path = os.path.join(path1, path2)
+        print(path) # prints dir1/dir2
+        ```
+
+- You can use the `os.path.basename()` function to get the base name of a path.
+  
+    - example:
+
+        ```python
+        import os
+
+        path = "dir/file.txt"
+        basename = os.path.basename(path)
+        print(basename) # prints file.txt
+        ```
+
+- You can use the `os.path.dirname()` function to get the directory name of a path.
+
+    - example:
+
+        ```python
+        import os
+
+        path = "dir/file.txt"
+        dirname = os.path.dirname(path)
+        print(dirname) # prints dir
+        ```
+
+- You can use the `os.path.abspath()` function to get the absolute path of a file.
+
+    - example:
+
+        ```python
+        import os
+
+        path = "file.txt"
+        abspath = os.path.abspath(path)
+        print(abspath) # prints /path/to/file.txt
+        ```
+
+- You can use the `os.path.exists()` function to check if a file or directory exists.
+
+    - example:
+
+        ```python
+        import os
+
+        path = "file.txt"
+        print(os.path.exists(path)) # prints True
+        ```
+
+- You can use the `os.path.isfile()` function to check if a path is a file.
+
+    - example:
+
+        ```python
+        import os
+
+        path = "file.txt"
+        print(os.path.isfile(path)) # prints True
+        ```
+- You can use the `os.path.isdir()` function to check if a path is a directory.
+
+    - example:
+
+        ```python
+        import os
+
+        path = "dir"
+        print(os.path.isdir(path)) # prints True
+        ```
+
+- You can use the `os.path.getsize()` function to get the size of a file in bytes.
+
+    - example:
+
+        ```python
+        import os
+
+        path = "file.txt"
+        size = os.path.getsize(path)
+        print(size) # prints 10
+        ```
+
+- You can use the `os.path.getmtime()` function to get the last modified time of a file.
+  
+    - example:
+
+        ```python
+        import os
+
+        path = "file.txt"
+        mtime = os.path.getmtime(path)
+        print(mtime) # prints 1630000000.0
+        ```
+
+- You can use the `os.path.getctime()` function to get the creation time of a file.
+
+    - example:
+
+        ```python
+        import os
+
+        path = "file.txt"
+        ctime = os.path.getctime(path)
+        print(ctime) # prints 1630000000.0
+        ```
+
+- You can use the `os.listdir()` function to get a list of files and directories in a directory.
+
+    - example:
+
+        ```python
+        import os
+
+        path = "dir"
+        files = os.listdir(path)
+        print(files) # prints ["file1.txt", "file2.txt"]
+        ```
+- You can use the `os.mkdir()` function to create a directory.
+
+    - example:
+
+        ```python
+        import os
+
+        path = "dir"
+        os.mkdir(path)
+        ```
+- You can use the `os.makedirs()` function to create a directory and its parent directories.
+  
+    - example:
+
+        ```python
+        import os
+
+        path = "dir1/dir2"
+        os.makedirs(path)
+        ``` 
+
+- You can use the `os.remove()` function to delete a file.
+
+    - example:
+
+        ```python
+        import os
+
+        path = "file.txt"
+        os.remove(path)
+        ```
+
+- You can use the `os.rmdir()` function to delete a directory.
+
+    - example:
+
+        ```python
+        import os
+
+        path = "dir"
+        os.rmdir(path)
+        ```
+
+- You can use the `os.removedirs()` function to delete a directory and its parent directories.
+
+    - example:
+
+        ```python
+        import os
+
+        path = "dir1/dir2"
+        os.removedirs(path)
+        ```
+
+- You can use the `os.rename()` function to rename a file or directory.
+
+    - example:
+
+        ```python
+        import os
+
+        old_path = "file.txt"
+        new_path = "new_file.txt"
+        os.rename(old_path, new_path)
+        ```
+
+- You can use the `os.walk()` function to iterate over all files and directories in a directory.
+
+    - example:
+
+        ```python
+        import os
+
+        path = "dir"
+        for root, dirs, files in os.walk(path):
+            print(root)
+            print(dirs)
+            print(files)
+        ```
+
+- You can use the `shutil` module to work with files and directories in Python.
+
+- You can use the `shutil.copy()` function to copy a file.
+
+    - example:
+
+        ```python
+        import shutil
+
+        src = "file.txt"
+        dst = "new_file.txt"
+        shutil.copy(src, dst)
+        ```
+- You can use the `shutil.copytree()` function to copy a directory.
+  
+      - example:
+  
+          ```python
+          import shutil
+  
+          src = "dir"
+          dst = "new_dir"
+          shutil.copytree(src, dst)
+          ```
+
+- You can use the `shutil.move()` function to move a file or directory.
+
+    - example:
+
+        ```python
+        import shutil
+
+        src = "file.txt"
+        dst = "new_file.txt"
+        shutil.move(src, dst)
+        ```
+
+- You can use the `shutil.rmtree()` function to delete a directory and its contents.
+
+    - example:
+
+        ```python
+        import shutil
+
+        path = "dir"
+        shutil.rmtree(path)
+        ```
+
+- You can use the `shutil.make_archive()` function to create a zip archive of a directory.
+  
+    - example:
+
+        ```python
+        import shutil
+
+        path = "dir"
+        shutil.make_archive("archive", "zip", path)
+        ```
+- You can use the `shutil.unpack_archive()` function to extract a zip archive.
+  
+    - example:
+
+        ```python
+        import shutil
+
+        path = "archive.zip"
+        shutil.unpack_archive(path)
+        ```
+- You can use the `shutil.disk_usage()` function to get disk usage statistics.
+  
+    - example:
+
+        ```python
+        import shutil
+
+        path = "dir"
+        usage = shutil.disk_usage(path)
+        print(usage)
+        ```
+
+- You can use the `shutil.which()` function to find the path to an executable.
+
+    - example:
+
+        ```python
+        import shutil
+
+        path = "python"
+        print(shutil.which(path))
+        ```
+- You can use the `shutil.get_terminal_size()` function to get the size of the terminal window.
+
+    - example:
+
+        ```python
+        import shutil
+
+        size = shutil.get_terminal_size()
+        print(size)
+        ```
+
+- You can use the `shutil.get_archive_formats()` function to get a list of supported archive formats.
+
+    - example:
+
+        ```python
+        import shutil
+
+        formats = shutil.get_archive_formats()
+        print(formats)
+        ```
+
+- You can use the `shutil.get_unpack_formats()` function to get a list of supported unpack formats.
+
+    - example:
+
+        ```python
+        import shutil
+
+        formats = shutil.get_unpack_formats()
+        print(formats)
+        ```
+
+- You can use the `shutil.register_archive_format()` function to register a new archive format.
+
+    - example:
+
+        ```python
+        import shutil
+
+        def extract_zip(filename, extract_dir):
+            pass
+
+        shutil.register_archive_format("zip", extract_zip)
+        ```
+
+- You can use the `shutil.register_unpack_format()` function to register a new unpack format.
+
+    - example:
+
+        ```python
+        import shutil
+
+        def extract_zip(filename, extract_dir):
+            pass
+
+        shutil.register_unpack_format("zip", extract_zip)
+        ```
+
+- You can use the `shutil.unregister_archive_format()` function to unregister an archive format.  
+
+    - example:
+
+        ```python
+        import shutil
+
+        shutil.unregister_archive_format("zip")
+        ```
+
+- You can use the `shutil.unregister_unpack_format()` function to unregister an unpack format.
+
+    - example:
+
+        ```python
+        import shutil
+
+        shutil.unregister_unpack_format("zip")
+        ```
+
+- You can use the `shutil.get_terminal_size()` function to get the size of the terminal window.
+
+
+### Regular Expressions
