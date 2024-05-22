@@ -1017,7 +1017,331 @@ It can also span multiple lines.
 
 - You can use the `return` statement to return a value from a function.
 
-### Conditional statements
 
 
+### Functions
 
+- Functions are used to group code into reusable blocks.
+
+- Functions are defined using the `def` keyword, followed by the function name and a pair of parentheses.
+
+     example:
+
+        ```python
+        def greet():
+            print("Hello, World!")
+
+        greet() # prints Hello, World!
+        ```
+- You can pass arguments to a function by placing them inside the parentheses.
+
+    example:
+
+        ```python
+        def greet(name):
+            print(f"Hello, {name}!")
+
+        greet("Alice") # prints Hello, Alice!
+        ```
+- You can return a value from a function using the `return` keyword.
+
+    example:
+
+        ```python
+        def add(a, b):
+            return a + b
+
+        result = add(1, 2)
+        print(result) # prints 3
+        ```
+- You can define default values for function arguments by using the assignment operator `=`.
+  
+      example:
+  
+          ```python
+          def greet(name="World"):
+              print(f"Hello, {name}!")
+  
+          greet() # prints Hello, World!
+          greet("Alice") # prints Hello, Alice!
+          ``` 
+
+- You can pass a variable number of arguments to a function by using the `*args` and `**kwargs` syntax. 
+
+    example:
+
+        ```python
+        def add(*args):
+            return sum(args)
+
+        result = add(1, 2, 3, 4, 5)
+        print(result) # prints 15
+        ``` 
+    example for kwargs:
+      
+          ```python
+          def greet(**kwargs):
+              for key, value in kwargs.items():
+                  print(f"{key}: {value}")
+  
+          greet(name="Alice", age=30) # prints name: Alice and age: 30
+          ```
+- You can define anonymous functions using the `lambda` keyword.  
+
+    example:
+
+        ```python
+        add = lambda a, b: a + b
+        result = add(1, 2)
+        print(result) # prints 3
+        ```
+
+- You can call a function by using the function name followed by a pair of parentheses.
+
+    example:
+
+        ```python
+        def greet():
+            print("Hello, World!")
+
+        greet() # prints Hello, World!
+        ```
+- You can use the `help()` function to get information about a function.
+  
+      example:
+  
+          ```python
+          def greet(name):
+              print(f"Hello, {name}!")
+  
+          help(greet)
+          ```
+- function parameters vs arguments
+  
+      - Parameters are the names used in the function definition to refer to the arguments passed to the function.
+  
+      - Arguments are the values passed to the function when it is called.
+  
+          example:
+  
+              ```python
+              def greet(name):
+                  print(f"Hello, {name}!")
+  
+              greet("Alice") # Alice is the argument passed to the greet function
+              ```
+
+- keyword parameters vs positional parameters
+
+    - Positional parameters are passed to a function based on their position in the function call.
+  
+    - Keyword parameters are passed to a function based on their name in the function call.
+  
+        example:
+  
+            ```python
+            def greet(name, age):
+                print(f"Hello, {name}! You are {age} years old.")
+  
+            greet("Alice", 30) # Alice is the name and 30 is the age
+            greet(age=30, name="Alice") # Alice is the name and 30 is the age
+            ```
+
+- default parameters
+  
+      - Default parameters are used to provide a default value for a parameter if no value is passed to the function.
+    
+          example:
+    
+              ```python
+              def greet(name="World"):
+                  print(f"Hello, {name}!")
+    
+              greet() # prints Hello, World!
+              greet("Alice") # prints Hello, Alice!
+              ```
+
+- variable number of arguments
+  
+      - You can pass a variable number of arguments to a function by using the `*args` and `**kwargs` syntax.
+    
+          example:
+    
+              ```python
+              def add(*args):
+                  return sum(args)
+    
+              result = add(1, 2, 3, 4, 5)
+              print(result) # prints 15
+              ```
+          example for kwargs:
+    
+              ```python
+
+              def greet(**kwargs):
+                  for key, value in kwargs.items():
+                      print(f"{key}: {value}")
+
+              greet(name="Alice", age=30) # prints name: Alice and age: 30
+              ```
+- anonymous functions
+    
+        - You can define anonymous functions using the `lambda` keyword.
+      
+            example:
+      
+                ```python
+                add = lambda a, b: a + b
+                result = add(1, 2)
+                print(result) # prints 3
+                ```   
+
+- function scope
+
+    - The scope of a variable refers to the region of a program where the variable is accessible.
+  
+    - Variables defined inside a function are local to that function and cannot be accessed outside the function.
+  
+    - Variables defined outside a function are global and can be accessed inside the function using the `global` keyword.
+  
+        example:
+  
+            ```python
+            x = 10
+
+            def print_x():
+                global x
+                print(x)
+
+            print_x() # prints 10
+            ```
+
+- Function Recursion
+  
+      - Recursion is a technique in which a function calls itself to solve a problem.
+    
+      - Recursion is used to break a complex problem into smaller subproblems that are easier to solve.
+    
+      - Recursion consists of two parts: the base case and the recursive case.
+    
+      - The base case is the condition that stops the recursion.
+    
+      - The recursive case is the condition that calls the function recursively.
+    
+          example:
+    
+              ```python
+              def factorial(n):
+                  if n == 0:
+                      return 1
+                  else:
+                      return n * factorial(n - 1)
+  
+              result = factorial(5)
+              print(result) # prints 120
+              ```
+
+- Function Decorators
+  
+      - Function decorators are used to modify the behavior of a function or method.
+    
+      - Function decorators are defined using the `@` symbol followed by the decorator name.
+    
+      - Function decorators take a function as an argument and return a new function.
+    
+      - Function decorators are used to add functionality to a function without modifying its code.
+    
+          example:
+    
+              ```python
+              def uppercase(func):
+                  def wrapper(*args, **kwargs):
+                      result = func(*args, **kwargs)
+                      return result.upper()
+                  return wrapper
+  
+              @uppercase
+              def greet(name):
+                  return f"Hello, {name}!"
+  
+              result = greet("Alice")
+              print(result) # prints HELLO, ALICE!
+              ```
+
+- Function Generators
+    
+        - Function generators are used to create iterators in Python.
+      
+        - Function generators are defined using the `yield` keyword.
+      
+        - Function generators return a generator object that can be iterated over.
+      
+        - Function generators are used to generate a sequence of values without storing them in memory.
+      
+            example:
+      
+                ```python
+                def numbers():
+                    yield 1
+                    yield 2
+                    yield 3
+    
+                for number in numbers():
+                    print(number) # outputs 1, 2, 3
+                ```
+
+- Function Annotations
+    
+        - Function annotations are used to provide additional information about the types of function parameters and return values.
+      
+        - Function annotations are defined using a colon `:` after the parameter name or return value, followed by the annotation type.
+      
+        - Function annotations are optional and do not affect the behavior of the function.
+      
+            example:
+      
+                ```python
+                def add(a: int, b: int) -> int:
+                    return a + b
+                ```
+
+- Function Arguments
+      
+          - Function arguments are the values passed to a function when it is called.
+        
+          - Function arguments can be passed by position or by keyword.
+        
+          - Function arguments can have default values.
+        
+          - Function arguments can be passed as a variable number of arguments using the `*args` and `**kwargs` syntax.
+        
+              example:
+        
+                  ```python
+                  def greet(name):
+                      print(f"Hello, {name}!")
+        
+                  greet("Alice") # Alice is the argument passed to the greet function
+                  ```
+
+- Function Parameters
+
+    - Function parameters are the names used in the function definition to refer to the arguments passed to the function.
+  
+    - Function parameters can have default values.
+  
+    - Function parameters can be passed by position or by keyword.
+  
+        example:
+  
+            ```python
+            def greet(name):
+                print(f"Hello, {name}!")
+  
+            greet("Alice") # Alice is the argument passed to the greet function
+            ```
+
+### Modules
+
+
+      
