@@ -1056,15 +1056,15 @@ It can also span multiple lines.
         ```
 - You can define default values for function arguments by using the assignment operator `=`.
   
-      - example:
-  
-          ```python
-          def greet(name="World"):
-              print(f"Hello, {name}!")
-  
-          greet() # prints Hello, World!
-          greet("Alice") # prints Hello, Alice!
-          ``` 
+    - example:
+
+        ```python
+        def greet(name="World"):
+            print(f"Hello, {name}!")
+
+        greet() # prints Hello, World!
+        greet("Alice") # prints Hello, Alice!
+        ``` 
 
 - You can pass a variable number of arguments to a function by using the `*args` and `**kwargs` syntax. 
 
