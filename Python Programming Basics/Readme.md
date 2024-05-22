@@ -833,7 +833,191 @@ It can also span multiple lines.
 
 - Python has several types of statements, such as assignment statements, import statements, print statements, and pass statements.
 
+- Assignment statements are used to assign values to variables.
 
+- Import statements are used to import modules into a program.
+
+- Print statements are used to print output to the console.
+
+- Pass statements are used to do nothing in a block of code.
+
+- You can use the `if` statement to execute code based on a condition.
+     
+     example:
+
+        ```python
+        x = 10
+        if x > 5:
+            print("x is greater than 5")
+        ```
+
+- You can use the `elif` statement to execute code if the previous condition is False.
+
+    example:
+
+        ```python
+        x = 10
+        if x > 5:
+            print("x is greater than 5")
+        elif x < 5:
+            print("x is less than 5")
+        ```
+
+- You can use the `else` statement to execute code if all previous conditions are False.
+
+    example:
+
+        ```python
+        x = 10
+        if x > 5:
+            print("x is greater than 5")
+        else:
+            print("x is less than or equal to 5")
+        ```
+
+- You can use the `for` statement to iterate over a sequence of items.
+
+    example:
+
+        ```python
+        fruits = ["apple", "banana", "cherry"]
+        for fruit in fruits:
+            print(fruit)
+        ```
+
+- You can use the `while` statement to execute code as long as a condition is True.
+
+    example:
+
+        ```python
+        x = 0
+        while x < 5:
+            print(x)
+            x += 1
+        ```
+
+- You can use the `try` statement to catch exceptions in a program.
+
+    example:
+
+        ```python
+        try:
+            x = 1 / 0
+        except ZeroDivisionError:
+            print("Cannot divide by zero")
+        ```
+
+- You can use the `with` statement to open and close files in a program.
+  
+      example:
+  
+          ```python
+          with open("file.txt", "r") as file:
+              content = file.read()
+              print(content)
+          ```
+- You can use the `assert` statement to check if an expression is True. 
+
+    example:
+
+        ```python
+        x = 10
+        assert x > 5, "x is not greater than 5"
+        ```
+
+- You can use the `yield` statement to return a value from a generator function.
+
+    example:
+
+        ```python
+        def numbers():
+            yield 1
+            yield 2
+            yield 3
+
+        for number in numbers():
+            print(number) # outputs 1, 2, 3
+        ```
+
+- You can use the `raise` statement to raise an exception in a program.
+
+    example:
+
+        ```python
+        x = -1
+        if x < 0:
+            raise ValueError("x cannot be negative")
+        ```
+
+- You can use the `global` statement to access a global variable inside a function.
+
+    example:
+
+        ```python
+        x = 10
+
+        def print_x():
+            global x
+            print(x)
+
+        print_x() # prints 10
+        ```
+
+- You can use the `nonlocal` statement to access a variable in the outer scope of a function.
+
+    example:
+
+        ```python
+        def outer():
+            x = 10
+
+            def inner():
+                nonlocal x
+                x += 1
+                print(x)
+
+            inner()
+
+        outer() # prints 11
+        ```
+
+  - global vs non-local variables
+
+    - Global variables are defined outside of functions and can be accessed inside functions using the `global` keyword.
+
+    - Non-local variables are defined in the outer scope of a function and can be accessed inside nested functions using the `nonlocal` keyword.
+
+        example: 
+
+            ```python
+            x = 10
+
+            def outer():
+                x = 20
+
+                def inner():
+                    nonlocal x
+                    x += 1
+                    print(x)
+
+                inner()
+
+            outer() # prints 21
+            ```
+
+    - The `global` keyword is used to access a global variable inside a function.
+
+    - The `nonlocal` keyword is used to access a variable in the outer scope of a function.
+
+- You can use the `pass` statement to do nothing in a block of code.
+
+- You can use the `break` statement to exit a loop.
+
+- You can use the `continue` statement to skip the rest of a loop and continue with the next iteration.
+
+- You can use the `return` statement to return a value from a function.
+
+### Conditional statements
 
 
 
