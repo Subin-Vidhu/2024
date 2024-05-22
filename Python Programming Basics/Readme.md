@@ -113,6 +113,54 @@ It can also span multiple lines.
   CONSTANT_NAME = value
   ```
 
+ - Multiple assignments can be done in a single line using the following syntax:
+
+      ```python
+      a = b = c = value
+      ```
+
+    - Tuple unpacking can be used to assign multiple values to multiple variables in a single line:
+
+      ```python
+      a, b, c = value1, value2, value3
+      ```
+      
+    - You can swap the values of two variables using the following syntax:
+      
+        ```python
+        a, b = b, a
+        ```
+
+    - List unpacking can be used to assign multiple values to multiple variables in a single line:
+
+      ```python
+      [a, b, c] = [value1, value2, value3]
+      ```
+
+    - Extended unpacking can be used to assign multiple values to multiple variables in a single line:
+
+      ```python
+      a, *b, c = value1, value2, value3, value4
+      ```
+
+      example:
+
+      ```python
+      a, *b, c = 1, 2, 3, 4, 5
+      print(a) # prints 1
+      print(b) # prints [2, 3, 4]
+      print(c) # prints 5
+      ```
+
+  - You can use the `global` keyword to access a global variable inside a function.
+
+- Variable scope refers to the visibility of a variable within a program.
+
+- You can delete a variable using the `del` keyword.
+
+- You can check if a variable is defined using the `defined()` function.
+
+
 ### Data Types
 
 - Python has several built-in data types, such as integers, floats, strings, lists, tuples, dictionaries, etc.
@@ -210,7 +258,7 @@ It can also span multiple lines.
 
         print("Hello\aWorld") # prints HelloWorld - alert. It produces a sound. More examples:
 
-        
+
         ```
   
 
