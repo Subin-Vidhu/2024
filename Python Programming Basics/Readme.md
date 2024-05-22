@@ -1077,15 +1077,15 @@ It can also span multiple lines.
         result = add(1, 2, 3, 4, 5)
         print(result) # prints 15
         ``` 
-    example for kwargs:
+    - example for kwargs:
       
-          ```python
-          def greet(**kwargs):
-              for key, value in kwargs.items():
-                  print(f"{key}: {value}")
-  
-          greet(name="Alice", age=30) # prints name: Alice and age: 30
-          ```
+        ```python
+        def greet(**kwargs):
+            for key, value in kwargs.items():
+                print(f"{key}: {value}")
+
+        greet(name="Alice", age=30) # prints name: Alice and age: 30
+        ```
 - You can define anonymous functions using the `lambda` keyword.  
 
     - example:
