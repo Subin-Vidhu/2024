@@ -2887,3 +2887,242 @@ It can also span multiple lines.
         ```
 
 ### Testing
+
+- Testing is used to verify that a program works as expected.
+
+- You can use the `unittest` module to write tests in Python.
+
+- You can create a test case by creating a class that inherits from `unittest.TestCase`.
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            def test_add(self):
+                self.assertEqual(1 + 1, 2)
+        ```
+
+- You can use the `assertEqual()` method to check if two values are equal.
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            def test_add(self):
+                self.assertEqual(1 + 1, 2)
+        ```
+
+- You can use the `assertNotEqual()` method to check if two values are not equal.
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            def test_add(self):
+                self.assertNotEqual(1 + 1, 3)
+        ```
+
+- You can use the `assertTrue()` method to check if a value is True.
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            def test_add(self):
+                self.assertTrue(1 + 1 == 2)
+        ```
+
+- You can use the `assertFalse()` method to check if a value is False.
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            def test_add(self):
+                self.assertFalse(1 + 1 == 3)
+        ```
+
+- You can use the `assertIn()` method to check if a value is in a list.
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            def test_add(self):
+                self.assertIn(1, [1, 2, 3])
+        ```
+
+
+- You can use the `assertNotIn()` method to check if a value is not in a list.
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            def test_add(self):
+                self.assertNotIn(4, [1, 2, 3])
+        ```
+
+- You can use the `assertIs()` method to check if two values are the same object.
+
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            def test_add(self):
+                x = [1, 2, 3]
+                y = x
+                self.assertIs(x, y)
+        ```
+
+
+- You can use the `assertIsNot()` method to check if two values are not the same object.
+
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            def test_add(self):
+                x = [1, 2, 3]
+                y = [1, 2, 3]
+                self.assertIsNot(x, y)
+        ```   
+
+- You can use the `assertRaises()` method to check if an exception is raised.
+
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            def test_divide(self):
+                with self.assertRaises(ZeroDivisionError):
+                    x = 1 / 0
+        ```
+
+- You can use the `setUp()` method to run code before each test method.
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            def setUp(self):
+                self.x = 1
+                self.y = 2
+
+            def test_add(self):
+                self.assertEqual(self.x + self.y, 3)
+        ```
+- You can use the `tearDown()` method to run code after each test method.
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            def setUp(self):
+                self.x = 1
+                self.y = 2
+
+            def tearDown(self):
+                del self.x
+                del self.y
+
+            def test_add(self):
+                self.assertEqual(self.x + self.y, 3)
+        ```
+- You can use the `@unittest.skip()` decorator to skip a test.
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            @unittest.skip("Skip this test")
+            def test_add(self):
+                self.assertEqual(1 + 1, 2)
+        ``` 
+
+- You can use the `@unittest.skipIf()` decorator to skip a test if a condition is True.
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            @unittest.skipIf(True, "Skip this test")
+            def test_add(self):
+                self.assertEqual(1 + 1, 2)
+        ```
+
+- You can use the `@unittest.skipUnless()` decorator to skip a test unless a condition is True.
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            @unittest.skipUnless(False, "Skip this test")
+            def test_add(self):
+                self.assertEqual(1 + 1, 2)
+        ```
+- You can use the `@unittest.expectedFailure()` decorator to mark a test as expected to fail.
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            @unittest.expectedFailure
+            def test_add(self):
+                self.assertEqual(1 + 1, 3)
+        ```
+
+- You can use the `unittest.main()` function to run tests in a module.
+
+
+
+    - example:
+
+        ```python
+        import unittest
+
+        class TestMath(unittest.TestCase):
+            def test_add(self):
+                self.assertEqual(1 + 1, 2)
+
+        if __name__ == "__main__":
+            unittest.main()
+        ```
+
+
+### Debugging
