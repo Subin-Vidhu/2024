@@ -640,6 +640,115 @@ It can also span multiple lines.
 
 - Dictionaries are unordered collections of key-value pairs, such as `{"name": "Alice", "age": 30}`, `{"a": 1, "b": 2}`, etc.
 
+  - You can access the value of a key in a dictionary using indexing.
+
+    example: 
+
+        ```python
+        person = {"name": "Alice", "age": 30}
+        name = person["name"]
+        print(name) # prints "Alice"
+        ```
+
+  - You can change the value of a key in a dictionary.
+      
+      example:
+  
+          ```python
+          person = {"name": "Alice", "age": 30}
+          person["age"] = 31
+          print(person) # prints {"name": "Alice", "age": 31}
+          ```
+
+  - You can add a new key-value pair to a dictionary.
+
+    example:
+
+        ```python
+        person = {"name": "Alice", "age": 30}
+        person["city"] = "New York"
+        print(person) # prints {"name": "Alice", "age": 30, "city": "New York"}
+        ```
+
+  - You can remove a key-value pair from a dictionary using the `pop()` method.
+
+
+    example:
+
+        ```python
+        person = {"name": "Alice", "age": 30}
+        person.pop("age")
+        print(person) # prints {"name": "Alice"}
+        ```
+  - You can remove a key-value pair from a dictionary using the `del` keyword.
+
+    example:
+
+        ```python
+        person = {"name": "Alice", "age": 30}
+        del person["age"]
+        print(person) # prints {"name": "Alice"}
+        ```
+
+  - You can clear a dictionary using the `clear()` method.
+
+    example:
+
+        ```python
+        person = {"name": "Alice", "age": 30}
+        person.clear()
+        print(person) # prints {}
+        ```
+
+  - You can copy a dictionary using the `copy()` method.
+
+    example:
+
+        ```python
+        person = {"name": "Alice", "age": 30}
+        person_copy = person.copy()
+        print(person_copy) # prints {"name": "Alice", "age": 30}
+        ```
+
+  - You can create a dictionary using the `dict()` function.
+
+    example:
+
+        ```python
+        person = dict(name="Alice", age=30)
+        print(person) # prints {"name": "Alice", "age": 30}
+        ```
+  - You can create a dictionary using the `fromkeys()` method.
+
+    example:
+
+        ```python
+        keys = ["name", "age"]
+        person = dict.fromkeys(keys)
+        print(person) # prints {"name": None, "age": None}
+        ```
+
+  - You can create a dictionary using the `items()` method.
+  
+      example:
+  
+          ```python
+          person = {"name": "Alice", "age": 30}
+          items = person.items()
+          print(items) # prints dict_items([("name", "Alice"), ("age", 30)])
+          ```
+
+  - You can create a dictionary using the `keys()` method.
+
+    example:
+
+        ```python
+        person = {"name": "Alice", "age": 30}
+        keys = person.keys()
+        print(keys) # prints dict_keys(["name", "age"])
+        ```
+
+        
 - To check the type of a variable, use the `type()` function.
 
 - To convert a variable to a different type, use the built-in functions `int()`, `float()`, `str()`, `list()`, `tuple()`, `dict()`, etc.
