@@ -149,4 +149,23 @@ It can also span multiple lines.
 
 ### Operators
 
+- Operators are used to perform operations on variables and values.
+
+- Python has several types of operators, such as arithmetic, assignment, comparison, logical, identity, membership, and bitwise operators.
+
+- Arithmetic operators are used to perform mathematical operations, such as addition `+`, subtraction `-`, multiplication `*`, division `/`, modulus `%`, exponentiation `**`, and floor division `//`.
+
+- Assignment operators are used to assign values to variables, such as `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `**=`, and `//=`.
+
+- Comparison operators are used to compare values, such as `==`, `!=`, `<`, `>`, `<=`, and `>=`.
+
+- Logical operators are used to combine boolean values, such as `and`, `or`, and `not`.
+
+- Identity operators are used to compare objects, such as `is` and `is not`.
+
+- Membership operators are used to test if a value is present in a sequence, such as `in` and `not in`.
+
+- Bitwise operators are used to perform bitwise operations on integers, such as `&`, `|`, `^`, `~`, `<<`, and `>>`.
+
+
 
