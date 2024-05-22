@@ -3241,3 +3241,296 @@ It can also span multiple lines.
 
 
 ### Logging
+
+- Logging is used to record events in a program.
+
+- You can use the `logging` module to log messages in Python.
+
+- You can use the `logging.debug()` function to log a debug message.
+
+    - example:
+
+        ```python
+        import logging
+
+        logging.basicConfig(level=logging.DEBUG)
+        logging.debug("This is a debug message")
+        ``` 
+
+- You can use the `logging.info()` function to log an info message.
+
+    - example:
+
+        ```python
+        import logging
+
+        logging.basicConfig(level=logging.INFO)
+        logging.info("This is an info message")
+        ```
+
+- You can use the `logging.warning()` function to log a warning message.  
+
+    - example:
+
+        ```python
+        import logging
+
+        logging.basicConfig(level=logging.WARNING)
+        logging.warning("This is a warning message")
+        ```
+
+- You can use the `logging.error()` function to log an error message.
+
+    - example:
+
+        ```python
+        import logging
+
+        logging.basicConfig(level=logging.ERROR)
+        logging.error("This is an error message")
+        ```
+- You can use the `logging.critical()` function to log a critical message.
+
+    - example:
+
+        ```python
+        import logging
+
+        logging.basicConfig(level=logging.CRITICAL)
+        logging.critical("This is a critical message")
+        ```
+
+- You can use the `logging.basicConfig()` function to configure the logging system.
+
+    - example:
+
+        ```python
+        import logging
+
+        logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
+        logging.debug("This is a debug message")
+        ```
+- You can use the `logging.getLogger()` function to get a logger object.
+  
+      - example:
+  
+          ```python
+          import logging
+  
+          logger = logging.getLogger("my_logger")
+          logger.setLevel(logging.DEBUG)
+          logger.debug("This is a debug message")
+          ``` 
+
+- You can use the `logging.Formatter()` class to format log messages.
+
+    - example:
+
+        ```python
+        import logging
+
+        formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+        handler = logging.StreamHandler()
+        handler.setFormatter(formatter)
+        logger = logging.getLogger("my_logger")
+        logger.addHandler(handler)
+        logger.setLevel(logging.DEBUG)
+        logger.debug("This is a debug message")
+        ```
+- You can use the `logging.FileHandler()` class to log messages to a file.
+
+    - example:
+
+        ```python
+        import logging
+
+        handler = logging.FileHandler("log.txt")
+        logger = logging.getLogger("my_logger")
+        logger.addHandler(handler)
+        logger.setLevel(logging.DEBUG)
+        logger.debug("This is a debug message")
+        ```
+- You can use the `logging.StreamHandler()` class to log messages to the console.
+
+    - example:
+
+        ```python
+        import logging
+
+        handler = logging.StreamHandler()
+        logger = logging.getLogger("my_logger")
+        logger.addHandler(handler)
+        logger.setLevel(logging.DEBUG)
+        logger.debug("This is a debug message")
+        ```
+- You can use the `logging.handlers.RotatingFileHandler()` class to log messages to a file that rotates based on size.
+
+    - example:
+
+        ```python
+        import logging
+        from logging.handlers import RotatingFileHandler
+
+        handler = RotatingFileHandler("log.txt", maxBytes=1000, backupCount=3)
+        logger = logging.getLogger("my_logger")
+        logger.addHandler(handler)
+        logger.setLevel(logging.DEBUG)
+        logger.debug("This is a debug message")
+        ```
+
+- You can use the `logging.handlers.TimedRotatingFileHandler()` class to log messages to a file that rotates based on time.
+
+    - example:
+
+        ```python
+        import logging
+        from logging.handlers import TimedRotatingFileHandler
+
+        handler = TimedRotatingFileHandler("log.txt", when="midnight", interval=1, backupCount=3)
+        logger = logging.getLogger("my_logger")
+        logger.addHandler(handler)
+        logger.setLevel(logging.DEBUG)
+        logger.debug("This is a debug message")
+        ```
+
+- You can use the `logging.handlers.SysLogHandler()` class to log messages to the system log.
+
+    - example:
+
+        ```python
+        import logging
+        from logging.handlers import SysLogHandler
+
+        handler = SysLogHandler()
+        logger = logging.getLogger("my_logger")
+        logger.addHandler(handler)
+        logger.setLevel(logging.DEBUG)
+        logger.debug("This is a debug message")
+        ```
+
+- You can use the `logging.handlers.SMTPHandler()` class to log messages to an email address.
+
+    - example:
+
+        ```python
+        import logging
+        from logging.handlers import SMTPHandler
+
+        handler = SMTPHandler(mailhost="localhost", fromaddr="", toaddrs="", subject="Log Message")   
+        logger = logging.getLogger("my_logger") 
+        logger.addHandler(handler)
+        logger.setLevel(logging.DEBUG)
+        logger.debug("This is a debug message")
+        ```
+
+- You can use the `logging.handlers.HTTPHandler()` class to log messages to a web server.
+
+    - example:
+
+        ```python
+        import logging
+        from logging.handlers import HTTPHandler
+
+        handler = HTTPHandler(host="localhost", url="/log", method="POST")
+        logger = logging.getLogger("my_logger")
+        logger.addHandler(handler)
+        logger.setLevel(logging.DEBUG)
+        logger.debug("This is a debug message")
+        ```
+
+- You can use the `logging.handlers.QueueHandler()` class to log messages to a queue.
+
+
+    - example:
+
+        ```python
+        import logging
+        from logging.handlers import QueueHandler
+
+        handler = QueueHandler()
+        logger = logging.getLogger("my_logger")
+        logger.addHandler(handler)
+        logger.setLevel(logging.DEBUG)
+        logger.debug("This is a debug message")
+        ```
+
+- You can use the `logging.handlers.QueueListener()` class to log messages from a queue.
+
+    - example:
+
+        ```python
+        import logging
+        from logging.handlers import QueueListener
+
+        handler = logging.StreamHandler()
+        listener = QueueListener(queue, handler)
+        listener.start()
+        logger = logging.getLogger("my_logger")
+        logger.addHandler(handler)
+        logger.setLevel(logging.DEBUG)
+        logger.debug("This is a debug message")
+        listener.stop()
+        ```
+
+- You can use the `logging.config.dictConfig()` function to configure the logging system using a dictionary.
+
+    - example:
+
+        ```python
+        import logging
+        import logging.config
+
+        config = {
+            "version": 1,
+            "handlers": {
+                "console": {
+                    "class": "logging.StreamHandler",
+                    "level": "DEBUG",
+                    "formatter": "simple",
+                    "stream": "ext://sys.stdout"
+                }
+            },
+            "loggers": {
+                "my_logger": {
+                    "handlers": ["console"],
+                    "level": "DEBUG"
+                }
+            },
+            "formatters": {
+                "simple": {
+                    "format": "%(asctime)s - %(levelname)s - %(message)s"
+                }
+            }
+        }
+
+        logging.config.dictConfig(config)
+        logger = logging.getLogger("my_logger")
+        logger.debug("This is a debug message")
+        ```
+
+- You can use the `logging.config.fileConfig()` function to configure the logging system using a configuration file.
+
+    - example:
+
+        ```python
+        import logging
+        import logging.config
+
+        logging.config.fileConfig("logging.conf")
+        logger = logging.getLogger("my_logger")
+        logger.debug("This is a debug message")
+        ```
+
+- You can use the `logging.config.listen()` function to configure the logging system using a configuration file.
+
+    - example:
+
+        ```python
+        import logging
+        import logging.config
+
+        logging.config.listen(9999)
+        logger = logging.getLogger("my_logger")
+        logger.debug("This is a debug message")
+        ```
+
