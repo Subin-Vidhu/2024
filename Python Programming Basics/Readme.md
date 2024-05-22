@@ -909,13 +909,13 @@ It can also span multiple lines.
 
 - You can use the `with` statement to open and close files in a program.
   
-      - example:
-  
-          ```python
-          with open("file.txt", "r") as file:
-              content = file.read()
-              print(content)
-          ```
+    - example:
+
+        ```python
+        with open("file.txt", "r") as file:
+            content = file.read()
+            print(content)
+        ```
 - You can use the `assert` statement to check if an expression is True. 
 
     - example:
