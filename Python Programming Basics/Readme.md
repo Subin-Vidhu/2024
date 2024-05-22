@@ -147,6 +147,6 @@ It can also span multiple lines.
 
 - None is a special data type in Python that represents the absence of a value.
 
-
+### Operators
 
 
