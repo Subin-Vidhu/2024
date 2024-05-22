@@ -2465,3 +2465,425 @@ It can also span multiple lines.
 
 
 ### Regular Expressions
+
+- Regular expressions are used to search for patterns in text.
+
+- Regular expressions are defined using the `re` module.
+  
+    - example:
+  
+        ```python
+        import re
+        ```
+- You can use the `re.search()` function to search for a pattern in a string.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "World"
+        match = re.search(pattern, text)
+        print(match.group()) # prints World
+        ```
+
+- You can use the `re.match()` function to match a pattern at the beginning of a string.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "Hello"
+        match = re.match(pattern, text)
+        print(match.group()) # prints Hello
+        ``` 
+
+- You can use the `re.findall()` function to find all occurrences of a pattern in a string.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "l"
+        matches = re.findall(pattern, text)
+        print(matches) # prints ['l', 'l', 'l']
+        ```
+
+- You can use the `re.sub()` function to replace occurrences of a pattern in a string.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "World"
+        replacement = "Alice"
+        new_text = re.sub(pattern, replacement, text)
+        print(new_text) # prints Hello, Alice!
+        ```
+
+- You can use special characters in regular expressions to match specific patterns.
+
+- You can use the `.` character to match any character.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "H.llo"
+        match = re.search(pattern, text)
+        print(match.group()) # prints Hello
+        ``` 
+
+- You can use the `^` character to match the beginning of a string.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "^Hello"
+        match = re.match(pattern, text)
+        print(match.group()) # prints Hello
+        ```
+
+- You can use the `$` character to match the end of a string.
+  
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "World!$"
+        match = re.search(pattern, text)
+        print(match.group()) # prints World!
+        ```
+
+- You can use the `*` character to match zero or more occurrences of a pattern.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "l*"
+        matches = re.findall(pattern, text)
+        print(matches) # prints ['', '', 'l',
+
+        ``` 
+
+- You can use the `+` character to match one or more occurrences of a pattern.
+
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "l+"
+        matches = re.findall(pattern, text)
+        print(matches) # prints ['l', 'l', 'l']
+        ```
+
+- You can use the `?` character to match zero or one occurrence of a pattern.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "l?"
+        matches = re.findall(pattern, text)
+        print(matches) # prints ['', 'l', '', 'l', 'l', '', '']
+        ```
+
+- You can use the `{n}` character to match exactly `n` occurrences of a pattern.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "l{2}"
+        matches = re.findall(pattern, text)
+        print(matches) # prints ['ll']
+        ```
+
+- You can use the `{n, m}` character to match between `n` and `m` occurrences of a pattern.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "l{1,2}"
+        matches = re.findall(pattern, text)
+        print(matches) # prints ['l', 'l', 'l']
+        ```
+
+- You can use the `[]` character to match any character in a set.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "[aeiou]"
+        matches = re.findall(pattern, text)
+        print(matches) # prints ['e', 'o', 'o']
+        ```
+
+- You can use the `[^]` character to match any character not in a set.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "[^aeiou]"
+        matches = re.findall(pattern, text)
+        print(matches) # prints ['H', 'l', 'l', ',', ' ', 'W', 'r', 'l', 'd', '!']
+        ```
+
+- You can use the `|` character to match either of two patterns.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "Hello|World"
+        match = re.search(pattern, text)
+        print(match.group()) # prints Hello
+        ```
+
+- You can use the `\d` character to match any digit.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, 123!"
+        pattern = "\d"
+        matches = re.findall(pattern, text)
+        print(matches) # prints ['1', '2', '3']
+        ```
+- You can use the `\D` character to match any non-digit.
+  
+      - example:
+  
+          ```python
+          import re
+  
+          text = "Hello, 123!"
+          pattern = "\D"
+          matches = re.findall(pattern, text)
+          print(matches) # prints ['H', 'e', 'l', 'l', 'o', ',', ' ', '!']
+          ``` 
+
+- You can use the `\w` character to match any word character.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "\w"
+        matches = re.findall(pattern, text)
+        print(matches) # prints ['H', 'e', 'l', 'l', 'o', 'W', 'o', 'r', 'l', 'd']
+        ```
+- You can use the `\W` character to match any non-word character.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "\W"
+        matches = re.findall(pattern, text)
+        print(matches) # prints [',', ' ', '!']
+        ```
+- You can use the `\s` character to match any whitespace character.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "\s"
+        matches = re.findall(pattern, text)
+        print(matches) # prints [',', ' ']
+        ```
+
+- You can use the `\S` character to match any non-whitespace character.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "\S"
+        matches = re.findall(pattern, text)
+        print(matches) # prints ['H', 'e', 'l', 'l', 'o', ',', 'W', 'o', 'r', 'l', 'd', '!']
+        ```
+
+- You can use the `re.IGNORECASE` flag to perform case-insensitive matching.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "hello"
+        match = re.search(pattern, text, re.IGNORECASE)
+        print(match.group()) # prints Hello
+        ```
+
+- You can use the `re.MULTILINE` flag to match the beginning and end of each line.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello\nWorld"
+        pattern = "^Hello"
+        match = re.search(pattern, text, re.MULTILINE)
+        print(match.group()) # prints Hello
+        ```
+
+- You can use the `re.DOTALL` flag to match any character, including newlines.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello\nWorld"
+        pattern = "Hello.World"
+        match = re.search(pattern, text, re.DOTALL)
+        print(match.group()) # prints Hello\nWorld
+        ```
+
+- You can use the `re.VERBOSE` flag to write regular expressions in a more readable format.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = """
+        Hello # match Hello
+        , # match comma
+        World # match World
+        """
+        match = re.search(pattern, text, re.VERBOSE)
+        print(match.group()) # prints Hello, World
+        ```
+
+- You can use the `re.compile()` function to compile a regular expression.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = re.compile("World")
+        match = pattern.search(text)
+        print(match.group()) # prints World
+        ```
+
+- You can use the `re.split()` function to split a string using a regular expression.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = ","
+        parts = re.split(pattern, text)
+        print(parts) # prints ['Hello', ' World!']
+        ```
+
+- You can use the `re.escape()` function to escape special characters in a string.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = re.escape("Hello, World!")
+        match = re.search(pattern, text)
+        print(match.group()) # prints Hello, World!
+        ```
+- You can use the `re.fullmatch()` function to match the entire string.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "Hello, World!"
+        match = re.fullmatch(pattern, text)
+        print(match.group()) # prints Hello, World!
+        ```
+
+- You can use the `re.finditer()` function to find all occurrences of a pattern in a string.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "l"
+        matches = re.finditer(pattern, text)
+        for match in matches:
+            print(match.group())
+        ```
+
+- You can use the `re.subn()` function to replace occurrences of a pattern in a string and get the number of replacements.
+
+    - example:
+
+        ```python
+        import re
+
+        text = "Hello, World!"
+        pattern = "World"
+        replacement = "Alice"
+        new_text, count = re.subn(pattern, replacement, text)
+        print(new_text) # prints Hello, Alice!
+        print(count) # prints 1
+        ```
+
+### Testing
