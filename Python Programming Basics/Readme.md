@@ -1843,3 +1843,105 @@ It can also span multiple lines.
 
 
 ### Exceptions
+
+- Exceptions are used to handle errors in a program.
+  - example:
+  
+      ```python
+      try:
+          x = 1 / 0
+      except ZeroDivisionError:
+          print("Cannot divide by zero")
+      ```
+
+- Exceptions are raised when an error occurs in a program.
+
+  - example:
+
+      ```python
+      x = 1 / 0
+      ```
+
+- You can catch exceptions using the `try` and `except` blocks.
+
+  - example:
+
+      ```python
+      try:
+          x = 1 / 0
+      except ZeroDivisionError:
+          print("Cannot divide by zero")
+      ```
+
+- You can catch multiple exceptions using the `except` block.
+  
+    - example:
+  
+        ```python
+        try:
+            x = 1 / 0
+        except ZeroDivisionError:
+            print("Cannot divide by zero")
+        except ValueError:
+            print("Invalid value")
+        ```
+
+- You can use the `else` block to execute code if no exceptions are raised.
+  
+    - example:
+  
+        ```python
+        try:
+            x = 1 / 1
+        except ZeroDivisionError:
+            print("Cannot divide by zero")
+        else:
+            print("Division successful")
+        ```
+
+- You can use the `finally` block to execute code after the `try` block, regardless of whether an exception is raised.
+
+  - example:
+
+      ```python
+      try:
+          x = 1 / 0
+      except ZeroDivisionError:
+          print("Cannot divide by zero")
+      finally:
+          print("Done")
+      ```
+
+- You can raise exceptions using the `raise` keyword.
+  
+    - example:
+  
+        ```python
+        x = -1
+        if x < 0:
+            raise ValueError("x cannot be negative")
+        ```
+
+- You can create custom exceptions by defining a new class that inherits from the `Exception` class.
+
+  - example:
+
+      ```python
+      class NegativeValueError(Exception):
+          pass
+
+      x = -1
+      if x < 0:
+          raise NegativeValueError("x cannot be negative")
+      ```
+
+- You can use the `assert` statement to check if an expression is True.
+
+  - example:
+
+      ```python
+      x = 10
+      assert x > 5, "x is not greater than 5"
+      ```
+
+### File I/O
