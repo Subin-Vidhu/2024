@@ -1342,5 +1342,101 @@ It can also span multiple lines.
 
 ### Modules
 
+- Modules are used to organize code into separate files.
+
+- Modules are defined using the `import` keyword followed by the module name.
+
+- You can import specific functions or variables from a module using the `from` keyword.
+  - example:
+  
+      ```python
+      import math
+
+      print(math.pi) # prints 3.141592653589793
+      ```
+- You can import all functions and variables from a module using the `*` operator.
+
+  - example:
+
+      ```python
+      from math import *
+
+      print(pi) # prints 3.141592653589793
+      ```
+- You can create your own modules by defining functions and variables in a separate file.
+
+- You can import your own modules using the `import` keyword.
+
+- You can use the `as` keyword to create an alias for a module.
+
+  - example:
+
+      ```python
+      import math as m
+
+      print(m.pi) # prints 3.141592653589793
+      ```
+- You can use the `dir()` function to get a list of all functions and variables in a module.
+  
+    - example:
+  
+        ```python
+        import math
+  
+        print(dir(math))
+        ```
+- You can use the `help()` function to get information about a module.
+  
+    - example:
+  
+        ```python
+        import math
+  
+        help(math)
+        ```
+- You can use the `__name__` variable to get the name of a module.
+  
+    - example:
+  
+        ```python
+        print(__name__) # prints __main__ if the module is run directly
+        ```
+- You can use the `__file__` variable to get the path to a module.
+
+  - example:
+
+      ```python
+      import math
+
+      print(math.__file__)
+      ```
+- You can use the `__doc__` variable to get the documentation of a module.
+
+  - example:
+
+      ```python
+      import math
+
+      print(math.__doc__)
+      ``` 
+
+- You can use the `__all__` variable to specify which functions and variables to import from a module.
+  
+    - example:
+  
+        ```python
+        __all__ = ["pi", "e"]
+        ``` 
+
+- You can use the `__init__.py` file to define a package in Python.
+
+- You can use the `from` keyword to import a module from a package.
+
+- You can use the `as` keyword to create an alias for a module in a package.
+
+
+### Classes
+
+
 
       
