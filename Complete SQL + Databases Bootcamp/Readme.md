@@ -188,7 +188,7 @@ select * from User
 
 - PostgreSQL is known for its reliability, with support for high availability, replication, and backup and recovery.
 
-- For this course, we will be using `PostgreSQL` as our database and `valentina studio` as our database client.
+- For this course, we will be using `PostgreSQL` as our database and `valentina studio`[To install](https://valentina-db.com/en/studio/download#:~:text=Valentina%20Studio%20Win%2064) as our database client.
 
 
     #### Assuming th employees.sql is the path in the cmd, and a DB called Employees is created, then the command to run the sql file is as follows:
