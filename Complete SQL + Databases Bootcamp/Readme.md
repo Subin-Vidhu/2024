@@ -497,3 +497,61 @@ select emp_no as "Employee #", birth_date as "Bday" FROM "employees";
 
 ### Filtering Data
 
+- The WHERE clause is used to filter data in the SELECT statement. The WHERE clause specifies a condition that must be met for a row to be included in the result set.
+
+- The WHERE clause has the following syntax:
+
+```sql
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+```
+
+- The WHERE clause can contain one or more conditions, which are combined using logical operators such as AND, OR, and NOT.
+
+    - eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+    ```sql
+    select * from User where role = 'employee' AND age > 30;
+    ```
+
+
+- The WHERE clause can contain comparison operators such as =, <, >, <=, >=, and <>.
+
+  - eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+    ```sql
+    select * from User where age > 30;
+    ```
+
+- The WHERE clause can contain range operators such as BETWEEN and IN.
+
+  - eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+    ```sql
+    select * from User where age BETWEEN 30 AND 40;
+    ```
+
+    ```sql
+    select * from User where age IN (30, 40, 50);
+    ```
+
+- The WHERE clause can contain pattern matching operators such as LIKE and ILIKE.
+
+  - eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+    ```sql
+    select * from User where name LIKE 'A%';
+    ```
+
+    ```sql
+    select * from User where name ILIKE 'a%';
+    ```
+
+- Not operator
+
+  - eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+    ```sql
+    select * from User where NOT role = 'employee';
+    ```
