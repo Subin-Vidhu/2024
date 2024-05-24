@@ -173,3 +173,18 @@ select * from User
 - SQL Server: SQL Server is a commercial relational database management system that is developed by Microsoft.
 
 ### PostgreSQL
+
+- PostgreSQL is an open-source relational database management system that is known for its advanced features and extensibility.
+
+- PostgreSQL is widely used for web applications, data warehousing, and business intelligence.
+
+- PostgreSQL supports a wide range of data types, including integers, floats, strings, dates, and arrays.
+
+- PostgreSQL supports advanced features such as transactions, views, triggers, and stored procedures.
+
+- PostgreSQL is known for its extensibility, with support for custom data types, custom functions, and custom indexes.
+
+- PostgreSQL is known for its performance, with support for parallel query processing, query optimization, and indexing.
+
+- PostgreSQL is known for its reliability, with support for high availability, replication, and backup and recovery.
+
