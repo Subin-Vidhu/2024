@@ -565,3 +565,31 @@ WHERE condition;
 ### Checking for NULL Values
 
 - The IS NULL operator is used to check for NULL values in the SELECT statement. The IS NULL operator returns true if the value is NULL and false if the value is not NULL.
+
+- The IS NULL operator has the following syntax:
+
+  ```sql
+  SELECT column1, column2, ...
+  FROM table_name
+  WHERE column IS NULL;
+  ```
+
+- The IS NOT NULL operator is used to check for non-NULL values in the SELECT statement. The IS NOT NULL operator returns true if the value is not NULL and false if the value is NULL.
+
+- The IS NOT NULL operator has the following syntax:
+
+  ```sql
+  SELECT column1, column2, ...
+  FROM table_name
+  WHERE column IS NOT NULL;
+  ```
+
+- eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+  ```sql
+  select * from User where role IS NULL;
+  ```
+
+  ```sql
+  select * from User where role IS NOT NULL;
+  ```
