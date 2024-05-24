@@ -749,3 +749,6 @@ WHERE condition;
   ORDER BY column1 [ASC|DESC];
   ``` 
 
+### Multi Table Select
+
+- The JOIN clause is used to combine rows from two or more tables based on a related column between them. The JOIN clause returns rows when there is at least one match in both tables.
