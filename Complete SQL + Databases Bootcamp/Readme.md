@@ -452,13 +452,13 @@ select emp_no as "Employee #", birth_date as "Bday" FROM "employees";
 
     - eg. The following query retrieves all the data from the User table:
 
-    ```sql
-    /*
-    This is a multi-line comment
-    It spans multiple lines
-    */
-    select * from User;
-    ```
+      ```sql
+      /*
+      This is a multi-line comment
+      It spans multiple lines
+      */
+      select * from User;
+      ```
   
 - Comments are ignored by the SQL parser and do not affect the execution of the SQL code.
 
