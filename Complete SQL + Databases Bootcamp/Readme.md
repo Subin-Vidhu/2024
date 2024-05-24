@@ -470,3 +470,28 @@ select emp_no as "Employee #", birth_date as "Bday" FROM "employees";
 
 - Comments are used to document changes made to the SQL code.
 
+### Common Select Mistakes
+
+- Some of the common mistakes made while writing SQL queries are:
+
+- Missing semicolon at the end of the query.
+
+- Misspelling of column names.
+
+- Missing quotes around string values.
+
+- Using reserved keywords as column names.
+
+- Using incorrect data types in the WHERE clause.
+
+- Using incorrect operators in the WHERE clause.
+
+- Using incorrect functions in the SELECT statement.
+
+- Using incorrect functions in the WHERE clause.
+
+- Using incorrect functions in the ORDER BY clause.
+
+- Using incorrect functions in the GROUP BY clause.
+
+
