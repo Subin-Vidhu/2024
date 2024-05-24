@@ -76,5 +76,19 @@ select * from User
 
 ### Database Models
 
+- Hierarchical Model: This model organizes data in a tree-like structure, with a single root, to which all the other data is linked. This model is not widely used today.
+
+- Network Model: This model is an extension of the hierarchical model, where each child can have multiple parents. This model is also not widely used today.
+
+- `Relational Model`: This model organizes data into tables, where each table has rows and columns. This model is the most widely used today. eg. MySQL, PostgreSQL, SQLite, Oracle, SQL Server, etc.
+
+- Object-Oriented Model: This model organizes data into objects, which consist of attributes and methods. This model is used in object-oriented programming languages.
+
+- Document Model: This model organizes data into documents, which can contain nested documents and arrays. This model is used in document-oriented databases.
+
+- Graph Model: This model organizes data into nodes and edges, which represent entities and relationships. This model is used in graph databases.
+
+- Entity-Relationship Model: This model organizes data into entities and relationships, which represent real-world entities and their relationships. This model is used in entity-relationship diagrams.
+
 
 
