@@ -326,3 +326,33 @@ select * FROM "titles";
 
 ### Renaming Columns
 
+- The AS keyword is used to rename columns in the SELECT statement. The AS keyword is optional, and the column name can be specified without it.
+
+- The AS keyword is used to give an alias to the column name.
+
+- The AS keyword is used to make the query more readable.
+
+- The AS keyword is used to avoid conflicts with reserved keywords. 
+
+- The AS keyword is used to give a meaningful name to the column.
+
+- The AS keyword is used to give a short name to the column.
+
+- The AS keyword is used to give a descriptive name to the column.  
+
+- The AS keyword is used to give a unique name to the column.
+
+- eg. The following query renames the column name to `first_name` and `last_name`:
+
+```sql
+select f_name as first_name, l_name as last_name from employees;
+```
+
+- Some of the examples tried out were:
+```sql
+select emp_no as "Employee #", birth_date as "Bday" FROM "employees";
+```
+
+
+
+
