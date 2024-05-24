@@ -43,7 +43,10 @@ select * from User
 - Imperative: How to do something, eg. Java
 - Declarative: What to do, eg. SQL
 
+### History of SQL
 
+- 1970: SQL was developed at IBM by Donald D. Chamberlin and Raymond F. Boyce
+- `Sequel`: Structured English Query Language
 
 
 
