@@ -712,3 +712,6 @@ WHERE condition;
   select age(birth_date) from User;
   ```
 
+### Distinct Operator
+
+- The DISTINCT operator is used to remove duplicate rows from the result set in the SELECT statement. The DISTINCT operator returns unique rows from the result set.
