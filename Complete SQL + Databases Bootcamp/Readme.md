@@ -37,3 +37,10 @@ VALUES ('u5', 'Jason', 'Lipton', '1992-01-01', 'm', 'manager');
 select * from User 
 -- where role = 'employee';
 ```
+
+### Imperative vs Declarative
+
+- Imperative: How to do something
+- Declarative: What to do
+
+
