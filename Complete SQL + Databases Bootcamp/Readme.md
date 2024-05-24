@@ -355,6 +355,14 @@ select emp_no as "Employee #", birth_date as "Bday" FROM "employees";
 
 ### Column Concatenation
 
-- The `||` operator is used to concatenate columns in the SELECT statement. The `||` operator is used to combine two or more columns into a single column.
+- Concat function is used to concatenate two or more columns in the SELECT statement.
 
+- Concat function is used to combine two or more columns into a single column.
 
+- eg. The following query concatenates the first name and last name columns:
+
+  ```sql
+  select concat(f_name, ' ', l_name) as full_name from employees;
+  ```
+
+![alt text](image-1.png)
