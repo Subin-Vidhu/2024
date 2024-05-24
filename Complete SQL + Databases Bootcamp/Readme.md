@@ -524,6 +524,8 @@ WHERE condition;
     select * from User where age > 30;
     ```
 
+    ![alt text](image-3.png)
+
 - The WHERE clause can contain range operators such as BETWEEN and IN.
 
   - eg. The following query retrieves all the data from the User table where the role is 'employee':
