@@ -365,4 +365,4 @@ select emp_no as "Employee #", birth_date as "Bday" FROM "employees";
   select concat(f_name, ' ', l_name) as full_name from employees;
   ```
 
-![alt text](image-1.png)
+![alt text](image-2.png)
