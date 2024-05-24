@@ -647,3 +647,68 @@ WHERE condition;
   ```
 
 ### Format Date and Time
+
+- The TO_CHAR function is used to format date and time values in the SELECT statement. The TO_CHAR function returns a formatted date or time value.
+
+- Select current date
+  
+    ```sql
+    select current_date;
+    ```
+- The TO_CHAR function has the following syntax:
+
+  ```sql
+  SELECT TO_CHAR(date_column, 'format')
+  FROM table_name;
+  ```
+
+- The TO_CHAR function takes two arguments: the date or time column and the format string.
+
+- The format string specifies the format in which the date or time value should be displayed.
+
+- The format string can contain date and time format elements such as YYYY, MM, DD, HH, MI, SS, and AM.
+
+- The format string can contain date and time separators such as /, -, and :.
+
+- The format string can contain date and time literals such as 'YYYY', 'MM', 'DD', 'HH', 'MI', 'SS', and 'AM'.
+
+- The format string can contain date and time modifiers such as FM, TH, and SP.
+
+- The format string can contain date and time punctuation such as ., ,, and ;.
+
+- The format string can contain date and time text such as 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', and 'December'.
+
+- eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+  ```sql
+  select to_char(birth_date, 'YYYY-MM-DD') from User;
+  ```
+    
+  ```sql
+  select to_char(birth_date, 'YYYY-MM-DD HH24:MI:SS') from User;
+  ```
+  
+  ```sql
+  select to_char(birth_date, 'YYYY-MM-DD HH24:MI:SS AM') from User;
+  ```
+  
+  ```sql
+  select to_char(birth_date, 'YYYY-MM-DD HH24:MI:SS AM') from User;
+  ```
+    
+  ```sql    
+  select to_char(birth_date, 'YYYY-MM-DD HH24:MI:SS AM') from User;
+  ```
+
+- Calculate Age
+
+  ```sql
+  select extract(year from age(birth_date)) from User;
+  ```
+
+  or 
+
+  ```sql
+  select age(birth_date) from User;
+  ```
+
