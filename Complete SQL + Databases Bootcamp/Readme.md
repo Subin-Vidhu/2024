@@ -1,4 +1,4 @@
-### SQL Fundamentals
+### SQL Fundamentals - [Reference](https://www.w3resource.com/sql/tutorials.php#HISTSQL)
 
 #### Schema SQL
 
