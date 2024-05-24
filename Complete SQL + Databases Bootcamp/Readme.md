@@ -737,4 +737,14 @@ WHERE condition;
   select distinct role from User;
   ```
 
-  
+### Sorting Data
+
+- The ORDER BY clause is used to sort the result set in the SELECT statement. The ORDER BY clause specifies the order in which the rows should be returned.
+
+- The ORDER BY clause has the following syntax:
+
+  ```sql
+  SELECT column1, column2, ...
+  FROM table_name
+  ORDER BY column1 [ASC|DESC];
+  ``` 
