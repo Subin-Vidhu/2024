@@ -850,3 +850,25 @@ WHERE condition;
 ### Full Outer Join
 
 - The FULL OUTER JOIN clause is used to combine rows from two or more tables based on a related column between them. The FULL OUTER JOIN clause returns rows when there is no match in both tables.
+
+- The FULL OUTER JOIN clause has the following syntax:
+
+  ```sql
+  SELECT column1, column2, ...
+  FROM table1
+  FULL OUTER JOIN table2
+  ON table1.column = table2.column;
+  ```
+
+- The FULL OUTER JOIN clause joins two or more tables based on a related column between them.
+
+- The FULL OUTER JOIN clause returns rows when there is no match in both tables.
+
+- The FULL OUTER JOIN clause is used to combine rows from two or more tables based on a related column between them.
+
+- eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+  ```sql
+  select a.emp_no, a.first_name, a.last_name, b.dept_name from employees AS a FULL OUTER JOIN departments AS b ON a.dept_no = b.dept_no order by a.emp_no;
+  ```
+  
