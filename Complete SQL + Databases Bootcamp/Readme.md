@@ -120,5 +120,15 @@ select * from User
 
 ### ROWS
 
+- A row is a horizontal arrangement of data in a table. Each row represents a record in the table.
+
+- A row has a primary key, which is used to uniquely identify the row in the table.
+
+- A row has a value for each column in the table.
+
+- A row is also known as a tuple in the relational model.
+
+
+
 
 
