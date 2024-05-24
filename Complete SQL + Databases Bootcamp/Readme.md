@@ -353,6 +353,8 @@ select f_name as first_name, l_name as last_name from employees;
 select emp_no as "Employee #", birth_date as "Bday" FROM "employees";
 ```
 
+### Column Concatenation
 
+- The `||` operator is used to concatenate columns in the SELECT statement. The `||` operator is used to combine two or more columns into a single column.
 
 
