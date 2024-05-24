@@ -188,3 +188,4 @@ select * from User
 
 - PostgreSQL is known for its reliability, with support for high availability, replication, and backup and recovery.
 
+- For this course, we will be using PostgreSQL as our database and valentina studio as our database client.
