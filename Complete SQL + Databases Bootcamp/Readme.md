@@ -134,5 +134,16 @@ select * from User
 
 ### PRIMARY KEY
 
+- A primary key is a column or a set of columns that uniquely identifies each row in a table.
+
+- A primary key must contain unique values.
+
+- A primary key cannot contain NULL values.
+
+- A primary key is used to enforce entity integrity.
+
+- A primary key is also known as a candidate key in the relational model.
+
+
 
 
