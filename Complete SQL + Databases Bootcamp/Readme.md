@@ -366,3 +366,7 @@ select emp_no as "Employee #", birth_date as "Bday" FROM "employees";
   ```
 
 ![alt text](image-2.png)
+
+### Functions in SQL
+
+
