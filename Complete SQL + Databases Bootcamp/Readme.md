@@ -146,4 +146,14 @@ select * from User
 
 ### FOREIGN KEY
 
+- A foreign key is a column or a set of columns that references a primary key in another table.
+
+- A foreign key is used to enforce referential integrity.
+
+- A foreign key can contain NULL values.
+
+- A foreign key is also known as a referencing key in the relational model.
+
+
+
 
