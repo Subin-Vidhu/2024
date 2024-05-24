@@ -562,4 +562,6 @@ WHERE condition;
 
     ![alt text](image-4.png)
 
-    
+### Checking for NULL Values
+
+- The IS NULL operator is used to check for NULL values in the SELECT statement. The IS NULL operator returns true if the value is NULL and false if the value is not NULL.
