@@ -132,7 +132,7 @@ select * from User
 
 - Cardinality: The number of rows in a table is known as the cardinality of the table.
 
-
+### PRIMARY KEY
 
 
 
