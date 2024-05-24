@@ -371,7 +371,7 @@ select emp_no as "Employee #", birth_date as "Bday" FROM "employees";
 
 - SQL functions are used to perform operations on data in a database. There are several types of SQL functions, including:
 
-- `Aggregate functions`: Aggregate functions are used to perform calculations on a set of values and return a single value. Examples of aggregate functions include SUM, AVG, COUNT, MIN, and MAX.
+- `Aggregate functions`: Aggregate functions are used to perform calculations on a set of values and return a single value. Examples of aggregate functions include SUM, AVG, COUNT, MIN, and MAX. [Reference](https://www.postgresql.org/docs/12/functions-aggregate.html)
 
     ```
     select sum(salary) from salaries; 
