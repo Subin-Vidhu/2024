@@ -68,5 +68,9 @@ select * from User
 
 - A database is a collection of data stored in a computer system. Databases are organized in such a way that computer programs can easily access the data.
 
+### Data Base Management System (DBMS)
 
+- A DBMS is a software that allows a computer to perform database functions such as storing, retrieving, adding, deleting, and modifying data.
+
+- Examples of DBMS include MySQL, PostgreSQL, SQLite, Oracle, SQL Server, and many more.
 
