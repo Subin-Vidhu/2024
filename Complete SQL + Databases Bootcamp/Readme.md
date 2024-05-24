@@ -715,3 +715,26 @@ WHERE condition;
 ### Distinct Operator
 
 - The DISTINCT operator is used to remove duplicate rows from the result set in the SELECT statement. The DISTINCT operator returns unique rows from the result set.
+
+- The DISTINCT operator has the following syntax:
+
+  ```sql
+  SELECT DISTINCT column1, column2, ...
+  FROM table_name;
+  ```
+
+- The DISTINCT operator removes duplicate rows from the result set.
+
+- The DISTINCT operator is used to retrieve unique values from a column.
+
+- The DISTINCT operator is used to remove duplicate values from a column.
+
+- The DISTINCT operator is used to remove duplicate rows from the result set.
+
+- eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+  ```sql
+  select distinct role from User;
+  ```
+
+  
