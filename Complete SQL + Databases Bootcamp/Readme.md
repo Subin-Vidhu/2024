@@ -49,4 +49,8 @@ select * from User
 - `Sequel`: Structured English Query Language
 - For more information, check out the [video](https://youtu.be/KG-mqHoXOXY?si=ZQOvDpY2gS0W8dE7)
 
+### SQL Standards
+
+
+
 
