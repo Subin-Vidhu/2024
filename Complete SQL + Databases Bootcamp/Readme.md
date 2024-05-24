@@ -209,5 +209,5 @@ select * from User
 
 - A query can be executed using a database client, such as `valentina studio`, `pgAdmin`, or `SQL Server Management Studio`.
 
- - ![alt text](image.png)
+  ![alt text](image.png)
  
