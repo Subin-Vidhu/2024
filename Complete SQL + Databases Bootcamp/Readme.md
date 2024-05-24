@@ -823,4 +823,6 @@ WHERE condition;
   select a.emp_no, a.first_name, a.last_name, b.dept_name from employees AS a LEFT JOIN departments AS b ON a.dept_no = b.dept_no order by a.emp_no;
   ```
 
-  
+### Cross Join
+
+- The CROSS JOIN clause is used to combine rows from two or more tables without a related column between them. The CROSS JOIN clause returns the Cartesian product of the two tables.
