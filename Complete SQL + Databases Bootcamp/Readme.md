@@ -47,6 +47,6 @@ select * from User
 
 - 1970: SQL was developed at IBM by Donald D. Chamberlin and Raymond F. Boyce
 - `Sequel`: Structured English Query Language
-
+- For more information, check out the [video](https://youtu.be/KG-mqHoXOXY?si=ZQOvDpY2gS0W8dE7)
 
 
