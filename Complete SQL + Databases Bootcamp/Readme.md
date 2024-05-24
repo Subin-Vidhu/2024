@@ -64,6 +64,7 @@ select * from User
 
 - These are some of the SQL standards that have been released over the years and the latest one is SQL:2023.
 
+### DATABASES
 
 
 
