@@ -1,3 +1,13 @@
+## 🔰 Complete SQL + Databases Bootcamp
+
+⏱  24.5 Hours  📦 278 Lessons
+
+Most comprehensive resource online to learn SQL and Database Management & Design + exercises to give you real-world experience working with all database types.
+
+Taught By: Mo Binni, Andrei Neagoie
+
+Download Full Course: https://t.me/+1kcu9r4nl-1lY2Rk
+
 ### SQL Fundamentals - [Reference](https://www.w3resource.com/sql/tutorials.php#HISTSQL)
 
 #### Schema SQL
@@ -233,3 +243,83 @@ select * from User
 - TCL (Transaction Control Language): COMMIT, ROLLBACK  Manages transactions in a database
 
 ### SELECT Statement
+
+- The SELECT statement is used to retrieve data from a database. The SELECT statement is the most commonly used SQL statement.
+
+- The SELECT statement has the following syntax:
+
+```sql
+SELECT column1, column2, ...
+FROM table_name;
+```
+
+- The SELECT statement retrieves data from the specified columns of the specified table.
+
+- The SELECT statement can retrieve data from one or more columns of a table.
+
+- The SELECT statement can retrieve data from one or more tables using JOINs.
+
+- The SELECT statement can retrieve data based on specified conditions using WHERE clause.
+
+- The SELECT statement can retrieve data in a specific order using ORDER BY clause.
+
+- The SELECT statement can retrieve a subset of data using LIMIT clause.
+
+- The SELECT statement can retrieve distinct values using DISTINCT clause.
+
+- The SELECT statement can perform calculations on retrieved data using aggregate functions.
+
+- The SELECT statement can group retrieved data using GROUP BY clause.
+
+- The SELECT statement can filter grouped data using HAVING clause.
+
+- The SELECT statement can retrieve data from multiple tables using JOINs.
+
+- The SELECT statement can retrieve data from multiple tables using UNION clause.
+
+- The SELECT statement can retrieve data from multiple tables using INTERSECT clause.
+
+- The SELECT statement can retrieve data from multiple tables using EXCEPT clause.
+
+- The SELECT statement can retrieve data from multiple tables using subqueries.
+
+- The SELECT statement can retrieve data from multiple tables using common table expressions (CTEs).
+
+- The SELECT statement can retrieve data from multiple tables using window functions.
+
+- The SELECT statement can retrieve data from multiple tables using recursive queries.
+
+- The SELECT statement can retrieve data from multiple tables using full-text search.
+
+- The SELECT statement can retrieve data from multiple tables using spatial queries.
+
+- The SELECT statement can retrieve data from multiple tables using JSON functions.
+
+- The SELECT statement can retrieve data from multiple tables using XML functions.
+
+- The SELECT statement can retrieve data from multiple tables using regular expressions.
+
+- The SELECT statement can retrieve data from multiple tables using machine learning functions.
+
+- The SELECT statement can retrieve data from multiple tables using graph functions.
+
+- The SELECT statement can retrieve data from multiple tables using geospatial functions.
+
+- The SELECT statement can retrieve data from multiple tables using time series functions.
+
+- The SELECT statement can retrieve data from multiple tables using statistical functions.
+
+- Here in the sql editor of valentina studio, we can run the following query to retrieve all the data from the User table:
+
+```sql 
+select * from User;
+```
+- Some of the examples tried out were:
+```sql
+select * FROM "employees";
+select * FROM "departments";
+select * from "salaries";
+select * FROM "titles";
+```
+
+- The above queries were run on the employees database, which is a sample database provided by the course owner.
