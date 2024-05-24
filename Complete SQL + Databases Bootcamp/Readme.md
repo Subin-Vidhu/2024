@@ -154,6 +154,8 @@ select * from User
 
 - A foreign key is also known as a referencing key in the relational model.
 
+### OLTP vs OLAP
 
+- OLTP (Online Transaction Processing): OLTP systems are used to manage day-to-day transactions, such as sales, orders, and payments. OLTP systems are optimized for fast and efficient transaction processing.
 
 
