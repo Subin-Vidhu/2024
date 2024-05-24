@@ -144,6 +144,6 @@ select * from User
 
 - A primary key is also known as a candidate key in the relational model.
 
-
+### FOREIGN KEY
 
 
