@@ -557,3 +557,9 @@ WHERE condition;
     ```sql
     select * from User where NOT role = 'employee';
     ```
+
+- Operator Precedence
+
+    ![alt text](image-4.png)
+
+    
