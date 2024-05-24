@@ -1,3 +1,5 @@
+### SQL Fundamentals
+
 #### Schema SQL
 
 ```sql
