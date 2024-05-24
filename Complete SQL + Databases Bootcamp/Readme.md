@@ -66,5 +66,7 @@ select * from User
 
 ### DATABASES
 
+- A database is a collection of data stored in a computer system. Databases are organized in such a way that computer programs can easily access the data.
+
 
 
