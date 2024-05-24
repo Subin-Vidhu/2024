@@ -92,5 +92,18 @@ select * from User
 
 ### TABLES
 
+- A table is a collection of related data stored in rows and columns. Each row represents a record, and each column represents a field.
+
+- A table is also known as a relation in the relational model.
+
+- A table has a name, which is used to identify the table.
+
+- A table has columns, which are used to define the fields of the table.
+
+- A table has rows, which are used to store the records of the table.
+
+- A table has a primary key, which is used to uniquely identify each row in the table.
+
+
 
 
