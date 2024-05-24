@@ -323,3 +323,6 @@ select * FROM "titles";
 ```
 
 - The above queries were run on the employees database, which is a sample database provided by the course owner.
+
+### Renaming Columns
+
