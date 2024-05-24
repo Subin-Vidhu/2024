@@ -158,4 +158,6 @@ select * from User
 
 - OLTP (Online Transaction Processing): OLTP systems are used to manage day-to-day transactions, such as sales, orders, and payments. OLTP systems are optimized for fast and efficient transaction processing.
 
+- OLAP (Online Analytical Processing): OLAP systems are used to analyze and report on data, such as sales trends, customer behavior, and market share. OLAP systems are optimized for complex queries and data analysis.
+
 
