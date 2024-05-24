@@ -751,4 +751,8 @@ WHERE condition;
 
 ### Multi Table Select
 
-- The JOIN clause is used to combine rows from two or more tables based on a related column between them. The JOIN clause returns rows when there is at least one match in both tables.
+- Multi-table select is used to retrieve data from multiple tables in a single query. Multi-table select is used to join two or more tables using JOINs.
+
+  ```sql 
+  select a.emp_no, a.first_name, a.last_name, b.dept_name from employees AS a, departments AS b where a.dept_no = b.dept_no order by a.emp_no;
+  ```
