@@ -248,10 +248,10 @@ select * from User
 
 - The SELECT statement has the following syntax:
 
-```sql
-SELECT column1, column2, ...
-FROM table_name;
-```
+  ```sql
+  SELECT column1, column2, ...
+  FROM table_name;
+  ```
 
 - The SELECT statement retrieves data from the specified columns of the specified table.
 
@@ -311,16 +311,16 @@ FROM table_name;
 
 - Here in the sql editor of valentina studio, we can run the following query to retrieve all the data from the User table:
 
-```sql 
-select * from User;
-```
+  ```sql 
+  select * from User;
+  ```
 - Some of the examples tried out were:
-```sql
-select * FROM "employees";
-select * FROM "departments";
-select * from "salaries";
-select * FROM "titles";
-```
+  ```sql
+  select * FROM "employees";
+  select * FROM "departments";
+  select * from "salaries";
+  select * FROM "titles";
+  ```
 
 - The above queries were run on the employees database, which is a sample database provided by the course owner.
 
@@ -344,14 +344,14 @@ select * FROM "titles";
 
 - eg. The following query renames the column name to `first_name` and `last_name`:
 
-```sql
-select f_name as first_name, l_name as last_name from employees;
-```
+  ```sql
+  select f_name as first_name, l_name as last_name from employees;
+  ```
 
 - Some of the examples tried out were:
-```sql
-select emp_no as "Employee #", birth_date as "Bday" FROM "employees";
-```
+  ```sql
+  select emp_no as "Employee #", birth_date as "Bday" FROM "employees";
+  ```
 
 ### Column Concatenation
 
