@@ -538,7 +538,7 @@ WHERE condition;
     select * from User where age IN (30, 40, 50);
     ```
 
-- The WHERE clause can contain pattern matching operators such as LIKE and ILIKE.
+- The WHERE clause can contain pattern matching operators such as LIKE and ILIKE and CAST.
 
   - eg. The following query retrieves all the data from the User table where the role is 'employee':
 
@@ -548,6 +548,10 @@ WHERE condition;
 
     ```sql
     select * from User where name ILIKE 'a%';
+    ```
+
+    ```sql
+    select * from User where CAST(age AS varchar) LIKE '3%';
     ```
 
 - Not operator
@@ -610,4 +614,10 @@ WHERE condition;
 - The COALESCE function returns the first non-NULL value from the list of values.
 
 - The COALESCE function is used to handle NULL values in the result set.
+
+- eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+  ```sql
+  select coalesce(role, 'Unknown') from User;
+  ```
 
