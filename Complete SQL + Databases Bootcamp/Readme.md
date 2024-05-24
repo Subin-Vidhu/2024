@@ -501,11 +501,11 @@ select * from User
 
 - The WHERE clause has the following syntax:
 
-```sql
-SELECT column1, column2, ...
-FROM table_name
-WHERE condition;
-```
+  ```sql
+  SELECT column1, column2, ...
+  FROM table_name
+  WHERE condition;
+  ```
 
 - The WHERE clause can contain one or more conditions, which are combined using logical operators such as AND, OR, and NOT.
 
