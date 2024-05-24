@@ -798,3 +798,6 @@ WHERE condition;
   select a.emp_no, a.first_name, a.last_name, b.emp_no, b.first_name, b.last_name from employees AS a INNER JOIN employees AS b ON a.emp_no = b.emp_no order by a.emp_no;
   ```
 
+### Outer Join
+
+
