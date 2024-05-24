@@ -189,3 +189,11 @@ select * from User
 - PostgreSQL is known for its reliability, with support for high availability, replication, and backup and recovery.
 
 - For this course, we will be using `PostgreSQL` as our database and `valentina studio` as our database client.
+
+
+    #### Assuming th employees.sql is the path in the cmd, the command to run the sql file is as follows:
+    ```
+    path: "C:\Program Files\PostgreSQL\16\bin\psql.exe" -U postgres -d Employees < employees.sql
+    Password for user postgres:
+    ```
+    
