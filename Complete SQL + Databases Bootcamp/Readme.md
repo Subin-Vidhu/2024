@@ -104,6 +104,6 @@ select * from User
 
 - A table has a primary key, which is used to uniquely identify each row in the table.
 
-
+### COLUMNS
 
 
