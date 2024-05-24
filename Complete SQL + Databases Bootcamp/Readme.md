@@ -160,4 +160,15 @@ select * from User
 
 - OLAP (Online Analytical Processing): OLAP systems are used to analyze and report on data, such as sales trends, customer behavior, and market share. OLAP systems are optimized for complex queries and data analysis.
 
+### Popular SQL Databases
+
+- MySQL: MySQL is an open-source relational database management system that is widely used for web applications.
+
+- PostgreSQL: PostgreSQL is an open-source relational database management system that is known for its advanced features and extensibility.
+
+- SQLite: SQLite is a lightweight relational database management system that is embedded in many applications.
+
+- Oracle: Oracle is a commercial relational database management system that is widely used in enterprise applications.
+
+- SQL Server: SQL Server is a commercial relational database management system that is developed by Microsoft.
 
