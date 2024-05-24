@@ -756,3 +756,6 @@ WHERE condition;
   ```sql 
   select a.emp_no, a.first_name, a.last_name, b.dept_name from employees AS a, departments AS b where a.dept_no = b.dept_no order by a.emp_no;
   ```
+
+### Inner Join
+
