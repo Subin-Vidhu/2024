@@ -436,3 +436,37 @@ select emp_no as "Employee #", birth_date as "Bday" FROM "employees";
 
   ```
 
+### Comments in SQL
+
+- Comments are used to document SQL code and make it more readable. There are two types of comments in SQL:
+
+- Single-line comments: Single-line comments start with -- and continue until the end of the line.
+
+  - eg. The following query retrieves all the data from the User table:
+
+    ```sql
+    select * from User; -- This is a single-line comment
+    ```
+
+- Multi-line comments: Multi-line comments start with /* and end with */. Multi-line comments can span multiple lines.
+
+    - eg. The following query retrieves all the data from the User table:
+
+    ```sql
+    /*
+    This is a multi-line comment
+    It spans multiple lines
+    */
+    select * from User;
+    ```
+  
+- Comments are ignored by the SQL parser and do not affect the execution of the SQL code.
+
+- Comments are used to document the purpose of the SQL code.
+
+- Comments are used to explain complex SQL queries.
+
+- Comments are used to provide context for the SQL code.
+
+- Comments are used to document changes made to the SQL code.
+
