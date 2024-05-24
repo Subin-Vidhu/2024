@@ -588,8 +588,26 @@ WHERE condition;
 
   ```sql
   select * from User where role IS NULL;
-  ```
+  ``` 
 
   ```sql
   select * from User where role IS NOT NULL;
   ```
+
+### Coalesce Function
+
+- The COALESCE function is used to return the first non-NULL value in a list of values. The COALESCE function returns the first non-NULL value from the list of values.
+
+- The COALESCE function has the following syntax:
+
+  ```sql
+  SELECT COALESCE(value1, value2, ...)
+  FROM table_name;
+  ```
+
+- The COALESCE function can take one or more arguments, which are evaluated from left to right.
+
+- The COALESCE function returns the first non-NULL value from the list of values.
+
+- The COALESCE function is used to handle NULL values in the result set.
+
