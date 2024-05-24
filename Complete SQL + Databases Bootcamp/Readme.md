@@ -197,3 +197,6 @@ select * from User
     Password for user postgres:
     ```
     
+### Queries in SQL
+
+- A query is a request for data from a database. Queries are used to retrieve, insert, update, and delete data in a database.
