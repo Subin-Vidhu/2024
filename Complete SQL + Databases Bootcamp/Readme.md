@@ -208,6 +208,28 @@ select * from User
 - A query can be simple or complex, depending on the requirements of the user.
 
 - A query can be executed using a database client, such as `valentina studio`, `pgAdmin`, or `SQL Server Management Studio`.
+ 
+### SQL Statements
 
   ![alt text](image.png)
- 
+- SQL statements are used to perform operations on a database. There are several types of SQL statements, including:
+
+- Data Definition Language (DDL) statements: DDL statements are used to define, modify, and delete database objects, such as tables, indexes, and views.
+
+- Data Manipulation Language (DML) statements: DML statements are used to retrieve, insert, update, and delete data in a database.
+
+- Data Control Language (DCL) statements: DCL statements are used to grant and revoke permissions on database objects.
+
+- Transaction Control Language (TCL) statements: TCL statements are used to manage transactions in a database.
+
+- DQL (Data Query Language): SELECT - Retrieves data from a database
+
+- DML (Data Manipulation Language): INSERT, UPDATE, DELETE  Modifies data in a database
+
+- DDL (Data Definition Language): CREATE, ALTER, DROP  Creates, modifies, and deletes database objects
+
+- DCL (Data Control Language): GRANT, REVOKE  Grants and revokes permissions on database objects
+
+- TCL (Transaction Control Language): COMMIT, ROLLBACK  Manages transactions in a database
+
+### SELECT Statement
