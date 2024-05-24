@@ -200,3 +200,14 @@ select * from User
 ### Queries in SQL
 
 - A query is a request for data from a database. Queries are used to retrieve, insert, update, and delete data in a database.
+
+- A query is written in SQL (Structured Query Language), which is a standard language for interacting with databases.
+
+- A query consists of one or more SQL statements, which are used to perform operations on the database.
+
+- A query can be simple or complex, depending on the requirements of the user.
+
+- A query can be executed using a database client, such as `valentina studio`, `pgAdmin`, or `SQL Server Management Studio`.
+
+ - ![alt text](image.png)
+ 
