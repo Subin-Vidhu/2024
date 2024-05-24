@@ -369,4 +369,65 @@ select emp_no as "Employee #", birth_date as "Bday" FROM "employees";
 
 ### Functions in SQL
 
+- SQL functions are used to perform operations on data in a database. There are several types of SQL functions, including:
+
+- `Aggregate functions`: Aggregate functions are used to perform calculations on a set of values and return a single value. Examples of aggregate functions include SUM, AVG, COUNT, MIN, and MAX.
+
+- `Scalar functions`: Scalar functions are used to perform calculations on a single value and return a single value. Examples of scalar functions include UPPER, LOWER, LENGTH, and SUBSTRING.
+
+- `Date functions`: Date functions are used to perform calculations on date values and return a date value. Examples of date functions include DATE, MONTH, YEAR, and DAY.
+
+- `String functions`: String functions are used to perform operations on string values and return a string value. Examples of string functions include CONCAT, SUBSTRING, and REPLACE.
+
+- `Mathematical functions`: Mathematical functions are used to perform calculations on numeric values and return a numeric value. Examples of mathematical functions include ABS, ROUND, and CEIL.
+
+- `Logical functions`: Logical functions are used to perform operations on boolean values and return a boolean value. Examples of logical functions include AND, OR, and NOT.
+
+- `Window functions`: Window functions are used to perform calculations on a set of rows and return a single value for each row. Examples of window functions include ROW_NUMBER, RANK, and DENSE_RANK.
+
+- `User-defined functions`: User-defined functions are functions that are defined by the user and can be used in SQL queries. Examples of user-defined functions include stored procedures and user-defined functions.
+
+- Here are some of the examples of functions used in SQL:
+
+  ```sql
+  select count(*) from employees;
+  select sum(salary) from salaries;
+  select avg(salary) from salaries;
+  select min(salary) from salaries;
+  select max(salary) from salaries;
+  select upper(f_name) from employees;
+  select lower(f_name) from employees;
+  select length(f_name) from employees;
+  select substring(f_name, 1, 3) from employees;
+  select abs(salary) from salaries;
+  select round(salary) from salaries;
+  select ceil(salary) from salaries;
+  select floor(salary) from salaries;
+  select date_part('year', birth_date) from employees;
+  select date_part('month', birth_date) from employees;
+  select date_part('day', birth_date) from employees;
+  select concat(f_name, ' ', l_name) from employees;
+  select replace(f_name, 'a', 'A') from employees;
+  select coalesce(f_name, 'Unknown') from employees;
+  select distinct f_name from employees;
+  select distinct l_name from employees;
+  select distinct f_name, l_name from employees;
+  select distinct on (f_name) f_name, l_name from employees;
+  select distinct on (l_name) f_name, l_name from employees;
+  select distinct on (f_name, l_name) f_name, l_name from employees;
+  select distinct on (f_name, l_name) f_name, l_name from employees order by f_name, l_name;
+  select distinct on (f_name, l_name) f_name, l_name from employees order by f_name desc, l_name desc;
+  select distinct on (f_name, l_name) f_name, l_name from employees order by f_name, l_name desc;
+  select distinct on (f_name, l_name) f_name, l_name from employees order by f_name desc, l_name;
+  select distinct on (f_name, l_name) f_name, l_name from employees order by f_name, l_name desc;
+  select distinct on (f_name, l_name) f_name, l_name from employees order by f_name desc, l_name;
+  select distinct on (f_name, l_name) f_name, l_name from employees order by f_name, l_name desc;
+  select distinct on (f_name, l_name) f_name, l_name from employees order by f_name desc, l_name;
+  select distinct on (f_name, l_name) f_name, l_name from employees order by f_name, l_name desc;
+  select distinct on (f_name, l_name) f_name, l_name from employees order by f_name desc, l_name;
+  select distinct on (f_name, l_name) f_name, l_name from employees order by f_name, l_name desc;
+  select distinct on (f_name, l_name) f_name, l_name from employees order by f_name desc, l_name;
+  select distinct on (f_name, l_name) f_name, l_name from employees order by f_name, l_name desc;
+
+  ```
 
