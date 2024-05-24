@@ -826,3 +826,27 @@ WHERE condition;
 ### Cross Join
 
 - The CROSS JOIN clause is used to combine rows from two or more tables without a related column between them. The CROSS JOIN clause returns the Cartesian product of the two tables.
+
+- The CROSS JOIN clause has the following syntax:
+
+  ```sql
+  SELECT column1, column2, ...
+  FROM table1
+  CROSS JOIN table2;
+  ```
+
+- The CROSS JOIN clause combines rows from two or more tables without a related column between them.
+
+- The CROSS JOIN clause returns the Cartesian product of the two tables.
+
+- The CROSS JOIN clause is used to combine rows from two or more tables without a related column between them.
+
+- eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+  ```sql
+  select a.emp_no, a.first_name, a.last_name, b.dept_name from employees AS a CROSS JOIN departments AS b order by a.emp_no;
+  ```
+
+### Full Outer Join
+
+- The FULL OUTER JOIN clause is used to combine rows from two or more tables based on a related column between them. The FULL OUTER JOIN clause returns rows when there is no match in both tables.
