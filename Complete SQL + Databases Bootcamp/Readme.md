@@ -106,4 +106,19 @@ select * from User
 
 ### COLUMNS
 
+- A column is a vertical arrangement of data in a table. Each column represents a field in the table.
+
+- A column has a name, which is used to identify the column.
+
+- A column has a data type, which defines the type of data that can be stored in the column.
+
+- A column has a size, which defines the maximum length of the data that can be stored in the column.
+
+- A column can have domain/constraints, which define the rules that the data in the column must follow.
+
+- Columns are also known as attributes in the relational model.
+
+
+
+
 
