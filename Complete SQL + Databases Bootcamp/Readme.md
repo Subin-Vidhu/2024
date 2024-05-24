@@ -128,6 +128,10 @@ select * from User
 
 - A row is also known as a tuple in the relational model.
 
+- A row is also known as a record in the database.
+
+- Cardinality: The number of rows in a table is known as the cardinality of the table.
+
 
 
 
