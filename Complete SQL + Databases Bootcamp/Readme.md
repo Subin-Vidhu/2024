@@ -622,3 +622,28 @@ WHERE condition;
   ```
 
 ### Date Filtering
+
+- The DATE function is used to extract the date part from a timestamp or date value. The DATE function returns the date part of a timestamp or date value.  
+
+- The DATE function has the following syntax:
+
+  ```sql
+  SELECT DATE(date_column)
+  FROM table_name;
+  ```
+
+- The DATE function returns the date part of the timestamp or date value.
+
+- To check the timezone in valentina studio, we can run the following query:
+
+  ```sql
+  select current_setting('TIMEZONE');
+  ```
+
+  or 
+
+  ```sql
+  SHOW timezone;
+  ```
+
+### Format Date and Time
