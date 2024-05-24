@@ -118,7 +118,7 @@ select * from User
 
 - Columns are also known as attributes in the relational model.
 
-
+### ROWS
 
 
 
