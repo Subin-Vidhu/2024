@@ -897,4 +897,3 @@ select * from User
   select a.emp_no, a.first_name, a.last_name, b.dept_name from employees AS a JOIN departments AS b USING (dept_no) order by a.emp_no;
   ```
 
-
