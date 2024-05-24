@@ -621,3 +621,4 @@ WHERE condition;
   select coalesce(role, 'Unknown') from User;
   ```
 
+### Date Filtering
