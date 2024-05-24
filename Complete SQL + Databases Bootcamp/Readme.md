@@ -51,6 +51,19 @@ select * from User
 
 ### SQL Standards
 
+- SQL-86 (SQL-1)
+- SQL-89 (SQL-2)
+- SQL-92 (SQL-3)
+- SQL:1999 (SQL-3)
+- SQL:2003 (SQL-3)
+- SQL:2008 (SQL-3)
+- SQL:2011 (SQL-3)
+- SQL:2016 (SQL-3)
+- SQL:2019 (SQL-3)
+- SQL:2023 (SQL-3)
+
+- These are some of the SQL standards that have been released over the years and the latest one is SQL:2023.
+
 
 
 
