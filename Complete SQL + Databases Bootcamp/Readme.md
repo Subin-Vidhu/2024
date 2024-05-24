@@ -373,6 +373,11 @@ select emp_no as "Employee #", birth_date as "Bday" FROM "employees";
 
 - `Aggregate functions`: Aggregate functions are used to perform calculations on a set of values and return a single value. Examples of aggregate functions include SUM, AVG, COUNT, MIN, and MAX.
 
+    ```
+    select sum(salary) from salaries; 
+    select avg(salary) from salaries;
+    ```
+
 - `Scalar functions`: Scalar functions are used to perform calculations on a single value and return a single value. Examples of scalar functions include UPPER, LOWER, LENGTH, and SUBSTRING.
 
 - `Date functions`: Date functions are used to perform calculations on date values and return a date value. Examples of date functions include DATE, MONTH, YEAR, and DAY.
