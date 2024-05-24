@@ -871,4 +871,30 @@ WHERE condition;
   ```sql
   select a.emp_no, a.first_name, a.last_name, b.dept_name from employees AS a FULL OUTER JOIN departments AS b ON a.dept_no = b.dept_no order by a.emp_no;
   ```
+
+### USING Clause
+
+- The USING clause is used to specify the columns to join in the SELECT statement. The USING clause specifies the columns to join in the SELECT statement.
+
+- The USING clause has the following syntax:
+
+  ```sql
+  SELECT column1, column2, ...
+  FROM table1
+  JOIN table2
+  USING (column);
+  ```
+
+- The USING clause specifies the columns to join in the SELECT statement.
+
+- The USING clause is used to specify the columns to join in the SELECT statement.
+
+- The USING clause is used to specify the columns to join in the SELECT statement.
+
+- eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+  ```sql
+  select a.emp_no, a.first_name, a.last_name, b.dept_name from employees AS a JOIN departments AS b USING (dept_no) order by a.emp_no;
+  ```
+
   
