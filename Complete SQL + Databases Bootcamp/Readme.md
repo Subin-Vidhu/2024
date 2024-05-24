@@ -40,7 +40,9 @@ select * from User
 
 ### Imperative vs Declarative
 
-- Imperative: How to do something
-- Declarative: What to do
+- Imperative: How to do something, eg. SQL
+- Declarative: What to do, eg. Java
+
+
 
 
