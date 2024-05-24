@@ -495,3 +495,5 @@ select emp_no as "Employee #", birth_date as "Bday" FROM "employees";
 - Using incorrect functions in the GROUP BY clause.
 
 
+### Filtering Data
+
