@@ -1057,3 +1057,6 @@ eg. The following query retrieves all the data from the User table where the rol
     ```sql
     select emp_no, salary, max(salary) over (partition by emp_no) as total_salary from salaries order by emp_no;
     ```
+
+### Partition By
+
