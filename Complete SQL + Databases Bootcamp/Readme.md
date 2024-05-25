@@ -960,3 +960,5 @@ select * from User
 - Where vs Having
   - The WHERE clause filters rows before they are grouped.
   - The HAVING clause filters groups after they are grouped.
+
+### Group by Mental Model
