@@ -899,3 +899,39 @@ select * from User
 
 ### Group By
 
+- The GROUP BY clause is used to group rows that have the same values in one or more columns in the SELECT statement. The GROUP BY clause groups rows that have the same values in one or more columns.
+
+- The GROUP BY clause has the following syntax:
+
+  ```sql
+  SELECT column1, column2, ...
+  FROM table_name
+  GROUP BY column1, column2, ...;
+  ```
+
+- eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+  ```sql
+  select dept_no, count(*) from employees group by dept_no;
+  ```
+  
+  ```sql
+  select dept_no, count(emp_no) from dept_emp group by dept_no order by dept_no;
+  ```
+
+- utilizes a split-apply-combine strategy. 
+  - Split the data into groups by using the GROUP BY clause.
+  - Apply a function to each group.
+  - Combine the results into a single result set.
+
+- Order of Operations
+  - FROM
+  - WHERE
+  - GROUP BY
+  - HAVING
+  - SELECT
+  - ORDER BY
+
+
+
+
