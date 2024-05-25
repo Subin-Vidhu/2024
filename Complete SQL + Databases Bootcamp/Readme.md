@@ -1036,4 +1036,24 @@ eg. The following query retrieves all the data from the User table where the rol
 
 ### Window Functions
 
+- Window functions are used to perform calculations on a set of rows in a table. Window functions are used to calculate aggregate values, rank values, and perform other calculations on a set of rows.
 
+- Window functions are used to perform calculations on a set of rows in a table.
+
+- Window functions are used to calculate aggregate values, rank values, and perform other calculations on a set of rows.
+
+- Window functions are used to perform calculations on a set of rows in a table.
+
+- eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+  ```sql
+  select emp_no, salary, sum(salary) over () as total_salary from salaries order by emp_no;
+  ```
+
+- OVER() clause is used to specify the window frame for the window function.
+
+  - eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+    ```sql
+    select emp_no, salary, max(salary) over (partition by emp_no) as total_salary from salaries order by emp_no;
+    ```
