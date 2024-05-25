@@ -962,3 +962,19 @@ select * from User
   - The HAVING clause filters groups after they are grouped.
 
 ### Group by Mental Model
+
+- The GROUP BY Mental Model is a way to think about the GROUP BY clause in SQL. The GROUP BY Mental Model helps you understand how the GROUP BY clause works and how to use it effectively.
+
+- The GROUP BY Mental Model has the following steps:
+
+  - Split the data into groups based on the columns in the GROUP BY clause.
+  - Apply an aggregate function to each group.
+  - Combine the results into a single result set.
+
+- eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+  ```sql
+  select dept_no, count(emp_no) from dept_emp group by dept_no having count(emp_no) > 50000 order by dept_no;
+  ```
+
+###
