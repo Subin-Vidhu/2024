@@ -1017,3 +1017,19 @@ eg. The following query retrieves all the data from the User table where the rol
   select dept_no, emp_no from dept_emp union select dept_no, emp_no from dept_emp;
   ```
 
+### Rollup Operator
+
+- The ROLLUP operator is used to generate subtotals in the SELECT statement. The ROLLUP operator generates subtotals for the specified columns.
+
+- The ROLLUP operator has the following syntax:
+
+  ```sql
+  SELECT column1, column2, ...
+  FROM table_name
+  GROUP BY ROLLUP (column1, column2, ...);
+  ```
+- eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+  ```sql
+  select dept_no, emp_no, count(emp_no) from dept_emp group by ROLLUP (dept_no, emp_no) order by dept_no;
+  ```
