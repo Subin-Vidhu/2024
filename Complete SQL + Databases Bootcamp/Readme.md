@@ -979,4 +979,41 @@ select * from User
 
 ### Grouping Sets
 
+- The GROUPING SETS clause is used to group rows by multiple columns in the SELECT statement. The GROUPING SETS clause groups rows by multiple columns.
+
+- The GROUPING SETS clause has the following syntax:
+
+  ```sql
+  SELECT column1, column2, ...
+  FROM table_name
+  GROUP BY GROUPING SETS (column1, column2, ...);
+  ```
+
+- The GROUPING SETS clause groups rows by multiple columns.
+
+- The GROUPING SETS clause is used to group rows by multiple columns in the SELECT statement.
+
+eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+  ```sql
+  select dept_no, emp_no, count(emp_no) from dept_emp group by GROUPING SETS (dept_no, emp_no) order by dept_no;
+  ```
+
+- UNION Operator: The UNION operator is used to combine the result sets of two or more SELECT statements. The UNION operator returns all rows from the result sets of the SELECT statements.
+
+- The UNION operator has the following syntax:
+
+  ```sql
+  SELECT column1, column2, ...
+  FROM table1
+  UNION
+  SELECT column1, column2, ...
+  FROM table2;
+  ```
+
+-eg for UNION operator:
+
+  ```sql
+  select dept_no, emp_no from dept_emp union select dept_no, emp_no from dept_emp;
+  ```
 
