@@ -1033,3 +1033,7 @@ eg. The following query retrieves all the data from the User table where the rol
   ```sql
   select dept_no, emp_no, count(emp_no) from dept_emp group by ROLLUP (dept_no, emp_no) order by dept_no;
   ```
+
+### Window Functions
+
+
