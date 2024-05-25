@@ -934,4 +934,29 @@ select * from User
 
 ### Having Clause
 
+- The HAVING clause is used to filter groups in the SELECT statement. The HAVING clause filters groups that have the specified conditions.
 
+- The HAVING clause has the following syntax:
+
+  ```sql
+  SELECT column1, column2, ...
+  FROM table_name
+  GROUP BY column1, column2, ...
+  HAVING condition;
+  ```
+
+- The HAVING clause filters groups that have the specified conditions.
+
+- The HAVING clause is used to filter groups in the SELECT statement.
+
+- The HAVING clause is used to filter groups that have the specified conditions.
+
+- eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+  ```sql
+  select dept_no, count(emp_no) from dept_emp group by dept_no having count(emp_no) > 50000 order by dept_no;
+  ```
+
+- Where vs Having
+  - The WHERE clause filters rows before they are grouped.
+  - The HAVING clause filters groups after they are grouped.
