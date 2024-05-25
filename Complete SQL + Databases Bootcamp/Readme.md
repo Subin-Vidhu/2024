@@ -1060,3 +1060,10 @@ eg. The following query retrieves all the data from the User table where the rol
 
 ### Partition By
 
+- The PARTITION BY clause is used to divide the result set into partitions in the SELECT statement. The PARTITION BY clause divides the result set into partitions based on the specified columns.
+
+- eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+  ```sql
+  select emp_no, salary, sum(salary) over (partition by emp_no) as total_salary from salaries order by emp_no;
+  ```
