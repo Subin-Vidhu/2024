@@ -1097,4 +1097,4 @@ eg. The following query retrieves all the data from the User table where the rol
     select emp_no, salary, sum(salary) over (partition by emp_no order by emp_no rows between 1 preceding and 1 following) as total_salary from salaries order by emp_no;
     ```
 
-Kind of ending the course at this point, as more important topics need to be discovered
+Kind of ending the course at this point, as more important topics need to be discovered.
