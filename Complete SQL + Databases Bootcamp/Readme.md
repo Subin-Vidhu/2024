@@ -1069,3 +1069,13 @@ eg. The following query retrieves all the data from the User table where the rol
   ```
 
 ### Order By
+
+- The ORDER BY clause is used to sort the result set in the SELECT statement. The ORDER BY clause specifies the order in which the rows should be returned.
+
+  - eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+    ```sql
+    select emp_no, salary, sum(salary) over (partition by emp_no order by emp_no) as total_salary from salaries o
+    er by emp_no;
+    ```
+
