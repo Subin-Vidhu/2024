@@ -1098,3 +1098,5 @@ eg. The following query retrieves all the data from the User table where the rol
     ```
 
 Kind of ending the course at this point, as more important topics need to be discovered.
+
+Will come up with a new plan which is more likely to be a spaced repetition rather than a cramming session.
