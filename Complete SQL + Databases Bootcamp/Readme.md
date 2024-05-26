@@ -1079,3 +1079,4 @@ eg. The following query retrieves all the data from the User table where the rol
     er by emp_no;
     ```
 
+### Framing in Window Functions
