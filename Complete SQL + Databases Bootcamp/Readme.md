@@ -1080,3 +1080,20 @@ eg. The following query retrieves all the data from the User table where the rol
     ```
 
 ### Framing in Window Functions
+
+- The framing clause is used to specify the window frame for the window function. The framing clause specifies the window frame for the window function.
+
+- The framing clause has the following syntax:
+
+  ```sql
+  SELECT column1, column2, ...
+  FROM table_name
+  WINDOW window_name AS (ORDER BY column1 ROWS BETWEEN start AND end);
+  ```
+
+   - eg. The following query retrieves all the data from the User table where the role is 'employee':
+
+    ```sql
+    select emp_no, salary, sum(salary) over (partition by emp_no order by emp_no rows between 1 preceding and 1 following) as total_salary from salaries order by emp_no;
+    ```
+
