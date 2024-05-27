@@ -401,4 +401,6 @@ func main() {
 
     - eg. `p := new(int)` creates a pointer to an integer.
 
-    
+### Variable Scope
+
+
