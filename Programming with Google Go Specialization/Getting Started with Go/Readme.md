@@ -46,6 +46,12 @@
 
     - A program that reads high-level code and executes it line by line. It translates the code into machine code as it goes.
 
+- Interpretation:
+    
+    - The process of translating high-level code into machine code line by line. Translation occurs every time the code is run, which can slow down execution. eg. Python, Ruby, etc.
+
+    - Requires an interpreter to be installed on the computer to run the code. eg. Python, Ruby, etc.
+
 - Source Code:
     
     - The code that you write in a high-level language.
