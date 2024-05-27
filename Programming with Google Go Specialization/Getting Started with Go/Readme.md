@@ -586,3 +586,31 @@ func main() {
     - `>=`: Greater than or equal to
 
 ### ASCII and Unicode
+
+- ASCII
+
+    - American Standard Code for Information Interchange.
+
+    - 7-bit character encoding standard, each character is associated with an 8-bit number.
+
+    - 128 characters: 0-127.
+
+    - eg. `A` is 0x41, `a` is 0x61.
+
+- Unicode
+    
+    - Character encoding standard that supports multiple languages.
+
+    - 32-bit character encoding standard.
+
+    - UTF-8, UTF-16, UTF-32.
+
+        -  UTF-8 are same as ASCII for the first 128 characters.
+
+        -  UTF-16 uses 16 bits for most characters.
+
+        -  UTF-32 uses 32 bits for all characters.
+
+    - Code points: Unique numbers assigned to each character.
+
+    - Rune: a codepoint in Go.
