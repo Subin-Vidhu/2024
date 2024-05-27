@@ -491,3 +491,5 @@ func main() {
     - implementation is fast
     - compiler determines stack vs heap allocation
     - garbage collection is done by the Go runtime in the background.
+
+### Comments
