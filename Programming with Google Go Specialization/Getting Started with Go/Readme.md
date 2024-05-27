@@ -120,4 +120,35 @@
     
     - A programming paradigm that uses objects to represent data and methods to operate on that data.
 
+    - Organize your code through encapsulation.
+
+    - Group together data and functions which are related.
+
+    - User defined type which is specific to the problem domain.
+
     - Go is not a pure object-oriented language, but it does support some object-oriented features.
+
+- Object:  
+        
+    - An instance of a class.
+
+- Class:
+        
+    - A blueprint for creating objects.
+
+- Objects in GO | Structs and Methods:
+    
+    - Go does not have classes, but it does have structs.
+
+    - A struct is a user-defined type that groups together data and functions.
+
+    - A struct can have fields and methods.
+
+    - Fields are data that is stored in the struct.
+
+    - Methods are functions that operate on the data in the struct.
+
+    - Go uses structs with associated methods to achieve object-oriented programming.
+
+    - Simplified implementation of classes and objects.
+
