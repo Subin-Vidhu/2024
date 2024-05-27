@@ -560,3 +560,29 @@ func main() {
     - `<<`: Bitwise left shift
     - `>>`: Bitwise right shift
     - `&^`: Bit clear
+
+### Floating-Point Numbers
+
+- Floating-point numbers are numbers with a decimal point.
+
+- Floating-point numbers can be signed or unsigned.
+
+- Different lengths and signs of floating-point numbers are used for different purposes. eg. `float32`, `float64`.
+
+- Floating-Point Operators
+
+    - `+`: Addition
+    - `-`: Subtraction
+    - `*`: Multiplication
+    - `/`: Division
+
+- Comparison Operators
+    
+    - `==`: Equal to
+    - `!=`: Not equal to
+    - `<`: Less than
+    - `>`: Greater than
+    - `<=`: Less than or equal to
+    - `>=`: Greater than or equal to
+
+### ASCII and Unicode
