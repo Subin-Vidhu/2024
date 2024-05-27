@@ -691,3 +691,114 @@ func main() {
             fmt.Println(A, B, C)
         }
         ```
+
+### Control Structures
+
+- Control structures are used to control the flow of a program.
+
+- Conditional Statements
+
+    - `if` statement: Executes a block of code if a condition is true.
+
+    - `if-else` statement: Executes one block of code if a condition is true and another block of code if the condition is false.
+        - eg. 
+        
+            ```go
+            package main
+            import "fmt"
+            func main() {
+                x := 10
+                if x > 5 {
+                    fmt.Println("x is greater than 5")
+                } else {
+                    fmt.Println("x is less than or equal to 5")
+                }
+            }
+            ```
+
+    - `if-else if-else` statement: Executes one block of code if a condition is true, another block of code if another condition is true, and a default block of code if none of the conditions are true.
+        - eg. 
+        
+            ```go
+            package main
+            import "fmt"
+            func main() {
+                x := 10
+                if x > 5 {
+                    fmt.Println("x is greater than 5")
+                } else {
+                    fmt.Println("x is less than or equal to 5")
+                }
+            }
+            ```
+
+    - `switch` statement: Executes a block of code based on the value of an expression.
+        - eg. 
+        
+            ```go
+            package main
+            import "fmt"
+            func main() {
+                x := 10
+                switch x {
+                    case 10:
+                        fmt.Println("x is 10")
+                    case 20:
+                        fmt.Println("x is 20")
+                    default:
+                        fmt.Println("x is not 10 or 20")
+                }
+            }
+            ```
+
+- Loops
+
+    - `for` loop: Executes a block of code a specified number of times.
+
+    - `for` loop with a condition: Executes a block of code while a condition is true.
+
+    - `for` loop with a range: Executes a block of code for each element in a range.
+        - eg. 
+        
+            ```go
+            package main
+            import "fmt"
+            func main() {
+                for i := 0; i < 5; i++ {
+                    fmt.Println(i)
+                }
+            }
+            ```
+
+    - `while` loop: Executes a block of code while a condition is true.
+        - eg. 
+        
+            ```go
+            package main
+            import "fmt"
+            func main() {
+                i := 0
+                for i < 5 {
+                    fmt.Println(i)
+                    i++
+                }
+            }
+            ```
+
+    - `do-while` loop: Executes a block of code at least once and then repeats while a condition is true.
+        - eg. 
+        
+            ```go
+            package main
+            import "fmt"
+            func main() {
+                i := 0
+                for {
+                    fmt.Println(i)
+                    i++
+                    if i >= 5 {
+                        break
+                    }
+                }
+            }
+            ```
