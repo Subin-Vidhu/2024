@@ -874,3 +874,88 @@ func main() {
             fmt.Println("You entered:", x)
         }
         ```
+
+### Arrays
+
+- Arrays are fixed-size collections of elements.
+
+- Arrays are declared with a fixed size.
+
+- Arrays are zero-indexed.
+
+- Arrays are passed by value.
+
+- Arrays can be initialized with values.
+
+- Arrays can be sliced.
+
+- Arrays can be multidimensional.
+
+- Arrays can be compared.
+
+- Arrays can be sorted.
+
+    - eg. 
+    
+        ```go
+        package main
+        import "fmt"
+        func main() {
+            var a [5]int
+            a[0] = 1
+            a[1] = 2
+            a[2] = 3
+            a[3] = 4
+            a[4] = 5
+            fmt.Println(a)
+        }
+        ```
+
+- Array Literal
+
+    - An array literal is a list of values enclosed in curly braces.
+
+    - The length of the array is determined by the number of values in the list.
+
+    - eg. 
+    
+        ```go
+        package main
+        import "fmt"
+        func main() {
+            a := [5]int{1, 2, 3, 4, 5}
+            fmt.Println(a)
+        }
+        ```
+
+    - ... for size in array literal infers size from number of initializers.
+        - eg. 
+        
+            ```go
+            package main
+            import "fmt"
+            func main() {
+                a := [...]int{1, 2, 3, 4, 5}
+                fmt.Println(a)
+            }
+            ```
+
+- Iterating through Arrays
+
+    - Arrays can be iterated through using a `for` loop.
+
+    - The `range` keyword is used to get the index and value of each element in the array.
+
+    - eg. 
+    
+        ```go
+        package main
+        import "fmt"
+        func main() {
+            a := [5]int{1, 2, 3, 4, 5}
+            for i, v := range a {
+                fmt.Println(i, v)
+            }
+        }
+        ```
+    - `range` returns index and value.
