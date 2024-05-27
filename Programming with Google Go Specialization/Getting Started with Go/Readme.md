@@ -442,3 +442,5 @@ func main() {
     
         - Variable is declared in block bi.
         - bi >= bj.
+
+### Deallocating Memory
