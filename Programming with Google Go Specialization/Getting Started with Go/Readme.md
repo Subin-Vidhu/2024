@@ -1181,4 +1181,42 @@ func main() {
             }
             ```
 
-###
+### Structs
+
+- Structs are user-defined types that group together data and functions.
+
+- Structs are created with the `type` and `struct` keywords.
+
+- Structs can have fields and methods.
+    - eg. 
+    
+        ```go
+        package main
+        import "fmt"
+        type Person struct {
+            Name string
+            Age int
+            address string
+            phone string
+        }
+        func main() {
+            p := Person{Name: "John", Age: 30, address: "123 Main St", phone: "555-5555"}
+
+            // or 
+
+            p.Name = "John"
+            p.Age = 30
+            p.address = "123 Main St"
+            p.phone = "555-5555"
+
+            // or
+
+            p = new(Person)
+            p.Name = "John"
+            p.Age = 30
+            p.address = "123 Main St"
+            p.phone = "555-5555"
+            
+            fmt.Println(p)
+        }
+        ```
