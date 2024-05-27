@@ -802,3 +802,75 @@ func main() {
                 }
             }
             ```
+
+    - `break` statement: Exits a loop.
+
+    - `continue` statement: Skips the rest of the loop and goes to the next iteration.
+
+### Tagless Switch
+
+- Go switch statements can be written without a tag.
+
+- The case statements are evaluated in order.
+
+- The first case that evaluates to true is executed.
+
+    - eg. 
+    
+        ```go
+        package main
+        import "fmt"
+        func main() {
+            x := 10
+            switch {
+                case x > 5:
+                    fmt.Println("x is greater than 5")
+                case x > 10:
+                    fmt.Println("x is greater than 10")
+                default:
+                    fmt.Println("x is less than or equal to 5")
+            }
+        }
+        ```
+
+- The `fallthrough` keyword can be used to execute the next case.
+
+    - eg. 
+    
+        ```go
+        package main
+        import "fmt"
+        func main() {
+            x := 10
+            switch {
+                case x > 5:
+                    fmt.Println("x is greater than 5")
+                    fallthrough
+                case x > 10:
+                    fmt.Println("x is greater than 10")
+                default:
+                    fmt.Println("x is less than or equal to 5")
+            }
+        }
+        ```
+
+### Scan
+
+- The `fmt.Scan()` function is used to read input from the console.
+
+- The `fmt.Scan()` function reads input until a newline character is encountered.
+    - eg. 
+    
+        ```go
+        package main
+        import "fmt"
+        func main() {
+            var x int
+            fmt.Print("Enter a number: ")
+            x, err := fmt.Scan(&x)
+            if err != nil {
+                fmt.Println(err)
+            }
+            fmt.Println("You entered:", x)
+        }
+        ```
