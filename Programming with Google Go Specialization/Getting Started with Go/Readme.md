@@ -363,3 +363,14 @@ func main() {
     fmt.Println(name)
 }
 ```
+
+- Variables can be initialized with a value when they are declared. eg.
+
+```go   
+package main
+import "fmt"
+func main() {
+    var name string = "John"
+    fmt.Println(name)
+}
+```
