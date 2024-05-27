@@ -670,3 +670,24 @@ func main() {
             ```
     
 ### Constants
+
+- Constants are variables whose values cannot be changed.
+
+- Constants must be different but actual values is not important.
+
+- iota is a special constant that is used to create a sequence of related constants.
+
+    - eg. 
+    
+        ```go
+        package main
+        import "fmt"
+        const (
+            A = iota
+            B
+            C
+        )
+        func main() {
+            fmt.Println(A, B, C)
+        }
+        ```
