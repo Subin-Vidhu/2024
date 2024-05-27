@@ -529,3 +529,27 @@ func main() {
 
 
 ### Integers
+
+- Integers are whole numbers.
+
+- Integers can be signed or unsigned.
+
+- Different lengths and signs of integers are used for different purposes. eg. `int8`, `int16`, `int32`, `int64`, `uint8`, `uint16`, `uint32`, `uint64`.
+
+- Binary, Octal, and Hexadecimal
+
+    - Binary: `0b` or `0B` prefix.
+    - Octal: `0` prefix.
+    - Hexadecimal: `0x` or `0X` prefix.
+
+- Binary Operators
+
+    - `+`: Addition
+    - `-`: Subtraction
+    - `*`: Multiplication
+    - `/`: Division
+    - `%`: Modulus
+    - `++`: Increment
+    - `--`: Decrement
+
+    
