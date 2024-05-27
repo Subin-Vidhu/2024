@@ -1047,4 +1047,39 @@ func main() {
         }
         ```
 
-        
+- Variable slices
+
+    - Slices can be created with the `make()` function.
+
+    - The `make()` function takes the type of the slice, the length of the slice, and the capacity of the slice.
+
+    - eg. 
+    
+        ```go
+        package main
+        import "fmt"
+        func main() {
+            a := make([]int, 5, 10) // type, length 5, capacity 10
+            fmt.Println(a)
+        }
+        ```
+
+- Append
+
+    - The `append()` function is used to add elements to a slice.
+
+    - The `append()` function takes a slice and one or more elements to add to the slice.
+
+    - The `append()` function returns a new slice with the added elements.
+
+    - eg. 
+    
+        ```go
+        package main
+        import "fmt"
+        func main() {
+            a := []int{1, 2, 3, 4, 5}
+            a = append(a, 6)
+            fmt.Println(a) // [1 2 3 4 5 6]
+        }
+        ```
