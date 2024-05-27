@@ -153,3 +153,34 @@
     - Simplified implementation of classes and objects.
 
 ### Concurrency
+
+ - Performance Limits:
+    
+    - Moore's Law used to be a guideline for the performance of computers. It stated that the number of transistors on a chip would double every 18 months.
+
+    - More transistors on a chip meant more processing power ie higher clock frequency.
+
+    - But the clock frequency has not increased significantly in recent years. Power/temperature constraints have limited the clock frequency.
+
+    - Performance improvements are now achieved through parallelism.
+
+- Parallelism:
+    
+    - Number of cores still increases with each new generation of processors.
+
+    - Running multiple tasks at the same time on different cores.
+
+    - Can be achieved through multi-core processors.
+
+    - Difficulties with parallelism:
+
+        - When do tasks start/stop?
+        - What if one task needs data from another task?
+        - How do tasks communicate?
+        - Do tasks conflict in memory access?
+
+- Concurrency:
+
+    `
+
+
