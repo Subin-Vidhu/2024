@@ -332,3 +332,5 @@
     - Variables can be declared and initialized on the same line.
     - `name := value`
 
+### Variable Initialization
+
