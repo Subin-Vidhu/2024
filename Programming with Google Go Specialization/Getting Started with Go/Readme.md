@@ -403,4 +403,42 @@ func main() {
 
 ### Variable Scope
 
+- The places in the code where a variable can be accessed.
 
+- Variables can be declared at the package level or the function level.
+
+- Package-level variables can be accessed by any function in the package.
+
+- Function-level variables can only be accessed by the function in which they are declared.
+
+- Blocks
+
+    - A block is a group of statements enclosed in curly braces.
+
+    - Variables declared in a block are only accessible within that block.
+
+    - Variables declared in a block are not accessible outside the block.
+
+        - eg
+            
+            ```go
+            package main
+            import "fmt"
+            func main() {
+                x := 10
+                if x > 5 {
+                    y := 20
+                    fmt.Println(y)
+                }
+                fmt.Println(x)
+            }
+            ```
+
+- Lexical Scoping
+
+    - The scope of a variable is determined by its location in the code.
+
+    - Variable accessible form block bj if :
+    
+        - Variable is declared in block bi.
+        - bi >= bj.
