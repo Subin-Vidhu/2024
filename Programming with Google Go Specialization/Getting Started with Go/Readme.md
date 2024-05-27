@@ -1289,5 +1289,190 @@ func main() {
             fmt.Println(string(b))
         }
         ``` 
-        
 
+- JSON Marshal
+
+    - The `json.Marshal()` function is used to convert a Go data structure to a JSON string.
+
+    - The `json.Marshal()` function returns a byte slice.
+
+    - The `json.MarshalIndent()` function is used to format the JSON string.
+
+    - eg. 
+    
+        ```go
+        package main
+        import (
+            "encoding/json"
+            "fmt"
+        )
+        type Person struct {
+            Name string `json:"name"`
+            Age int `json:"age"`
+            Address string `json:"address"`
+            Phone string `json:"phone"`
+        }
+        func main() {
+            p := Person{Name: "John", Age: 30, Address: "123 Main St", Phone: "555-5555"}
+            b, err := json.MarshalIndent(p, "", "    ")
+            if err != nil {
+                fmt.Println(err)
+                return
+            }
+            fmt.Println(string(b))
+        }
+        ```
+
+- Unmarshall
+    
+    - The `json.Unmarshal()` function is used to convert a JSON string to a Go data structure.
+
+    - The `json.Unmarshal()` function takes a byte slice and a pointer to a data structure.
+
+    - eg. 
+    
+        ```go
+        package main
+        import (
+            "encoding/json"
+            "fmt"
+        )
+        type Person struct {
+            Name string `json:"name"`
+            Age int `json:"age"`
+            Address string `json:"address"`
+            Phone string `json:"phone"`
+        }
+        func main() {
+            s := `{"name": "John", "age": 30, "address": "123 Main St", "phone": "555-5555"}`
+            var p Person
+            err := json.Unmarshal([]byte(s), &p)
+            if err != nil {
+                fmt.Println(err)
+                return
+            }
+            fmt.Println(p)
+        }
+        ```
+
+### Files
+
+- Files are used to store data.
+
+- Files can be read and written in Go.
+
+- Files are opened with the `os.Open()` function.
+
+- Files are closed with the `Close()` method.
+
+    - eg. 
+    
+        ```go
+        package main
+        import (
+            "fmt"
+            "os"
+        )
+        func main() {
+            f, err := os.Open("file.txt")
+            if err != nil {
+                fmt.Println(err)
+                return
+            }
+            defer f.Close() //defer means the function will be called when the function exits
+        }
+        ```
+
+- ioutil file
+
+    - The `ioutil.ReadFile()` function is used to read the contents of a file.
+
+    - The `ioutil.WriteFile()` function is used to write data to a file.
+
+    - eg. 
+    
+        ```go
+        package main
+        import (
+            "fmt"
+            "io/ioutil"
+        )
+        func main() {
+            b, err := ioutil.ReadFile("file.txt")
+            if err != nil {
+                fmt.Println(err)
+                return
+            }
+            fmt.Println(string(b))
+        }
+        ```
+
+       ```go
+        package main
+        import (
+            "fmt"
+            "io/ioutil"
+        )
+        func main() {
+            b := []byte("Hello, World!")
+            err := ioutil.WriteFile("file.txt", b, 0644)
+            if err != nil {
+                fmt.Println(err)
+                return
+            }
+        }
+        ```
+
+- OS Package File Access
+
+    - The `os.Read()` function is used to read data from a file.
+
+    - The `os.Write()` function is used to write data to a file.
+
+        - eg. 
+        
+            ```go
+            package main
+            import (
+                "fmt"
+                "os"
+            )
+            func main() {
+                f, err := os.Open("file.txt")
+                if err != nil {
+                    fmt.Println(err)
+                    return
+                }
+                defer f.Close()
+                b := make([]byte, 100)
+                n, err := f.Read(b)
+                if err != nil {
+                    fmt.Println(err)
+                    return
+                }
+                fmt.Println(string(b[:n]))
+            }
+            ```
+
+            ```go
+            package main
+            import (
+                "fmt"
+                "os"
+            )
+            func main() {
+                f, err := os.Create("file.txt")
+                if err != nil {
+                    fmt.Println(err)
+                    return
+                }
+                defer f.Close()
+                b := []byte("Hello, World!")
+                n, err := f.Write(b)
+                if err != nil {
+                    fmt.Println(err)
+                    return
+                }
+                fmt.Println(n, "bytes written")
+            }
+            ```
