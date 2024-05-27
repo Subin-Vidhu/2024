@@ -1106,3 +1106,79 @@ func main() {
             fmt.Println(m)
         }
         ```
+
+### Maps
+
+- Maps are used to store key-value pairs.
+
+- Maps are created with the `make()` function.
+
+- Maps are accessed with the `[]` operator.
+    - eg. 
+    
+        ```go
+        package main
+        import "fmt"
+        func main() {
+            m := make(map[string]int) // key is a string, value is an int
+            m["one"] = 1
+            m["two"] = 2
+            m["three"] = 3
+            fmt.Println(m)
+        }
+        ```
+
+- Accessing Maps
+    - Maps can be accessed using the `[]` operator.
+        - eg. 
+        
+            ```go
+            package main
+            import "fmt"
+            func main() {
+                m := make(map[string]int)
+                m["one"] = 1
+                m["two"] = 2
+                m["three"] = 3
+                fmt.Println(m["one"])
+                fmt.Println(m["two"])
+                fmt.Println(m["three"])
+            }
+            ```
+- Deleting from Maps
+
+    - Elements can be deleted from a map using the `delete()` function.
+        - eg. 
+        
+            ```go
+            package main
+            import "fmt"
+            func main() {
+                m := make(map[string]int)
+                m["one"] = 1
+                m["two"] = 2
+                m["three"] = 3
+                delete(m, "two")
+                fmt.Println(m)
+            }
+            ```
+- Iterating through a map
+
+    - Maps can be iterated through using a `for` loop.
+        - eg. 
+        
+            ```go
+            package main
+            import "fmt"
+            func main() {
+                m := make(map[string]int)
+                m["one"] = 1
+                m["two"] = 2
+                m["three"] = 3
+                for k, v := range m {
+                    fmt.Println(k, v)
+                }
+            }
+            ```
+
+###
