@@ -303,3 +303,32 @@
     - Declared using the `const` keyword.
     - `const name = value`
 
+- Multiple Variables:
+
+    - Multiple variables can be declared on the same line.
+    - `var name1, name2 type = value1, value2`
+    - `var name1, name2 = value1, value2`
+    - `name1, name2 := value1, value2`
+
+- Zero Values:
+
+    - Variables that are declared but not initialized are set to their zero values.
+    - `int`: 0
+    - `float64`: 0.0
+    - `bool`: false
+    - `string`: ""
+    - `byte`: 0
+    - `rune`: 0
+    - `complex64`: 0 + 0i
+    - `complex128`: 0 + 0i
+
+- Type Conversion:
+    
+    - Variables can be converted from one type to another.
+    - `var name type = type(value)`
+
+- Short Variable Declaration:
+        
+    - Variables can be declared and initialized on the same line.
+    - `name := value`
+
