@@ -181,6 +181,28 @@
 
 - Concurrency:
 
-    `
+    - Managing multiple tasks at the same time.
+
+    - A way to structure a program so that it can run multiple tasks at the same time.
+
+    - Concurrent programming enables parallelism:
+
+        - Management of task execution.
+        - Communication between tasks.
+        - Synchronization of tasks.
+
+    - Tasks are called `goroutines` in Go.
+
+    - Goroutines are lightweight threads that are managed by the Go runtime.
+
+    - Goroutines are started with the `go` keyword.
+
+    - `Channels` are used to communicate between goroutines.
+
+    - Channels are a type in Go that can be used to send and receive data between goroutines.
+
+    - `Select` enables task synchronization.
+
+
 
 
