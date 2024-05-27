@@ -526,3 +526,6 @@ func main() {
             ```
 
     - `fmt.Sprintf()` returns a formatted string.
+
+
+### Integers
