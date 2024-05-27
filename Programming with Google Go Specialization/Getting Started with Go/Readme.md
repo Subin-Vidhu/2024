@@ -38,6 +38,10 @@
             
     - A program that translates high-level code into machine code. It reads the entire program and translates it all at once.
 
+- Compilation:
+            
+    - The process of translating high-level code into machine code, Translation occurs only once, saves time during execution. eg. C, C++, etc.
+
 - Interpreter:
 
     - A program that reads high-level code and executes it line by line. It translates the code into machine code as it goes.
