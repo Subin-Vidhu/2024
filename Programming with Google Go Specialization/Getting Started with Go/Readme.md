@@ -552,4 +552,11 @@ func main() {
     - `++`: Increment
     - `--`: Decrement
 
-    
+- Bitwise Operators
+
+    - `&`: Bitwise AND
+    - `|`: Bitwise OR
+    - `^`: Bitwise XOR
+    - `<<`: Bitwise left shift
+    - `>>`: Bitwise right shift
+    - `&^`: Bit clear
