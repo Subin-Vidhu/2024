@@ -52,6 +52,28 @@
 
     - Requires an interpreter to be installed on the computer to run the code. eg. Python, Ruby, etc.
 
+- Efficiency vs. Ease of Use:
+    
+    - Compiled languages are generally faster than interpreted languages because the code is translated all at once. Interpreted languages are easier to use because they do not require a separate compilation step.
+
+- Go is a compiled language, which means that it is translated into machine code before it is run. This makes it faster than interpreted languages like Python or Ruby. But it has some of the ease of use of an interpreted language because it has a garbage collector and built-in support for concurrency.
+
+    - Garbage Collector: A program that automatically frees up memory that is no longer needed.
+
+    - Where should memory be allocated? Stack or Heap?
+
+        - Stack: 
+        
+            - Memory is allocated on the stack when a function is called. It is automatically freed when the function returns.
+
+        - Heap: 
+        
+            - Memory is allocated on the heap when a variable is created with the `new` keyword. It is not automatically freed, so it must be freed manually.
+
+    - When can memory be deallocated?
+
+        - Memory can be deallocated when it is no longer needed. This can happen when a variable goes out of scope or when a program exits.
+
 - Source Code:
     
     - The code that you write in a high-level language.
