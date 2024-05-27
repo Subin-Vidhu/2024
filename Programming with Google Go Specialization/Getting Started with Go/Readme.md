@@ -444,3 +444,13 @@ func main() {
         - bi >= bj.
 
 ### Deallocating Memory
+
+- When a variable is no longer needed, it should be deallocated, otherwise, it will run out of memory.
+
+- Go has a garbage collector that automatically frees up memory that is no longer needed.
+
+- Stack vs. Heap
+
+    - Memory is allocated on the stack when a function is called. It is automatically freed when the function returns.
+
+    - Memory is allocated on the heap when a variable is created with the `new` keyword. It is not automatically freed, so it must be freed manually.
