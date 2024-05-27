@@ -614,3 +614,5 @@ func main() {
     - Code points: Unique numbers assigned to each character.
 
     - Rune: a codepoint in Go.
+
+### Strings
