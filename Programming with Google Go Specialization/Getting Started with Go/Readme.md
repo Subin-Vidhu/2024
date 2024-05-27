@@ -113,3 +113,11 @@
     - A program that translates code from one high-level language to another high-level language.
 
 - All software must be translated  into the machine language that the computer understands before it can be executed.
+
+### Object-Oriented Programming
+
+- Object-Oriented Programming (OOP):
+    
+    - A programming paradigm that uses objects to represent data and methods to operate on that data.
+
+    - Go is not a pure object-oriented language, but it does support some object-oriented features.
