@@ -375,3 +375,30 @@ func main() {
 }
 ```
 ### Pointers
+
+- Pointers are variables that store the memory address of another variable ie an address to data in memory.
+
+- & operator returns memory address of a variable/function.
+
+- * operator returns the data at the memory address.
+
+- eg. 
+
+    ```go
+    var x int = 10
+    var y int
+    var ip *int // pointer to an integer
+    ip = &x // store the address of x in ip
+    y = *ip // store the value at the address in y
+    fmt.Println(*y)
+    ```
+
+- New
+    
+    - The `new` function returns a pointer to a newly allocated zero value of the specified type.
+
+    - new() creates a variable and returns a pointer to the variable.
+
+    - eg. `p := new(int)` creates a pointer to an integer.
+
+    
