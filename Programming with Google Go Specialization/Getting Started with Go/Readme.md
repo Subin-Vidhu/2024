@@ -334,3 +334,32 @@
 
 ### Variable Initialization
 
+- Variables can be initialized when they are declared.
+
+- Variable Initialization:
+    - `var name type = value`
+    - `var name = value`
+    - `name := value`
+
+- Unintialized Variables:
+    - Variables that are declared but not initialized are set to their zero values.
+    - `int`: 0
+    - `float64`: 0.0
+    - `bool`: false
+    - `string`: ""
+    - `byte`: 0
+    - `rune`: 0
+    - `complex64`: 0 + 0i
+    - `complex128`: 0 + 0i
+
+- Variables can be initialized in the declaration statement or later in the program.eg.
+
+```go  
+package main
+import "fmt"
+func main() {
+    var name string
+    name = "John"
+    fmt.Println(name)
+}
+```
