@@ -274,3 +274,6 @@
     - `go vet`: Reports suspicious constructs in the code.
     - `go generate`: Generates Go files by processing source files.
     - `go list`: Lists the packages in the current directory.
+
+### Go Variables
+
