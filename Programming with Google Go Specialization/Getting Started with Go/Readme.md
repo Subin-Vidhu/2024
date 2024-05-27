@@ -206,4 +206,5 @@
 
 ### Installing GO
 
+- Download the Go installer from the official website [here](https://golang.org/dl/)
 
