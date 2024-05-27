@@ -209,3 +209,14 @@
 - Download the Go installer from the official website [here](https://golang.org/dl/)
 
 ### Workspaces and Packages
+
+- Go uses workspaces to organize your code.
+
+    - A workspace is a directory that contains your Go code.
+    - Hierarchy of directories:
+        - `src` directory: Contains your Go source code files.
+        - `pkg` directory: Contains package objects.
+        - `bin` directory: Contains executable files.
+    - Programmer typically has one workspace for many projects.
+
+   
