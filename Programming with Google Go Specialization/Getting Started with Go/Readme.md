@@ -616,3 +616,56 @@ func main() {
     - Rune: a codepoint in Go.
 
 ### Strings
+
+- Strings are sequences of characters.
+
+- Strings are immutable.
+
+- Strings can be concatenated with the `+` operator.
+
+- Strings can be compared with the `==` operator.
+
+- Strings can be indexed with the `[]` operator.
+
+- Strings can be sliced with the `[:]` operator.
+
+- Strings can be converted to bytes with the `[]byte()` function.
+
+- Strings can be converted to runes with the `[]rune()` function.
+
+- Strings can be formatted with the `fmt.Sprintf()` function.
+
+- strconv package can be used to convert strings to other types.
+
+    - eg. `strconv.Atoi()` converts a string to an integer.
+        ```go
+        package main
+        import (
+            "fmt"
+            "strconv"
+        )
+        func main() {
+            s := "10"
+            i, _ := strconv.Atoi(s)
+            fmt.Println(i)
+        }
+        ```
+
+    - eg. `strconv.ParseFloat()` converts a string to a float.
+    - eg. `strconv.Itoa()` converts an integer to a string.
+
+        - eg. 
+        
+            ```go
+            package main
+            import (
+                "fmt"
+                "strconv"
+            )
+            func main() {
+                i := 10
+                s := strconv.Itoa(i)
+                fmt.Println(s)
+            }
+            ```
+    
