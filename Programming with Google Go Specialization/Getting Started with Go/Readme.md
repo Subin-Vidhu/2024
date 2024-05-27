@@ -959,3 +959,92 @@ func main() {
         }
         ```
     - `range` returns index and value.
+
+### Slices
+
+- Slices are dynamic collections of elements.
+
+- Slices are like arrays, but their size can change.
+
+- Slices are passed by reference.
+
+- Slices can be created with the `make()` function.
+
+- Slices can be created with the `[]` operator.
+
+- Slices can be sliced.
+
+- Slices examples:
+
+    - eg. 
+    
+        ```go
+        package main
+        import "fmt"
+        func main() {
+            a := []int{1, 2, 3, 4, 5}
+            fmt.Println(a)
+            s := a[1:3]
+            fmt.Println(s)
+        }
+        ```
+
+- Length and Capacity
+
+    - The length of a slice is the number of elements in the slice.
+
+    - The capacity of a slice is the number of elements in the underlying array.
+
+    - The capacity of a slice can be increased by using the `append()` function.
+
+    - eg. 
+    
+        ```go
+        package main
+        import "fmt"
+        func main() {
+            a := []int{1, 2, 3, 4, 5}
+            fmt.Println(len(a))
+            fmt.Println(cap(a))
+            a = append(a, 6)
+            fmt.Println(len(a))
+            fmt.Println(cap(a))
+        }
+        ```
+
+- Accessing Slices
+
+    - Slices can be accessed using the `[]` operator.
+        - eg. 
+        
+            ```go
+            package main
+            import "fmt"
+            func main() {
+                a := []int{1, 2, 3, 4, 5}
+                fmt.Println(a[0])
+                fmt.Println(a[1])
+                fmt.Println(a[2])
+                fmt.Println(a[3])
+                fmt.Println(a[4])
+            }
+            ```
+
+- Slice literals
+
+    - A slice literal is a list of values enclosed in curly braces.
+
+    - The length of the slice is determined by the number of values in the list.
+
+    - eg. 
+    
+        ```go
+        package main
+        import "fmt"
+        func main() {
+            a := []int{1, 2, 3, 4, 5}
+            fmt.Println(a)
+        }
+        ```
+
+        
