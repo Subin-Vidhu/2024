@@ -1083,3 +1083,26 @@ func main() {
             fmt.Println(a) // [1 2 3 4 5 6]
         }
         ```
+
+### Hash Tables
+
+- Hash tables are used to store key-value pairs.
+
+- Hash tables are implemented with maps in Go.
+
+- Maps are created with the `make()` function.
+
+- Maps are accessed with the `[]` operator.
+    - eg. 
+    
+        ```go
+        package main
+        import "fmt"
+        func main() {
+            m := make(map[string]int) // key is a string, value is an int
+            m["one"] = 1
+            m["two"] = 2
+            m["three"] = 3
+            fmt.Println(m)
+        }
+        ```
