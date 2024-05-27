@@ -1216,7 +1216,34 @@ func main() {
             p.Age = 30
             p.address = "123 Main St"
             p.phone = "555-5555"
-            
+
             fmt.Println(p)
         }
         ```
+
+### RFC - Request for Comments
+
+- RFCs are documents that describe new features or changes to existing features.
+
+- Definitions of protocols, procedures, programs, and concepts.
+
+- RFCs are used to standardize the internet.
+
+  - eg. 
+
+    - RFC 791: Internet Protocol
+    - RFC 793: Transmission Control Protocol
+    - RFC 2616: Hypertext Transfer Protocol
+    - RFC 7230: Hypertext Transfer Protocol (HTTP/1.1)\
+    - RFC 1866: Hypertext Markup Language (HTML)
+    - RFC 3986: Uniform Resource Identifier (URI)
+
+- Golang provides packages for important RFCs.
+
+    - eg. 
+
+        - `net/http` package implements RFC 7230.
+        - `net/url` package implements RFC 3986.
+        - `net` package implements RFC 791. eg. `net.IPAddr`, `net.IPNet`, etc.
+
+### JSON
