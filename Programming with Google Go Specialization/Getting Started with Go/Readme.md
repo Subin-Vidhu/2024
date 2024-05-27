@@ -218,5 +218,39 @@
         - `pkg` directory: Contains package objects.
         - `bin` directory: Contains executable files.
     - Programmer typically has one workspace for many projects.
+    - Directory hierarchy is recommended not enforced.
+    
+    - Workspace directroy is set by the `GOPATH` environment variable.
 
-   
+- Packages:
+
+    - Group of related source files.
+    - Each package has a unique name.
+    - Each package can be imported by other packages.
+    - Enables software reuse.
+    - First line of file names the package. eg. `package main`
+        - `main` package is used to create an executable.
+
+    - Importing Packages:
+        - `import "fmt"` imports the `fmt` package.
+        - `import "math/rand"` imports the `rand` package from the `math` package.
+
+    - Package Naming:
+
+        - Package name is the last element of the import path.
+        - `import "math/rand"` imports the `rand` package from the `math` package.
+        - `import "github.com/golang/example/hello"` imports the `hello` package from the `github.com/golang/example` package.
+
+    - Package Main
+    
+        - The `main` package is used to create an executable.
+        - The `main` function is the entry point of the program.
+        - The `main` function is called when the program is run.
+        eg. 
+        
+        ```go
+        package main
+        import "fmt"
+        func main() { 
+            fmt.Printf("Hello World!\n") }
+        ```
