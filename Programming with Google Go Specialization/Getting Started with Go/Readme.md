@@ -512,4 +512,17 @@ func main() {
 
 ### Print Statements
 
+- Print statements are used to display output.
 
+    -Improt form the fmt package
+    - `fmt.Println()` prints a new line after the output.
+    - `fmt.Print()` does not print a new line after the output.
+    - `fmt.Printf()` prints formatted output.
+        - eg. 
+        
+            ```go
+            name := "John"
+            fmt.Printf("Hello, %s!\n", name)
+            ```
+
+    - `fmt.Sprintf()` returns a formatted string.
