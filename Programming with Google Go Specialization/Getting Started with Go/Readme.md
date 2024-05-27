@@ -256,3 +256,21 @@
         ```
 
 ### Go Tools
+
+- Go has a set of tools that help you write, build, and run Go code, ie manage GO source code.
+
+    - `import': access other packages.
+        - `fmt`: format code.
+        - Searches directories specified by GOROOT and GOPATH environment variables.
+
+    - `go build`: Compiles the code in the current directory.
+        - eg. `go build hello.go` compiles the `hello.go` file.
+    - `go run`: Compiles and runs the code in the current directory, tie compiles .go files and runs the executable.
+        - eg. `go run hello.go` runs the `hello.go` file.
+    - `go test`: Runs tests in the current directory.
+    - `go fmt`: Formats the code in the current directory.
+    - `go get`: Downloads and installs packages.
+    - `go doc`: Displays documentation for a package.
+    - `go vet`: Reports suspicious constructs in the code.
+    - `go generate`: Generates Go files by processing source files.
+    - `go list`: Lists the packages in the current directory.
