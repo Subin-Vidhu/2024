@@ -457,3 +457,37 @@ func main() {
 
 ### Garbage Collection
 
+- Go has a garbage collector that automatically frees up memory that is no longer needed.
+
+- Pointers and Deallocation
+    
+    - Go has a garbage collector that automatically frees up memory that is no longer needed.
+
+    - Memory is deallocated when it is no longer needed.
+
+    - Memory can be deallocated when a variable goes out of scope or when a program exits.
+
+    - Hard to determine when a variable is no longer needed.
+        eg. 
+
+        ```go 
+        func foo() * int{
+            x := 10
+            return &x
+        }
+
+        func main() {
+            var y *int
+            y := foo()
+            fmt.Println(*y)
+        }
+        ``` 
+- In interpreted languages, garbage collection is done by the interpreter, eg. for python the python interpreter, for java the JVM.
+
+    - easy for the programmer, but can slow down execution.
+
+- But when it comes to Go, GO is a coompiled language which enables garbage collection.
+
+    - implementation is fast
+    - compiler determines stack vs heap allocation
+    - garbage collection is done by the Go runtime in the background.
