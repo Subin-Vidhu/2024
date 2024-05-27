@@ -138,7 +138,7 @@
 
 - Objects in GO | Structs and Methods:
     
-    - Go does not have classes, but it does have structs.
+    - Go does not have classes, but it does have `structs`.
 
     - A struct is a user-defined type that groups together data and functions.
 
