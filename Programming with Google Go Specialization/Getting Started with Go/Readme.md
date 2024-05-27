@@ -277,3 +277,29 @@
 
 ### Go Variables
 
+- Variables are used to store data in a program.
+
+- It should have a name and a type.
+
+- Variable Declaration:
+    - `var name type = value`
+    - `var name = value`
+    - `name := value`
+
+- Variable Types:
+
+    - `int`: Integer
+    - `float64`: Floating-point number
+    - `bool`: Boolean
+    - `string`: String
+    - `byte`: Byte
+    - `rune`: Unicode character
+    - `complex64`: Complex number with float32 real and imaginary parts
+    - `complex128`: Complex number with float64 real and imaginary parts
+
+- Constants:
+    
+    - Constants are variables whose values cannot be changed.
+    - Declared using the `const` keyword.
+    - `const name = value`
+
