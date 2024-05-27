@@ -1247,3 +1247,47 @@ func main() {
         - `net` package implements RFC 791. eg. `net.IPAddr`, `net.IPNet`, etc.
 
 ### JSON
+
+- JSON (JavaScript Object Notation) is a lightweight data-interchange format.
+
+- RFC 7159: The JavaScript Object Notation (JSON) Data Interchange Format.
+
+- Attribute-value pairs.
+
+- Data is represented in key-value pairs.
+
+- Data is separated by commas.
+    - eg.. 
+    
+        ```json
+        {
+            "name": "John",
+            "age": 30,
+            "address": "123 Main St",
+            "phone": "555-5555"
+        }
+        ```
+        ```go
+        package main
+        import (
+            "encoding/json"
+            "fmt"
+        )
+        type Person struct {
+            Name string `json:"name"`
+            Age int `json:"age"`
+            Address string `json:"address"`
+            Phone string `json:"phone"`
+        }
+        func main() {
+            p := Person{Name: "John", Age: 30, Address: "123 Main St", Phone: "555-5555"}
+            b, err := json.Marshal(p)
+            if err != nil {
+                fmt.Println(err)
+                return
+            }
+            fmt.Println(string(b))
+        }
+        ``` 
+        
+
