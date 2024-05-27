@@ -493,3 +493,20 @@ func main() {
     - garbage collection is done by the Go runtime in the background.
 
 ### Comments
+
+- Comments are used to document code.
+
+- Single-line comments start with `//`.
+
+- Multi-line comments start with `/*` and end with `*/`.
+
+- Comments are ignored by the compiler.
+
+    - eg. 
+    
+        ```go
+        // This is a single-line comment
+        /* This is a
+        multi-line comment */
+        ```
+
