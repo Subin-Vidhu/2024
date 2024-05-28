@@ -321,7 +321,11 @@
         - controls the randomness of the model
         - higher temperature: more randomness
         - lower temperature: less randomness
-
+    - stop
+        - stop: ["\n", " ", ".", ",", "!", "?"]
+        - specifies the stop tokens
+        - model stops generating tokens when it encounters a stop token
+        
     - Zero- shot vs Few-shot vs Prompt-based
         - Zero-shot: no training examples
         - Few-shot: few training examples
