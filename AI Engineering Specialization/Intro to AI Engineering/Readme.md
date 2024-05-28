@@ -343,3 +343,88 @@
     - DALL.E 3
         - Image Generation
         - Text-to-Image Translation
+
+- AI Risks
+    ![alt text](image.png)
+    - AI Risks
+        - Bias
+        - Privacy
+        - Security
+        - Safety
+        - Accountability
+
+        - Bias
+            - Bias: unfair prejudice
+            - Data bias: biased data
+            - Model bias: biased model
+            - Decision bias: biased decision
+
+        - Privacy
+            - Privacy: personal information
+            - Data privacy: data protection
+            - Model privacy: model protection
+            - Decision privacy: decision protection
+
+        - Security
+            - Security: data protection
+            - Data security: data protection
+            - Model security: model protection
+            - Decision security: decision protection
+
+        - Safety
+            - Safety: human well-being
+            - Data safety: data protection
+            - Model safety: model protection
+            - Decision safety: decision protection
+
+        - Accountability
+            - Accountability: responsibility
+            - Data accountability: data responsibility
+            - Model accountability: model responsibility
+            - Decision accountability: decision responsibility
+
+        - AI Ethics
+            - AI Ethics: ethical principles
+            - Data ethics: ethical data use
+            - Model ethics: ethical model design
+            - Decision ethics: ethical decision making
+
+        - AI Governance
+            - AI Governance: governance framework
+            - Data governance: data management
+            - Model governance: model management
+            - Decision governance: decision management
+
+        - AI Regulation
+            - AI Regulation: regulatory framework
+            - Data regulation: data protection
+            - Model regulation: model protection
+            - Decision regulation: decision protection
+
+        - AI Compliance
+            - AI Compliance: compliance requirements
+            - Data compliance: data protection
+            - Model compliance: model protection
+            - Decision compliance: decision protection
+
+        - AI Transparency
+            - AI Transparency: transparent AI systems
+            - Data transparency: transparent data use
+            - Model transparency: transparent model design
+            - Decision transparency: transparent decision making
+
+        - AI Accountability
+            - AI Accountability: accountable AI systems
+            - Data accountability: accountable data use
+            - Model accountability: accountable model design
+            - Decision accountability: accountable decision making
+
+        - AI Responsibility
+            - AI Responsibility: responsible AI systems
+            - Data responsibility: responsible data use
+            - Model responsibility: responsible model design
+            - Decision responsibility: responsible decision making
+
+        - AI Trustworthiness
+            - AI Trustworthiness: trustworthy AI systems
+            - Data trustworthiness
