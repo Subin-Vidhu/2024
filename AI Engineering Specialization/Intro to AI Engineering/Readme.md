@@ -171,5 +171,138 @@
             - Response max tokens: 64
             - Response top p: 1
         
-       
+- TOKENS
+
+    - What is a Token?
+        - Token: smallest unit of text
+        - Word token: word
+        - Sentence token: sentence
+        - Paragraph token: paragraph
+        - Document token: document
+
+    - Tokenization
+        - Tokenization: process of splitting text into tokens
+        - Word tokenization: split text into words
+        - Sentence tokenization: split text into sentences
+        - Paragraph tokenization: split text into paragraphs
+        - Document tokenization: split text into documents
+
+    - Token Types
+        - Word token: word
+        - Punctuation token: punctuation
+        - Number token: number
+        - Symbol token: symbol
+        - Special token: special
+
+    - Tokenization Libraries
+        - NLTK: Natural Language Toolkit
+        - spaCy: Industrial-Strength Natural Language Processing
+        - Transformers: State-of-the-Art Natural Language Processing
+
+    - Tokenization Techniques
+        - Word Tokenization
+        - Sentence Tokenization
+        - Paragraph Tokenization
+        - Document Tokenization
+
+    - Tokenization Examples
+        - Word Tokenization
+            ```python
+            import nltk
+            nltk.download('punkt')
+            from nltk.tokenize import word_tokenize
+            text = "Hello, world!"
+            tokens = word_tokenize(text)
+            print(tokens)
+            # Output: ['Hello', ',', 'world', '!']
+            ```
+        - Sentence Tokenization
+            ```python
+            import nltk
+            nltk.download('punkt')
+            from nltk.tokenize import sent_tokenize
+            text = "Hello, world! How are you?"
+            sentences = sent_tokenize(text)
+            print(sentences)
+            # Output: ['Hello, world!', 'How are you?']
+            ```
+        - Paragraph Tokenization
+            ```python
+            import nltk
+            nltk.download('punkt')
+            from nltk.tokenize import blankline_tokenize
+            text = "Hello, world!\n\nHow are you?"
+            paragraphs = blankline_tokenize(text)
+            print(paragraphs)
+            # Output: ['Hello, world!', 'How are you?']
+            ```
+        - Document Tokenization
+            ```python
+            import nltk
+            nltk.download('punkt')
+            from nltk.tokenize import RegexpTokenizer
+            text = "Hello, world!\n\nHow are you?"
+            tokenizer = RegexpTokenizer(r'\w+')
+            tokens = tokenizer.tokenize(text)
+            print(tokens)
+            # Output: ['Hello', 'world', 'How', 'are', 'you']
+            ```
+
+    - Tokenization Challenges
+
+        - Tokenization Errors
+            - Word tokenization: split words incorrectly
+            - Sentence tokenization: split sentences incorrectly
+            - Paragraph tokenization: split paragraphs incorrectly
+            - Document tokenization: split documents incorrectly
+
+        - Tokenization Ambiguity
+            - Word tokenization: ambiguous words
+            - Sentence tokenization: ambiguous sentences
+            - Paragraph tokenization: ambiguous paragraphs
+            - Document tokenization: ambiguous documents
+
+        - Tokenization Variability
+            - Word tokenization: different languages
+            - Sentence tokenization: different punctuation
+            - Paragraph tokenization: different formatting
+            - Document tokenization: different structure
+
+        - Tokenization Complexity
+            - Word tokenization: compound words
+            - Sentence tokenization: complex sentences
+            - Paragraph tokenization: nested paragraphs
+            - Document tokenization: hierarchical documents
+
+    - Tokenization Best Practices
+
+        - Tokenization Libraries
+            - NLTK: Natural Language Toolkit
+            - spaCy: Industrial-Strength Natural Language Processing
+            - Transformers: State-of-the-Art Natural Language Processing
+
+        - Tokenization Techniques
+            - Word Tokenization
+            - Sentence Tokenization
+            - Paragraph Tokenization
+            - Document Tokenization
+
+        - Tokenization Examples
+            - Word Tokenization
+            - Sentence Tokenization
+            - Paragraph Tokenization
+            - Document Tokenization
+
+        - Tokenization Challenges
+            - Tokenization Errors
+            - Tokenization Ambiguity
+            - Tokenization Variability
+            - Tokenization Complexity
+
+        - Tokenization Best Practices
+            - Tokenization Libraries
+            - Tokenization Techniques
+            - Tokenization Examples
+            - Tokenization Challenges
+
 
