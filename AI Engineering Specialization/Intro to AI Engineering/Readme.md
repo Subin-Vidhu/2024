@@ -322,4 +322,7 @@
         - higher temperature: more randomness
         - lower temperature: less randomness
 
-    
+    - Zero- shot vs Few-shot vs Prompt-based
+        - Zero-shot: no training examples
+        - Few-shot: few training examples
+        - Prompt-based: prompt with examples
