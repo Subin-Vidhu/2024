@@ -325,8 +325,17 @@
         - stop: ["\n", " ", ".", ",", "!", "?"]
         - specifies the stop tokens
         - model stops generating tokens when it encounters a stop token
-        
+
     - Zero- shot vs Few-shot vs Prompt-based
         - Zero-shot: no training examples
         - Few-shot: few training examples
         - Prompt-based: prompt with examples
+    - Presence and Frequency penalty
+        - Frequency penalty: penalizes frequent tokens
+            - number from -2 to 2
+            - default value: 0
+            -  at higher numbers it decreases the models likelihood of repeating the exact same phrase.
+        - Presence penalty: penalizes repeated tokens
+            - number from -2 to 2
+            - default value: 0
+            - higher numbers increase a models likelihood of generating diverse tokens 
