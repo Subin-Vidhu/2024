@@ -339,3 +339,7 @@
             - number from -2 to 2
             - default value: 0
             - higher numbers increase a models likelihood of generating diverse tokens 
+
+    - DALL.E 3
+        - Image Generation
+        - Text-to-Image Translation
