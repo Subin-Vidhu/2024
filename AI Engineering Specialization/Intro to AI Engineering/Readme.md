@@ -305,4 +305,21 @@
             - Tokenization Examples
             - Tokenization Challenges
 
+    - max_tokens
+        - limits the number of tokens the model outputs
+        - does not affect the size of the input
 
+    - finish_reason
+        - indicates why the model stopped generating tokens
+        - can be "length", "stop", or "timeout"
+            - "length": reached max_tokens
+            - "stop": generated a stop token
+            - "timeout": exceeded max_time
+
+    - Temperature
+        - temperature: 0.7
+        - controls the randomness of the model
+        - higher temperature: more randomness
+        - lower temperature: less randomness
+
+    
