@@ -428,3 +428,77 @@
         - AI Trustworthiness
             - AI Trustworthiness: trustworthy AI systems
             - Data trustworthiness
+
+- AI Safety Best Practices
+    [Open AI](https://platform.openai.com/docs/guides/moderation/quickstart)
+    - AI Safety
+        - AI Safety: safe AI systems
+        - Data Safety: safe data use
+        - Model Safety: safe model design
+        - Decision Safety: safe decision making
+
+    - AI Security
+        - AI Security: secure AI systems
+        - Data Security: secure data use
+        - Model Security: secure model design
+        - Decision Security: secure decision making
+
+    - AI Privacy
+        - AI Privacy: private AI systems
+        - Data Privacy: private data use
+        - Model Privacy: private model design
+        - Decision Privacy: private decision making
+
+    - AI Bias
+        - AI Bias: unbiased AI systems
+        - Data Bias: unbiased data use
+        - Model Bias: unbiased model design
+        - Decision Bias: unbiased decision making
+
+    - AI Accountability
+        - AI Accountability: accountable AI systems
+        - Data Accountability: accountable data use
+        - Model Accountability: accountable model design
+        - Decision Accountability: accountable decision making
+
+    - AI Transparency
+        - AI Transparency: transparent AI systems
+        - Data Transparency: transparent data use
+        - Model Transparency: transparent model design
+        - Decision Transparency: transparent decision making
+
+    - AI Governance
+        - AI Governance: governed AI systems
+        - Data Governance: governed data use
+        - Model Governance: governed model design
+        - Decision Governance: governed decision making
+
+    - AI Regulation
+        - AI Regulation: regulated AI systems
+        - Data Regulation: regulated data use
+        - Model Regulation: regulated model design
+        - Decision Regulation: regulated decision making
+
+    - AI Compliance
+        - AI Compliance: compliant AI systems
+        - Data Compliance: compliant data use
+        - Model Compliance: compliant model design
+        - Decision Compliance: compliant decision making
+
+    - AI Ethics
+        - AI Ethics: ethical AI systems
+        - Data Ethics: ethical data use
+        - Model Ethics: ethical model design
+        - Decision Ethics: ethical decision making
+
+    - AI Responsibility
+        - AI Responsibility: responsible AI systems
+        - Data Responsibility: responsible data use
+        - Model Responsibility: responsible model design
+        - Decision Responsibility: responsible decision making
+
+    - AI Trustworthiness
+        - AI Trustworthiness: trustworthy AI systems
+        - Data Trustworthiness: trustworthy data use
+        - Model Trustworthiness: trustworthy model design
+        - Decision Trustworthiness: trustworthy
