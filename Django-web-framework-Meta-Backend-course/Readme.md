@@ -30,3 +30,8 @@
  - **Incredibly versatile** − Companies, organizations, and governments have used Django to build all sorts of things — from content management systems to social networks to scientific computing platforms.
  - **Easy to learn** − Django was designed to be easy to learn and use.
  - **Free and open-source** − Django is free and open source, and it's easy to download and use.
+
+### Course Content
+
+- Syllabus: [Django-web-framework-Meta-Backend-course](https://www.coursera.org/learn/django-web-framework/supplement/LNFwv/course-syllabus)
+
