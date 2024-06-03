@@ -146,3 +146,55 @@
 
     - ![alt text](image-7.png)
 
+### Creating a Django project
+
+- Virtualenv is a tool to create isolated Python environments.
+- Virtualenv is used to manage dependencies for different projects.
+- Virtualenv is used to avoid conflicts between dependencies.
+
+    - To create a virtual environment, execute the following command in terminal.
+
+        - Linux/Mac:
+            ```python
+            python3 -m venv myenv
+            source myenv/bin/activate
+            ```
+
+        - Windows:
+            ```python
+            python -m venv myenv
+            myenv\Scripts\activate
+            ```
+
+
+    - To install Django in the virtual environment, execute the following command in terminal.
+
+        ```python
+        pip install Django
+        ```
+
+    - To create a Django project, execute the following command in terminal.
+
+        ```python
+        django-admin startproject mysite
+        ```
+
+    - To create a Django app, execute the following command in terminal.
+
+        ```python
+        python manage.py startapp myapp
+        ```
+
+    - To run the Django development server, execute the following command in terminal.
+
+        ```python
+        python manage.py runserver
+        ```
+
+    - To stop the Django development server, press Ctrl + C in terminal.
+
+    - To deactivate the virtual environment, execute the following command in terminal.
+
+        ```python
+        deactivate
+        ```
