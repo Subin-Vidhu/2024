@@ -180,6 +180,20 @@
         pip install Django
         ```
 
+    - To check the Django version, execute the following command in terminal.
+
+        - 
+            ```python
+            django-admin --version
+            ```
+
+            OR
+
+        -
+            ```python
+            python -m django --version
+            ```
+
     - To create a Django project, execute the following command in terminal.
 
         ```python
