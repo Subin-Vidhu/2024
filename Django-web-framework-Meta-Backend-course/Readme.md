@@ -870,3 +870,76 @@
 
 ### Models and Migrations
 
+-  Models in Django are Python classes that represent database tables.
+
+    - single, definitive source of information about your data
+    - contains the essential fields and behaviors of the data you’re storing
+    - each model maps to a single database table
+    - each model is a Python class that subclasses django.db.models.Model
+
+        - eg. 
+            ```python
+            from django.db import models
+
+            class Person(models.Model):
+                first_name = models.CharField(max_length=30)
+                last_name = models.CharField(max_length=30)
+            ```
+    - Fields in Django models are used to define the structure of the database table.
+
+    - SQL vs Django models:
+
+        - SQL:
+            ``` 
+            CREATE TABLE person (
+                id INT PRIMARY KEY,
+                first_name VARCHAR(30),
+                last_name VARCHAR(30)
+            );
+            ```
+        - Django models:
+            ```python
+            - from django.db import models
+
+            - class Person(models.Model):
+                - first_name = models.CharField(max_length=30)
+                - last_name = models.CharField(max_length=30)
+            ```
+
+            ![alt text](image-24.png)
+
+- Migrations in Django are used to manage changes to the database schema.
+
+    - Migrations are used to create, update, and delete database tables.
+    - eg. 
+        - To create a migration, execute the following command in terminal.
+
+            ```python
+            python manage.py makemigrations
+            ```
+
+        - To apply a migration, execute the following command in terminal.
+
+            ```python
+            python manage.py migrate
+            ```
+
+    - CRUD Operations
+
+        - Create: Insert data into the database.
+
+            ![alt text](image-25.png)
+
+        - Read: Retrieve data from the database.
+
+            ![alt text](image-26.png)
+
+        - Update: Modify data in the database.
+
+            ![alt text](image-27.png)
+
+        - Delete: Remove data from the database.
+
+            ![alt text](image-28.png)
+
+        - Functions like save(), get(), filter(), update_or_create(), delete() are used to perform CRUD operations in Django.
