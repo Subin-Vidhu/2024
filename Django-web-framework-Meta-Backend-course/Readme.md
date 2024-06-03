@@ -682,3 +682,110 @@
         ```
 
 - Understanding URLS
+
+    - eg of a URL: http://www.example.com/hello/123
+
+        - here http is the scheme, www is the subdomain, example is the domain, com is the top-level domain, hello is the file path, 123 is the path parameter.
+
+    - URL components:
+
+        - Scheme: The protocol used to access the resource.
+        - Subdomain: The domain name before the domain.
+        - Domain: The main part of the domain name.
+        - Top-level domain: The last part of the domain name.
+            - eg. 
+                - .org: Organization
+                - .com: Commercial
+                - .net: Network
+                - .edu: Education
+                - .in: India
+                - .uk: United Kingdom
+                - .us: United States
+                - .gov: Government
+                - .mil: Military
+                - .int: International
+                - .ie: Ireland
+
+        - File path: The path to the resource on the server ie the location of the resource on the server.
+
+        - Path parameter: The parameter passed in the URL.
+
+            - Query parameters: Parameters passed in the URL after a question mark ?.
+            - Path parameters: Parameters passed in the URL as part of the path.
+
+                - eg. 
+
+                    - Query parameters: http://www.example.com/hello?name=John&age=30
+
+            ![alt text](image-18.png)
+
+    - URL patterns:
+
+        - Static URLs: Fixed URLs that do not change.
+        - Dynamic URLs: URLs that change based on user input.
+        - Query parameters: Parameters passed in the URL after a question mark ?.
+        - Path parameters: Parameters passed in the URL as part of the path.
+        - Wildcard URLs: URLs that match any path segment.
+        - Regular expression URLs: URLs that match a pattern using regular expressions.
+
+    - URL Design
+
+        - URL design is the process of designing the URLs for a web application.
+        - URL design is important for search engine optimization (SEO).
+        - eg. 
+
+            - Bad URL: http://www.example.com/page?id=123
+            - Good URL: http://www.example.com/page/123
+
+        - URL design best practices:
+
+            - Use lowercase letters.
+            - Use hyphens to separate words.
+            - Use slashes to separate directories.
+            - Use file extensions for static files.
+            - Use query parameters for filtering.
+            - Use path parameters for resources.
+            - Use regular expressions for complex patterns.
+
+- Parameters : [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/OhSHQ/parameters)
+
+- Mapping URLs with params
+
+    - eg. 
+
+        - To map a URL with a path parameter, define a URL pattern with angle brackets <> in the urls.py file of the app.
+
+            ```python
+            from django.urls import path
+            from . import views
+
+            urlpatterns = [
+                path('hello/<name>/', views.hello),
+            ]
+            ```
+
+        - To extract the path parameter in the view, define a function with the path parameter as an argument.
+
+            ```python
+            from django.http import HttpResponse
+
+            def hello(request, name):
+                return HttpResponse(f"Hello, {name}!")
+            ```
+
+        - To pass the path parameter in the URL, add the path parameter to the URL.
+
+            ```python
+            <a href="/hello/John/">Hello, John!</a>
+            ```
+        
+        - To extract the path parameter in the view, define a function with the path parameter as an argument.
+
+            ```python
+            from django.http import HttpResponse
+
+            def hello(request, name):
+                return HttpResponse(f"Hello, {name}!")
+            ```
+
+        
