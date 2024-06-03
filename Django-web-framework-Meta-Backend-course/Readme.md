@@ -837,3 +837,25 @@
 
     - URL Namespacing and Views: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/9Bl6F/url-namespacing-and-views)
         
+
+- Error Handling
+
+    - Error handling is the process of handling errors in a web application.
+    - eg. 
+        - 404 Not Found: The requested resource was not found.
+        - 500 Internal Server Error: The server encountered an error.
+
+    - Common error handling techniques:
+        - Try-catch: Catch exceptions and handle errors.
+        - Status codes: Return appropriate status codes in the response.
+        - Error messages: Display error messages to the user.
+        - Logging: Log errors to a file or database.
+        - Redirects: Redirect the user to an error page.
+        - Custom error pages: Display custom error pages to the user.
+
+    
+    ![alt text](image-20.png)
+
+    ![alt text](image-21.png)
+
+- Handling errors in Views :[Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/QpaMm/handling-errors-in-views)
