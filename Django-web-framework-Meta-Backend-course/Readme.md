@@ -84,3 +84,13 @@
 
     - [Additional Resources](https://www.coursera.org/learn/django-web-framework/supplement/yqDlw/additional-resources)
 
+### Project and Apps
+
+- Basic structure of a webpage:
+    
+    - A webpage is made up of HTML, CSS, and JavaScript.
+    - HTML is the structure of the webpage.
+    - CSS is the styling of the webpage.
+    - JavaScript is the interactivity of the webpage.
+
+- Django project structure:
