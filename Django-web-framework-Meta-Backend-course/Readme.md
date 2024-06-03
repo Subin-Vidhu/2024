@@ -265,3 +265,39 @@
         ![alt text](image-8.png)
     
 - App Structures: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/rDp6w/app-structures)
+
+
+- Creating an App
+
+    - To create a Django app, execute the following command in terminal.
+
+        ```python
+        python manage.py startapp myapp
+        ```
+
+    - To create a superuser, execute the following command in terminal.
+
+        ```python
+        python manage.py createsuperuser
+        ```
+
+    - To run migrations, execute the following command in terminal.
+
+        ```python
+        python manage.py makemigrations
+        python manage.py migrate
+        ```
+
+    - To run the Django development server, execute the following command in terminal.
+
+        ```python
+        python manage.py runserver
+        ```
+
+    - To stop the Django development server, press Ctrl + C in terminal.
+
+    - To deactivate the virtual environment, execute the following command in terminal.
+
+        ```python
+        deactivate
+        ```
