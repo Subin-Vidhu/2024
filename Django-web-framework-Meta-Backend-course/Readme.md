@@ -312,3 +312,15 @@
     - Reusable Components
 
     ![alt text](image-9.png)
+
+    - Django
+          - Feature-rich
+          - Code Reusability
+          - Scalability
+        
+- Three-tier architecture
+    - Presentation Layer
+    - Business Logic Layer
+    - Data Layer
+
+        ![alt text](image-9.png)
