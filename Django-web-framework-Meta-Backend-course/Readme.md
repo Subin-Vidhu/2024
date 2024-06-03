@@ -94,3 +94,14 @@
     - JavaScript is the interactivity of the webpage.
 
 - Django project structure:
+
+    - A Django project is made up of multiple apps.
+    - Each app is a separate module that is designed to do one thing well.
+    - Each app can be reused in multiple projects.
+    - Each app can be developed by a separate team.
+
+- What is required to create a dynamic web application?
+
+    ![alt text](image-1.png)
+
+    
