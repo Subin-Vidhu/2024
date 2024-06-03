@@ -148,9 +148,16 @@
 
 ### Creating a Django project
 
+- Create a new directory for the project.
+
+    ```python
+    mkdir myproject
+    cd myproject
+    ```
+
 - Virtualenv is a tool to create isolated Python environments.
-- Virtualenv is used to manage dependencies for different projects.
-- Virtualenv is used to avoid conflicts between dependencies.
+    - Virtualenv is used to manage dependencies for different projects.
+    - Virtualenv is used to avoid conflicts between dependencies.
 
     - To create a virtual environment, execute the following command in terminal.
 
