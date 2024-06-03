@@ -789,3 +789,6 @@
             ```
 
 - Additional Resources: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/S9v2H/additional-resources)        
+
+### Creating URLs and Views
+
