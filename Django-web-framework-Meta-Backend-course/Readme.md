@@ -867,3 +867,6 @@
         ![alt text](image-22.png)
 
 - Additional Resources: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/8VHUC/additional-resources)
+
+### Models and Migrations
+
