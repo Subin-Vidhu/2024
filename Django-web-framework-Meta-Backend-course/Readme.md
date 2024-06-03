@@ -80,3 +80,6 @@
     python3 manage.py migrate  # To migrate the changes in Database
     ```
 
+- ### Additional Resources
+
+    - [Additional Resources](https://www.coursera.org/learn/django-web-framework/supplement/yqDlw/additional-resources)
