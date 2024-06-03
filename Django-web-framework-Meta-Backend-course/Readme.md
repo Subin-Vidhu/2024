@@ -422,3 +422,45 @@
             ]
             ```
             
+- Creating Views and Mapping to URLS
+
+    - To create a view, define a function in the views.py file of the app.
+
+        ```python
+        from django.http import HttpResponse
+
+        def hello(request):
+            return HttpResponse("Hello, World!")
+        ```
+
+    - To map the view to a URL, define a URL pattern in the urls.py file of the app.
+
+        ```python
+        from django.urls import path
+        from . import views
+
+        urlpatterns = [
+            path('hello/', views.hello),
+        ]
+        ```
+
+    - To include the URL patterns of the app in the URL patterns of the project, define a URL pattern in the urls.py file of the project.
+
+        ```python
+        from django.urls import path, include
+        from myapp import views
+
+        urlpatterns = [
+            path('hello/', include('myapp.urls')),
+        ]
+        ```
+
+    - To run the Django development server, execute the following command in terminal.
+
+        ```python
+        python manage.py runserver
+        ```
+    
+        ![alt text](image-10.png)
+
+    - View Logic: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/o2Enm/view-logic)
