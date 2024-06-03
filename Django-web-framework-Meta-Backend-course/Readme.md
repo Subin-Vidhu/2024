@@ -264,3 +264,4 @@
 
         ![alt text](image-8.png)
     
+- App Structures: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/rDp6w/app-structures)
