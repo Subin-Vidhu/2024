@@ -865,3 +865,5 @@
     - Class-based views are Python classes that handle HTTP requests and return HTTP responses.
 
         ![alt text](image-22.png)
+
+- Additional Resources: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/8VHUC/additional-resources)
