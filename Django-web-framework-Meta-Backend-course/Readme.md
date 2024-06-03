@@ -327,3 +327,4 @@
 
 - MVT Overview: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/hpwXW/mvt-overview)
 
+- Additional Resources: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/0AF6Z/additional-resources)
