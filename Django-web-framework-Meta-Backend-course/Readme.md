@@ -53,3 +53,30 @@
 
 - working-with-labs-in-the-course: [Working with labs in the course](https://www.coursera.org/learn/django-web-framework/supplement/b35Pn/working-with-labs-in-this-course)
 
+### Django Installation
+
+- Django installation steps:
+
+    - Step 1: Install Django
+    - Step 2: Verify the installation
+    - Step 3: Create a Django project
+    - Step 4: Create a Django app
+    - Step 5: Start the Django development server
+
+    - eg.
+        ```python
+        pip install Django
+        django-admin --version
+        django-admin startproject mysite
+        cd mysite
+        python manage.py runserver
+        ```
+
+- To run and view your Django app in the browser, execute the following command in terminal. (Verify you are in the directory where manage.py file resides.)
+    
+    ```python
+    python3 manage.py runserver # To run the server
+    python3 manage.py makemigrations # To compile the migrations
+    python3 manage.py migrate  # To migrate the changes in Database
+    ```
+
