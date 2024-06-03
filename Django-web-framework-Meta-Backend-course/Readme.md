@@ -230,7 +230,7 @@
 
         - manage.py is a thin wrapper around django-admin that takes care of several things for you.
 
-        - django-admin vs manage.py in a table:
+        - django-admin vs manage.py:
 
             - django-admin
                 - django-admin is Django's command-line utility for administrative tasks.
@@ -262,4 +262,5 @@
                 - specific to the virtual environment
                 - points to the settings.py file in the project directory
 
+        ![alt text](image-8.png)
     
