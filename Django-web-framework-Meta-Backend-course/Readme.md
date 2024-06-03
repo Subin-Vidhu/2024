@@ -618,3 +618,67 @@
     - HTTPS is used to verify the identity of the server.s
 
 - Request and Response Objects: [Refer me](https://www.coursera.org/learn/django-web-framework/supplement/DMTe5/request-and-response-objects)
+
+
+- Creating requests and responses
+
+    - To create a request object, pass the request
+    - To create a response object, pass the content and content type
+
+        ```python
+        from django.http import HttpRequest, HttpResponse
+
+        def hello(request):
+            return HttpResponse("Hello, World!")
+        ```
+
+    - To create a response object with a status code, pass the status code
+
+        ```python
+        from django.http import HttpResponse
+
+        def hello(request):
+            return HttpResponse("Hello, World!", status=200)
+        ```
+
+    - To create a response object with headers, pass the headers
+    
+        ```python
+        from django.http import HttpResponse
+
+        def hello(request):
+            response = HttpResponse("Hello, World!")
+            response['Content-Type'] = 'text/html'
+            return response
+        ```
+
+    - To create a response object with a content type, pass the content type
+
+        ```python
+        from django.http import HttpResponse
+
+        def hello(request):
+            return HttpResponse("Hello, World!", content_type='text/html')
+        ```
+    
+    - To create a response object with a status code and content type, pass the status code and content type
+
+        ```python
+        from django.http import HttpResponse
+
+        def hello(request):
+            return HttpResponse("Hello, World!", status=200, content_type='text/html')
+        ```
+    
+    - To create a response object with a status code, headers, and content type, pass the status code, headers, and content type
+
+        ```python
+        from django.http import HttpResponse
+
+        def hello(request):
+            response = HttpResponse("Hello, World!", status=200)
+            response['Content-Type'] = 'text/html'
+            return response
+        ```
+
+- Understanding URLS
