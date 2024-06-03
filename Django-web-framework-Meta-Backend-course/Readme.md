@@ -22,3 +22,11 @@
 - Django REST framework is a powerful and flexible toolkit for building Web APIs.
 - Django applications include some reusable components and more can be added to meet the requirements of a particular application.
 
+### Features of Django
+
+ - **Ridiculously fast** − Django was designed to help developers take applications from concept to completion as quickly as possible.
+ - **Reassuringly secure** − Django takes security seriously and helps developers avoid many common security mistakes.
+ - **Exceedingly scalable** − Some of the busiest sites on the planet use Django’s ability to quickly and flexibly scale to meet the heaviest traffic demands.
+ - **Incredibly versatile** − Companies, organizations, and governments have used Django to build all sorts of things — from content management systems to social networks to scientific computing platforms.
+ - **Easy to learn** − Django was designed to be easy to learn and use.
+ - **Free and open-source** − Django is free and open source, and it's easy to download and use.
