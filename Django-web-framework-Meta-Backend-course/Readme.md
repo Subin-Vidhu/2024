@@ -792,3 +792,48 @@
 
 ### Creating URLs and Views
 
+- Regular Expressions in URLs
+
+    - RegEx is a set of characters that specify a pattern and are used to search for or find patterns in a string.
+
+      - Extraction and Validation
+      - Advance Searching
+      - Group Searches
+      - Find and Replace
+
+    - Universal, same across all languages
+
+    - eg. 
+
+        - To map a URL with a regular expression, define a URL pattern with a regular expression in the urls.py file of the app.
+
+            ```python
+            from django.urls import re_path
+            from . import views
+
+            urlpatterns = [
+                re_path(r'^hello/(?P<name>\w+)/$', views.hello), # r'^hello/(?P<name>\w+)/$' means that the URL should start with hello, followed by a name, and end with a slash.
+            ]
+            ```
+
+            - ^: Start of the string.
+            - $: End of the string.
+            - (): Grouping.
+            - ?: Non-greedy.
+            - \w: Word character.
+            - +: One or more.
+            - /: Slash.
+
+        - To extract the path parameter in the view, define a function with the path parameter as an argument.
+
+            ```python
+            from django.http import HttpResponse
+
+            def hello(request, name):
+                return HttpResponse(f"Hello, {name}!")
+            ```
+
+    ![alt text](image-19.png)
+
+    - URL Namespacing and Views: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/9Bl6F/url-namespacing-and-views)
+        
