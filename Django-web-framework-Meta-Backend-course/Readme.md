@@ -1062,4 +1062,5 @@
 
     ![alt text](image-39.png)
 
-    
+- Django fields: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/n2FLA/django-fields)
+
