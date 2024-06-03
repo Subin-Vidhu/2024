@@ -221,4 +221,45 @@
         ```
 
 ### Admin and Structures
-        
+
+- When working with Django projects, developer has 2 choices for command line utility:
+    - django-admin
+    - manage.py
+
+        - django-admin is Django's command-line utility for administrative tasks.
+
+        - manage.py is a thin wrapper around django-admin that takes care of several things for you.
+
+        - django-admin vs manage.py in a table:
+
+            - django-admin
+                - django-admin is Django's command-line utility for administrative tasks.
+                - django-admin is a standalone program that is installed along with Django.
+                - django-admin is used to create projects, apps, and other administrative tasks.
+                - django-admin is used to manage the Django project as a whole.
+                - django-admin is used to run management commands.
+                - django-admin is used to start the development server.
+            
+            - manage.py
+                - manage.py is a thin wrapper around django-admin that takes care of several things for you.
+                - manage.py is a Python script that is created in the project directory.
+                - manage.py is used to run management commands.
+                - manage.py is used to start the development server.
+                - manage.py is used to create an app.
+                - manage.py is used to create a superuser.
+                - manage.py is used to run migrations.
+
+            - django-admin.py 
+
+                - automatically installed
+                - located on system path
+                - activate virtual environment
+
+            - manage.py
+                
+                - automatically created each time you create a new project
+                - located in the project directory
+                - specific to the virtual environment
+                - points to the settings.py file in the project directory
+
+    
