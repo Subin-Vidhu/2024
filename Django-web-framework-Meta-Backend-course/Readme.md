@@ -328,3 +328,97 @@
 - MVT Overview: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/hpwXW/mvt-overview)
 
 - Additional Resources: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/0AF6Z/additional-resources)
+
+### Views
+
+- Views in Django are Python functions that take a web request and return a web response.
+
+- Views are the heart of Django web applications.
+
+- Views are responsible for processing the request and returning the response.
+
+- Views are used to interact with the database and render templates.
+
+- Views are used to handle user input and display output.
+
+- Views are used to implement business logic and application logic.
+
+- Views are used to handle HTTP methods such as GET, POST, PUT, and DELETE.
+
+- Views are used to handle form submissions and file uploads.
+
+- Views are used to handle authentication and authorization.
+
+- Views are used to handle errors and exceptions.
+
+- Views are used to handle redirects and responses.
+
+- Views are used to handle AJAX requests and JSON responses.
+
+- Views are used to handle API requests and responses.
+
+- Views are used to handle webhooks and websockets.
+
+- Views are used to handle caching and performance optimization.- Views are used to handle testing and debugging.
+
+   - eg. 
+        ```python
+        from django.http import HttpResponse
+
+        def hello(request):
+            return HttpResponse("Hello, World!")
+        ```
+
+    - Process Data
+    - Retrieve Data
+    - Transform Data
+    - Render Templates
+
+- Routing
+    - Routing is the process of mapping URLs to views.
+
+    - Routing is used to define the URL patterns for the web application.
+
+    - eg.
+        ```python
+        from django.urls import path
+        from . import views
+
+        urlpatterns = [
+            path('hello/', views.hello),
+        ]
+        ```
+
+    - URL patterns are defined in the urls.py file of the app.
+
+    - URL patterns are defined using the path() function and re_path() function.
+
+        - eg with re_path.
+        
+            ```python
+            from django.urls import re_path
+            from . import views
+
+            urlpatterns = [
+                re_path(r'^hello/$', views.hello),
+            ] # r'^hello/$' means that the URL should start with hello and end with a slash. 
+            ```
+        - eg with path.
+            ```python
+            from django.urls import path
+            from . import views
+
+            urlpatterns = [
+                path('hello/', views.hello),
+            ]
+            ```
+        - eg with include.
+            ```python
+            from django.urls import path, include
+            from . import views
+
+            urlpatterns = [
+                path('hello/', include('myapp.urls')), # include('myapp.urls') means that the URL patterns in myapp.urls should be included in the URL patterns of the project.
+            ]
+            ```
+            
