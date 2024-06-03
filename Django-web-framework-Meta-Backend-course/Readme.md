@@ -116,7 +116,7 @@
     - The client and server communicate using HTTP or HTTPS.
     - The server and database communicate using SQL or NoSQL queries.
 
-- Django project structure:
+- Django project structure: [Refer me](https://www.coursera.org/learn/django-web-framework/supplement/Ahqrc/project-structure)
 
     - PROJECT
         - In Django, a project represents the entire web application.
@@ -145,3 +145,4 @@
         - ![alt text](image-6.png)
 
     - ![alt text](image-7.png)
+
