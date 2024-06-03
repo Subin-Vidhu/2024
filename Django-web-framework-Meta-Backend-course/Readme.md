@@ -104,4 +104,15 @@
 
     ![alt text](image-1.png)
 
-    
+    ![alt text](image-3.png)
+
+    - Client sends a request to the server.
+    - Database is used to store and retrieve data.
+    - Server processes the request and sends a response back to the client, after fetching data from the database.
+    - Client receives the response and displays the data.
+    - The client can be a web browser, mobile app, or desktop app.
+    - The server can be a web server, application server, or database server.
+    - The database can be a relational database, NoSQL database, or in-memory database.
+    - The client and server communicate using HTTP or HTTPS.
+    - The server and database communicate using SQL or NoSQL queries.
+
