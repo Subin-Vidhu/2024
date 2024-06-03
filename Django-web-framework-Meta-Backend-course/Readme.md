@@ -945,3 +945,25 @@
         - Functions like save(), get(), filter(), update_or_create(), delete() are used to perform CRUD operations in Django.
 
     - Model Relationships; [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/3gkfi/model-relationships)
+
+- Migrations
+
+    - Records changes made to models and implements these changes in the database schema.
+    - ORM is used to interact with the database.
+        - SQL
+
+            ![alt text](image-29.png)
+        
+        - Django
+
+            ![alt text](image-30.png)
+
+        - Set of Instructions, apply and run, no sql required.
+
+            ![alt text](image-31.png)
+    
+        - Migrations helps in:
+
+            ![alt text](image-32.png)   
+
+    - How to use migrations; [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/wcsZg/how-to-use-migrations)
