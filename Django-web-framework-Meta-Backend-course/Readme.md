@@ -464,3 +464,7 @@
         ![alt text](image-10.png)
 
     - View Logic: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/o2Enm/view-logic)
+
+
+### Requests and URLs
+
