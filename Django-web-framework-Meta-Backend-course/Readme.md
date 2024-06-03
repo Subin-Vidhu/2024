@@ -943,3 +943,5 @@
             ![alt text](image-28.png)
 
         - Functions like save(), get(), filter(), update_or_create(), delete() are used to perform CRUD operations in Django.
+
+    - Model Relationships; [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/3gkfi/model-relationships)
