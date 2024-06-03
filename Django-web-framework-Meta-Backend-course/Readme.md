@@ -1055,3 +1055,11 @@
     ![alt text](image-36.png)
 
     ![alt text](image-37.png)
+
+- Working with Django form fields and data types
+
+    ![alt text](image-38.png)
+
+    ![alt text](image-39.png)
+
+    
