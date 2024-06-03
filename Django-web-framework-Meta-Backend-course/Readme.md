@@ -1065,5 +1065,3 @@
 - Django fields: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/n2FLA/django-fields)
 
 - Form api: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/xphM6/form-api)
-
-- Additional Resources: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/YyY6o/additional-resources)
