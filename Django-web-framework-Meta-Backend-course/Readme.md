@@ -1020,3 +1020,5 @@
     - A field inside a model.
 
 - ORM: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/S6VCq/object-relationship-mapping-orm)
+
+- Additional Resources: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/kbX1B/additional-resources)
