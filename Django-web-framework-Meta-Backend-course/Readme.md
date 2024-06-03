@@ -967,3 +967,56 @@
             ![alt text](image-32.png)   
 
     - How to use migrations; [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/wcsZg/how-to-use-migrations)
+
+
+- Makemigrations vs migrate
+
+    - makemigrations: Prepares the changes to be made to a model.
+
+    - migrate: Applies the changes to the database or executes SQL commands to make changes to a model.
+
+- Migration history
+
+    - Migration history is a record of all the migrations that have been applied to the database.
+
+    - Migration history is stored in the django_migrations table.
+
+        - eg. 
+            ```python
+            SELECT * FROM django_migrations;
+            ```
+    
+    - Migration history is used to track changes to the database schema.
+
+        - eg. 
+            ```python
+            python manage.py showmigrations
+            ```
+
+    - Migration history is used to roll back changes to the database schema.
+
+        - eg. 
+            ```python
+            python manage.py migrate myapp zero
+            ```
+
+    - Migration history is used to apply changes to the database schema.
+
+        - eg. 
+            ```python
+            python manage.py migrate myapp
+            ```
+
+    - Migration history is used to create and apply migrations.
+
+        - eg. 
+            ```python
+            python manage.py makemigrations
+            python manage.py migrate
+            ```
+
+- Foreign Key
+
+    - A field inside a model.
+
+- ORM: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/S6VCq/object-relationship-mapping-orm)
