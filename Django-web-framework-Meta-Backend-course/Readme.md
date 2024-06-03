@@ -116,3 +116,28 @@
     - The client and server communicate using HTTP or HTTPS.
     - The server and database communicate using SQL or NoSQL queries.
 
+- Django project structure:
+
+    - PROJECT
+        - In Django, a project represents the entire web application.
+        - A project is made up of multiple apps.
+        - Django provides a set of commands that automate the creation of projects and apps.
+        - A project is a collection of settings, URLs, and apps.
+        - Project structure means to organize the files and folders in a project.
+        - This allows developers to code rather than configuration.
+        - Django follows the DRY principle, which means Don't Repeat Yourself.
+
+            ![alt text](image-5.png)
+
+    - APP
+        - In Django, an app represents a specific feature or functionality.
+        - An app is a web application that does something.
+        - An app is a collection of models, views, templates, and URLs.
+        - An app can be reused in multiple projects.
+        - An app can be developed by a separate team.
+        - An app can be distributed as a package.
+        - An app can be installed using pip.
+
+            ![alt text](image-4.png)
+
+    
