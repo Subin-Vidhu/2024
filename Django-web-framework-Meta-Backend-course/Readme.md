@@ -142,4 +142,6 @@
 
     - For Django to recognize an app, it must be added to the INSTALLED_APPS list in the settings.py file.
 
-        ![alt text](image-6.png)
+        - ![alt text](image-6.png)
+
+    - ![alt text](image-7.png)
