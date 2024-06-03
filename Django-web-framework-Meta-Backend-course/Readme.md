@@ -1022,3 +1022,36 @@
 - ORM: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/S6VCq/object-relationship-mapping-orm)
 
 - Additional Resources: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/kbX1B/additional-resources)
+
+### Models and Forms
+
+- Forms in Django are used to create, update, and delete data in the database.
+
+    - Forms are used to collect data from the user.
+    - Forms are used to validate data before saving it to the database.
+    - Forms are used to display data to the user.
+    - Forms are used to handle user input and display output.
+    - Forms are used to interact with the database and render templates.
+    - Forms are used to handle HTTP methods such as GET, POST, PUT, and DELETE.
+    - Forms are used to handle form submissions and file uploads.
+    - Forms are used to handle authentication and authorization.
+    - Forms are used to handle errors and exceptions.
+    - Forms are used to handle redirects and responses.
+    - Forms are used to handle AJAX requests and JSON responses.
+    - Forms are used to handle API requests and responses.
+    - Forms are used to handle webhooks and websockets.
+    - Forms are used to handle caching and performance optimization.
+    - Forms are used to handle testing and debugging.
+    
+
+- HTML form vs Django form
+
+    ![alt text](image-33.png)
+
+    ![alt text](image-34.png)
+
+    ![alt text](image-35.png)
+
+    ![alt text](image-36.png)
+
+    ![alt text](image-37.png)
