@@ -859,3 +859,9 @@
     ![alt text](image-21.png)
 
 - Handling errors in Views :[Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/QpaMm/handling-errors-in-views)
+
+- Class Based Views
+
+    - Class-based views are Python classes that handle HTTP requests and return HTTP responses.
+
+        ![alt text](image-22.png)
