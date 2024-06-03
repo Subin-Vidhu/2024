@@ -219,3 +219,6 @@
         ```python
         deactivate
         ```
+
+### Admin and Structures
+        
