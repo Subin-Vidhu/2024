@@ -468,3 +468,153 @@
 
 ### Requests and URLs
 
+- HTTP request makeup
+
+    ```
+    GET /hello/ HTTP/1.1
+    Host: www.example.com
+    Accept- Language: en- US
+    ```
+
+    - Common HTTP methods:
+        - GET: Retrieve data from the server.
+        - POST: Submit data to the server.
+        - PUT: Update data on the server.
+        - DELETE: Delete data from the server.
+        - PATCH: Partially update data on the server.
+        - OPTIONS: Get information about the server.
+        - HEAD: Get the headers of the response.
+
+    - Common HTTP headers:
+        - Host: The domain name of the server.
+        - User-Agent: The browser or client making the request.
+        - Accept: The media types accepted by the client.
+        - Accept-Language: The languages accepted by the client.
+        - Accept-Encoding: The encodings accepted by the client.
+        - Content-Type: The media type of the request body.
+        - Content-Length: The length of the request body.
+        - Authorization: The credentials for the request.
+        - Cookie: The cookies sent by the client.
+
+    - Path parameters:
+        - Path parameters are used to pass data in the URL.
+        - Path parameters are defined using angle brackets <> in the URL pattern.
+        - Path parameters are extracted from the URL and passed to the view as arguments.
+
+        - eg.
+            ```python
+            from django.urls import path
+            from . import views
+
+            urlpatterns = [
+                path('hello/<name>/', views.hello),
+            ]
+            ```
+
+    - Common URL patterns:
+        - Static URLs: Fixed URLs that do not change.
+        - Dynamic URLs: URLs that change based on user input.
+        - Query parameters: Parameters passed in the URL after a question mark ?.
+        - Path parameters: Parameters passed in the URL as part of the path.
+        - Wildcard URLs: URLs that match any path segment.
+        - Regular expression URLs: URLs that match a pattern using regular expressions.
+
+    - Headers 
+        - Headers are used to pass additional information in the request.
+        - Headers are key-value pairs that are sent in the request.
+        - Headers are used to pass metadata, authentication, and other information.
+        - Headers are used to control caching, compression, and other features.
+        - Can contain server name , server port , request method, content type
+            - eg. 
+                ```python
+                GET /hello/ HTTP/1.1
+                Host: www.example.com
+                Accept-Language: en-US
+                ```
+
+- HTTP Response
+
+    - HTTP response makeup
+
+        ```
+        HTTP/1.1 200 OK
+        Date: Mon, 01 Jan 2022 00:00:00 GMT
+        Server: Apache
+        Last-Modified: Sun, 31 Dec 2021 23:59:59 GMT
+        ETag: "1234567890"
+        Accept-Ranges: bytes
+        Content-Length: 1234
+        Content-Type: text/html
+        ```
+    - Message Body
+        - The message body contains the content of the response.
+        - The message body can be HTML, JSON, XML, or plain text.
+        - The message body is sent after the headers.
+        - The message body is separated from the headers by a blank line.
+        - The message body is optional in some responses.
+            - eg. 
+                ```python
+                HTTP/1.1 200 OK
+                Content-Type: text/html
+
+                <html>
+                <head>
+                <title>Hello, World!</title>
+                </head>
+                <body>
+                <h1>Hello, World!</h1>
+                </body>
+                </html>
+                ```
+    - Common HTTP status codes:
+        - 200 OK: The request was successful.
+        - 201 Created: The request was successful and a new resource was created.
+        - 204 No Content: The request was successful and there is no content to return.
+        - 400 Bad Request: The request was invalid or malformed.
+        - 401 Unauthorized: The request requires authentication.
+        - 403 Forbidden: The request is not allowed.
+        - 404 Not Found: The requested resource was not found.
+        - 405 Method Not Allowed: The request method is not allowed.
+        - 500 Internal Server Error: The server encountered an error.
+        - 503 Service Unavailable: The server is unavailable.
+
+            - Status code Division:
+                - 1xx: Informational responses.
+                - 2xx: Success responses.
+                - 3xx: Redirection responses.
+                - 4xx: Client error responses.
+                - 5xx: Server error responses.
+
+                    ![alt text](image-11.png)
+
+                    ![alt text](image-12.png)
+
+                    ![alt text](image-13.png)
+
+                    ![alt text](image-14.png)
+
+                    ![alt text](image-15.png)
+
+                    ![alt text](image-16.png)
+
+                    - Client Error 400: Bad data sent by the client.
+                    - Client Error 401: Unauthorized access, should login ie authentication required.
+                    - Client Error 403: Forbidden access, no permission to access the resource.
+                    - Client Error 404: Resource not found, the requested resource does not exist.
+
+                  ![alt text](image-17.png)
+
+                    - Server Error 500: Internal server error, something went wrong on the server.
+        
+
+- HTTPS
+
+    - HTTPS is a secure version of HTTP.
+    - HTTPS encrypts the data sent between the client and server.
+    - HTTPS uses SSL/TLS to secure the connection.
+    - HTTPS uses port 443 by default.
+    - HTTPS is used to protect sensitive information.
+    - HTTPS is used to prevent eavesdropping and tampering.
+    - HTTPS is used to verify the identity of the server.s
+
+- Request and Response Objects: [Refer me](https://www.coursera.org/learn/django-web-framework/supplement/DMTe5/request-and-response-objects)
