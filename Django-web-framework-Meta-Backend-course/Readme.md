@@ -1087,3 +1087,13 @@
         - Forming user groups
 
         ![alt text](image-41.png)
+
+    - Django admin utility is executed from inside the terminal.
+
+        ![alt text](image-42.png) 
+
+    - Admin interface depends on django.admin.app
+    
+        ![alt text](image-43.png)
+
+    
