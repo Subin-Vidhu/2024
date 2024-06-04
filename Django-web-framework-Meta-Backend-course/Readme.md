@@ -1488,66 +1488,66 @@
 
 - Template inheritance
 
-    - To create a base template, define a base template with blocks.
+    - extends tag
+        - To create a base template, define a base template with blocks.
+        - eg. 
+            ```html
+            <!DOCTYPE html>
+            <html>
+            <head>
+            <title>{% block title %}Hello, World!{% endblock %}</title>
+            </head>
+            <body>
+            {% block content %}
+            {% endblock %}
+            </body>
+            </html>
+            ```
 
-    - eg. 
-        ```html
-        <!DOCTYPE html>
-        <html>
-        <head>
-        <title>{% block title %}Hello, World!{% endblock %}</title>
-        </head>
-        <body>
-        {% block content %}
-        {% endblock %}
-        </body>
-        </html>
-        ```
+        - To extend the base template, define a child template that extends the base template.
 
-    - To extend the base template, define a child template that extends the base template.
+        - eg. 
+            ```html
+            {% extends 'base.html' %}
 
-    - eg. 
-        ```html
-        {% extends 'base.html' %}
+            {% block title %}Hello, {{ name }}!{% endblock %}
 
-        {% block title %}Hello, {{ name }}!{% endblock %}
+            {% block content %}
+            <h1>Hello, {{ name }}!</h1>
+            {% endblock %}
+            ```
 
-        {% block content %}
-        <h1>Hello, {{ name }}!</h1>
-        {% endblock %}
-        ```
+    - include tag
 
-- include tag
+        - To include a template in another template, use the include tag.
 
-    - To include a template in another template, use the include tag.
+        - entire example:
+            ```html
+            <!DOCTYPE html>
+            <html>
+            <head>
+            <title>Hello, World!</title>
+            </head>
+            <body>
+            {% include 'header.html' %}
+            <h1>Hello, {{ name }}!</h1>
+            {% include 'footer.html' %}
+            </body>
+            </html>
+            ```
 
-    - entire example:
-        ```html
-        <!DOCTYPE html>
-        <html>
-        <head>
-        <title>Hello, World!</title>
-        </head>
-        <body>
-        {% include 'header.html' %}
-        <h1>Hello, {{ name }}!</h1>
-        {% include 'footer.html' %}
-        </body>
-        </html>
-        ```
+        - eg - header. 
+            ```html
+            <header>
+            <h1>Welcome to My Website!</h1>
+            </header>
+            ```
+        
+        - eg - footer. 
+            ```html
+            <footer>
+            <p>&copy; 2022 My Website</p>
+            </footer>
+            ```
 
-    - eg - header. 
-        ```html
-        <header>
-        <h1>Welcome to My Website!</h1>
-        </header>
-        ```
-    
-    - eg - footer. 
-        ```html
-        <footer>
-        <p>&copy; 2022 My Website</p>
-        </footer>
-        ```
-
-    
+            ![alt text](image-64.png)
