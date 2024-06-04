@@ -1131,6 +1131,6 @@
         - Authorization: Verify the permissions of the user.
 
     - User in Django can be of 3 types:
-        - Superuser: Has all permissions.
-        - Staff: Has some permissions.
-        - Normal/User: Has limited permissions.
+        - Superuser: Top level administrator, Has all permissions.
+        - Staff: Access django admin interface, Has some permissions.
+        - Normal/User: Not authorized to use the admin site, Has limited permissions.
