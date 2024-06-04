@@ -1180,3 +1180,19 @@
 - Enforcing permissions: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/LGEV4/enforcing-permissions)
 
 - Users and Permissions
+
+    ![alt text](image-51.png)
+
+    ![alt text](image-52.png)
+
+    ![alt text](image-53.png)
+
+    ![alt text](image-54.png)
+
+    ![alt text](image-55.png)
+
+    ![alt text](image-56.png)
+
+    ![alt text](image-57.png)
+
+
