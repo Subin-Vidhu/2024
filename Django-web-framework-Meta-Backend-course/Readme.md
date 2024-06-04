@@ -1166,3 +1166,9 @@
         ![alt text](image-48.png)
 
         ![alt text](image-49.png)
+
+    - Checking user permission
+
+        - has_perm() method is used to check if a user has a specific permission.
+
+        ![alt text](image-50.png)
