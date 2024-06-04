@@ -1172,3 +1172,7 @@
         - has_perm() method is used to check if a user has a specific permission.
 
         ![alt text](image-50.png)
+
+    
+- Django Group
+    - List of permission assigned to one or more users
