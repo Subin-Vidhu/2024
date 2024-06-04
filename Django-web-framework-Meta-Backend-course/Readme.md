@@ -1280,3 +1280,100 @@
     
 
 ### Templates
+
+- Templates in Django are used to generate HTML content dynamically.
+
+    ![alt text](image-58.png)
+
+    - Dynamic content
+        - Data that changes according to the context, user behaviour, and preferences.
+
+    - Static content
+        - Data that remains the same regardless of the context, user behaviour, and preferences.
+
+- Rendering
+    - Replaces variables with values
+    - Executes tags and filters
+    - Generates the final output
+        - eg. 
+            ```python
+            from django.shortcuts import render
+
+            def hello(request):
+                context = {'name': 'John'}
+                return render(request, 'hello.html', context)
+            ```
+
+- Template tags and filters
+
+    ![alt text](image-59.png)
+
+    - eg. 
+        ```python
+        {% if name %}
+            Hello, {{ name }}!
+        {% else %}
+            Hello, World!
+        {% endif %}
+        ```
+    ![alt text](image-60.png)
+
+    ![alt text](image-61.png)
+
+- Template Engines
+
+    - to create dynamic web pages
+    - to create reusable templates
+        - eg.
+            ```python
+            from django.shortcuts import render
+
+            def hello(request):
+                context = {'name': 'John'}
+                return render(request, 'hello.html', context)
+            ```
+
+        - eg.
+            ```html
+            <!DOCTYPE html>
+            <html>
+            <head>
+            <title>Hello, World!</title>
+            </head>
+            <body>
+            <h1>Hello, {{ name }}!</h1>
+            </body>
+            </html>
+            ```
+
+- Reuse and Inheritance
+
+    - Reuse: Use the same template in multiple views.
+    - Inheritance: Extend a base template with child templates.
+
+    - eg. 
+        ```python
+        {% extends 'base.html' %}
+
+        {% block content %}
+        <h1>Hello, {{ name }}!</h1>
+        {% endblock %}
+        ```
+
+    - eg. 
+        ```html
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <title>Hello, World!</title>
+        </head>
+        <body>
+        {% block content %}
+        {% endblock %}
+        </body>
+        </html>
+        ```
+
+         ![alt text](image-62.png)
+
+- Template-examples: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/Pqugv/template-examples)
