@@ -1259,3 +1259,22 @@
                 ```
 
     - Configuring mysql connection: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/dF9YT/configuring-mysql-connection)
+
+
+- Setting up a mysql connection
+
+    - set up mysql server
+        - eg on Windows:
+            - mysql -u root -p
+            - create database mydatabase;
+            - create user myuser identified by 'mypassword';
+            - grant all privileges on mydatabase.* to myuser;
+            - flush privileges;
+    - Windows:
+        - eg.
+            ```cmd
+            pip install mysqlclient
+            ```
+
+
+    
