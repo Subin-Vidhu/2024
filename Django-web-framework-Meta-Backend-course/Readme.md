@@ -1161,4 +1161,6 @@
         ![alt text](image-47.png)
 
 
-    
+    - Set permissions in a model
+
+        ![alt text](image-48.png)
