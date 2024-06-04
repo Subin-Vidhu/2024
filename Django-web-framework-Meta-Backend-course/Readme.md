@@ -1455,3 +1455,33 @@
         ```
 
 - Template language and variable interpolation: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/zmvUc/template-language-and-variable-interpolation)
+
+- Mapping model objects to a template
+
+    - To map model objects to a template, pass the model objects as context to the render() function.
+
+    - eg. 
+        ```python
+        from django.shortcuts import render
+        from .models import Person
+
+        def hello(request):
+            people = Person.objects.all()
+            context = {'people': people}
+            return render(request, 'hello.html', context)
+        ```
+
+    - eg. 
+        ```html
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <title>Hello, World!</title>
+        </head>
+        <body>
+        {% for person in people %}
+        <h1>Hello, {{ person.name }}!</h1>
+        {% endfor %}
+        </body>
+        </html>
+        ```
