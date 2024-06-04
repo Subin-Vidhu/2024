@@ -1400,3 +1400,10 @@
 - Template-examples: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/Pqugv/template-examples)
 
 ### Working with Templates
+
+-  4 main components in the syntax of dtl:
+    - Variables
+    - Tags
+    - Filters
+    - Comments
+        
