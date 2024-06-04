@@ -1096,4 +1096,24 @@
     
         ![alt text](image-43.png)
 
-    
+    - Admin interface is used to manage users, groups, permissions, and other settings.
+
+    - Creating a superuser
+
+        - To create a superuser, execute the following command in terminal.
+
+            ```python
+            python manage.py createsuperuser
+            ```
+
+        - To access the admin interface, open the following URL in a web browser.
+
+            ```python
+            http://localhost:8000/admin
+            ```
+
+        - To log in to the admin interface, enter the username and password of the superuser.
+
+            ![alt text](image-44.png)
+
+            ![alt text](image-45.png)
