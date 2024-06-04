@@ -1067,3 +1067,6 @@
 - Form api: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/xphM6/form-api)
 
 - Additional Resources: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/YyY6o/additional-resources)
+
+### Admin
+
