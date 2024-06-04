@@ -1196,3 +1196,4 @@
     ![alt text](image-57.png)
 
 
+- Admin Additional Resources: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/zB9d0/additional-resources)
