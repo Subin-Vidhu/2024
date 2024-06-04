@@ -1516,3 +1516,38 @@
         <h1>Hello, {{ name }}!</h1>
         {% endblock %}
         ```
+
+- include tag
+
+    - To include a template in another template, use the include tag.
+
+    - entire example:
+        ```html
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <title>Hello, World!</title>
+        </head>
+        <body>
+        {% include 'header.html' %}
+        <h1>Hello, {{ name }}!</h1>
+        {% include 'footer.html' %}
+        </body>
+        </html>
+        ```
+
+    - eg - header. 
+        ```html
+        <header>
+        <h1>Welcome to My Website!</h1>
+        </header>
+        ```
+    
+    - eg - footer. 
+        ```html
+        <footer>
+        <p>&copy; 2022 My Website</p>
+        </footer>
+        ```
+
+    
