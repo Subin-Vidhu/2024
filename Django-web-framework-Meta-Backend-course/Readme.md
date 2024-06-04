@@ -1164,3 +1164,5 @@
     - Set permissions in a model
 
         ![alt text](image-48.png)
+
+        ![alt text](image-49.png)
