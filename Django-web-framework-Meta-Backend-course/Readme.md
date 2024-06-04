@@ -1516,7 +1516,9 @@
             <h1>Hello, {{ name }}!</h1>
             {% endblock %}
             ```
+            ![alt text](image-65.png)
 
+            
     - include tag
 
         - To include a template in another template, use the include tag.
