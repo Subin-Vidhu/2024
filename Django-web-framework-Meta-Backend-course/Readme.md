@@ -1117,3 +1117,5 @@
             ![alt text](image-44.png)
 
             ![alt text](image-45.png)
+    
+    - Managing users in django admin: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/9tW6t/managing-users-in-django-admin)
