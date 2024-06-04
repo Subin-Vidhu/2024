@@ -1555,3 +1555,28 @@
             ![alt text](image-64.png)
 
 - More on template inheritance: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/8jY11/more-on-template-inheritance)
+
+### Debugging and Testing
+
+- Debugging is the process of finding and fixing errors in a web application.
+
+    - Debugging is used to identify and resolve issues in the code.
+    - Debugging is used to test and validate the application.
+    - Debugging is used to improve the performance and reliability of the application.
+    - Debugging is used to optimize and enhance the user experience.
+    - Debugging is used to monitor and track the application.
+    - Debugging is used to secure and protect the application.
+    - Debugging is used to scale and grow the application.
+    - Debugging is used to maintain and support the application.
+    - Debugging is used to document and communicate the application.
+
+- Debugging in Django
+    - eg. 
+        - To enable debugging in Django, set the DEBUG setting to True in the settings.py file.
+
+            ```python
+            DEBUG = True
+            ```
+- Testing in Django
+
+    
