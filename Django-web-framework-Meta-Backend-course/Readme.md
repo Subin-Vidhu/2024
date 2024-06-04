@@ -1398,3 +1398,5 @@
         ```
 
 - Template-examples: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/Pqugv/template-examples)
+
+### Working with Templates
