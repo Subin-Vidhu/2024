@@ -1407,3 +1407,50 @@
     - Filters
     - Comments
         
+- Variables
+    - Variables are used to display dynamic content in templates.
+
+    - represented by {{ variable }}
+
+    - eg. 
+        ```python
+        <h1>Hello, {{ name }}!</h1>
+        ```
+
+- Tags
+
+    - Tags are used to control the flow of the template.
+
+    - represented by {% tag %}, includes if, for, block, extends, include, and more.
+
+    - eg. 
+        ```python
+        {% if name %}
+            Hello, {{ name }}!
+        {% else %}
+            Hello, World!
+        {% endif %}
+        ```
+
+- Filters
+    
+    - Filters are used to modify the output of variables.
+
+    - represented by {{ variable|filter }}
+
+    - eg. 
+        ```python
+        <h1>Hello, {{ name|upper }}!</h1>
+        ```
+
+- Comments
+
+    - Comments are used to add comments to the template.
+
+    - represented by {# comment #}
+
+    - eg. 
+        ```python
+        {# This is a comment #}
+        ```
+
