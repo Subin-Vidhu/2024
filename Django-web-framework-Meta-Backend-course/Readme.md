@@ -1070,3 +1070,20 @@
 
 ### Admin
 
+- Django admin is a built-in app that automatically generates a user interface to add and modify content in the database.
+
+    - unified admin interface
+
+        - add, edit, delete
+
+        ![alt text](image-40.png)
+
+    - powerful tool, secure interface, easy to use
+
+    - Helps in:
+        - Creating Users
+        - Managing Users
+        - Controlling Access
+        - Forming user groups
+
+        ![alt text](image-41.png)
