@@ -1553,3 +1553,5 @@
             ```
 
             ![alt text](image-64.png)
+
+- More on template inheritance: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/8jY11/more-on-template-inheritance)
