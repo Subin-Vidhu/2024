@@ -1176,3 +1176,6 @@
     
 - Django Group
     - List of permission assigned to one or more users
+
+- Enforcing permissions: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/LGEV4/enforcing-permissions)
+
