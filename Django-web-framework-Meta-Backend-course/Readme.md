@@ -1579,4 +1579,13 @@
             ```
 - Testing in Django
 
+    - Unit testing: Test individual components of the application.
+    - Integration testing: Test how components work together.
+    - Functional testing: Test the application from the user's perspective.
+    - Regression testing: Test the application after changes are made.
+    - Load testing: Test the application under heavy load.
+
+        ![alt text](image-66.png)
+
+        ![alt text](image-67.png)
     
