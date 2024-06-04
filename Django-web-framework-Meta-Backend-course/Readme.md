@@ -1376,4 +1376,25 @@
 
          ![alt text](image-62.png)
 
+- For all of this to happen, make sure to update the settings.py file with the template directory.
+
+    - eg. 
+        ```python
+        TEMPLATES = [
+            {
+                'BACKEND': 'django.template.backends.django.DjangoTemplates',
+                'DIRS': [BASE_DIR / 'templates'], # 'DIRS': [BASE_DIR / 'templates'] means that the templates directory is located in the project directory.
+                'APP_DIRS': True,
+                'OPTIONS': {
+                    'context_processors': [
+                        'django.template.context_processors.debug',
+                        'django.template.context_processors.request',
+                        'django.contrib.auth.context_processors.auth',
+                        'django.contrib.messages.context_processors.messages',
+                    ],
+                },
+            },
+        ]
+        ```
+
 - Template-examples: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/Pqugv/template-examples)
