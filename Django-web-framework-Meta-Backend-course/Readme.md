@@ -1590,3 +1590,5 @@
         ![alt text](image-67.png)
     
 - Sub-classing-generic-views: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/usxgu/sub-classing-generic-views)
+
+- Additional Resources: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/YtwPH/additional-resources)
