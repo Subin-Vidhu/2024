@@ -1485,3 +1485,34 @@
         </body>
         </html>
         ```
+
+- Template inheritance
+
+    - To create a base template, define a base template with blocks.
+
+    - eg. 
+        ```html
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <title>{% block title %}Hello, World!{% endblock %}</title>
+        </head>
+        <body>
+        {% block content %}
+        {% endblock %}
+        </body>
+        </html>
+        ```
+
+    - To extend the base template, define a child template that extends the base template.
+
+    - eg. 
+        ```html
+        {% extends 'base.html' %}
+
+        {% block title %}Hello, {{ name }}!{% endblock %}
+
+        {% block content %}
+        <h1>Hello, {{ name }}!</h1>
+        {% endblock %}
+        ```
