@@ -1199,3 +1199,63 @@
 - Admin Additional Resources: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/zB9d0/additional-resources)
 
 ### Database Configuration
+
+- Django supports multiple databases out of the box.
+
+    - SQLite: Lightweight, built-in, file-based.
+    - MySQL: Popular, open-source, relational.
+    - PostgreSQL: Advanced, scalable, object-relational.
+    - Oracle: Enterprise, powerful, commercial.
+    - SQL Server: Microsoft, robust, scalable.
+
+- Steps to connect to a database:
+
+    - Install the database server.
+    - Install the database driver.
+    - Configure the database settings.
+    - Create the database tables.
+    - Connect to the database.
+
+        - eg. 
+            ```python
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.sqlite3',
+                    'NAME': BASE_DIR / 'db.sqlite3',
+                }
+            }
+            ```
+
+        - To configure database options to work with a MySQL database in a Django project, you need to connect to a MySQL database and create the database.     
+
+            - eg. 
+                ```python
+                DATABASES = {
+                    'default': {
+                        'ENGINE': 'django.db.backends.mysql',
+                        'NAME': 'mydatabase',
+                        'USER': 'myuser',
+                        'PASSWORD': 'mypassword',
+                        'HOST': 'localhost',
+                        'PORT': '3306',
+                    }
+                }
+                ```
+        
+        - To configure database options to work with a PostgreSQL database in a Django project, you need to connect to a PostgreSQL database and create the database.
+
+            - eg. 
+                ```python
+                DATABASES = {
+                    'default': {
+                        'ENGINE': 'django.db.backends.postgresql',
+                        'NAME': 'mydatabase',
+                        'USER': 'myuser',
+                        'PASSWORD': 'mypassword',
+                        'HOST': 'localhost',
+                        'PORT': '5432',
+                    }
+                }
+                ```
+
+    - Configuring mysql connection: [Refer Me](https://www.coursera.org/learn/django-web-framework/supplement/dF9YT/configuring-mysql-connection)
