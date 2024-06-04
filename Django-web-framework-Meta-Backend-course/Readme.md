@@ -1123,3 +1123,14 @@
 
 - Permissions
 
+    ![alt text](image-46.png)
+
+    - Control which users are allowed to do which actions.
+    - Authentication and Authorization
+       - Authentication: Verify the identity of the user.
+        - Authorization: Verify the permissions of the user.
+
+    - User in Django can be of 3 types:
+        - Superuser: Has all permissions.
+        - Staff: Has some permissions.
+        - Normal/User: Has limited permissions.
