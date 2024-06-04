@@ -1134,3 +1134,31 @@
         - Superuser: Top level administrator, Has all permissions.
         - Staff: Access django admin interface, Has some permissions.
         - Normal/User: Not authorized to use the admin site, Has limited permissions.
+
+    - Create user through django shell
+        - eg.
+            ```python
+            from django.contrib.auth.models import User
+            user = User.objects.create_user('john', 'a@b.com', 'password')
+            ```
+
+    - Create a staff user
+        - eg.
+        ```python
+        user.is_staff = True
+        user.save()
+        ```
+
+    - Create a superuser
+        - eg.
+        ```python
+        user.is_superuser = True
+        user.save()
+        ```
+
+    - Creating superuser directly
+
+        ![alt text](image-47.png)
+
+
+    
