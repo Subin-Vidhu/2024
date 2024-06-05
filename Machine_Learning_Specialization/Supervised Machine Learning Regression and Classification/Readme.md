@@ -17,4 +17,5 @@
     ![alt text](image-5.png)
 
 - Direction of steepest descent
-    
+
+    ![alt text](image-6.png)
