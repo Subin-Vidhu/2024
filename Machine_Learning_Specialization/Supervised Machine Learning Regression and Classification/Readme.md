@@ -19,3 +19,8 @@
 - Direction of steepest descent
 
     ![alt text](image-6.png)
+
+- Gradient Descent for Linear Regression
+
+    ![alt text](image-7.png)
+    
