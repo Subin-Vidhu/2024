@@ -9,3 +9,6 @@
 
     - w=0
     ![alt text](image-2.png)
+
+    - w=-0.5
+    
