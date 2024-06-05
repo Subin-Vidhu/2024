@@ -4,7 +4,7 @@
     - w=1
     ![alt text](image.png)
 
-    - w=0
+    - w=0.5
     ![alt text](image-1.png)
 
 
