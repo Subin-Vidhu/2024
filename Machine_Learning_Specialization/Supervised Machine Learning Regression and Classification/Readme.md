@@ -23,4 +23,3 @@
 - Gradient Descent for Linear Regression
 
     ![alt text](image-7.png)
-    
