@@ -12,3 +12,6 @@
 
     - w=-0.5
     ![alt text](image-4.png)
+
+    - generally
+    
