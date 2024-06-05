@@ -11,4 +11,4 @@
     ![alt text](image-2.png)
 
     - w=-0.5
-    
+    ![alt text](image-4.png)
