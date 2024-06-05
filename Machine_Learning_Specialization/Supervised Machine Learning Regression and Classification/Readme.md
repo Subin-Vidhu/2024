@@ -7,4 +7,5 @@
     - w=0.5
     ![alt text](image-1.png)
 
+    - w=0
 
