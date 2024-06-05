@@ -15,3 +15,6 @@
 
     - generally
     ![alt text](image-5.png)
+
+- Direction of steepest descent
+    
