@@ -34,5 +34,5 @@
 
     - Mean Normalization
     
-        
+        ![alt text](image-10.png)
         
