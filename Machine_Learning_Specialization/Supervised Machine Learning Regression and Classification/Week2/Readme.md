@@ -7,3 +7,7 @@
 - Model Representation
 
     ![alt text](image-1.png)
+
+- Vectorized Implementation
+
+    ![alt text](image-2.png)
