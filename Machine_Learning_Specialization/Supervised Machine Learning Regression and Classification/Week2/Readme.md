@@ -49,3 +49,10 @@
 - Feature Engineering
 
     - Using intuition to design new features by transforming or combining the original features
+
+
+- Polynomial Regression
+
+    - using the square of the original feature to fit a quadratic function
+
+    
