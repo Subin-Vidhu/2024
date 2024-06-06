@@ -87,3 +87,15 @@
         - Display > Multiple Displays > Extend these displays / Duplicate these displays
     - **Display Settings**
 
+### Ctrl + Alt + Delete
+
+- **Lock**
+- **Switch User**
+- **Sign Out**
+- **Task Manager**
+- **Change a Password**
+- **Start Task Manager**
+- **Lock Computer**
+- **Log Off**
+- **Shut Down**
+- **Restart**
