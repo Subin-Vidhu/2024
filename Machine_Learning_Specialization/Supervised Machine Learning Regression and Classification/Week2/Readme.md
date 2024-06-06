@@ -27,3 +27,12 @@
 - Feature Scaling
 
     ![alt text](image-8.png)
+
+    - Dividing by max
+       
+        ![alt text](image-9.png)
+
+    - Mean Normalization
+    
+        
+        
