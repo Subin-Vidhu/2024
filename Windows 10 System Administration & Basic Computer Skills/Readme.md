@@ -79,5 +79,11 @@
     - **Toolbars**
     - **Task Bar Settings**
 
+### Monitors and Screen Resolution
 
+- **Monitors**
+    - **Screen Resolution**
+    - **Multiple Monitors**
+        - Display > Multiple Displays > Extend these displays / Duplicate these displays
+    - **Display Settings**
 
