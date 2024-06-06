@@ -23,3 +23,7 @@
     ![alt text](image-6.png)
 
     ![alt text](image-7.png)
+
+- Feature Scaling
+
+    ![alt text](image-8.png)
