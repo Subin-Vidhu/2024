@@ -41,3 +41,8 @@
         ![alt text](image-11.png)
 
     ![alt text](image-12.png)
+
+- Learning Rate
+
+    - check the learning rate using the cost function vs number of iterations graph
+
