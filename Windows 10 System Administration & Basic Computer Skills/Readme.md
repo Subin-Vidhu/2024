@@ -9,4 +9,9 @@
 - **Login**
 - **Power Options**
 
-### 
+### File Explorer
+
+- **File Explorer**
+- Windows + E
+
+###
