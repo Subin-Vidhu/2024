@@ -66,5 +66,18 @@
         - Click on "Printer" in the top menu
         - Click on "Cancel All Documents"
 
+### Task Bar
+
+- **Task Bar**
+    - **Start Menu**
+    - **Search**
+    - **Task View**
+    - **Cortana**
+    - **Notification Area**
+    - **System Tray**
+    - **Quick Launch**
+    - **Toolbars**
+    - **Task Bar Settings**
+
 
 
