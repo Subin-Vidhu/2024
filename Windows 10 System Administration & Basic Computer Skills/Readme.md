@@ -36,4 +36,35 @@
 - **Windows + Alt + Y**: Open Yammer App
 - **Windows + Alt + Q**: Open News App
 
-###
+### Network drives and Printing
+
+- **Network drives** 
+    - Mapping a network drive:
+        - Open File Explorer
+        - Click on "This PC"
+        - Click on "Computer" in the top menu
+        - Click on "Map network drive"
+        - Select a drive letter
+        - Enter the folder path
+        - Check "Reconnect at sign-in"
+        - Click on "Finish"
+- **Printing** 
+
+    - Setting default printer:
+        - Control Panel > Devices and Printers
+        - Right-click on the printer you want to set as default
+        - Click on "Set as default printer"
+    - Printing a test page
+        - Control Panel > Devices and Printers
+        - Right-click on the printer you want to print a test page from
+        - Click on "Printer properties"
+        - Click on "Print Test Page"
+    - Cancelling a print job
+        - Control Panel > Devices and Printers
+        - Right-click on the printer you want to cancel a print job from
+        - Click on "See what's printing"
+        - Click on "Printer" in the top menu
+        - Click on "Cancel All Documents"
+
+
+
