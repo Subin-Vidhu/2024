@@ -46,3 +46,6 @@
 
     - check the learning rate using the cost function vs number of iterations graph
 
+- Feature Engineering
+
+    - Using intuition to design new features by transforming or combining the original features
