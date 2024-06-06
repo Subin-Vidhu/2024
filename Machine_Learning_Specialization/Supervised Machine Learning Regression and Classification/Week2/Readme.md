@@ -36,3 +36,6 @@
     
         ![alt text](image-10.png)
         
+    - Z-score Normalization
+    
+        ![alt text](image-11.png)
