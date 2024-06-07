@@ -38,5 +38,9 @@
 
         - Reduce the size of parameters w subscript j (j=1,2,3,...,n) by penalizing large values of the parameters
 
-        ![alt text](image-9.png)
+            ![alt text](image-9.png)
+
+            - Choosing lambda
+
+                ![alt text](image-10.png)
 
