@@ -44,3 +44,6 @@
 
                 ![alt text](image-10.png)
 
+    - Implementing Gradient Descent
+
+        ![alt text](image-11.png)
