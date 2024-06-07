@@ -9,3 +9,10 @@
         ![alt text](image-2.png)
 
         ![alt text](image-3.png)
+
+    - Gradient Descent
+        
+        - Approach remains same as linear regression
+        - Only difference is the hypothesis function
+
+        ![alt text](image-4.png)
