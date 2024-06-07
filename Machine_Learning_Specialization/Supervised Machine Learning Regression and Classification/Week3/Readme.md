@@ -27,5 +27,9 @@
 - Addressing Overfitting
 
     -  Collect more training data
-    
+
         ![alt text](image-7.png)
+
+    - Select features to include/exclude
+
+        ![alt text](image-8.png)
