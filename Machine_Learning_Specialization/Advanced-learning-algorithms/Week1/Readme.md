@@ -88,3 +88,11 @@ S
     - Tensor is a datatype that the tensorflow team had created inorder to store and carry out computations on matrices efficiently.
 
         ![alt text](image-15.png)   
+
+
+- Building a Neural Network
+    
+    - Building a neural network involves defining the layers of the neural network, connecting the layers and defining the activation functions.
+
+
+        ![alt text](image-16.png)
