@@ -42,4 +42,6 @@ S
         - Hidden Layer
         - Output Layer
 
-        
+            ![alt text](image-7.png)
+
+            ![alt text](image-8.png)
