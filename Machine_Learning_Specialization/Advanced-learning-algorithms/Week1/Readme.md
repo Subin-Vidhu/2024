@@ -7,3 +7,9 @@
 - Why neural networks are so popular noewadays?
     
     ![alt text](image-2.png)
+
+- Demand Prediction
+
+    - single feature
+
+        ![alt text](image-3.png)
