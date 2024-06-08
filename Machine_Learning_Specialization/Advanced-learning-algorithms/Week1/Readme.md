@@ -25,3 +25,9 @@
     - How many neurons and how many hidden layers is a question of the architecture of the neural network.*
 
         ![alt text](image-5.png)
+
+- Recognizing Images
+
+    - Can you train a neural network that takes as input a feature vector with a million brightness values and output the identity of the object in the image?
+
+        ![alt text](image-6.png)
