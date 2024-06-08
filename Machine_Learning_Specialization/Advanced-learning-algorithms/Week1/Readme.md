@@ -100,3 +100,9 @@ S
         ![alt text](image-17.png)
 
         ![alt text](image-18.png)
+
+- Neural Network Implementation in Python
+
+    - Python and Numpy
+
+        ![alt text](image-19.png)
