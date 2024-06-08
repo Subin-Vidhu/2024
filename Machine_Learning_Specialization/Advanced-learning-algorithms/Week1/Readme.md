@@ -51,3 +51,17 @@ S
         - Complex Neural Network
 
             ![alt text](image-10.png)
+
+- Forward Propagation
+
+    - Forward Propagation is the process neural network makes predictions.
+
+    - Hand written digit recognition - binary classification
+
+        ![alt text](image-11.png)
+
+        ![alt text](image-12.png)
+
+
+
+
