@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>First Innings Score Predictor</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='ipl-favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://kit.fontawesome.com/5f3f547070.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Website Title -->
+    <div class="container">
+        <h2 class='container-heading'><span class='heading_first'>First Innings Score Predictor for Indian Premier
+                League (IPL) </span>
+            <div class='description'>
+                <p style="font-size: 20px;">A Machine Learning Web App, Built with Flask.</p>
+            </div>
+    </div>
+
+    <div style="text-align: center;">
+        <h4 style='color:black'>{{ val }}</h4>
+    </div>
+
+    <!-- Prediction Area -->
+    <div class="prediction-area" style='margin-top: 45px;'>
+
+        <!-- IPL Banner - 1 -->
+        <div class='ipl-banner-left'>
+            <div class="slider-frame">
+                <div class="slide-images-up">
+                    <!-- Image-1 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='mi.jpg') }}" alt="Mumbai Indians">
+                    </div>
+                    <!-- Image-2 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='srh.png') }}"
+                            alt="Sunrisers Hyderabad">
+                    </div>
+                    <!-- Image-3 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='rcb.png') }}"
+                            alt="Royal Challengers Bangalore">
+                    </div>
+                    <!-- Image-4 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='dc.png') }}" alt="Delhi Capitals">
+                    </div>
+                    <!-- Image-5 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='rr.png') }}"
+                            alt="Rajasthan Royals">
+                    </div>
+                    <!-- Image-6 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='kkr.jpg') }}"
+                            alt="Kolkata Knight Riders">
+                    </div>
+                    <!-- Image-7 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='kxip.png') }}"
+                            alt="Kings XI Punjab">
+                    </div>
+                    <!-- Image-8 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='csk.png') }}"
+                            alt="Chennai Super Kings">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Prediction Form -->
+        <div class='div2'>
+            <form action="predict" method="POST">
+                <!-- Batting Team Dropdown -->
+                <select class="form-input align-center" name="batting-team">
+                    <option value="none">--- Select a Batting team ---</option>
+                    <option value="Mumbai Indians">Mumbai Indians</option>
+                    <option value="Kolkata Knight Riders">Kolkata Knight Riders</option>
+                    <option value="Chennai Super Kings">Chennai Super Kings</option>
+                    <option value="Rajasthan Royals">Rajasthan Royals</option>
+                    <option value="Kings XI Punjab">Kings XI Punjab</option>
+                    <option value="Royal Challengers Bangalore">Royal Challengers Bangalore</option>
+                    <option value="Delhi Capitals">Delhi Capitals</option>
+                    <option value="Sunrisers Hyderabad">Sunrisers Hyderabad</option>
+                </select><br>
+
+                <!-- Bowling Team Dropdown -->
+                <select class="form-input align-center" name="bowling-team">
+                    <option value="none">--- Select a Bowling team ---</option>
+                    <option value="Mumbai Indians">Mumbai Indians</option>
+                    <option value="Kolkata Knight Riders">Kolkata Knight Riders</option>
+                    <option value="Chennai Super Kings">Chennai Super Kings</option>
+                    <option value="Rajasthan Royals">Rajasthan Royals</option>
+                    <option value="Kings XI Punjab">Kings XI Punjab</option>
+                    <option value="Royal Challengers Bangalore">Royal Challengers Bangalore</option>
+                    <option value="Delhi Capitals">Delhi Capitals</option>
+                    <option value="Sunrisers Hyderabad">Sunrisers Hyderabad</option>
+                </select><br>
+
+                <!-- Venue -->
+                <select class="form-input align-center" name="venue">
+                    <option value="none">--- Select a Venue ---</option>
+                    <option value="ACA-VDCA Stadium, Visakhapatnam">ACA-VDCA Stadium, Visakhapatnam</option>
+                    <option value="Barabati Stadium, Cuttack">Barabati Stadium, Cuttack</option>
+                    <option value="Dr DY Patil Sports Academy, Mumbai">Dr DY Patil Sports Academy, Mumbai</option>
+                    <option value="Dubai International Cricket Stadium, Dubai">Dubai International Cricket Stadium,
+                        Dubai</option>
+                    <option value="Eden Gardens, Kolkata">Eden Gardens, Kolkata</option>
+                    <option value="Feroz Shah Kotla, Delhi">Feroz Shah Kotla, Delhi</option>
+                    <option value="Himachal Pradesh Cricket Association Stadium, Dharamshala">Himachal Pradesh Cricket
+                        Association Stadium, Dharamshala</option>
+                    <option value="Holkar Cricket Stadium, Indore">Holkar Cricket Stadium, Indore</option>
+                    <option value="JSCA International Stadium Complex, Ranchi">JSCA International Stadium Complex,
+                        Ranchi</option>
+                    <option value="M Chinnaswamy Stadium, Bangalore">M Chinnaswamy Stadium, Bangalore</option>
+                    <option value="MA Chidambaram Stadium, Chepauk">MA Chidambaram Stadium, Chepauk</option>
+                    <option value="Maharashtra Cricket Association Stadium, Pune">Maharashtra Cricket Association
+                        Stadium, Pune</option>
+                    <option value="Punjab Cricket Association Stadium, Mohali">Punjab Cricket Association Stadium,
+                        Mohali</option>
+                    <option value="Raipur International Cricket Stadium, Raipur">Raipur International Cricket Stadium,
+                        Raipur</option>
+                    <option value="Rajiv Gandhi International Stadium, Uppal">Rajiv Gandhi International Stadium, Uppal
+                    </option>
+                    <option value="Sardar Patel Stadium, Motera">Sardar Patel Stadium, Motera</option>
+                    <option value="Sawai Mansingh Stadium, Jaipur">Sawai Mansingh Stadium, Jaipur</option>
+                    <option value="Sharjah Cricket Stadium, Sharjah">Sharjah Cricket Stadium, Sharjah</option>
+                    <option value="Sheikh Zayed Stadium, Abu-Dhabi">Sheikh Zayed Stadium, Abu-Dhabi</option>
+                    <option value="Wankhede Stadium, Mumbai">Wankhede Stadium, Mumbai</option>
+                </select><br>
+
+                <input class="form-input" type="text" name="overs" placeholder="Overs (>= 5.0) eg. 7.2"><br>
+
+                <input class="form-input" type="text" name="runs" placeholder="Runs eg. 64"><br>
+
+                <input class="form-input" type="text" name="wickets" placeholder="Wickets eg. 4"><br>
+
+                <input class="form-input" type="text" name="runs_in_prev_5"
+                    placeholder="Runs scored in previous 5 Overs eg. 42"><br>
+
+                <input class="form-input" type="text" name="wickets_in_prev_5"
+                    placeholder="Wickets taken in previous 5 Overs eg. 3"><br>
+
+                <input type="submit" class="myButton" value="Predict Score">
+            </form>
+        </div>
+
+        <!-- IPL Banner - 2 -->
+        <div class='ipl-banner-right'>
+
+            <div class="slider-frame">
+                <div class="slide-images-down">
+
+                    <!-- Image-1 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='mi.jpg') }}" alt="Mumbai Indians">
+                    </div>
+                    <!-- Image-2 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='srh.png') }}"
+                            alt="Sunrisers Hyderabad">
+                    </div>
+                    <!-- Image-3 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='rcb.png') }}"
+                            alt="Royal Challengers Bangalore">
+                    </div>
+                    <!-- Image-4 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='dc.png') }}" alt="Delhi Capitals">
+                    </div>
+                    <!-- Image-5 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='kkr.jpg') }}"
+                            alt="Kolkata Knight Riders">
+                    </div>
+                    <!-- Image-6 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='rr.png') }}"
+                            alt="Rajasthan Royals">
+                    </div>
+                    <!-- Image-7 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='kxip.png') }}"
+                            alt="Kings XI Punjab">
+                    </div>
+                    <!-- Image-8 -->
+                    <div class="image-container">
+                        <img class="image-width" src="{{ url_for('static', filename='csk.png') }}"
+                            alt="Chennai Super Kings">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+    <footer
+        style="position: fixed; bottom: 0; width: 100%;background-color: black;color: ivory;text-align: center;padding-top: 5px;padding-bottom: 5px;">
+        Made with ❤️ by Abhishek Sharma.
+    </footer>
+
+
+</body>
+
+</html>
