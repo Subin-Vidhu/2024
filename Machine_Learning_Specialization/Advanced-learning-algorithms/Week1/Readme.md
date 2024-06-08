@@ -85,6 +85,6 @@ S
 
     - Tensors are the fundamental building blocks of data in Tensorflow.
 
-    - Tensors are the fundamental building blocks of data in Tensorflow.
+    - Tensor is a datatype that the tensorflow team had created inorder to store and carry out computations on matrices efficiently.
 
         ![alt text](image-15.png)   
