@@ -63,5 +63,10 @@ S
         ![alt text](image-12.png)
 
 
+- Tensorflow Implementation
 
+    - Tensorflow is a powerful open source software library for numerical computation, particularly well suited and fine tuned for large scale machine learning.
 
+    - Tensorflow is a symbolic math library based on dataflow and differentiable programming.
+
+    
