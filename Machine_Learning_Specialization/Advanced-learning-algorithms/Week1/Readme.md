@@ -31,3 +31,15 @@
     - Can you train a neural network that takes as input a feature vector with a million brightness values and output the identity of the object in the image?
 
         ![alt text](image-6.png)
+
+- Neural Network Model
+
+    - Fundamental building block of most modern neural network is a layer of neurons.
+
+    - Different Layers
+S
+        - Input Layer
+        - Hidden Layer
+        - Output Layer
+
+        
