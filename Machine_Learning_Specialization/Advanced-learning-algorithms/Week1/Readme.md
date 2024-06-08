@@ -69,4 +69,7 @@ S
 
     - Tensorflow is a symbolic math library based on dataflow and differentiable programming.
 
+    - Coffee Roasting Example
+
+        ![alt text](image-13.png)
     
