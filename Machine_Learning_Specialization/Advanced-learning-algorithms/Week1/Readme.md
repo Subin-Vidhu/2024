@@ -79,4 +79,12 @@ S
 
 - Data in Tensorflow
 
-    
+    - Data in Tensorflow is represented as tensors.
+
+    - Tensors are n-dimensional arrays.
+
+    - Tensors are the fundamental building blocks of data in Tensorflow.
+
+    - Tensors are the fundamental building blocks of data in Tensorflow.
+
+        ![alt text](image-15.png)   
