@@ -17,3 +17,5 @@
     - multiple features
 
         ![alt text](image-4.png)
+
+    - Neural Network can learn complex patterns and create new features by itself where as in traditional machine learning we have to manually create features(feature engineering).
