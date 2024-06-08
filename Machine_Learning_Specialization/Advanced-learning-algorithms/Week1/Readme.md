@@ -114,3 +114,5 @@ S
     - Vectorization is the process of converting an algorithm from operating on a single value at a time to operating on a set of values at one time.
 
         ![alt text](image-21.png)
+
+        ![alt text](image-22.png)
