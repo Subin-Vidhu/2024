@@ -76,3 +76,7 @@ S
     - Digit Classification Example
 
         ![alt text](image-14.png)
+
+- Data in Tensorflow
+
+    
