@@ -73,3 +73,6 @@ S
 
         ![alt text](image-13.png)
     
+    - Digit Classification Example
+
+        ![alt text](image-14.png)
