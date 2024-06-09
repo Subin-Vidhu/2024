@@ -25,3 +25,8 @@
     - Sigmoid, ReLU, Linear and many more
 
         ![alt text](image-5.png)
+
+    
+    - Choosing the right activation function
+
+        ![alt text](image-6.png)
