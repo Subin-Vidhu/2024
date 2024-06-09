@@ -15,3 +15,7 @@
     - Loss function and Cost function
 
         ![alt text](image-3.png)
+
+    - Gradient Descent
+
+        ![alt text](image-4.png)
