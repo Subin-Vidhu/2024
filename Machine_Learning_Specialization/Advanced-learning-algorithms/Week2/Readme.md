@@ -86,3 +86,13 @@
     - Train one neural network to predict multiple labels
 
         ![alt text](image-17.png)
+
+- Gradient Descent
+
+    - Gradient Descent is an optimization algorithm used to minimize some function by iteratively moving in the direction of steepest descent as defined by the negative of the gradient.
+
+        ![alt text](image-18.png)
+
+    - Adam
+
+        
