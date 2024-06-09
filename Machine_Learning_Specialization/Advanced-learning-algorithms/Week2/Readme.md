@@ -22,3 +22,6 @@
 
 - Activation Functions
 
+    - Sigmoid, ReLU, Linear and many more
+
+        ![alt text](image-5.png)
