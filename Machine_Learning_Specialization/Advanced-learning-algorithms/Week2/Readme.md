@@ -62,3 +62,7 @@
     - Multiclass classification
 
         ![alt text](image-10.png)
+
+    - Cost function
+
+        ![alt text](image-11.png)
