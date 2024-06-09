@@ -66,3 +66,8 @@
     - Cost function
 
         ![alt text](image-11.png)
+
+    - Neurel Network with Softmax
+
+        ![alt text](image-12.png)
+    
