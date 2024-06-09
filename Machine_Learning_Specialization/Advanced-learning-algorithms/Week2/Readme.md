@@ -42,3 +42,12 @@
         - Activation functions introduce non-linearity to the model. Non-linearity is important because most real-world data is non-linear.
 
         - Activation functions help the neural network to learn complex patterns in the data.
+
+        - eg.
+
+            ```python
+            def sigmoid(x):
+                return 1 / (1 + np.exp(-x))
+            ```
+
+        
