@@ -11,3 +11,7 @@
     - Create a model
      
         ![alt text](image-2.png)
+
+    - Loss function and Cost function
+
+        ![alt text](image-3.png)
