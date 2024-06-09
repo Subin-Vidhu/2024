@@ -55,3 +55,6 @@
     - more than 2 possible outputs
 
         ![alt text](image-9.png)
+
+
+- Softmax function
