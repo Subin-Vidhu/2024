@@ -58,3 +58,7 @@
 
 
 - Softmax function
+
+    - Multiclass classification
+
+        ![alt text](image-10.png)
