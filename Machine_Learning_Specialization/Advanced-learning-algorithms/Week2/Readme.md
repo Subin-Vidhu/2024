@@ -34,3 +34,11 @@
         ![alt text](image-7.png)
 
         ![alt text](image-8.png)
+    
+    - Why do we need activation functions?
+
+        - Without activation functions, the neural network is just a linear regression model.
+
+        - Activation functions introduce non-linearity to the model. Non-linearity is important because most real-world data is non-linear.
+
+        - Activation functions help the neural network to learn complex patterns in the data.
