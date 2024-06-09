@@ -19,3 +19,6 @@
     - Gradient Descent
 
         ![alt text](image-4.png)
+
+- Activation Functions
+
