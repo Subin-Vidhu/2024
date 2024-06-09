@@ -70,4 +70,8 @@
     - Neurel Network with Softmax
 
         ![alt text](image-12.png)
+
+    - Improved implementation
+
+        ![alt text](image-13.png)
     
