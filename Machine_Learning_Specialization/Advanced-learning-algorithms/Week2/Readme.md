@@ -81,5 +81,8 @@
 
         ![alt text](image-16.png)
 
+- Multi label classification
 
-    
+    - Train one neural network to predict multiple labels
+
+        ![alt text](image-17.png)
