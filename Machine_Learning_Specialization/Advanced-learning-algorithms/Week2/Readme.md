@@ -30,3 +30,5 @@
     - Choosing the right activation function
 
         ![alt text](image-6.png)
+
+        ![alt text](image-7.png)
