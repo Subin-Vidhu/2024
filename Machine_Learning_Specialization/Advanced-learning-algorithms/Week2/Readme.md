@@ -99,5 +99,9 @@
 
 - Additional Layer Types
 
-    
+    - Convolutional Neural Networks
+
+        - Convolutional Neural Networks are a type of deep learning algorithm that can take in an input image, assign importance to various aspects/objects in the image and be able to differentiate one from the other.
+
+            ![alt text](image-20.png)
 
