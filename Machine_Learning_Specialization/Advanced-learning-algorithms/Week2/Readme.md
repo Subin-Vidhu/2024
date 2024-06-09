@@ -7,3 +7,7 @@
 - Model Training Steps
 
     ![alt text](image-1.png)
+
+    - Create a model
+     
+        ![alt text](image-2.png)
