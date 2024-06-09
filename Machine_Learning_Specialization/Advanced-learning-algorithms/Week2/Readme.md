@@ -50,4 +50,8 @@
                 return 1 / (1 + np.exp(-x))
             ```
 
-        
+- Multiclass classification
+
+    - more than 2 possible outputs
+
+        ![alt text](image-9.png)
