@@ -98,3 +98,5 @@
 - Full cycle of a Machine Learning Project
 
     ![alt text](image-31.png)
+
+    ![alt text](image-32.png)
