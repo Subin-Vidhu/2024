@@ -111,3 +111,4 @@
 
 - Skwewed Dataset
 
+    ![alt text](image-36.png)
