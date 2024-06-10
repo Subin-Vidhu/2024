@@ -86,3 +86,7 @@
         - is the process of generating new data from scratch.
 
     ![alt text](image-27.png)
+
+- Transfer Learning
+
+    ![alt text](image-28.png)
