@@ -100,3 +100,7 @@
     ![alt text](image-31.png)
 
     ![alt text](image-32.png)
+
+- Fairness, bias, and ethics
+
+    ![alt text](image-33.png)
