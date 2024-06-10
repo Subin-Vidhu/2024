@@ -97,4 +97,4 @@
 
 - Full cycle of a Machine Learning Project
 
-    
+    ![alt text](image-31.png)
