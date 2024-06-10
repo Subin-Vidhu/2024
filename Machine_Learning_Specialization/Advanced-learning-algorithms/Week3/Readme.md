@@ -33,4 +33,4 @@
 
 - Bias and Variance
 
-    
+    ![alt text](image-12.png)
