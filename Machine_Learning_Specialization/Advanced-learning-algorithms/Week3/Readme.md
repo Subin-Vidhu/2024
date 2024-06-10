@@ -90,3 +90,5 @@
 - Transfer Learning
 
     ![alt text](image-28.png)
+
+    ![alt text](image-29.png)
