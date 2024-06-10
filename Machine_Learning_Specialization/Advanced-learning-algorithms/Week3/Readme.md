@@ -94,3 +94,7 @@
     ![alt text](image-29.png)
 
     ![alt text](image-30.png)
+
+- Full cycle of a Machine Learning Project
+
+    
