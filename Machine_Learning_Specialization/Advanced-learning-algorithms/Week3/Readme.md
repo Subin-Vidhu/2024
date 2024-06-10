@@ -77,3 +77,12 @@
 
 - Adding Data
 
+    - Data Augmentation
+
+        - is the process of artificially increasing the size of the training set by applying transformations to the original data.
+
+    - Data Synthesis
+
+        - is the process of generating new data from scratch.
+
+    ![alt text](image-27.png)
