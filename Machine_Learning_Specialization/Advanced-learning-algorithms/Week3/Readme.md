@@ -56,3 +56,7 @@
     ![alt text](image-18.png)
 
     ![alt text](image-20.png)
+
+- Debugging a learning algorithm
+
+    
