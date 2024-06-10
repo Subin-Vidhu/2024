@@ -48,3 +48,7 @@
 - Establishing a baseline level of performance
 
     ![alt text](image-16.png)
+
+- Learning Curve
+
+    
