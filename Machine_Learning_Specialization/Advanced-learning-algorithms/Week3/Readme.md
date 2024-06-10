@@ -38,3 +38,7 @@
     - Diagnosing bias and variance
 
         ![alt text](image-13.png)
+
+- Regularization and bias/variance
+
+    ![alt text](image-14.png)
