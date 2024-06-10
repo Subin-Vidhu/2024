@@ -59,4 +59,4 @@
 
 - Debugging a learning algorithm
 
-    
+    ![alt text](image-21.png)
