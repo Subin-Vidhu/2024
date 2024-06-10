@@ -104,3 +104,5 @@
 - Fairness, bias, and ethics
 
     ![alt text](image-33.png)
+
+    ![alt text](image-34.png)
