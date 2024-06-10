@@ -108,3 +108,6 @@
     ![alt text](image-34.png)
 
     ![alt text](image-35.png)
+
+- Skwewed Dataset
+
