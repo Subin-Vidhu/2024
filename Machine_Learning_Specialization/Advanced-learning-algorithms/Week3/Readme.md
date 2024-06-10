@@ -34,3 +34,7 @@
 - Bias and Variance
 
     ![alt text](image-12.png)
+
+    - Diagnosing bias and variance
+
+        ![alt text](image-13.png)
