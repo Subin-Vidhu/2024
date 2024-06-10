@@ -60,3 +60,7 @@
 - Debugging a learning algorithm
 
     ![alt text](image-21.png)
+
+- Bias Variance tradeoff
+
+    ![alt text](image-22.png)
