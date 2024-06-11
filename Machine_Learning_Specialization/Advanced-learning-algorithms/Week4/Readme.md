@@ -41,3 +41,13 @@
         ![alt text](image-4.png)
 
         ![alt text](image-5.png)
+
+- Choosing a split: Information Gain
+
+    - Information gain: The reduction in entropy after a dataset is split on an attribute.
+
+        ![alt text](image-6.png)
+
+        ![alt text](image-7.png)        
+
+        ![alt text](image-6.png)
