@@ -81,3 +81,6 @@
     - The split is decided based on the variance of the target values.
 
         ![alt text](image-13.png)
+
+        ![alt text](image-14.png)
+
