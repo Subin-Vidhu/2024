@@ -96,3 +96,17 @@
         ![alt text](image-16.png)
 
         ![alt text](image-17.png)
+
+- Random Forest Algorithm
+
+    - Random forest is an ensemble of decision trees.
+
+    - Each tree is trained on a random subset of the data.
+
+    - Each tree is trained on a random subset of the features.
+
+    - The final prediction is the average of the predictions of the individual trees.
+
+    - Random forests are robust to overfitting.
+
+        ![alt text](image-18.png)
