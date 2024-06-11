@@ -71,3 +71,13 @@
     - Carry out the usual information gain calculation and decide to split on the continous feature value that gives the maximum information gain.
 
         ![alt text](image-12.png)
+
+- Regression Trees
+
+    - Instead of predicting a class label, we predict a continuous value.
+
+    - The prediction is the average of the target values of the data points in the leaf node.
+
+    - The split is decided based on the variance of the target values.
+
+        ![alt text](image-13.png)
