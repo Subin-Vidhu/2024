@@ -121,4 +121,8 @@
 
     - XGBoost provides a parallel tree boosting that solves many data science problems in a fast and accurate way.
 
-        ![alt text](image-20.png)
+        ![alt text](image-21.png)
+
+        ![alt text](image-22.png)
+
+        ![alt text](image-24.png)
