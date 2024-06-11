@@ -87,3 +87,12 @@
 - Tree ensembles
 
     ![alt text](image-15.png)
+
+
+- Sampling with replacement
+
+    - lets you create multiple datasets from the original dataset.
+
+        ![alt text](image-16.png)
+
+        ![alt text](image-17.png)
