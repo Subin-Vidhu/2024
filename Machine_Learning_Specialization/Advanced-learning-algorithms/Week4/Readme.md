@@ -65,3 +65,9 @@
     ![alt text](image-10.png)   
 
     ![alt text](image-11.png)
+
+- Continous valued features
+
+    - Carry out the usual information gain calculation and decide to split on the continous feature value that gives the maximum information gain.
+
+        ![alt text](image-12.png)
