@@ -8,3 +8,21 @@
 
     ![alt text](image-3.png)
 
+- Learning Process
+
+    - How to choose what feature to split on at each node?
+
+        - Greedy algorithm: At each node, choose the feature that maximizes the information gain.
+
+        - Information gain: The reduction in entropy after a dataset is split on an attribute.
+
+        - Entropy: The measure of randomness or uncertainty in a dataset.
+
+        - Information gain = entropy(parent) - [weighted average]entropy(children)
+
+        - Entropy = -Σp(x)log2p(x)
+
+        - p(x) = fraction of examples in class x
+
+    
+
