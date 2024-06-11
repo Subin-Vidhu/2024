@@ -126,3 +126,27 @@
         ![alt text](image-22.png)
 
         ![alt text](image-24.png)
+
+- Decision Trees vs Neural Networks
+
+    - Decision Trees
+
+        - Easy to interpret.
+
+        - Can handle both numerical and categorical data.
+
+        - Can handle multi-output problems.
+
+        - Can handle missing values.        
+
+    - Neural Networks
+
+        - Can capture complex patterns in data.
+
+        - Can model non-linear relationships.
+
+        - Can model large datasets.
+
+        - Can model image, text, and other data types.
+
+            ![alt text](image-25.png)
