@@ -24,5 +24,13 @@
 
         - p(x) = fraction of examples in class x
 
-    
+    - When do you stop splitting?
+
+        - When all data points belong to the same class.
+
+        - When all data points belong to the same feature value.
+
+        - When the tree reaches a maximum depth.
+
+        - When the number of data points is less than a threshold.
 
