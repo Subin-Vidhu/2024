@@ -36,3 +36,4 @@
 
 - Measuring Purity
 
+    - Entropy: The measure of randomness or uncertainty in a dataset, ie measure of impurity of a set of data points.
