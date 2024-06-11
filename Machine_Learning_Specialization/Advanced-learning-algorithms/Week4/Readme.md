@@ -34,3 +34,5 @@
 
         - When the number of data points is less than a threshold.
 
+- Measuring Purity
+
