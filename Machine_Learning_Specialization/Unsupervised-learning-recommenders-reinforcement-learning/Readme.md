@@ -83,3 +83,8 @@
         
     ![alt text](image-24.png)
              
+- Anomaly detection vs Supervised learning
+
+    ![alt text](image-25.png)
+
+    
