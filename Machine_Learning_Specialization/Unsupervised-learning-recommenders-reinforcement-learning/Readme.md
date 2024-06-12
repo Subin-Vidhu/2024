@@ -50,3 +50,9 @@
     - Choosing the value of K
 
         ![alt text](image-13.png)
+
+- Anomaly detection
+
+    - Anomaly detection is the identification of items, events or observations which do not conform to an expected pattern or other items in a dataset.
+
+             
