@@ -58,4 +58,10 @@
         ![alt text](image-14.png)
 
         ![alt text](image-16.png)
+
+- Gaussian distribution
+
+    - The Gaussian distribution is a continuous function that approximates the exact binomial distribution of events.
+
+        
              
