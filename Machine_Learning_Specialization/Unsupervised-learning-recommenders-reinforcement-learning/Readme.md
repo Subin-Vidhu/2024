@@ -10,6 +10,15 @@
 
 - K-means
 
-    - is a clustering algorithm that tries to partition a set of points into K sets (clusters) such that the points in each cluster tend to be near each other.
+    - repeatedly do two different things:
+
+        - Assign each data point to the nearest cluster center.
+
+        - Recompute the cluster centers.
+
+            ![alt text](image-2.png)
+
+            ![alt text](image-3.png)
+
 
         
