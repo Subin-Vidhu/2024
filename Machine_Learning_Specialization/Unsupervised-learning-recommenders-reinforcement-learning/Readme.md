@@ -34,3 +34,5 @@
     ![alt text](image-7.png)
 
 - Random Initialization    
+
+    ![alt text](image-8.png)
