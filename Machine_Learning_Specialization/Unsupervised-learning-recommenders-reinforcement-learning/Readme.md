@@ -40,3 +40,9 @@
     ![alt text](image-10.png)
 
     ![alt text](image-11.png)
+
+- Choosing the number of clusters    
+
+    - Elbow method
+
+        ![alt text](image-12.png)
