@@ -71,6 +71,8 @@
 
 - Anomaly detection algorithm
 
+    ![alt text](image-20.png)
+
     
         
              
