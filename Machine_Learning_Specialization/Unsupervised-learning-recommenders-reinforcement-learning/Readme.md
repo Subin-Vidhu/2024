@@ -46,3 +46,7 @@
     - Elbow method
 
         ![alt text](image-12.png)
+
+    - Choosing the value of K
+
+        ![alt text](image-13.png)
