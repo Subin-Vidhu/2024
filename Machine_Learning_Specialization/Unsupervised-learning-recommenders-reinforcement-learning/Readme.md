@@ -14,7 +14,7 @@
 
         - Assign each data point to the nearest cluster center.
 
-        - Recompute the cluster centers.
+        - Recompute the cluster centers to the mean of all points.
 
             ![alt text](image-2.png)
 
