@@ -23,3 +23,5 @@
             ![alt text](image-4.png)
         
 - K-means algorithm        
+
+    ![alt text](image-5.png)
