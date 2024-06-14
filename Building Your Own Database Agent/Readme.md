@@ -34,4 +34,4 @@
 
 - Leveraging assistants API for SQL DBs
 
-    
+     ![alt text](image-6.png)
