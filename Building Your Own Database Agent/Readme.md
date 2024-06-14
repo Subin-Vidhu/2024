@@ -24,3 +24,6 @@
 
 - Connecting to a SQL DB
 
+    - AI agent with sql db
+
+        
