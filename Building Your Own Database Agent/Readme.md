@@ -27,3 +27,7 @@
     - AI agent with sql db
 
         ![alt text](image-4.png)
+
+- Function calling feature
+
+    
