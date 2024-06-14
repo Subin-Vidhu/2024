@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 test.py
 test_venv/
+*.db
 # C extensions
 *.so
 
