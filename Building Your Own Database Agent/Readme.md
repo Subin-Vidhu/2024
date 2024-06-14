@@ -17,6 +17,8 @@
     
 - Interacting with a CSV data
 
-    
+    - Alternative options for AI DB agents
+
+        
 
     
