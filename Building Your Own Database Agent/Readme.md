@@ -22,3 +22,5 @@
         ![alt text](image-3.png)
 
 
+- Connecting to a SQL DB
+
