@@ -31,3 +31,7 @@
 - Function calling feature
 
     ![alt text](image-5.png)
+
+- Leveraging assistants API for SQL DBs
+
+    
