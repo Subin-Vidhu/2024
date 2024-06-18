@@ -10,6 +10,7 @@ Courses and Challenges Completed
 6. Python And Flask Demonstrations Practice Course [[Source](https://www.udemy.com/course/python-and-flask-only-demonstration-course/)]
 7. Flask Hacking Mastery [[Source](https://www.udemy.com/course/flask-hacking-mastery/)]
 8. Nginx for sys and web admins FREE[[Source](https://www.udemy.com/course/nginx-for-sys-and-web-admins-free/)]
+   Telegram : 13
 9. Understanding and Applying Text Embeddings[[Source](https://learn.deeplearning.ai/google-cloud-vertex-ai)]
 10. Windows Command Mastery for Ethical Hackers[[Source](https://www.udemy.com/course/windows-command-mastery-for-ethical-hackers/learn/lecture/41094498?src=sac&kw=Windows+Command+Mastery+for+Ethical+Hackers#overview)]
 11. AI FOR GOOD [[Source](https://www.coursera.org/specializations/ai-for-good)]
