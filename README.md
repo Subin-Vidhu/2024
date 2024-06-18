@@ -30,4 +30,4 @@ Courses and Challenges Completed
 18. Python Programming Basics - Book || [Github Link](https://www.youtube.com/watch?v=4F2m91eKmts)
     Telegram : 11
 19. Programming For Everybody Specialization - Book || [Github Link](https://github.com/Subin-Vidhu/2024/blob/main/Books/pythonlearn.pdf)
-    Telegram : 12
+    
