@@ -20,6 +20,7 @@ Courses and Challenges Completed
     Telegram : 8
 13. 100 Days of Code - The Complete Python Pro Bootcamp for 2023 [Angela Course - Telegram, ongoing...]
 14. Mathematics for ML DL-AI (ongoing...)[[Source](https://www.coursera.org/specializations/mathematics-for-machine-learning-and-data-science)]
+    Telegram : 17
 15. Ubuntu Network Server[[Source](https://www.udemy.com/course/ubuntu-network-server)]
     Telegram : 16
 16. Learning How to Learn: Powerful mental tools to help you master tough subjects [[Source](https://www.coursera.org/learn/learning-how-to-learn/home/week/1)]
