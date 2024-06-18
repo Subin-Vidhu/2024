@@ -24,4 +24,4 @@ Courses and Challenges Completed
 16. Learning How to Learn: Powerful mental tools to help you master tough subjects [[Source](https://www.coursera.org/learn/learning-how-to-learn/home/week/1)]
     Telegram : 9
 17. Python Full Course for free 🐍 || Yt link (https://youtu.be/XKHEtdqhLK8?si=qaipuIrZQksSdLUF)
-    
+    Telegram : 10
