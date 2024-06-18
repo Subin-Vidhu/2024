@@ -26,3 +26,5 @@ Courses and Challenges Completed
     Telegram : 9
 17. Python Full Course for free 🐍 || Yt link (https://youtu.be/XKHEtdqhLK8?si=qaipuIrZQksSdLUF)
     Telegram : 10
+18. Python Programming Basics - Book || [Github Link](https://www.youtube.com/watch?v=4F2m91eKmts)
+    Telegram : 11
