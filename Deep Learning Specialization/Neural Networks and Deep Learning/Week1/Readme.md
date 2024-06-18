@@ -32,4 +32,4 @@
 
         - Deep learning has been enabled by many other advances in machine learning.
         
-                    
+             ![alt text](image-5.png)       
