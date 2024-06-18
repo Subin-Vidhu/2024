@@ -15,3 +15,5 @@
     - Supervised learning is a type of machine learning algorithm that uses a known dataset (called the training dataset) to make predictions. The training dataset includes input data and response values. The model learns on this dataset to make predictions on new, unseen data.
 
         ![alt text](image-2.png)
+
+        ![alt text](image-3.png)
