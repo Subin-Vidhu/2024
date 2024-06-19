@@ -8,4 +8,6 @@
 
 - Neural Network Representation
 
-    - 2 layers
+    - 2 or more hidden layers
+
+        ![alt text](image-1.png)
