@@ -94,4 +94,4 @@
     - extend smaller array
     - perform operation
 
-        
+       ![alt text](image-16.png) 
