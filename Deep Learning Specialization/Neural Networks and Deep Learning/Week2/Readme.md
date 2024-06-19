@@ -102,4 +102,7 @@
 
 - Python/Numpy Vectors
 
-    ![alt text](image-19.png)
+    - always use vectors
+    - avoid rank 1 arrays
+
+        ![alt text](image-20.png)
