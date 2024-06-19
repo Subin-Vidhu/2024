@@ -43,3 +43,5 @@
     - dw = (1 / m) * sum(dL/dw), db = (1 / m) * sum(dL/db)
 
         ![alt text](image-4.png)
+
+        ![alt text](image-5.png)
