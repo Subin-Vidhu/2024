@@ -76,3 +76,11 @@
     - db = (1 / m) * sum(dz)
 
         ![alt text](image-12.png)
+
+- Vectorization
+
+    - avoid explicit loops
+    - use matrix operations
+    - faster, simpler code
+
+        ![alt text](image-13.png)
