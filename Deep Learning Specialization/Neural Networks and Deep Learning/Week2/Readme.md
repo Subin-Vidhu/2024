@@ -45,3 +45,10 @@
         ![alt text](image-4.png)
 
         ![alt text](image-5.png)
+
+- Intuition about derivatives
+
+    - derivative: slope of a function
+    - if slope > 0: increase parameter
+    - if slope < 0: decrease parameter
+    - if slope = 0: parameter is optimal
