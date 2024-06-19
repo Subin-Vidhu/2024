@@ -70,3 +70,9 @@
         ![alt text](image-10.png)
 
 - Logistic Regression Derivatives
+
+    - dz = y-hat - y
+    - dw = (1 / m) * x * dz^T
+    - db = (1 / m) * sum(dz)
+
+        ![alt text](image-12.png)
