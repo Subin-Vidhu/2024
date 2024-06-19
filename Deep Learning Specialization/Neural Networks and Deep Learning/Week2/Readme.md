@@ -60,3 +60,9 @@
         ![alt text](image-8.png)
 
 - Computation Graph
+
+    - visualize computation
+    - forward propagation: compute output
+    - backward propagation: compute derivatives
+
+        
