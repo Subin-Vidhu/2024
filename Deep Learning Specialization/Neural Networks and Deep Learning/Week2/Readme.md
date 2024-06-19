@@ -1,2 +1,5 @@
 ## References
 
+- Logistic Regression
+
+    
