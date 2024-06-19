@@ -20,3 +20,12 @@
     -  Y: matrix of output vectors
 
         ![alt text](image-1.png)
+
+- Logistic Regression
+
+    - given x, want y-hat = P(y = 1 | x)
+    - parameters: w, b
+    - output: y-hat = sigmoid(w^T x + b)
+    - sigmoid function: 1 / (1 + e^(-z))
+
+        ![alt text](image-2.png)
