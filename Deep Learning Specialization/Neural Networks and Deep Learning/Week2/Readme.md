@@ -52,3 +52,5 @@
     - if slope > 0: increase parameter
     - if slope < 0: decrease parameter
     - if slope = 0: parameter is optimal
+
+        ![alt text](image-6.png)
