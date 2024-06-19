@@ -29,3 +29,5 @@
     - sigmoid function: 1 / (1 + e^(-z))
 
         ![alt text](image-2.png)
+
+- Logistic Regression Cost Function
