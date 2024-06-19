@@ -18,3 +18,5 @@
     -  (x(i), y(i)): ith training example
     -  X: matrix of input vectors
     -  Y: matrix of output vectors
+
+        ![alt text](image-1.png)
