@@ -54,3 +54,5 @@
     - if slope = 0: parameter is optimal
 
         ![alt text](image-6.png)
+        
+        ![alt text](image-7.png)
