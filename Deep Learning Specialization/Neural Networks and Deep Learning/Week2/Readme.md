@@ -36,3 +36,5 @@
     - cost (all examples): J(w, b) = (1 / m) * sum(L(y-hat, y))
 
         ![alt text](image-3.png)
+
+- Gradient Descent
