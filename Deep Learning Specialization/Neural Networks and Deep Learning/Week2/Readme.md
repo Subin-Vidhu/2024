@@ -90,3 +90,8 @@
         ![alt text](image-15.png)
 
 - Broadcasting
+
+    - extend smaller array
+    - perform operation
+
+        
