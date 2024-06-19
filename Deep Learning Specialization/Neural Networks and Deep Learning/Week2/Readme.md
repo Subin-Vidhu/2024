@@ -38,3 +38,8 @@
         ![alt text](image-3.png)
 
 - Gradient Descent
+
+    - update parameters: w = w - alpha * dw, b = b - alpha * db
+    - dw = (1 / m) * sum(dL/dw), db = (1 / m) * sum(dL/db)
+
+        ![alt text](image-4.png)
