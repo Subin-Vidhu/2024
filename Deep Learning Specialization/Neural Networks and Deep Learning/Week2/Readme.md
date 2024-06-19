@@ -31,3 +31,8 @@
         ![alt text](image-2.png)
 
 - Logistic Regression Cost Function
+
+    - loss (single example): L(y-hat, y) = -(y log(y-hat) + (1 - y) log(1 - y-hat))
+    - cost (all examples): J(w, b) = (1 / m) * sum(L(y-hat, y))
+
+        ![alt text](image-3.png)
