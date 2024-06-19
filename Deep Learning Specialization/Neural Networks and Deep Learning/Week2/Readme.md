@@ -65,4 +65,4 @@
     - forward propagation: compute output
     - backward propagation: compute derivatives
 
-        
+        ![alt text](image-9.png)
