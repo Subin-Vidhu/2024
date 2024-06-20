@@ -75,3 +75,12 @@
     - Update the parameters using the gradients
 
         ![alt text](image-10.png)
+
+- Backpropagation intuition
+
+    - The backpropagation algorithm is used to calculate the gradients of the loss function with respect to the parameters of the model.
+
+    - It works by propagating the error backwards through the network, starting from the output layer and moving towards the input layer.
+
+    - The gradients are calculated using the chain rule of calculus.
+
