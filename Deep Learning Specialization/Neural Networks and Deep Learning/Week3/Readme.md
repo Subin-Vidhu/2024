@@ -41,3 +41,9 @@
         ![alt text](image-7.png)
 
         ![alt text](image-8.png)
+
+- Why do you need non-linear activation functions?
+
+    - Without non-linear activation functions, the neural network would be equivalent to a linear model.
+
+        ![alt text](image-9.png)
