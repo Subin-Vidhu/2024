@@ -84,3 +84,10 @@
 
     - The gradients are calculated using the chain rule of calculus.
 
+- What happens if you initialize weights to zero?
+
+    - If you initialize the weights to zero, then all the neurons in the network will compute the same output.
+
+    - This is because the weights are updated using the same gradient, and the neurons will learn the same features.
+
+    - To break the symmetry, you should initialize the weights randomly.
