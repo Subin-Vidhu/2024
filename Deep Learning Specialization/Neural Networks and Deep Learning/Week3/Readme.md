@@ -65,3 +65,13 @@
     - ELU: `g'(z) = 1 if z < 0, e^z if z >= 0`
 
     - softmax: `g'(z) = g(z) * (1 - g(z))`
+
+- Gradient descent for neural networks
+
+    - Forward propagation: Calculate the output of the model
+
+    - Backward propagation: Calculate the gradients of the loss function with respect to the parameters
+
+    - Update the parameters using the gradients
+
+        ![alt text](image-10.png)
