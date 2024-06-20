@@ -53,3 +53,15 @@
         ![alt text](image-9.png)
 
 - Derivatives of activation functions
+
+    - Sigmoid: `g'(z) = g(z) * (1 - g(z))`
+
+    - tanh: `g'(z) = 1 - g(z)^2`
+
+    - ReLU: `g'(z) = 0 if z < 0, 1 if z >= 0`
+
+    - Leaky ReLU: `g'(z) = 0.01 if z < 0, 1 if z >= 0`
+
+    - ELU: `g'(z) = 1 if z < 0, e^z if z >= 0`
+
+    - softmax: `g'(z) = g(z) * (1 - g(z))`
