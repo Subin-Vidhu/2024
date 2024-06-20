@@ -91,3 +91,8 @@
     - This is because the weights are updated using the same gradient, and the neurons will learn the same features.
 
     - To break the symmetry, you should initialize the weights randomly.
+
+        ![alt text](image-11.png)
+
+        ![alt text](image-12.png)
+
