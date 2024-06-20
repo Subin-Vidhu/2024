@@ -25,3 +25,10 @@
 
         ![alt text](image-4.png)
 
+- Vectorizing across multiple examples
+
+    - In logistic regression, we can vectorize the computation by using the formula `z = w^T * X + b` where `X` is a matrix of shape `(n_x, m)` where `n_x` is the number of features and `m` is the number of examples.
+    - In a neural network, we can vectorize the computation by using the formula `Z = W^T * A + b` where `A` is a matrix of shape `(n_h, m)` where `n_h` is the number of neurons in the hidden layer and `m` is the number of examples.
+
+        ![alt text](image-5.png)
+
