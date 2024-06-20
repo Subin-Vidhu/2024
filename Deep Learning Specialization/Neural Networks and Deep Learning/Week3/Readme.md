@@ -51,3 +51,5 @@
     - Linear activation functions are used in the output layer for regression problems, and you would typically use tanh or ReLU activation functions in the hidden layers.
 
         ![alt text](image-9.png)
+
+- Derivatives of activation functions
