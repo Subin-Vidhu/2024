@@ -61,3 +61,15 @@
         - Example: Face recognition
 
             ![alt text](image-5.png)
+
+        - Circuit Theory and Deep Learning
+
+            - The circuit theory is a theory that explains why deep networks can approximate complex functions.
+
+            - The universal approximation theorem states that a feedforward network with a single hidden layer containing a finite number of neurons can approximate continuous functions on compact subsets of R^n, under mild assumptions on the activation function.
+
+            - The circuit theory states that deep networks can approximate functions that shallow networks need exponentially more hidden units to compute.
+
+            - The circuit theory explains why deep networks can learn features at many different levels of abstraction.
+
+                
