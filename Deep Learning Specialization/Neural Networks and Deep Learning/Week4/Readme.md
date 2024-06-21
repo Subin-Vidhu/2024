@@ -25,4 +25,13 @@
         - Compute a[l] = g[l](z[l]) = g[l](W[l]a[l-1] + b[l])
         - Compute for l = 1 to L
 
-            ![alt text](image-2.png)
+        - Vectorized implementation
+
+            - Z[l] = W[l]A[l-1] + b[l]
+            - A[l] = g[l](Z[l])
+            - A[0] = X
+            - A[L] = Y_hat
+            - Compute for l = 1 to L
+            - A[L] = σ(Z[L])
+
+                ![alt text](image-2.png)
