@@ -118,3 +118,7 @@
             - Regularization λ
 
                 ![alt text](image-11.png)
+
+        - Applied deep learning is a very empirical process.
+
+            ![alt text](image-13.png)
