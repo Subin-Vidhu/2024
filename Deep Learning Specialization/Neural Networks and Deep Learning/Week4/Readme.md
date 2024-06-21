@@ -40,9 +40,16 @@
 
         - W[l]: (n[l], n[l-1])
         - b[l]: (n[l], 1)
-        - Z[l]: (n[l], m)
-        - A[l]: (n[l], m)
+        - Z[l]: (n[l], 1)
+        - A[l]: (n[l], 1)
 
         - here m is the number of examples, n[l] is the number of units in layer l, n[l-1] is the number of units in layer l-1, W[l] is the weight matrix for layer l, b[l] is the bias vector for layer l, Z[l] is the linear function of the previous layer, A[l] is the activation function for layer l.
 
             ![alt text](image-3.png)
+
+        - Same in vectorized implementation
+
+            - Z[l]: (n[l], m)
+            - A[l]: (n[l], m)
+
+                ![alt text](image-4.png)
