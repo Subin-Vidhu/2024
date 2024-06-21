@@ -35,3 +35,12 @@
             - A[L] = σ(Z[L])
 
                 ![alt text](image-2.png)
+
+    - Getting your matrix dimensions right
+
+        - W[l]: (n[l], n[l-1])
+        - b[l]: (n[l], 1)
+        - Z[l]: (n[l], m)
+        - A[l]: (n[l], m)
+
+        - here m is the number of examples, n[l] is the number of units in layer l, n[l-1] is the number of units in layer l-1, W[l] is the weight matrix for layer l, b[l] is the bias vector for layer l, Z[l] is the linear function of the previous layer, A[l] is the activation function for layer l.
