@@ -75,3 +75,21 @@
                 ![alt text](image-6.png)
 
     - Building blocks of deep neural networks
+
+        - Forward and backward propagation
+
+            - Forward propagation
+
+                - Compute Z[l] = W[l]A[l-1] + b[l]
+                - Compute A[l] = g[l](Z[l])
+                - Compute for l = 1 to L
+
+            - Backward propagation
+
+                - Compute dZ[l] = dA[l] * g'[l](Z[l])
+                - Compute dW[l] = dZ[l]A[l-1].T
+                - Compute db[l] = dZ[l]
+                - Compute dA[l-1] = W[l].T * dZ[l]
+                - Compute for l = L to 1
+
+                    ![alt text](image-7.png)
