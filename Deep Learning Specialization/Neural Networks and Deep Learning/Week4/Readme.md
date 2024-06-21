@@ -18,3 +18,5 @@
         - a[0] = x
 
             ![alt text](image-1.png)
+
+    - Forward Propagation
