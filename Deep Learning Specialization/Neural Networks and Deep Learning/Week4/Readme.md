@@ -73,3 +73,5 @@
             - The circuit theory explains why deep networks can learn features at many different levels of abstraction.
 
                 ![alt text](image-6.png)
+
+    - Building blocks of deep neural networks
