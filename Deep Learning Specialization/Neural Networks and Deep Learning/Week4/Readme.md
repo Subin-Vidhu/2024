@@ -53,3 +53,5 @@
             - A[l]: (n[l], m)
 
                 ![alt text](image-4.png)
+
+    - Why deep representations?
