@@ -99,3 +99,22 @@
                     ![alt text](image-9.png)
 
                     ![alt text](image-10.png)
+
+    - Parameters and Hyperparameters
+
+        - Parameters
+
+            - W[l], b[l]
+
+        - Hyperparameters
+
+            - Learning rate α
+            - Number of iterations
+            - Number of hidden layers L
+            - Number of hidden units n[l]
+            - Choice of activation function g[l]
+            - Momentum β
+            - Mini-batch size
+            - Regularization λ
+
+                ![alt text](image-11.png)
