@@ -55,3 +55,9 @@
                 ![alt text](image-4.png)
 
     - Why deep representations?
+
+        - Deep neural networks can learn features at many different levels of abstraction.
+
+        - Example: Face recognition
+
+            ![alt text](image-5.png)
