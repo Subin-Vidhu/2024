@@ -8,6 +8,6 @@
 
 - Javascript is maily used for adding logic to the web pages. It is used to make the web pages interactive and dynamic. It is a client-side scripting language that runs on the user's browser. It is used to create dynamic content on the web pages, such as animations, interactive forms, and games.
 
-
+    ![alt text](image.png)
 
 
