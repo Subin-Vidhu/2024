@@ -12,3 +12,4 @@ https://fonts.google.com
 
 https://heropatterns.com/
 
+https://developer.x.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
