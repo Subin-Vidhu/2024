@@ -23,3 +23,5 @@ https://www.w3schools.com/howto/howto_css_loader.asp
 https://unsplash.com/
 
 https://unsplash.com/documentation
+
+https://alligator.io/js/foreach-vs-for-loops/
