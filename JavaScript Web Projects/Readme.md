@@ -12,5 +12,7 @@
 
 ## 2. Developer Setup
 
+- Install git and VS Code
+
 
 
