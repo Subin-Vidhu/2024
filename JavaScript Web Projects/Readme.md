@@ -13,7 +13,7 @@
 ## 2. Developer Setup
 
 - Install git and VS Code
-- "--template" folder testing out vscode and git features
+- "--template" folder testing out vscode and git features[Github Page Hosting]
 
 
 
