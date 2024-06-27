@@ -27,3 +27,5 @@ https://unsplash.com/documentation
 https://alligator.io/js/foreach-vs-for-loops/
 
 https://www.w3schools.com/jsref/jsref_foreach.asp
+
+https://www.w3schools.com/jsref/event_onload.asp
