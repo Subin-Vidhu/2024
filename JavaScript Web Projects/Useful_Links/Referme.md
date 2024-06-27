@@ -6,3 +6,5 @@ https://fontawesome.com/icons?d=gallery&q=close&m=free
 
 https://zerotomastery.io/cheatsheets/javascript-cheatsheet-the-advanced-concepts/?utm_source=udemy&utm_medium=coursecontent#data-structures
 
+https://zerotomastery.io/cheatsheets/javascript-cheatsheet-the-advanced-concepts/?utm_source=udemy&utm_medium=coursecontent
+
