@@ -10,5 +10,5 @@
 
     ![alt text](image.png)
 
-## 2. 
+## 2. Developer Setup
 
