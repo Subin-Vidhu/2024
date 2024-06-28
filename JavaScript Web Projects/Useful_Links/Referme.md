@@ -33,3 +33,5 @@ https://www.w3schools.com/jsref/event_onload.asp
 https://www.w3schools.com/jsref/dom_obj_event.asp
 
 https://css-tricks.com/an-introduction-to-the-picture-in-picture-web-api/
+
+https://css-tricks.com/an-introduction-to-the-picture-in-picture-web-api/
