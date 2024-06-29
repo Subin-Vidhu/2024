@@ -43,3 +43,5 @@ http://www.voicerss.org/api/
 https://www.w3schools.com/tags/ref_av_dom.asp
 
 https://stackoverflow.com/questions/47822525/where-to-hide-an-api-key
+
+https://sv443.net/jokeapi/v2/
