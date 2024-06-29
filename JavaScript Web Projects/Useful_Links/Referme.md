@@ -39,3 +39,6 @@ https://css-tricks.com/an-introduction-to-the-picture-in-picture-web-api/
 https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API/Using_Screen_Capture
 
 http://www.voicerss.org/api/
+
+https://www.w3schools.com/tags/ref_av_dom.asp
+
