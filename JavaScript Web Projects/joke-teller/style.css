@@ -6,7 +6,7 @@ html {
 
 body {
   margin: 0;
-  background: #45badd;
+  background: #bbd2ef;
 }
 
 .container {
@@ -16,7 +16,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: url('./robot.gif');
+  background: url('./test.gif');
   background-size: contain;
   background-position: left center;
   background-repeat: no-repeat;
