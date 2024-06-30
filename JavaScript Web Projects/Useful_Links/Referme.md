@@ -51,3 +51,5 @@ https://blog.prototypr.io/how-to-design-a-dark-theme-for-your-android-app-3daeb2
 https://www.heropatterns.com/
 
 https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
+
+https://fontawesome.com/icons?d=gallery&q=close&m=free
