@@ -63,3 +63,5 @@ https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement
 https://www.w3schools.com/jsref/event_onchange.asp
 
 https://www.w3schools.com/howto/howto_css_switch.asp
+
+https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
