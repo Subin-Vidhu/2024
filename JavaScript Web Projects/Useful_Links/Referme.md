@@ -49,3 +49,5 @@ https://sv443.net/jokeapi/v2/
 https://blog.prototypr.io/how-to-design-a-dark-theme-for-your-android-app-3daeb264637
 
 https://www.heropatterns.com/
+
+https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
