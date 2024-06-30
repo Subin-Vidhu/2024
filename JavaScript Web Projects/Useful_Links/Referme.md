@@ -59,3 +59,6 @@ https://fonts.google.com
 https://undraw.co/illustrations
 
 https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement
+
+https://www.w3schools.com/jsref/event_onchange.asp
+
