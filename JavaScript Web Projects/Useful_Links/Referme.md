@@ -53,3 +53,5 @@ https://www.heropatterns.com/
 https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
 
 https://fontawesome.com/icons?d=gallery&q=close&m=free
+
+https://fonts.google.com
