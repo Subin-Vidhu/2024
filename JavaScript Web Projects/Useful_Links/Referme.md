@@ -57,3 +57,5 @@ https://fontawesome.com/icons?d=gallery&q=close&m=free
 https://fonts.google.com
 
 https://undraw.co/illustrations
+
+https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement
