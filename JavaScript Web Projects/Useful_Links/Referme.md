@@ -47,3 +47,5 @@ https://stackoverflow.com/questions/47822525/where-to-hide-an-api-key
 https://sv443.net/jokeapi/v2/
 
 https://blog.prototypr.io/how-to-design-a-dark-theme-for-your-android-app-3daeb264637
+
+https://www.heropatterns.com/
