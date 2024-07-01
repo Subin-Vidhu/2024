@@ -82,4 +82,16 @@
     np.random.randint(1,100,10) # output: array([ 9, 77, 40,  4, 63, 40, 60, 92, 64,  5])
     # random integers from low (inclusive) to high (exclusive)
     np.random.seed(42) # as long as the seed remains the same, the random numbers will be the same [but not in the next cell, ie both the seed and the random number generation should be in the same cell]
+
+    # Reshape
+    arr = np.arange(25)
+    print(arr) # output: array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24])
+    arr.reshape(5,5) # output: array([[ 0,  1,  2,  3,  4],
+    # [ 5,  6,  7,  8,  9],
+    # [10, 11, 12, 13, 14],
+    # [15, 16, 17, 18, 19],
+    # [20, 21, 22, 23, 24]])
+
+    # max, min, argmax, argmin
+    
     ```
