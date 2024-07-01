@@ -31,7 +31,6 @@
     my_matrix = [[1,2,3],[4,5,6],[7,8,9]]
     type(my_matrix) # output: list
     matrix = np.array(my_matrix)
-
     print(matrix) # output: array([[1, 2, 3],#[4, 5, 6],#[7, 8, 9]])
     type(matrix) # output: numpy.ndarray
     print(matrix.shape) # output: (3, 3)
@@ -61,6 +60,8 @@
     np.ones(3,3) * 4 # output: array([[4., 4., 4.],
     # [4., 4., 4.],
     # [4., 4., 4.]])
+
+    # linspace
     np.linspace(0,10,3) # output: array([ 0.,  5., 10.])
     np.linspace(0,10,5) # output: array([ 0.,  2.5,  5.,  7.5, 10.])
 
