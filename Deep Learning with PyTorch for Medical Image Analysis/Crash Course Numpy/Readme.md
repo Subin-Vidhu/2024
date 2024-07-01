@@ -130,5 +130,9 @@
     print(arr) # output: array([99, 99, 99, 99, 99, 99,  6,  7,  8,  9, 10])
     arr_copy = arr.copy()
     arr_copy[:] = 100
+    print(arr) # output: array([99, 99, 99, 99, 99, 99,  6,  7,  8,  9, 10])
+    print(arr_copy) # output: array([100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100])
+
+    
 
     ```
