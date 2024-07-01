@@ -100,6 +100,6 @@
     arr.min() # output: 2
     arr.argmin() # output: 9
 
-    
+    # shape
 
     ```
