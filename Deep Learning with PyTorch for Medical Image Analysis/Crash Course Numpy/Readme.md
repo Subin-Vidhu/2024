@@ -53,7 +53,14 @@
     # [1., 1., 1.],
     # [1., 1., 1.]])
     # By default, the data type of the created array is float64. We can specify the data type by using the dtype parameter.
-    
+
+    # Broadcasting with ones
+    np.ones(3,3) + 4 # output: array([[5., 5., 5.],
+    # [5., 5., 5.],
+    # [5., 5., 5.]])
+    np.ones(3,3) * 4 # output: array([[4., 4., 4.],
+    # [4., 4., 4.],
+    # [4., 4., 4.]])
     np.linspace(0,10,3) # output: array([ 0.,  5., 10.])
     np.linspace(0,10,5) # output: array([ 0.,  2.5,  5.,  7.5, 10.])
 
