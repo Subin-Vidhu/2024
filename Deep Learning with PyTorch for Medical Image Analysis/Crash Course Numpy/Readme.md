@@ -183,5 +183,15 @@
     # 2.98095799e+03, 8.10308393e+03])
     np.max(arr) # output: 9
     np.sum(arr) # output: 45
+
+    arr_2d = np.array([[1,2,3,4],[5,6,7,8],[9,10,11,12]])
+    print(arr_2d) # output: array([[ 1,  2,  3,  4],
+    # [ 5,  6,  7,  8],
+    # [ 9, 10, 11, 12]])
+    arr_2d.sum() # output: 78
+    # axis 0 is the vertical axis and axis 1 is the horizontal axis
+    arr_2d.sum(axis=0) # output: array([15, 18, 21, 24])
+    arr_2d.sum(axis=1) # output: array([10, 26, 42])
+
     
     ```
