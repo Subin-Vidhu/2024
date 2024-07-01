@@ -101,5 +101,11 @@
     arr.argmin() # output: 9
 
     # shape
-
+    arr = np.arange(10)
+    arr.shape # output: (10,)
+    arr = arr.reshape(2,5)
+    print(arr) # output: array([[38, 18, 22, 10, 10],
+    # [23, 35, 39, 23,  2]])
+    arr.shape # output: (2, 5)
+    
     ```
