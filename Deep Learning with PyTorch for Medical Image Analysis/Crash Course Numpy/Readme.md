@@ -107,5 +107,12 @@
     print(arr) # output: array([[38, 18, 22, 10, 10],
     # [23, 35, 39, 23,  2]])
     arr.shape # output: (2, 5)
+
+    # dtype
+    arr.dtype # output: dtype('int64')
+    arr = np.array([1.0,2.0,3.0])
+    arr.dtype # output: dtype('float64')
+
+    # Indexing and Selection
     
     ```
