@@ -35,6 +35,24 @@
     print(matrix) # output: array([[1, 2, 3],#[4, 5, 6],#[7, 8, 9]])
     type(matrix) # output: numpy.ndarray
     print(matrix.shape) # output: (3, 3)
-    
 
+    # arange
+    np.arange(0,10) # output: array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+    np.arange(0,11,2) # output: array([ 0,  2,  4,  6,  8, 10])
+
+    # zeros and ones
+    np.zeros(3) # output: array([0., 0., 0.])
+    np.zeros((5,5)) # output: array([[
+    # 0., 0., 0., 0., 0.],
+    # [0., 0., 0., 0., 0.],
+    # [0., 0., 0., 0., 0.],
+    # [0., 0., 0., 0., 0.],
+    # [0., 0., 0., 0., 0.]])
+    np.ones(3) # output: array([1., 1., 1.])
+    np.ones((3,3)) # output: array([[1., 1., 1.],
+    # [1., 1., 1.],
+    # [1., 1., 1.]])
+    np.linspace(0,10,3) # output: array([ 0.,  5., 10.])
+    np.linspace(0,10,5) # output: array([ 0.,  2.5,  5.,  7.5, 10.])
+    
     ```
