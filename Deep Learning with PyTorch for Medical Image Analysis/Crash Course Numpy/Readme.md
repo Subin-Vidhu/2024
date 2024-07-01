@@ -25,5 +25,16 @@
     my_list = [1,2,3]
     type(my_list) # output: list
     arr = np.array(my_list)
-    print(arr) # output: array([1, 2, 3]) 
+    print(arr) # output: array([1, 2, 3])
+    type(arr) # output: numpy.ndarray
+
+    my_matrix = [[1,2,3],[4,5,6],[7,8,9]]
+    type(my_matrix) # output: list
+    matrix = np.array(my_matrix)
+
+    print(matrix) # output: array([[1, 2, 3],#[4, 5, 6],#[7, 8, 9]])
+    type(matrix) # output: numpy.ndarray
+    print(matrix.shape) # output: (3, 3)
+    
+
     ```
