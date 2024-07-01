@@ -16,7 +16,7 @@ Courses and Challenges Completed
     Telegram : 14
 11. AI FOR GOOD || [[Source](https://www.coursera.org/specializations/ai-for-good)] || 
     Telegram : 15
-12. SSH [Source -🔅 SSH Crash Course With Some DevOps - Telegram] [Similar Udemy Course [Link](https://www.udemy.com/course/learning-ssh-and-putty-for-linuxunix-based-systems/learn/lecture/13385516#overview)]
+12. SSH [Source -🔅 SSH Crash Course With Some DevOps - Telegram] [Similar Udemy Course || [Link](https://www.udemy.com/course/learning-ssh-and-putty-for-linuxunix-based-systems/learn/lecture/13385516#overview)]
     Telegram : 8
 13. 100 Days of Code - The Complete Python Pro Bootcamp for 2023 [Angela Course - Telegram, ongoing...] [Github Link](https://github.com/Subin-Vidhu/2024/tree/main/100%20Days%20of%20Code%20-%20The%20Complete%20Python%20Pro%20Bootcamp%20for%202023)
     Telegram : 18
