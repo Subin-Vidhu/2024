@@ -14,7 +14,7 @@ Courses and Challenges Completed
 9. Understanding and Applying Text Embeddings || [[Source](https://learn.deeplearning.ai/google-cloud-vertex-ai)]
 10. Windows Command Mastery for Ethical Hackers || [[Source](https://www.udemy.com/course/windows-command-mastery-for-ethical-hackers/learn/lecture/41094498?src=sac&kw=Windows+Command+Mastery+for+Ethical+Hackers#overview)] || 
     Telegram : 14
-11. AI FOR GOOD || [[Source](https://www.coursera.org/specializations/ai-for-good)]
+11. AI FOR GOOD || [[Source](https://www.coursera.org/specializations/ai-for-good)] || 
     Telegram : 15
 12. SSH [Source -🔅 SSH Crash Course With Some DevOps - Telegram] [Similar Udemy Course [Link](https://www.udemy.com/course/learning-ssh-and-putty-for-linuxunix-based-systems/learn/lecture/13385516#overview)]
     Telegram : 8
