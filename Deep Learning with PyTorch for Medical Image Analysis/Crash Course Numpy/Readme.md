@@ -93,5 +93,13 @@
     # [20, 21, 22, 23, 24]])
 
     # max, min, argmax, argmin
+    arr = np.random.randint(0,50,10)
+    print(arr) # output: array([38, 18, 22, 10, 10, 23, 35, 39, 23,  2])
+    arr.max() # output: 39
+    arr.argmax() # output: 7
+    arr.min() # output: 2
+    arr.argmin() # output: 9
+
     
+
     ```
