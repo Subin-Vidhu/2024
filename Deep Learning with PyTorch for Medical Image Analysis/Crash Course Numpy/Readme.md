@@ -75,5 +75,8 @@
     # [0., 0., 1.]])
 
     # Random
-    
+    np.random.rand(2) # output: array([0.4359949 , 0.02592623])
+    # random numbers from a uniform distribution over [0, 1), mean 0 and variance 0
+    np.random.randn(2) # output: array([ 0.86617615, -0.67888615])
+    # random numbers from a normal distribution with mean 0 and variance 1
     ```
