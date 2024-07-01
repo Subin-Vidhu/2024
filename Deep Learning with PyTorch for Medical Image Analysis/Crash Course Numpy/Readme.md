@@ -8,6 +8,7 @@
 
 - Why use Numpy?
 
-    - Numpy is faster than Python lists
-    - Numpy uses less memory than Python lists
-    - Numpy is more convenient than Python lists
+    - While numpy structures look similar to standard python lists, they are much more efficient
+    - Numpy arrays are stored at one continuous place in memory unlike lists, so processes can be performed on them much faster
+    - Numpy is optimized for numerical operations and is faster than standard python lists
+    
