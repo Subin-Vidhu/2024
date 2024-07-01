@@ -128,11 +128,24 @@
     slice_of_arr[:] = 99
     print(slice_of_arr) # output: array([99, 99, 99, 99, 99, 99])
     print(arr) # output: array([99, 99, 99, 99, 99, 99,  6,  7,  8,  9, 10])
+
+    # Copy - slicing creates a view of the original array, not a copy, so changes to the slice will affect the original array. If you dont want the original array to be affected, you should make a copy of the array
+
     arr_copy = arr.copy()
     arr_copy[:] = 100
     print(arr) # output: array([99, 99, 99, 99, 99, 99,  6,  7,  8,  9, 10])
     print(arr_copy) # output: array([100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100])
 
-    
-
+    # Indexing a 2D array
+    arr_2d = np.array([[5,10,15],[20,25,30],[35,40,45]])
+    print(arr_2d) # output: array([[ 5, 10, 15],
+    # [20, 25, 30],
+    # [35, 40, 45]])
+    arr_2d[0] # output: array([ 5, 10, 15])
+    arr_2d[1][0] # output: 20
+    arr_2d[:2,1:] # output: array([[10, 15],
+    # [25, 30]])
+    arr_2d[2] # output: array([35, 40, 45])
+    arr_2d[2,:] # output: array([35, 40, 45])
+    arr_2d.shape # output: (3, 3)
     ```
