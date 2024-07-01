@@ -81,5 +81,5 @@
     # random numbers from a normal distribution with mean 0 and variance 1
     np.random.randint(1,100,10) # output: array([ 9, 77, 40,  4, 63, 40, 60, 92, 64,  5])
     # random integers from low (inclusive) to high (exclusive)
-    
+    np.random.seed(42) # as long as the seed remains the same, the random numbers will be the same [but not in the next cell, ie both the seed and the random number generation should be in the same cell]
     ```
