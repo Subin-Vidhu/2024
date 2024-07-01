@@ -114,5 +114,21 @@
     arr.dtype # output: dtype('float64')
 
     # Indexing and Selection
-    
+    arr = np.arange(0,11)
+    print(arr) # output: array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10])
+    arr[8] # output: 8
+    arr[1:5] # output: array([1, 2, 3, 4])
+    arr[:6] # output: array([0, 1, 2, 3, 4, 5])
+    arr[5:] # output: array([ 5,  6,  7,  8,  9, 10])
+    arr[0:5] = 100
+    print(arr) # output: array([100, 100, 100, 100, 100, 5, 6, 7, 8, 9, 10])
+    arr = np.arange(0,11)
+    slice_of_arr = arr[0:6]
+    print(slice_of_arr) # output: array([0, 1, 2, 3, 4, 5])
+    slice_of_arr[:] = 99
+    print(slice_of_arr) # output: array([99, 99, 99, 99, 99, 99])
+    print(arr) # output: array([99, 99, 99, 99, 99, 99,  6,  7,  8,  9, 10])
+    arr_copy = arr.copy()
+    arr_copy[:] = 100
+
     ```
