@@ -79,4 +79,7 @@
     # random numbers from a uniform distribution over [0, 1), mean 0 and variance 0
     np.random.randn(2) # output: array([ 0.86617615, -0.67888615])
     # random numbers from a normal distribution with mean 0 and variance 1
+    np.random.randint(1,100,10) # output: array([ 9, 77, 40,  4, 63, 40, 60, 92, 64,  5])
+    # random integers from low (inclusive) to high (exclusive)
+    
     ```
