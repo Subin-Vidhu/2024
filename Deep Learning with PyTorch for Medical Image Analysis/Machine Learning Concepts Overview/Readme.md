@@ -123,6 +123,6 @@
                     ![alt text](image-2.png)
 
                 - True positive (TP): The number of positive instances that were correctly predicted as positive.
-                - False positive (FP): The number of negative instances that were incorrectly predicted as positive.
+                - False positive (FP) | Type 1 Error: The number of negative instances that were incorrectly predicted as positive.
                 - True negative (TN): The number of negative instances that were correctly predicted as negative.
-                - False negative (FN): The number of positive instances that were incorrectly predicted as negative.
+                - False negative (FN)| Type 2 Error: The number of positive instances that were incorrectly predicted as negative.
