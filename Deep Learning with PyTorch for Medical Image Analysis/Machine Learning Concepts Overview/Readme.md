@@ -40,7 +40,6 @@
                 - Association: An association rule learning problem is where you want to discover rules that describe large portions of your data, such as people that buy X also tend to buy Y.
         - Reinforcement Learning
             - Reinforcement learning is a type of machine learning that is about taking suitable action to maximize reward in a particular situation. It is employed by various software and machines to find the best possible behavior or path it should take in a specific situation.
-            - Reinforcement learning is about taking suitable action to maximize reward in a particular situation. It is employed by various software and machines to find the best possible behavior or path it should take in a specific situation.
             - Reinforcement learning is used in various fields, such as:
                 - Robotics
                 - Video games
