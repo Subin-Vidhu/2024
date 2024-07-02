@@ -103,7 +103,17 @@
         - Bias-Variance Tradeoff
             - The bias-variance tradeoff is the balance between the bias and variance of a model. It is the tradeoff between the error introduced by approximating a real-world problem by a much simpler model (bias) and the error introduced by the model due to its sensitivity to the fluctuations in the training data (variance).
             - A model with high bias and low variance may underfit the data, while a model with low bias and high variance may overfit the data. The goal is to find a model that has low bias and low variance, which means that it generalizes well to new, unseen data.
-            
-              
 
+    - Model Evaluation
+        - Model evaluation is the process of assessing the performance of a machine learning model. It is important to evaluate the model on a test set that is separate from the training set. The model should perform well on the test set, which means that it should have low error and high accuracy.
+        - Common metrics for model evaluation include:
+            - Accuracy: The proportion of correct predictions to the total number of predictions.
+            - Precision: The proportion of true positive predictions to the total number of positive predictions.
+            - Recall: The proportion of true positive predictions to the total number of actual positive instances.
+            - F1 score: The harmonic mean of precision and recall.
+            - ROC curve: The receiver operating characteristic curve, which shows the tradeoff between true positive rate and false positive rate.
+            - AUC: The area under the ROC curve, which measures the performance of the model across all possible classification thresholds.   
+
+            - Note:
+                - Accuracy is not always the best metric for model evaluation. It is important to consider the problem domain and the goals of the model when choosing an evaluation metric. For example, in a highly imbalanced dataset, accuracy may not be a good metric because it may be biased towards the majority class.
 
