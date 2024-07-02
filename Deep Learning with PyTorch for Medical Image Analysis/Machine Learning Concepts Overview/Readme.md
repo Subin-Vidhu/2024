@@ -128,3 +128,13 @@
                 - False negative (FN)| Type 2 Error: The number of positive instances that were incorrectly predicted as negative.
 
                     ![alt text](image-3.png)
+
+        - Some model evaluations for regression problems include:
+            - Mean Absolute Error (MAE): The average of the absolute differences between predictions and actual values.
+                - MAE = 1/n * Σ |y - ŷ|
+                - The smaller the MAE, the better the model.
+                - They wont tell you if the model is overfitting or underfitting.
+                - 
+            - Mean Squared Error (MSE): The average of the squared differences between predictions and actual values.
+            - Root Mean Squared Error (RMSE): The square root of the average of the squared differences between predictions and actual values.
+            - R-squared (R2): The proportion of the variance in the dependent variable that is predictable from the independent variables.
