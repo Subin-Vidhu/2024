@@ -26,3 +26,27 @@
      - Neural Networks
         - Neural networks are a set of algorithms, modeled loosely after the human brain, that are designed to recognize patterns. They interpret sensory data through a kind of machine perception, labeling, clustering, and categorizing data.
         - Deep learning is a specialized form of machine learning. It involves a neural network with three or more layers, including an input layer, one or more hidden layers, and an output layer. (In deep learning, the hidden layers are typically much larger than the input layer.), so deep learning simply refers to neural networks with more than one hidden layer.
+
+    - Types of Machine Learning
+        - Supervised Learning
+            - Supervised learning is the most common type of machine learning. It is the process of teaching or training a model using labeled data. The model learns to make predictions based on the features of the data. The model is trained using a labeled dataset, which means that the data is already tagged with the correct answer.
+            - Examples of supervised learning include:
+                - Classification: A classification problem is when the output variable is a category, such as “spam” or “not spam.”
+                - Regression: A regression problem is when the output variable is a real or continuous value, such as “salary” or “weight.”
+        - Unsupervised Learning
+            - Unsupervised learning is a type of machine learning that looks for previously undetected patterns in a data set with no pre-existing labels. The system is not told the “right answer.” The algorithm must figure out what is being shown.
+            - Examples of unsupervised learning include:
+                - Clustering: A clustering problem is where you want to discover the inherent groupings in the data, such as grouping customers by purchasing behavior.
+                - Association: An association rule learning problem is where you want to discover rules that describe large portions of your data, such as people that buy X also tend to buy Y.
+        - Reinforcement Learning
+            - Reinforcement learning is a type of machine learning that is about taking suitable action to maximize reward in a particular situation. It is employed by various software and machines to find the best possible behavior or path it should take in a specific situation.
+            - Reinforcement learning is about taking suitable action to maximize reward in a particular situation. It is employed by various software and machines to find the best possible behavior or path it should take in a specific situation.
+            - Reinforcement learning is used in various fields, such as:
+                - Robotics
+                - Video games
+                - Recommendation systems
+                - Industrial automation
+                - Finance
+                - Healthcare
+                - Natural language processing
+                - And many more…
