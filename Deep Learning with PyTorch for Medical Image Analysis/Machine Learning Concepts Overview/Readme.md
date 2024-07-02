@@ -98,6 +98,12 @@
 
         - Variance
             - Variance is the error introduced by the model due to its sensitivity to the fluctuations in the training data. It is the amount that the estimate of the target function will change if different training data were used.
-            - High variance can cause an algorithm to model the random noise in the training data, rather than the intended outputs (overfitting).  
+            - High variance can cause an algorithm to model the random noise in the training data, rather than the intended outputs (overfitting).
+
+        - Bias-Variance Tradeoff
+            - The bias-variance tradeoff is the balance between the bias and variance of a model. It is the tradeoff between the error introduced by approximating a real-world problem by a much simpler model (bias) and the error introduced by the model due to its sensitivity to the fluctuations in the training data (variance).
+            - A model with high bias and low variance may underfit the data, while a model with low bias and high variance may overfit the data. The goal is to find a model that has low bias and low variance, which means that it generalizes well to new, unseen data.
+            
+              
 
 
