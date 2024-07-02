@@ -45,6 +45,9 @@
                 - Deploy the model
 
                     ![alt text](image.png)
+
+            - Is it fair to test the model just on the test set?
+                - No, it is not fair to test the model just on the test set. The model may overfit the test set, which means that it may perform well on the test set but poorly on new, unseen data. To avoid overfitting, it is important to split the data into three sets: training, validation, and testing. The model is trained on the training set, tuned on the validation set, and tested on the test set.
         - Unsupervised Learning
             - Unsupervised learning is a type of machine learning that looks for previously undetected patterns in a data set with no pre-existing labels. The system is not told the “right answer.” The algorithm must figure out what is being shown.
             - Examples of unsupervised learning include:
@@ -61,3 +64,31 @@
                 - Healthcare
                 - Natural language processing
                 - And many more…
+
+    - Overfitting and Underfitting
+        - Overfitting
+            - Overfitting occurs when a model learns the detail and noise in the training data to the extent that it negatively impacts the performance of the model on new data. This means that the model is too complex and captures the noise in the training data.
+            - How to avoid overfitting:
+                - Cross-validation
+                - Regularization
+                - Feature selection
+                - Early stopping
+                - Pruning
+                - Ensembling
+        - Underfitting
+            - Underfitting occurs when a model is too simple to capture the underlying structure of the data. This means that the model is not complex enough to learn the patterns in the data.
+            - How to avoid underfitting:
+                - Increase the complexity of the model
+                - Increase the number of features
+                - Decrease the regularization parameter
+                - Decrease the learning rate
+                - Increase the number of iterations
+                - Decrease the batch size
+
+        - Good Model
+            - A good model is one that generalizes well to new, unseen data. It is important to evaluate the model on a test set that is separate from the training set. The model should perform well on the test set, which means that it should have low error and high accuracy.
+            - As epochs increase, the training error decreases, but the test error may increase. This is because the model may overfit the training data, which means that it may perform well on the training data but poorly on new, unseen data.
+
+                ![alt text](image-1.png)
+
+
