@@ -120,7 +120,7 @@
             - Confusion Matrix
                 - A confusion matrix is a table that is often used to describe the performance of a classification model on a set of test data for which the true values are known. It is a matrix with four cells, each representing a different combination of predicted and actual values.
 
-                ![alt text](image-2.png)
+                    ![alt text](image-2.png)
 
                 - True positive (TP): The number of positive instances that were correctly predicted as positive.
                 - False positive (FP): The number of negative instances that were incorrectly predicted as positive.
