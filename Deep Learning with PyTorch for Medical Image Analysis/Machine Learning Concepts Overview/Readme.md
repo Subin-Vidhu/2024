@@ -117,3 +117,12 @@
             - Note:
                 - Accuracy is not always the best metric for model evaluation. It is important to consider the problem domain and the goals of the model when choosing an evaluation metric. For example, in a highly imbalanced dataset, accuracy may not be a good metric because it may be biased towards the majority class.
 
+            - Confusion Matrix
+                - A confusion matrix is a table that is often used to describe the performance of a classification model on a set of test data for which the true values are known. It is a matrix with four cells, each representing a different combination of predicted and actual values.
+
+                ![alt text](image-2.png)
+
+                - True positive (TP): The number of positive instances that were correctly predicted as positive.
+                - False positive (FP): The number of negative instances that were incorrectly predicted as positive.
+                - True negative (TN): The number of negative instances that were correctly predicted as negative.
+                - False negative (FN): The number of positive instances that were incorrectly predicted as negative.
