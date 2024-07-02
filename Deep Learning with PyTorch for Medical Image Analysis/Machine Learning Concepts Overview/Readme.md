@@ -91,4 +91,6 @@
 
                 ![alt text](image-1.png)
 
+    - Bias and Variance    
+
 
