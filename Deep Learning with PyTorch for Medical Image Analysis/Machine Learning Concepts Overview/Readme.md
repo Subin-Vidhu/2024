@@ -134,7 +134,7 @@
                 - MAE = 1/n * Σ |y - ŷ|
                 - The smaller the MAE, the better the model.
                 - They wont tell you if the model is overfitting or underfitting.
-                - 
+                - They wont punish the model for making large errors.
             - Mean Squared Error (MSE): The average of the squared differences between predictions and actual values.
             - Root Mean Squared Error (RMSE): The square root of the average of the squared differences between predictions and actual values.
             - R-squared (R2): The proportion of the variance in the dependent variable that is predictable from the independent variables.
