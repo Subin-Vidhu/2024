@@ -33,6 +33,18 @@
             - Examples of supervised learning include:
                 - Classification: A classification problem is when the output variable is a category, such as “spam” or “not spam.”
                 - Regression: A regression problem is when the output variable is a real or continuous value, such as “salary” or “weight.”
+
+            - Machine learning process of supervised learning:
+                - Collect and preprocess data
+                - Split the data into training and testing sets
+                - Choose a model
+                - Train the model
+                - Evaluate the model
+                - Make predictions
+                - Improve the model
+                - Deploy the model
+
+                    ![alt text](image.png)
         - Unsupervised Learning
             - Unsupervised learning is a type of machine learning that looks for previously undetected patterns in a data set with no pre-existing labels. The system is not told the “right answer.” The algorithm must figure out what is being shown.
             - Examples of unsupervised learning include:
