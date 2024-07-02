@@ -91,6 +91,13 @@
 
                 ![alt text](image-1.png)
 
-    - Bias and Variance    
+    - Bias and Variance
+        - Bias
+            - Bias is the error introduced by approximating a real-world problem, which may be complex, by a much simpler model. It is the difference between the expected prediction of the model and the true value.
+            - High bias can cause an algorithm to miss the relevant relations between features and target outputs (underfitting).
+
+        - Variance
+            - Variance is the error introduced by the model due to its sensitivity to the fluctuations in the training data. It is the amount that the estimate of the target function will change if different training data were used.
+            - High variance can cause an algorithm to model the random noise in the training data, rather than the intended outputs (overfitting).  
 
 
