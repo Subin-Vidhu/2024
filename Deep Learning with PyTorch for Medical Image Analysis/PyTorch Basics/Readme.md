@@ -84,5 +84,13 @@
             #         [0., 1.]])
             torch.arange(0, 10, 2) # tensor([0, 2, 4, 6, 8])
             torch.linspace(0, 10, 5) # tensor([ 0.0000,  2.5000,  5.0000,  7.5000, 10.0000])
-            torch.logspace(0, 10, 5) # tensor([1.0000e+00, 1.0000e+03, 1.0000e+06, 1.0000e+09, 1.0000e+10])
+            torch.logspace(0, 10, 5) # tensor([1.0000e+00, 1.0000e+03, 1.0000e+06, 1.0000e+09, 1.0000e+10]) 
+
+            # To convert into a particular datatype
+            x = torch.tensor([1, 2, 3], dtype=torch.float32)
+            print(x) # tensor([1., 2., 3.])
+            #or
+            arr = [1, 2, 3]
+            arr.type(torch.float32)
+            print(arr) # tensor([1., 2., 3.])
             ```
