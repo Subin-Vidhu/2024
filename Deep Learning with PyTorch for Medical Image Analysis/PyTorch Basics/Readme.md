@@ -213,4 +213,9 @@
         x.div_(y) # tensor([1, 2, 3]) # x = x / y
         x.remainder_(y) # tensor([1, 2, 3]) # x = x % y
 
-        
+        # Dot product
+        x = torch.tensor([1, 2, 3])
+        y = torch.tensor([9, 8, 7])
+        torch.dot(x, y) # tensor(46) # 1*9 + 2*8 + 3*7 = 46
+
+        # Matrix multiplication
