@@ -69,4 +69,5 @@
             print(x) # tensor([99,  2,  3,  4,  5], dtype=torch.int32)
             #torch.Tensor converts the datatype
             
+            # torch.tensor vs torch.Tensor - torch.tensor always retains the datatype of the input data, while torch.Tensor(torch.FloatTensor) converts the datatype to the float32 tensor datatype.
             ```
