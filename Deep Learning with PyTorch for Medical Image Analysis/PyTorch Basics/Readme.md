@@ -156,3 +156,16 @@
             #         [0, 0],
             #         [0, 0]])
         
+        #view() is used to reshape the tensor
+        x = torch.arange(10)
+        x # tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+        x.view(2, 5) # tensor([[0, 1, 2, 3, 4],
+                    #         [5, 6, 7, 8, 9]])
+        x.view(5, 2) # tensor([[0, 1],
+                    #         [2, 3],
+                    #         [4, 5],
+                    #         [6, 7],
+                    #         [8, 9]])
+        # view vs reshape - view() is a memory-efficient way to create a new tensor with the same data as the original tensor. If you modify the view, the original tensor will also be modified. If you want a new copy of the tensor, you should use the clone() method.
+
+        # view reflects the original tensor
