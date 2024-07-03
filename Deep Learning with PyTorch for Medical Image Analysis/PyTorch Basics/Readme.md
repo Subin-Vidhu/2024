@@ -129,4 +129,19 @@
 
     - Element-wise operations
         - Element-wise operations are the operations between two tensors that operate on corresponding elements.
-                
+
+    - Broadcasting
+        - Broadcasting is a powerful mechanism that allows PyTorch to work with arrays of different shapes when performing arithmetic operations.
+
+    - Code:
+
+          ```python
+          import torch
+          import numpy as np
+          x = torch.arange(6).reshape(3, 2)
+          x # tensor([[0, 1],
+            #         [2, 3],
+            #         [4, 5]])
+
+          x[1, 1] # tensor(3)
+          type(x[1, 1]) # torch.Tensor
