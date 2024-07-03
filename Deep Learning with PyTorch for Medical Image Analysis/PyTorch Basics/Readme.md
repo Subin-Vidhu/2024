@@ -93,4 +93,18 @@
             arr = [1, 2, 3]
             arr.type(torch.float32)
             print(arr) # tensor([1., 2., 3.])
+
+            # random number generation
+            torch.manual_seed(42)
+            torch.rand(2, 2) # tensor([[0.8823, 0.9150],
+                            #         [0.3829, 0.9593]])
+            torch.randn(2, 2) # tensor([[ 0.3367, -0.1288],
+                            #         [ 0.2345,  0.2303]])
+            torch.randint(0, 10, (5, 5)) # tensor([[6, 9, 2, 6, 7],
+                                    #         [4, 3, 1, 3, 1],
+                                    #         [3, 7, 3, 6, 7],
+                                    #         [7, 2, 5, 4, 1],
+                                    #         [4, 6, 6, 6, 6]])
+            
+
             ```
