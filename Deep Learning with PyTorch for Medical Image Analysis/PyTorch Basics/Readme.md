@@ -25,3 +25,12 @@
     - Easiest to arrange data in the form of tensors.
 
 - Tensor Basics
+
+    - A tensor is a generalization of vectors and matrices and is easily understood as a multidimensional array.
+    - A PyTorch Tensor is conceptually identical to a NumPy array.
+    - A tensor is an n-dimensional array.
+    - A tensor can be thought of as a generalized matrix.
+    - A tensor is a fundamental data structure for deep learning.
+    - Tensors are used to encode the signal, image, and other data types.
+    - Tensors are used for high-dimensional data representation, data manipulation, and data storage, among other things.
+    
