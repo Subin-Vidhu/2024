@@ -23,3 +23,5 @@
 - Why do we use tensors?
 
     - Easiest to arrange data in the form of tensors.
+
+- Tensor Basics
