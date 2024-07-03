@@ -145,4 +145,8 @@
 
         x[1, 1] # tensor(3)
         type(x[1, 1]) # torch.Tensor
+        x[:,1]  # tensor([1, 3, 5])
+        x[:,1:] # tensor([[1],
+                #         [3],
+                #         [5]])
         
