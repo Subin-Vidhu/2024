@@ -95,7 +95,7 @@
             print(arr) # tensor([1., 2., 3.])
 
             # random number generation
-            torch.manual_seed(42)
+            torch.manual_seed(42) # to ensure reproducibility
             torch.rand(2, 2) # tensor([[0.8823, 0.9150],
                             #         [0.3829, 0.9593]])
             torch.randn(2, 2) # tensor([[ 0.3367, -0.1288],
