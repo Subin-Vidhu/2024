@@ -188,3 +188,24 @@
         x * y # tensor([ 9, 16, 21]) # element-wise multiplication
         x / y # tensor([0.1111, 0.2500, 0.4286])
         x % y # tensor([1, 2, 3])
+
+        torch.add(x, y) # tensor([10, 10, 10])
+        torch.sub(x, y) # tensor([-8, -6, -4])
+        torch.mul(x, y) # tensor([ 9, 16, 21])
+        torch.div(x, y) # tensor([0.1111, 0.2500, 0.4286])
+        torch.remainder(x, y) # tensor([1, 2, 3])
+
+        x = torch.tensor([1, 2, 3])
+        y = torch.tensor([9, 8, 7])
+        x.add(y) # tensor([10, 10, 10])
+        x.sub(y) # tensor([-8, -6, -4])
+        x.mul(y) # tensor([ 9, 16, 21])
+        x.div(y) # tensor([0.1111, 0.2500, 0.4286])
+        x.remainder(y) # tensor([1, 2, 3])
+
+
+        # In-place operations
+        x = torch.tensor([1, 2, 3])
+        y = torch.tensor([9, 8, 7])
+        x.add_(y) # tensor([10, 10, 10])
+        x.sub_(y) # tensor([1, 2, 3])
