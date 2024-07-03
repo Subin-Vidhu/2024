@@ -32,5 +32,19 @@
     - A tensor can be thought of as a generalized matrix.
     - A tensor is a fundamental data structure for deep learning.
     - Tensors are used to encode the signal, image, and other data types.
-    - Tensors are used for high-dimensional data representation, data manipulation, and data storage, among other things.
     
+        - Python code:
+            ```python
+            import torch
+            import numpy as np
+            arr = np.array([1, 2, 3, 4, 5])
+            print(arr)
+            type(arr) # numpy.ndarray
+            x = torch.from_numpy(arr)
+            print(x) # tensor([1, 2, 3, 4, 5], dtype=torch.int32)
+            type(x) # torch.Tensor
+            x = torch.as_tensor(arr)
+            print(x) # tensor([1, 2, 3, 4, 5], dtype=torch.int32)
+            type(x) # torch.Tensor
+            x.dtype # torch.int32
+            ```
