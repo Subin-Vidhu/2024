@@ -238,6 +238,10 @@
         x = torch.tensor([2., 3., 4.])
         x.argmax() # tensor(2) # index of the maximum element
 
+        # numel
+        x = torch.tensor([[1, 2, 3], [4, 5, 6]])
+        x.numel() # 6 # number of elements in the tensor
+
         
 
 
