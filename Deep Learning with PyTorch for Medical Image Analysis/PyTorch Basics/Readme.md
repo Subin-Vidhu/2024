@@ -135,13 +135,14 @@
 
     - Code:
 
-          ```python
-          import torch
-          import numpy as np
-          x = torch.arange(6).reshape(3, 2)
-          x # tensor([[0, 1],
+        ```python
+        import torch
+        import numpy as np
+        x = torch.arange(6).reshape(3, 2)
+        x # tensor([[0, 1],
             #         [2, 3],
             #         [4, 5]])
 
-          x[1, 1] # tensor(3)
-          type(x[1, 1]) # torch.Tensor
+        x[1, 1] # tensor(3)
+        type(x[1, 1]) # torch.Tensor
+        
