@@ -234,4 +234,10 @@
         x.norm(p=2) # tensor(5.3852) # sqrt(2^2 + 3^2 + 4^2) = 5.3852
         x.norm(p=3) # tensor(4.6416) # (2^3 + 3^3 + 4^3)^(1/3) = 4.6416
 
+        # argmax
+        x = torch.tensor([2., 3., 4.])
+        x.argmax() # tensor(2) # index of the maximum element
+
+        
+
 
