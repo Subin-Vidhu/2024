@@ -124,3 +124,9 @@
                                     #         [4, 3, 1, 3, 1]])
                                     
             ```
+
+- Tensor Operations
+
+    - Element-wise operations
+        - Element-wise operations are the operations between two tensors that operate on corresponding elements.
+                
