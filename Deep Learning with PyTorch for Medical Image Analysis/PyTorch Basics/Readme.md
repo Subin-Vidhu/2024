@@ -219,3 +219,10 @@
         torch.dot(x, y) # tensor(46) # 1*9 + 2*8 + 3*7 = 46
 
         # Matrix multiplication
+        # The number of columns in the first tensor should be equal to the number of rows in the second tensor.
+        x = torch.tensor([[1, 2, 3], [4, 5, 6]])
+        y = torch.tensor([[7, 8], [9, 10], [11, 12]])
+        torch.mm(x, y) # tensor([[ 58,  64],
+                    #         [139, 154]])
+        x @ y # tensor([[ 58,  64],
+                #         [139, 154]])
