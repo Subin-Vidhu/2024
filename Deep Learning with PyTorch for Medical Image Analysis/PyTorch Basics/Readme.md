@@ -70,4 +70,19 @@
             #torch.Tensor converts the datatype
             
             # torch.tensor vs torch.Tensor - torch.tensor always retains the datatype of the input data, while torch.Tensor(torch.FloatTensor) converts the datatype to the float32 tensor datatype.
+
+            torch.empty(2, 2) # tensor([[1.4013e-45, 0.0000e+00],
+                            #         [0.0000e+00, 0.0000e+00]])
+            torch.zeros(2, 2) # tensor([[0., 0.],
+                            #         [0., 0.]])
+            torch.ones(2, 2) # tensor([[1., 1.],
+                            #         [1., 1.]])
+            torch.rand(2, 2) # tensor([[0.7645, 0.8303],
+                            #         [0.2069, 0.6311]])
+            torch.eye(2) # tensor([[1., 0.],
+
+            #         [0., 1.]])
+            torch.arange(0, 10, 2) # tensor([0, 2, 4, 6, 8])
+            torch.linspace(0, 10, 5) # tensor([ 0.0000,  2.5000,  5.0000,  7.5000, 10.0000])
+            torch.logspace(0, 10, 5) # tensor([1.0000e+00, 1.0000e+03, 1.0000e+06, 1.0000e+09, 1.0000e+10])
             ```
