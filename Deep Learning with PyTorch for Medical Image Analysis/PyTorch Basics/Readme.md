@@ -178,3 +178,5 @@
                     #         [4, 5],
                     #         [6, 7],
                     #         [8, 9]])
+        x.view(3, -1) # RuntimeError: shape '[-1, -1]' is invalid for input of size 10
+        
