@@ -68,4 +68,5 @@
             print(arr) # [100   2   3   4   5]
             print(x) # tensor([99,  2,  3,  4,  5], dtype=torch.int32)
             #torch.Tensor converts the datatype
+            
             ```
