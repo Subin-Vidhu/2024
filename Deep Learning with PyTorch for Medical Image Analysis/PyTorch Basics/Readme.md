@@ -107,4 +107,8 @@
                                     #         [4, 6, 6, 6, 6]])
             
 
+            x = torch.zeros(2, 5)
+            print(x) # tensor([[0., 0., 0., 0., 0.],
+                    #         [0., 0., 0., 0., 0.]])
+            print(x.shape()) # torch.Size([2, 5])
             ```
