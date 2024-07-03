@@ -169,3 +169,12 @@
         # view vs reshape - view() is a memory-efficient way to create a new tensor with the same data as the original tensor. If you modify the view, the original tensor will also be modified. If you want a new copy of the tensor, you should use the clone() method.
 
         # view reflects the original tensor
+
+        # -1 in view() - If there is a -1 in the view() method, it means that the size of that dimension is inferred from other dimensions. If there is only one -1, then its size can be inferred. If there are more than one -1, then it will throw an error.
+        x.view(2, -1) # tensor([[0, 1, 2, 3, 4],
+                    #         [5, 6, 7, 8, 9]])
+        x.view(-1, 2) # tensor([[0, 1],
+                    #         [2, 3],
+                    #         [4, 5],
+                    #         [6, 7],
+                    #         [8, 9]])
