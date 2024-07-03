@@ -179,4 +179,12 @@
                     #         [6, 7],
                     #         [8, 9]])
         x.view(3, -1) # RuntimeError: shape '[-1, -1]' is invalid for input of size 10
-        
+
+        #Operations
+        x = torch.tensor([1, 2, 3])
+        y = torch.tensor([9, 8, 7])
+        x + y # tensor([10, 10, 10])
+        x - y # tensor([-8, -6, -4])
+        x * y # tensor([ 9, 16, 21]) # element-wise multiplication
+        x / y # tensor([0.1111, 0.2500, 0.4286])
+        x % y # tensor([1, 2, 3])
