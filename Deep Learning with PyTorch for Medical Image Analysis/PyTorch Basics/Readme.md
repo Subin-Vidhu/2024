@@ -47,4 +47,25 @@
             print(x) # tensor([1, 2, 3, 4, 5], dtype=torch.int32)
             type(x) # torch.Tensor
             x.dtype # torch.int32
+
+            #2D
+            arr_2d = np.arange(0.0, 12.0).reshape(4, 3)
+            print(arr_2d) # [[ 0.  1.  2.]
+                          #  [ 3.  4.  5.]
+                          #  [ 6.  7.  8.]
+                          #  [ 9. 10. 11.]]
+            x_2d = torch.from_numpy(arr_2d)
+            print(x_2d) # tensor([[ 0.,  1.,  2.],
+                        #         [ 3.,  4.,  5.],
+                        #         [ 6.,  7.,  8.],
+                        #         [ 9., 10., 11.]], dtype=torch.float64)
+
+            arr[0] = 99
+            print(x) # tensor([99,  2,  3,  4,  5], dtype=torch.int32)
+            # The tensor and the NumPy array share the same memory location.To only share a copy of the data, use torch.tensor() instead of torch.from_numpy().
+            x = torch.tensor(arr)
+            arr[0] = 100
+            print(arr) # [100   2   3   4   5]
+            print(x) # tensor([99,  2,  3,  4,  5], dtype=torch.int32)
+            #
             ```
