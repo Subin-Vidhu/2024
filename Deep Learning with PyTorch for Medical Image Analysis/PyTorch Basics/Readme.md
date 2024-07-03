@@ -207,5 +207,10 @@
         # In-place operations
         x = torch.tensor([1, 2, 3])
         y = torch.tensor([9, 8, 7])
-        x.add_(y) # tensor([10, 10, 10])
-        x.sub_(y) # tensor([1, 2, 3])
+        x.add_(y) # tensor([10, 10, 10]) # x = x + y
+        x.sub_(y) # tensor([1, 2, 3]) # x = x - y
+        x.mul_(y) # tensor([9, 16, 21]) # x = x * y
+        x.div_(y) # tensor([1, 2, 3]) # x = x / y
+        x.remainder_(y) # tensor([1, 2, 3]) # x = x % y
+
+        
