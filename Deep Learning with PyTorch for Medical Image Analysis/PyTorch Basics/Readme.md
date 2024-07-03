@@ -21,3 +21,5 @@
     - Tensors are the basic building blocks of PyTorch.
     
 - Why do we use tensors?
+
+    - Easiest to arrange data in the form of tensors.
