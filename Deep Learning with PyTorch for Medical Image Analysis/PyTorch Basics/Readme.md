@@ -14,9 +14,10 @@
     - Often thought of as a generalization of a matrix, a tensor is an array with an arbitrary number of axes. A matrix is a tensor with two axes, and a scalar is a tensor with zero axes.
 
         ![alt text](image.png)
-        
+
     - Tensors are similar to NumPy's ndarrays, with the addition being that Tensors can also be used on a GPU to accelerate computing.
     - Tensors are multi-dimensional arrays with support for automatic differentiation.
     - PyTorch has a rich library for operations on Tensors.
     - Tensors are the basic building blocks of PyTorch.
     
+- Why do we use tensors?
