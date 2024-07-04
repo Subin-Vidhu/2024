@@ -105,6 +105,34 @@
                 ![alt text](image-1.png)
                 ```python
                 # Create the model
+                class MultilayerPerceptron(nn.Module):
+                    def __init__(self, in_sz=784, out_sz=10, layers=[120, 84]):
+                        super().__init__() #super() is used to call the __init__() of the parent class so that we can access the attributes of the parent class
+                        self.fc1 = nn.Linear(in_sz, layers[0])
+                        self.fc2 = nn.Linear(layers[0], layers[1])
+                        self.fc3 = nn.Linear(layers[1], out_sz)
 
+                    def forward(self, X):
+                        X = F.relu(self.fc1(X))
+                        X = F.relu(self.fc2(X))
+                        X = self.fc3(X)
+                        return F.log_softmax(X, dim=1) #dim=1 is used to specify the dimension along which the softmax function is to be applied
 
+                torch.manual_seed(101)
+                model = MultilayerPerceptron()
+                model
+                # MultilayerPerceptron(
+                #   (fc1): Linear(in_features=784, out_features=120, bias=True)
+                #   (fc2): Linear(in_features=120, out_features=84, bias=True)
+                #   (fc3): Linear(in_features=84, out_features=10, bias=True)
+                # )
 
+                for param in model.parameters():
+                    print(param.numel()) 
+                    # 94080 - 784*120 weights
+                    # 120 - 120 bias
+                    # 10080 - 120*84 weights
+                    # 84 - 84 bias
+                    # 840 - 84*10 weights
+                    # 10 - 10 bias
+                    # Total = 105,214 parameters
