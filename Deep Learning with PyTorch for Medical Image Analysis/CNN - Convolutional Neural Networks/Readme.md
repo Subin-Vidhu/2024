@@ -36,8 +36,10 @@
 
         - We will evaluate the performance of the network on the test set.
 
+            ![alt text](image.png)
+            
         - Things to keep in mind:
 
             - Flattening out the images into a single vector of size 784 loses the spatial information present in the images ie it ends up removing some of the 2-D information present in the images, such as the relationship of a pixel to its neighbouring pixels.
-            
+
 
