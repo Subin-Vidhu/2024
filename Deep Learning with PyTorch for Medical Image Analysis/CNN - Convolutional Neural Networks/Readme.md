@@ -260,5 +260,7 @@
 
             - Padding is used to prevent the loss of information at the edges of the image.
 
-        - 
+        - To try out image kernels, visit this [link](https://setosa.io/ev/image-kernels/).
+
+        - The extracted features are then used to train a machine learning model and these extracted features are called `feature maps`.
         
