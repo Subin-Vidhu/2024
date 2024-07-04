@@ -228,7 +228,21 @@
 
 - Filters and Kernels
 
-     - Computer Vision is a general term of using computers to process images and videos.
+    - Computer Vision is a general term of using computers to process images and videos.
 
+    - Filters and Kernels are used in computer vision to extract features from images.
 
-                        
+        - Filters are essentially an `image kernel` which is a small matrix applied to an entire image.
+
+            ![alt text](image-2.png)
+            
+        - Certain popular filters are well known for edge detection, blurring, sharpening, embossing, etc.
+
+            - Edge detection: Detects edges in an image.
+
+            - Blurring: Blurs an image.
+
+            - Sharpening: Sharpens an image.
+
+            - Embossing: Creates a 3D effect on an image.
+
