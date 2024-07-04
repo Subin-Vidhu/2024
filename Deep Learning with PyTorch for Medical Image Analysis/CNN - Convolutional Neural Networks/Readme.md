@@ -144,4 +144,71 @@
                 images.shape #torch.Size([100, 1, 28, 28]) --> [100, 784] - 100 images, 784 pixels so that it can be fed to the model
                 images.view(100, -1).shape #torch.Size([100, 784])
 
+                # Training the model
+                import time
+                start_time = time.time()
+                epochs = 10
+                train_losses = []
+                test_losses = []
+                train_correct = []
+                test_correct = []
+
+                for i in range(epochs):
+                    trn_corr = 0
+                    tst_corr = 0
+
+                    # Run the training batches
+                    for b, (X_train, y_train) in enumerate(train_loader):
+                        b += 1
+
+                        # Apply the model
+                        y_pred = model(X_train.view(100, -1)) #view is used to reshape the tensor
+                        loss = criterion(y_pred, y_train)
+
+                        # Tally the number of correct predictions
+                        predicted = torch.max(y_pred.data, 1)[1] #torch.max returns the maximum value and its index
+                        #[0.1, 0.0, ..., 0.8] --> 9 
+                        # print y_pred.data to see the output
+                        batch_corr = (predicted == y_train).sum()
+                        trn_corr += batch_corr
+
+                        # Update parameters
+                        optimizer.zero_grad()
+                        loss.backward()
+                        optimizer.step()
+
+                        # Print interim results
+                        if b%200 == 0:
+                            print(f'epoch: {i:2}  batch: {b:4} [{100*b:6}/60000]  loss: {loss.item():10.8f}  accuracy: {trn_corr.item()*100/(100*b):7.3f}%')
+
+                    train_losses.append(loss)
+                    train_correct.append(trn_corr)
+
+                    # Run the testing batches
+                    with torch.no_grad():
+                        for b, (X_test, y_test) in enumerate(test_loader):
+
+                            # Apply the model
+                            y_val = model(X_test.view(500, -1))
+
+                            # Tally the number of correct predictions
+                            predicted = torch.max(y_val.data, 1)[1]
+                            tst_corr += (predicted == y_test).sum()
+
+                    loss = criterion(y_val, y_test)
+                    test_losses.append(loss)
+                    test_correct.append(tst_corr)
+                print(f'Duration: {(time.time() - start_time)/60} minutes')
+
+                plt.plot(train_losses, label='training loss')
+                plt.plot(test_losses, label='validation loss')
+
+                plt.plot([t/100 for t in train_correct], label='training accuracy')
+
+                plt.plot([t/100 for t in test_correct], label='validation accuracy')
+
+                plt.title('Loss and Accuracy')
+
+                plt.legend()
+
                 
