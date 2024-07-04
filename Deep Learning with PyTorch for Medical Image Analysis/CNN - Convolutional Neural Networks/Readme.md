@@ -270,3 +270,4 @@
 
             - Filter: A filter is a kernel applied to an entire image.
         
+        
