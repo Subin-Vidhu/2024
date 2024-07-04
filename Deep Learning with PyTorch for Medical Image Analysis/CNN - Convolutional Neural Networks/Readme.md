@@ -90,8 +90,17 @@
                 for images, labels in train_loader:
                     break
 
-                images.shape #torch.Size([100, 1, 28, 28])
+                images.shape #torch.Size([100, 1, 28, 28]) - 100 images, 1 channel(colour channel, 1 since it is a gray scale image), 28x28 pixels(height x width)
                 labels.shape #torch.Size([100])
+
+                # Print the first 12 labels
+                print('Labels: ', labels[:12].numpy()) #Labels:  [   5    0    4    1    9    2    1    3    1    4    3    5]
+
+                # Print the first 12 images
+                im = make_grid(images[:12], nrow=12) #nrow is the number of images in each row
+                plt.figure(figsize=(10, 4))
+                # We need to transpose the images from CWH to WHC
+                plt.imshow(np.transpose(im.numpy(), (1, 2, 0))) #transpose is used to change the order of the dimensions
 
                 
                 ```
