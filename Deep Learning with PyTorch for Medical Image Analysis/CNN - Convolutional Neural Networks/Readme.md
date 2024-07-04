@@ -270,7 +270,7 @@
 
             - Filter: A filter is a kernel applied to an entire image.
         
-        - In the context of convolutional neural networks, these "filters" are referred to as `convolutional kernels`.
-        - The process of applying these kernels to an image is called `convolution`.
+    - In the context of convolutional neural networks, these "filters" are referred to as `convolutional kernels`.
+    - The process of applying these kernels to an image is called `convolution`.
 
         
