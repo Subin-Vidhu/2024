@@ -228,5 +228,7 @@
 
 - Filters and Kernels
 
+     - Computer Vision is a general term of using computers to process images and videos.
+
 
                         
