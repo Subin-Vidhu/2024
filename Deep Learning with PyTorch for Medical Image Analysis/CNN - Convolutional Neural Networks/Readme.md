@@ -202,13 +202,27 @@
 
                 plt.plot(train_losses, label='training loss')
                 plt.plot(test_losses, label='validation loss')
-
-                plt.plot([t/100 for t in train_correct], label='training accuracy')
-
-                plt.plot([t/100 for t in test_correct], label='validation accuracy')
-
-                plt.title('Loss and Accuracy')
-
                 plt.legend()
+                ############################################################
+                train_acc = [t/600 for t in train_correct]
+                test_acc = [t/100 for t in test_correct]
+                plt.plot(train_acc, label='train acc')
+                plt.plot(test_acc, label='test acc')
+                plt.legend()
+                plt.show()
+                ############################################################
+                test_load_all = DataLoader(test_data, batch_size=10000, shuffle=False)
 
-                
+                with torch.no_grad():
+                    correct = 0
+                    for X_test, y_test in test_load_all:
+                        y_val = model(X_test.view(len(X_test), -1))  # pass in a flattened view of the image
+                        predicted = torch.max(y_val,1)[1]
+                        correct += (predicted == y_test).sum()
+
+                correct.item()/len(test_data) #0.9717
+
+                # Confusion matrix
+                print(confusion_matrix(predicted.view(-1), y_test.view(-1)))
+                ```
+                        
