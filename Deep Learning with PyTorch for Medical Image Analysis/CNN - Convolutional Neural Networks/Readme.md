@@ -235,7 +235,7 @@
         - Filters are essentially an `image kernel` which is a small matrix applied to an entire image.
 
             ![alt text](image-2.png)
-            
+
         - Certain popular filters are well known for edge detection, blurring, sharpening, embossing, etc.
 
             - Edge detection: Detects edges in an image.
@@ -246,3 +246,19 @@
 
             - Embossing: Creates a 3D effect on an image.
 
+        - When applying filter, the dimensions of the output image are reduced.
+
+            - eg: If we have a 5x5 image and a 3x3 filter, the output image will be 3x3.
+
+        - Stride: The number of pixels by which the filter slides over the image.
+
+            - eg: If the stride is 1, the filter moves one pixel at a time.
+
+        - Padding: The number of pixels added to the border of the image.
+
+            - Padding is used to preserve the dimensions of the image.
+
+            - Padding is used to prevent the loss of information at the edges of the image.
+
+        - 
+        
