@@ -37,9 +37,42 @@
         - We will evaluate the performance of the network on the test set.
 
             ![alt text](image.png)
-            
+
         - Things to keep in mind:
 
             - Flattening out the images into a single vector of size 784 loses the spatial information present in the images ie it ends up removing some of the 2-D information present in the images, such as the relationship of a pixel to its neighbouring pixels.
+
+        - Code:
+
+            -   ```python
+                import torch
+                import torch.nn as nn
+                import torch.nn.functional as F
+                from torch.utils.data import DataLoader
+                from torchvision import datasets, transforms
+                import matplotlib.pyplot as plt
+                import numpy as np
+                from sklearn.metrics import confusion_matrix
+                %matplotlib inline
+
+                # Load the MNIST dataset
+                transform = transforms.ToTensor()
+                train_data = datasets.MNIST(root='data', train=True, download=True, transform=transform)
+                test_data = datasets.MNIST(root='data', train=False, download=True, transform=transform)
+                print(train_data) #Dataset MNIST
+                                    #Number of datapoints: 60000
+                                    #Split: train
+                                    #Root Location: data
+                                    #Transforms (if any): ToTensor()
+                                    #Target Transforms (if any): None
+                print(test_data) #Dataset MNIST
+                                    #Number of datapoints: 10000
+                                    #Split: test
+                                    #Root Location: data
+                                    #Transforms (if any): ToTensor()
+                                    #Target Transforms (if any): None
+
+                # 
+                ```
 
 
