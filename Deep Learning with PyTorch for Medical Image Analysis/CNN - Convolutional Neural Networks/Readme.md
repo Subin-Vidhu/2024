@@ -72,7 +72,28 @@
                                     #Transforms (if any): ToTensor()
                                     #Target Transforms (if any): None
 
-                # 
+                type(train_data) #torchvision.datasets.mnist.MNIST
+                train_data[0] #Returns a tuple of image and label
+                image, label = train_data[0]
+                image.shape #torch.Size([1, 28, 28])
+                label #5
+                plt.imshow(image.reshape(28, 28), cmap='gray') #cmap = 'gray' is used to display the image in grayscale, use 'viridis' for color, use 'gist_yarg' for opposite grayscale
+
+                torch.manual_seed(101) #arbitrary seed for reproducibility
+                train_loader = DataLoader(train_data, batch_size=100, shuffle=True)
+                test_loader = DataLoader(test_data, batch_size=500, shuffle=False)
+
+                from torchvision.utils import make_grid
+                np.set_printoptions(formatter=dict(int=lambda x: f'{x:4}')) # to widen the printed array
+
+                # Display the first batch of images
+                for images, labels in train_loader:
+                    break
+
+                images.shape #torch.Size([100, 1, 28, 28])
+                labels.shape #torch.Size([100])
+
+                
                 ```
 
 
