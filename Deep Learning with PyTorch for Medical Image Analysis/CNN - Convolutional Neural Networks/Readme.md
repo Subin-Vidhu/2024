@@ -136,3 +136,12 @@
                     # 840 - 84*10 weights
                     # 10 - 10 bias
                     # Total = 105,214 parameters
+
+                # Loss and optimizer
+                criterion = nn.CrossEntropyLoss()
+                optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+
+                images.shape #torch.Size([100, 1, 28, 28]) --> [100, 784] - 100 images, 784 pixels so that it can be fed to the model
+                images.view(100, -1).shape #torch.Size([100, 784])
+
+                
