@@ -101,8 +101,10 @@
                 plt.figure(figsize=(10, 4))
                 # We need to transpose the images from CWH to WHC
                 plt.imshow(np.transpose(im.numpy(), (1, 2, 0))) #transpose is used to change the order of the dimensions
-
-                
                 ```
+                ![alt text](image-1.png)
+                ```python
+                # Create the model
+
 
 
