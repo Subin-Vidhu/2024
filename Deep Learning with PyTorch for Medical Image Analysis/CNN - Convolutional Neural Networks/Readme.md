@@ -329,3 +329,7 @@
             ![alt text](image-5.png)  
 
             ![alt text](image-6.png)
+
+        - 3D Convolutional Layer: Used for 3D data such as color image data.
+
+            - 
