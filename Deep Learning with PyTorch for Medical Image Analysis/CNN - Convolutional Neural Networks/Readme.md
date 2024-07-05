@@ -378,4 +378,4 @@
         
         - This greatly reduce the number of parameters in the network.
 
-            
+            ![alt text](image-13.png)
