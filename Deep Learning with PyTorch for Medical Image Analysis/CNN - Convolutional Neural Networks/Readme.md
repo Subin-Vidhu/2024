@@ -310,4 +310,6 @@
 
     - CNN also helps reduce parameters by focusing on `local connectivity`.
 
+    - Not all neurons will be fully connected.
+
     
