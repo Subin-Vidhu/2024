@@ -412,4 +412,6 @@
 
     - EfficientNet: A CNN designed for efficiency.
 
-    - These architectures have been trained on large datasets like ImageNet and have achieved state-of-the-art performance on image classification tasks.
+    - These architectures have been trained on large datasets like ImageNet and have achieved state-of-the-art performance on image classification tasks. 
+
+    ![alt text](image-14.png)
