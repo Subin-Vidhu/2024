@@ -354,4 +354,4 @@
 
             - The output will be a 3D feature map.
 
-                
+                ![alt text](image-10.png)
