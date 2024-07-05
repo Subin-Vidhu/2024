@@ -313,3 +313,7 @@
     - Not all neurons will be fully connected.
 
     - Instead, neurons are only onnected to a subset of local neurons in the next layer.
+
+    - This helps reduce the number of parameters in the network.
+
+    
