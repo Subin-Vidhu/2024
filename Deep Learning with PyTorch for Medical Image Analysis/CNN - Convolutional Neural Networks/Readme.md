@@ -375,3 +375,7 @@
         - Average Pooling: Takes the average value from the window.
 
             ![alt text](image-12.png)
+        
+        - This greatly reduce the number of parameters in the network.
+
+            
