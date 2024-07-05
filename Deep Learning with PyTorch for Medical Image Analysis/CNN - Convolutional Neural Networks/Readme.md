@@ -355,3 +355,7 @@
             - The output will be a 3D feature map.
 
                 ![alt text](image-10.png)
+
+        - Often convolutional layers are fed into another convolutional layer. This is called `stacking convolutional layers`.
+
+            - This allows the networks to discover patterns within patterns , usually with more complexity for later convolutional layers.
