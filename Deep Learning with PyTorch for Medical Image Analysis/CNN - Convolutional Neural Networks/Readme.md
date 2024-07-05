@@ -272,5 +272,22 @@
         
     - In the context of convolutional neural networks, these "filters" are referred to as `convolutional kernels`.
     - The process of applying these kernels to an image is called `convolution`.
+    - The output of the convolution operation is called a `feature map`.
+    - During convolution, we would lose border pixels. To prevent this, we can add `padding` to the image.
+    - The size of the output feature map is determined by the size of the input image, the size of the kernel, the stride, and the padding. The formula is given by:
+        - `output_size = (input_size - kernel_size + 2*padding)/stride + 1`
+        - eg: If the input image is 5x5, the kernel is 3x3, the stride is 1, and the padding is 0, the output feature map will be 3x3.
+
+            - If the padding is 1, the output feature map will be 5x5, and if the padding is 2, the output feature map will be 7x7.
+
+            - If the stride is 2, the output feature map will be 2x2.
+
+            - Applying it in the formula of the above examples looks like this:
+
+                - `output_size = (5 - 3 + 2*1)/1 + 1 = 5`
+
+                - `output_size = (5 - 3 + 2*2)/1 + 1 = 4`
+
+                - `output_size = (5 - 3 + 2*0)/2 + 1 = 2`
 
         
