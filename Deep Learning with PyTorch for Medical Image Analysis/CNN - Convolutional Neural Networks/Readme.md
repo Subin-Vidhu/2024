@@ -385,3 +385,9 @@
 - Dropout
     
     - Another common technique deployed with CNN is called Dropout.
+
+    - can be thought of as a form of regularization to help prevent overfitting.
+
+    - During training, a fraction of the neurons are randomly set to zero.
+
+    - This forces the network to learn more robust features and prevent units from "co-adapting" ie relying too much on other units.
