@@ -298,4 +298,4 @@
 
         - It does not take into account the relationship between pixels in the images.
         
-            
+            ![alt text](image-3.png)
