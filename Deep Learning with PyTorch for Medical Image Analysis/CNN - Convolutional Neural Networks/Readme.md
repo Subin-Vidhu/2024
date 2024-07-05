@@ -336,4 +336,4 @@
 
             - The shape of the color array has 3 dimensions: Height, Width, and Channels.
 
-            
+                ![alt text](image-7.png)
