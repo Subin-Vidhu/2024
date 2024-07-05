@@ -359,3 +359,5 @@
         - Often convolutional layers are fed into another convolutional layer. This is called `stacking convolutional layers`.
 
             - This allows the networks to discover patterns within patterns , usually with more complexity for later convolutional layers.
+
+- Pooling Layers            
