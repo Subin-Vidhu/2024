@@ -343,3 +343,15 @@
                 ![alt text](image-9.png)
 
             - Keep in mind that the computer wont understand the image as we do. It will only see the image as a 3D array of numbers. ie it wont know that a channel is Red, it just knows that there are now 3 intensity channels.
+
+        - How to perform convolution on a 3D image:
+
+            - The kernel will also be 3D.
+
+            - The kernel will have the same number of channels as the input image.
+
+            - The kernel will slide over the image in 3 dimensions.
+
+            - The output will be a 3D feature map.
+
+                
