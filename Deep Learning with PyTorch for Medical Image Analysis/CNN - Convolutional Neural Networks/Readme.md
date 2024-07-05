@@ -326,4 +326,4 @@
 
         - 2D Convolutional Layer: Used for 2D data such as image data.
 
-            
+            ![alt text](image-5.png)  
