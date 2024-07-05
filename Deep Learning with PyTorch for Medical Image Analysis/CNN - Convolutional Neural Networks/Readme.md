@@ -304,7 +304,7 @@
 
     - CNNs are a type of neural network that is designed to work with image data.
 
-    - A convolutional layer is created when we apply multiple image filters to the input image.
+    - A `convolutional layer` is created when we apply multiple image filters to the input image.
 
     - The layer will then be trained to figure out the best filter weight values.
 
