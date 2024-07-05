@@ -332,4 +332,8 @@
 
         - 3D Convolutional Layer: Used for 3D data such as color image data.
 
-            - 
+            - A color image has 3 channels: Red, Green, and Blue.
+
+            - The shape of the color array has 3 dimensions: Height, Width, and Channels.
+
+            
