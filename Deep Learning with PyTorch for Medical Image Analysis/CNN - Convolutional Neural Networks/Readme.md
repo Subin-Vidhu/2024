@@ -262,7 +262,7 @@
 
         - To try out image kernels, visit this [link](https://setosa.io/ev/image-kernels/).
 
-        - The extracted features are then used to train a machine learning model and these extracted features are called `feature maps`. It is referredt to more generally as `convolutional layers`.
+        - The extracted features are then used to train a machine learning model and these extracted features are called `feature maps`. It is referred to more generally as `convolutional layers`.
 
         - Kernel vs Filter
 
