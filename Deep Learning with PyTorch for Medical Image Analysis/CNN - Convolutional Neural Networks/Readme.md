@@ -312,4 +312,4 @@
 
     - Not all neurons will be fully connected.
 
-    
+    - Instead, neurons are onlyc onnected to a subset of local neurons in the next layer.
