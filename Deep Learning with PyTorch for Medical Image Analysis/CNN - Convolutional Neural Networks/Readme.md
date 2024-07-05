@@ -316,4 +316,8 @@
 
     - This helps reduce the number of parameters in the network.
 
-    
+    - In ANN, the input layer is fully connected to the hidden layer, therefore lots of parameters.
+
+    - In CNN, the input layer is connected to the hidden layer through a filter, therefore fewer parameters.
+
+        
