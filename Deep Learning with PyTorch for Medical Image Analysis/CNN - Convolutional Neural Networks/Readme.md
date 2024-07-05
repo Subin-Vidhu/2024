@@ -391,3 +391,25 @@
     - During training, a fraction of the neurons are randomly set to zero.
 
     - This forces the network to learn more robust features and prevent units from "co-adapting" ie relying too much on other units.
+
+    - Some famous architectures like AlexNet, VGG, and GoogleNet have used dropout.
+
+- Some CNN Architectures
+
+    - LeNet-5: One of the first successful CNNs.
+
+    - AlexNet: A deeper and more complex CNN.
+
+    - VGG: A very deep CNN with 19 layers.
+
+    - GoogLeNet: A CNN with 22 layers.
+
+    - ResNet: A CNN with 152 layers.
+
+    - Inception: A CNN with 22 layers.
+
+    - MobileNet: A CNN designed for mobile devices.
+
+    - EfficientNet: A CNN designed for efficiency.
+
+    - These architectures have been trained on large datasets like ImageNet and have achieved state-of-the-art performance on image classification tasks.
