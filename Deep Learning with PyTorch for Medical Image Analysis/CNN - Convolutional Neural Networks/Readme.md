@@ -299,3 +299,15 @@
         - It does not take into account the relationship between pixels in the images.
         
             ![alt text](image-3.png)
+
+        - CNNs are designed to overcome these limitations.
+
+    - CNNs are a type of neural network that is designed to work with image data.
+
+    - A convolutional layer is created when we apply multiple image filters to the input image.
+
+    - The layer will then be trained to figure out the best filter weight values.
+
+    - CNN also helps reduce parameters by focusing on `local connectivity`.
+
+    
