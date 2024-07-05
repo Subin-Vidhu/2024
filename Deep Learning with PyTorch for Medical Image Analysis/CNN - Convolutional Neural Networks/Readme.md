@@ -361,3 +361,13 @@
             - This allows the networks to discover patterns within patterns , usually with more complexity for later convolutional layers.
 
 - Pooling Layers            
+
+    - Pooling layers are used to reduce the dimensions of the feature maps.
+
+    - Pooling layers accept a feature map as input and output a smaller feature map.
+
+    - We can reduce the size using subsampling or pooling.
+
+         - Max Pooling: Takes the maximum value from the window.
+
+            ![alt text](image-11.png)
