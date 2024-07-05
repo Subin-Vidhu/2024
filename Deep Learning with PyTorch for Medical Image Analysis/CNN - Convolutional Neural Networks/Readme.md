@@ -292,5 +292,10 @@
 
 - Convolutional layers
 
-    
+    - ANN for image data works well but it has some limitations:
+
+        - It does not take into account the spatial information present in the images.
+
+        - It does not take into account the relationship between pixels in the images.
         
+            
