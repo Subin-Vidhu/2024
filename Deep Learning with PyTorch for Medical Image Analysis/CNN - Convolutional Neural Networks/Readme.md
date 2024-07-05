@@ -371,3 +371,7 @@
          - Max Pooling: Takes the maximum value from the window.
 
             ![alt text](image-11.png)
+
+        - Average Pooling: Takes the average value from the window.
+
+            ![alt text](image-12.png)
