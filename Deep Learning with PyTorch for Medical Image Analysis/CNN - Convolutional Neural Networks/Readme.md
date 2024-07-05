@@ -381,3 +381,7 @@
             ![alt text](image-13.png)
 
             - This pooling layer will end up removing a lot of infromation, even a small pooling "kernel" of 2x2 will remove 75% of the input data.
+
+- Dropout
+    
+    - Another common technique deployed with CNN is called Dropout.
