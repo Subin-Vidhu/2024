@@ -341,3 +341,5 @@
                 ![alt text](image-8.png)
 
                 ![alt text](image-9.png)
+
+            - Keep in mind that the computer wont understand the image as we do. It will only see the image as a 3D array of numbers. ie it wont know that a channel is Red, it just knows that there are now 3 intensity channels.
