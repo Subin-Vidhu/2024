@@ -320,4 +320,4 @@
 
     - In CNN, the input layer is connected to the hidden layer through a filter, therefore fewer parameters.
 
-        
+        ![alt text](image-4.png)
