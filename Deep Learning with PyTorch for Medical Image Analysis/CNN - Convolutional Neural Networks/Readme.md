@@ -646,6 +646,11 @@
 
     correct.item()/10000 #0.9881
     
+    #print a row of values for reference
+    np.set_printoptions(formatter=dict(int=lambda x: f'{x:4}'))
+    print(np.arange(10).reshape(1,10))
+    print()
+    
     # Confusion matrix
     print(confusion_matrix(predicted.view(-1), y_test.view(-1)))
     ```
