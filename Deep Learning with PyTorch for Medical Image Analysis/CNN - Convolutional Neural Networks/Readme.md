@@ -427,4 +427,4 @@
 
     - We can think of the entire group of the 60,000 images as a tensor(an n-dimensional array).
 
-    
+        ![alt text](image-15.png)
