@@ -530,14 +530,17 @@
 
         def forward(self, X):
             X = F.relu(self.conv1(X))
-            X = F.max_pool2d(X, 2, 2)
+            X = F.max_pool2d(X, 2, 2) # 2x2 kernel, stride 2
             X = F.relu(self.conv2(X))
-            X = F.max_pool2d(X, 2, 2)
-            X = X.view(-1, 5*5*16) # flatten the image
+            X = F.max_pool2d(X, 2, 2) # 2x2 kernel, stride 2
+            X = X.view(-1, 5*5*16) # flatten the image for the fully connected layer
             X = F.relu(self.fc1(X))
             X = F.relu(self.fc2(X))
             X = self.fc3(X)
             return F.log_softmax(X, dim=1)
+
+    
+
 
 
 
