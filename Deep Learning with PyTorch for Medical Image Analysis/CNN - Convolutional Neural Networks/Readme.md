@@ -794,5 +794,5 @@
         model.cuda()
         next(model.parameters()).is_cuda #True
 
-        # set pin_memory=True to speed up the transfer of data from CPU to GPU while defining data loaders
+        # set pin_memory=True to speed up the transfer of data from CPU to GPU while defining data loaders 
         ```
