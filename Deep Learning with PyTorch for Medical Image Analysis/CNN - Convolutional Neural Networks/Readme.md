@@ -499,3 +499,11 @@
         conv1 = nn.Conv2d(1, 6, 3, 1) # 1 input channel, 6 output channels, 3x3 kernel, stride 1  # ---> 6 filters -->pooling --> conv2
         conv2 = nn.Conv2d(6, 16, 3, 1) # 6 input channel, 16 output channels, 3x3 kernel, stride 1
 
+
+        for i, (X_train, y_train) in enumerate(train_data):
+            break
+        
+        X_train.shape #torch.Size([1, 28, 28])
+
+        
+
