@@ -504,6 +504,8 @@
         break
     
     X_train.shape #torch.Size([1, 28, 28])
+    # 4D tensor is required for the convolutional layer
+    x = X_train.view(1, 1, 28, 28) # 1 image, 1 channel, 28x28 image
 
     
 
