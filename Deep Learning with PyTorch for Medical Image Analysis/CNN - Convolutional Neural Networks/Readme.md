@@ -474,4 +474,22 @@
         import matplotlib.pyplot as plt
         %matplotlib inline
 
+        transform = transforms.ToTensor()
+        train_data = datasets.MNIST(root='data', train=True, download=True, transform=transform)
+        test_data = datasets.MNIST(root='data', train=False, download=True, transform=transform)
+
+        train_data #Dataset MNIST
+                    #Number of datapoints: 60000
+                    #Split: train
+                    #Root Location: data
+                    #Transforms (if any): ToTensor()
+                    #Target Transforms (if any): None
+        
+        test_data #Dataset MNIST
+                    #Number of datapoints: 10000
+                    #Split: test
+                    #Root Location: data
+                    #Transforms (if any): ToTensor()
+                    #Target Transforms (if any): None
+
         
