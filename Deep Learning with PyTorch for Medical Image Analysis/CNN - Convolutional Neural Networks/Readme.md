@@ -510,5 +510,7 @@
     x = F.relu(conv1(x))
     x.shape #torch.Size([1, 6, 26, 26]) # 6 filters, 26x26 image - lost 2 pixels on each side, ie why instead of 28x28, it is 26x26
 
+    
+
 
 
