@@ -723,4 +723,33 @@
 
     - The use of GPUs has greatly accelerated the training of deep learning models, PyTorch uses CUDA to leverage the power of GPUs, this means that GPU with PyTorch will require you to have an NVIDIA GPU card.
 
+    - Options if you don't have an NVIDIA GPU:
+
+        - Use a cloud service like AWS, Google Cloud, or Azure.
+
+        - Use a service like Google Colab.
+
+        - Use a service like Kaggle.
+
+        - Use a service like FloydHub.
+
+        - Use a service like Binder.
+
+        - Use a service like Paperspace.
+
+        - Use a service like Crestle.
+
+        - Use a service like Spell.
+
+        - Use a service like FloydHub.
+
+        - Use a service like Gradient.
+
+        - Use a service like Saturn Cloud.
+
+        - Use a service like Databricks.
+
+        - Use a service like DeepCognition.
+
+    
 
