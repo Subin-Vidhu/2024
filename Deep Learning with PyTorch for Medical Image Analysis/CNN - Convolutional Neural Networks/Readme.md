@@ -717,6 +717,6 @@
 
     - This allows for GPUs to have much larger bandwidth and memory than CPUs for processing large amounts of data.
 
-
+        ![alt text](image-17.png)
 
 
