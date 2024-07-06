@@ -468,4 +468,10 @@
         from torchvision.utils import make_grid
     
 
+        import numpy as np
+        import pandas as pd
+        from sklearn.metrics import confusion_matrix
+        import matplotlib.pyplot as plt
+        %matplotlib inline
+
         
