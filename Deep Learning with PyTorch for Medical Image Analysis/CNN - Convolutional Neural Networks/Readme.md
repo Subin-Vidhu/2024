@@ -709,7 +709,9 @@
 
             ![alt text](image-16.png)
     
+    - GPUs are better suited for deep learning because they can handle the large number of matrix multiplications required for training deep learning models.
 
+    
 
 
 
