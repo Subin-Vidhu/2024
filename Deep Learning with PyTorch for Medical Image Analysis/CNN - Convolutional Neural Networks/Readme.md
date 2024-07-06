@@ -697,9 +697,17 @@
 
     - Refer to the code for more details.
 
+- Why do we need GPUs?
 
+    - The backpropogation process is dependent on matrix mulltiplication, for which GPUs are much faster than CPUs.
 
+    - But why are GPUs better?
 
+        -  Fundamentally, GPUs are designed to handle parallel processing, they have many more logical cores(Arithmetic Logic Units, ALUs) than CPUs.
+
+        -  GPUs are designed to handle multiple tasks simultaneously.
+
+            ![alt text](image-16.png)
     
 
 
