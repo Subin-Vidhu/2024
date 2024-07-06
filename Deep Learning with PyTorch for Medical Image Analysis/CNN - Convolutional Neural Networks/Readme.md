@@ -790,6 +790,7 @@
         # In our CNN code, we can move the model to the GPU using the to() function.
 
         model = ConvolutionalNetwork()
+        next(model.parameters()).is_cuda #False
         model.cuda()
-         
+        next(model.parameters()).is_cuda #True
         ```
