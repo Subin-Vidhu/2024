@@ -719,4 +719,8 @@
 
         ![alt text](image-17.png)
 
+    - CUDA is currently limited to NVIDIA hardware, but other companies are working on similar technologies.
+
+    - The use of GPUs has greatly accelerated the training of deep learning models, PyTorch uses CUDA to leverage the power of GPUs, this means that GPU with PyTorch will require you to have an NVIDIA GPU card.
+
 
