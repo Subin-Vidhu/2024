@@ -663,6 +663,39 @@
     new_pred.argmax() # tensor(9)
     ```
 
+- Summary:
+
+    - Regular neural networks do not take into account the spatial information present in images.
+
+    - Convolutional neural networks are designed to work with image data.
+
+    - Convolutional layers are created when we apply multiple image filters to the input image.
+
+    - Pooling layers are used to reduce the dimensions of the feature maps.
+
+    - Dropout is used to prevent overfitting.
+
+    - Some famous CNN architectures are LeNet-5, AlexNet, VGG, GoogLeNet, ResNet, Inception, MobileNet, and EfficientNet.
+
+    - We trained a CNN on the MNIST dataset and achieved an accuracy of 98.81%.
+
+    - We used the CrossEntropyLoss function to calculate the loss.
+
+    - We used the Adam optimizer to update the weights of the network.
+
+    - We used the softmax activation function in the output layer to get the probabilities of each class.
+
+    - We used the max pooling function to reduce the dimensions of the feature maps.
+
+    - We used the relu activation function in the hidden layers.
+
+    - We used the log softmax activation function in the output layer.
+
+    - We used the flatten function to flatten the image for the fully connected layer.
+
+    - We used the view function to reshape the tensor.
+
+    - Refer to the code for more details.
 
 
 
