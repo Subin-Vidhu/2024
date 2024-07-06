@@ -507,7 +507,8 @@
     # 4D tensor is required for the convolutional layer
     x = X_train.view(1, 1, 28, 28) # 1 image, 1 channel, 28x28 image
 
-    
+    x = F.relu(conv1(x))
+    x.shape #torch.Size([1, 6, 26, 26]) # 6 filters, 26x26 image - lost 2 pixels on each side, ie why instead of 28x28, it is 26x26
 
 
 
