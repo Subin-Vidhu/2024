@@ -754,3 +754,28 @@
     - Follow NVIDIA documentation to install CUDA and cuDNN on your system.
 
 - Using GPUs for PyTorch
+
+    - code:
+            
+        ```python
+        import torch
+        # Check if GPU is available
+        torch.cuda.is_available() #True
+
+        # Check if GPU is available
+        torch.cuda.current_device() #0
+
+        # Check if GPU is available
+        torch.cuda.get_device_name(0) #'GeForce GTX 1650'
+
+        # Check if GPU is available
+        torch.cuda.memory_allocated() #0
+
+        # cached
+        torch.cuda.memory_cached() #0
+
+        # Check if GPU is available
+        torch.cuda.memory_reserved() #0
+
+        
+        ```
