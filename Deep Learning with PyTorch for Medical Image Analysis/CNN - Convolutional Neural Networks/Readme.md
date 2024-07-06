@@ -496,4 +496,6 @@
         train_loader = DataLoader(train_data, batch_size=10, shuffle=True)
         test_loader = DataLoader(test_data, batch_size=10, shuffle=False)
 
-        
+        conv1 = nn.Conv2d(1, 6, 3, 1) # 1 input channel, 6 output channels, 3x3 kernel, stride 1  # ---> 6 filters -->pooling --> conv2
+        conv2 = nn.Conv2d(6, 16, 3, 1) # 6 input channel, 16 output channels, 3x3 kernel, stride 1
+
