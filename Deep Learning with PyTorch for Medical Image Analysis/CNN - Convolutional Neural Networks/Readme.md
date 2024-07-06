@@ -777,5 +777,9 @@
         # Check if GPU is available
         torch.cuda.memory_reserved() #0
 
-        
+        a = torch.FloatTensor([1.0, 2.0])
+        a #tensor([1., 2.])
+        a.device #device(type='cpu')
+
+        # Move the tensor to the GPU
         ```
