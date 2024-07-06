@@ -795,4 +795,9 @@
         next(model.parameters()).is_cuda #True
 
         # set pin_memory=True to speed up the transfer of data from CPU to GPU while defining data loaders 
+
+        # Inorder to run things in GPU:
+        # 1. When creating a tensor, make sure you call cuda() on it
+        # 2. When creating a model, make sure you call cuda() on it
+        # 3. When creating a DataLoader, make sure you set pin_memory=True
         ```
