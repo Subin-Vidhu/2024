@@ -492,4 +492,8 @@
                     #Transforms (if any): ToTensor()
                     #Target Transforms (if any): None
 
+        torch.manual_seed(101)  # for reproducible results
+        train_loader = DataLoader(train_data, batch_size=10, shuffle=True)
+        test_loader = DataLoader(test_data, batch_size=10, shuffle=False)
+
         
