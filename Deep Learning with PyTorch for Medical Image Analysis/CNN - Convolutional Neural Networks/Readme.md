@@ -428,3 +428,23 @@
     - We can think of the entire group of the 60,000 images as a tensor(an n-dimensional array).
 
         ![alt text](image-15.png)
+
+    - For the labes, we'll use One-Hot Encoding.
+
+        - One-Hot Encoding is a process by which categorical variables are converted into a form that could be provided to ML algorithms to do a better job in prediction.
+
+        - It is a process of converting categorical variables into a binary vector.
+
+        - The length of the binary vector is equal to the number of categories in the categorical variable.
+
+        - The binary vector has a 1 at the index of the category and 0s in all other indexes.
+
+        - eg: If we have a categorical variable with 3 categories: A, B, and C.
+
+            - A will be represented as [1, 0, 0].
+
+            - B will be represented as [0, 1, 0].
+
+            - C will be represented as [0, 0, 1].
+
+        - We can use the `torch.nn.functional.one_hot` function to perform One-Hot Encoding.
