@@ -421,4 +421,6 @@
 
     - We will now train a CNN on the MNIST dataset.
 
-    
+    - Recall that flattened out the images into a single vector of size 784 caused us to lose some of the 2-D information present in the images.
+
+    - With CNNs, we can feed in the data as an array of 2D images.
