@@ -711,7 +711,7 @@
     
     - GPUs are better suited for deep learning because they can handle the large number of matrix multiplications required for training deep learning models.
 
-    
+    - NVIDIA created a parallel computing architecture called CUDA which gave deep learning library developers the ability to write code for parallel processing on GPUs.
 
 
 
