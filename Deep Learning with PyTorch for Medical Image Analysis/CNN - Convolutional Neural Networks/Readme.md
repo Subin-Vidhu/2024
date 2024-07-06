@@ -457,53 +457,55 @@
         - Channels
 
 
-    - Code:
+- Code:
 
-        ```python
-        import torch
-        import torch.nn as nn
-        import torch.nn.functional as F
-        from torch.utils.data import DataLoader
-        from torchvision import datasets, transforms
-        from torchvision.utils import make_grid
+    ```python
+    import torch
+    import torch.nn as nn
+    import torch.nn.functional as F
+    from torch.utils.data import DataLoader
+    from torchvision import datasets, transforms
+    from torchvision.utils import make_grid
+
+
+    import numpy as np
+    import pandas as pd
+    from sklearn.metrics import confusion_matrix
+    import matplotlib.pyplot as plt
+    %matplotlib inline
+
+    transform = transforms.ToTensor()
+    train_data = datasets.MNIST(root='data', train=True, download=True, transform=transform)
+    test_data = datasets.MNIST(root='data', train=False, download=True, transform=transform)
+
+    train_data #Dataset MNIST
+                #Number of datapoints: 60000
+                #Split: train
+                #Root Location: data
+                #Transforms (if any): ToTensor()
+                #Target Transforms (if any): None
+    
+    test_data #Dataset MNIST
+                #Number of datapoints: 10000
+                #Split: test
+                #Root Location: data
+                #Transforms (if any): ToTensor()
+                #Target Transforms (if any): None
+
+    torch.manual_seed(101)  # for reproducible results
+    train_loader = DataLoader(train_data, batch_size=10, shuffle=True)
+    test_loader = DataLoader(test_data, batch_size=10, shuffle=False)
+
+    conv1 = nn.Conv2d(1, 6, 3, 1) # 1 input channel, 6 output channels, 3x3 kernel, stride 1  # ---> 6 filters -->pooling --> conv2
+    conv2 = nn.Conv2d(6, 16, 3, 1) # 6 input channel, 16 output channels, 3x3 kernel, stride 1
+
+
+    for i, (X_train, y_train) in enumerate(train_data):
+        break
+    
+    X_train.shape #torch.Size([1, 28, 28])
+
     
 
-        import numpy as np
-        import pandas as pd
-        from sklearn.metrics import confusion_matrix
-        import matplotlib.pyplot as plt
-        %matplotlib inline
 
-        transform = transforms.ToTensor()
-        train_data = datasets.MNIST(root='data', train=True, download=True, transform=transform)
-        test_data = datasets.MNIST(root='data', train=False, download=True, transform=transform)
-
-        train_data #Dataset MNIST
-                    #Number of datapoints: 60000
-                    #Split: train
-                    #Root Location: data
-                    #Transforms (if any): ToTensor()
-                    #Target Transforms (if any): None
-        
-        test_data #Dataset MNIST
-                    #Number of datapoints: 10000
-                    #Split: test
-                    #Root Location: data
-                    #Transforms (if any): ToTensor()
-                    #Target Transforms (if any): None
-
-        torch.manual_seed(101)  # for reproducible results
-        train_loader = DataLoader(train_data, batch_size=10, shuffle=True)
-        test_loader = DataLoader(test_data, batch_size=10, shuffle=False)
-
-        conv1 = nn.Conv2d(1, 6, 3, 1) # 1 input channel, 6 output channels, 3x3 kernel, stride 1  # ---> 6 filters -->pooling --> conv2
-        conv2 = nn.Conv2d(6, 16, 3, 1) # 6 input channel, 16 output channels, 3x3 kernel, stride 1
-
-
-        for i, (X_train, y_train) in enumerate(train_data):
-            break
-        
-        X_train.shape #torch.Size([1, 28, 28])
-
-        
 
