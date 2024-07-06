@@ -585,7 +585,7 @@
             b += 1
 
             # Apply the model
-            y_pred = model(X_train)
+            y_pred = model(X_train) # we don't flatten the data here
             loss = criterion(y_pred, y_train)
 
             # Tally the number of correct predictions
@@ -649,7 +649,7 @@
     # Confusion matrix
     print(confusion_matrix(predicted.view(-1), y_test.view(-1)))
     ```
-    
+
 
 
     
