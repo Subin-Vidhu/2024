@@ -782,4 +782,7 @@
         a.device #device(type='cpu')
 
         # Move the tensor to the GPU
+        a = a.to('cuda') #tensor([1., 2.], device='cuda:0')
+
+        torch.cuda.memory_allocated() #256
         ```
