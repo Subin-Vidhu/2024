@@ -712,7 +712,10 @@
     - GPUs are better suited for deep learning because they can handle the large number of matrix multiplications required for training deep learning models.
 
     - NVIDIA created a parallel computing architecture called CUDA which gave deep learning library developers the ability to write code for parallel processing on GPUs.
+ 
+    - PyTorch and TensorFlow are two popular deep learning libraries that support CUDA.
 
+    - This allows for GPUs to have much larger bandwidth and memory than CPUs for processing large amounts of data.
 
 
 
