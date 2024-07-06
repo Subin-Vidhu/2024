@@ -515,6 +515,8 @@
     x = F.relu(conv2(x))
     x.shape #torch.Size([1, 16, 11, 11]) # 16 filters, 11x11 image - lost 2 pixels on each side, ie why instead of 13x13, it is 11x11
 
+    F.max_pool2d(x, 2, 2).shape #torch.Size([1, 16, 5, 5]) # 16 filters, 5x5 image - reduced by half due to pooling, 2x2 kernel, stride 2 - 11*11 changes to 5*5 using the formula ((11-2)/2)+1 = 5 where 2 is the kernel size and 2 is the stride
+
     
 
 
