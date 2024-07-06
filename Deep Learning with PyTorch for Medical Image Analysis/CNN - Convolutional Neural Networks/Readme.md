@@ -424,3 +424,7 @@
     - Recall that flattened out the images into a single vector of size 784 caused us to lose some of the 2-D information present in the images.
 
     - With CNNs, we can feed in the data as an array of 2D images.
+
+    - We can think of the entire group of the 60,000 images as a tensor(an n-dimensional array).
+
+    
