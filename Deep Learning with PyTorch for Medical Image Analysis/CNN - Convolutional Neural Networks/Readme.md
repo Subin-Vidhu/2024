@@ -551,6 +551,17 @@
 
     for param in model.parameters():
         print(param.numel())
+        # 54 - 1*6*3*3
+        # 6 - 6 bias
+        # 864 - 6*16*3*3
+        # 16 - 16 bias
+        # 48000 - 400*120 # 5*5*16 = 400, 120 neurons out
+        # 120 - 120 bias
+        # 10080 - 120*84 # 120 neurons in, 84 neurons out
+        # 84 - 84 bias
+        # 840 - 84*10 # 84 neurons in, 10 neurons out
+        # 10 - 10 bias 
+        # Total = 60,074 parameters
 
 
     
