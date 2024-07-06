@@ -753,3 +753,4 @@
 
     - Follow NVIDIA documentation to install CUDA and cuDNN on your system.
 
+- Using GPUs for PyTorch
