@@ -449,4 +449,9 @@
 
         - We can use the `torch.nn.functional.one_hot` function to perform One-Hot Encoding.
 
-    
+    - Keep in mind that when dealing with tensors of image data, we actually end up with 4 dimensions.
+
+        - Number of images
+        - Height
+        - Width
+        - Channels
