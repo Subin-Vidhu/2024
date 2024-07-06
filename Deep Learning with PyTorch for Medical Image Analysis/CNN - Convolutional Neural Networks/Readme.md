@@ -654,6 +654,8 @@
     # Confusion matrix
     print(confusion_matrix(predicted.view(-1), y_test.view(-1)))
 
+    #check random values for predictions
+    plt.imshow(test_data[2019][0].reshape(28,28))
     model.eval()
     with torch.no_grad():
         new_pred = model(test_data[2019][0].view(1,1,28,28))
