@@ -785,4 +785,11 @@
         a = a.to('cuda') #tensor([1., 2.], device='cuda:0')
 
         torch.cuda.memory_allocated() #256
+
+
+        # In our CNN code, we can move the model to the GPU using the to() function.
+
+        model = ConvolutionalNetwork()
+        model.cuda()
+         
         ```
