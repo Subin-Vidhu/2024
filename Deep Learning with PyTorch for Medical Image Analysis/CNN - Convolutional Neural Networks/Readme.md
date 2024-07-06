@@ -518,6 +518,28 @@
     F.max_pool2d(x, 2, 2).shape #torch.Size([1, 16, 5, 5]) # 16 filters, 5x5 image - reduced by half due to pooling, 2x2 kernel, stride 2 - 11*11 changes to 5*5 using the formula ((11-2)/2)+1 = 5 where 2 is the kernel size and 2 is the stride, actually 5.5 but since it is an odd number, it is rounded down to 5
 
 
+    # Create the model
+    class ConvolutionalNetwork(nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.conv1 = nn.Conv2d(1, 6, 3, 1) # 1 input channel, 6 output channels, 3x3 kernel, stride 1
+            self.conv2 = nn.Conv2d(6, 16, 3, 1) # 6 input channel, 16 output channels, 3x3 kernel, stride 1
+            self.fc1 = nn.Linear(5*5*16, 120) # 5x5 image, 16 filters, 120 output neurons
+            self.fc2 = nn.Linear(120, 84) # 120 input neurons, 84 output neurons
+            self.fc3 = nn.Linear(84, 10) # 84 input neurons, 10 output neurons
+
+        def forward(self, X):
+            X = F.relu(self.conv1(X))
+            X = F.max_pool2d(X, 2, 2)
+            X = F.relu(self.conv2(X))
+            X = F.max_pool2d(X, 2, 2)
+            X = X.view(-1, 5*5*16) # flatten the image
+            X = F.relu(self.fc1(X))
+            X = F.relu(self.fc2(X))
+            X = self.fc3(X)
+            return F.log_softmax(X, dim=1)
+
+
 
 
 
