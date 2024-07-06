@@ -539,6 +539,20 @@
             X = self.fc3(X)
             return F.log_softmax(X, dim=1)
 
+    torch.manual_seed(101)
+    model = ConvolutionalNetwork()
+    model #ConvolutionalNetwork(
+            # (conv1): Conv2d(1, 6, kernel_size=(3, 3), stride=(1, 1))
+            # (conv2): Conv2d(6, 16, kernel_size=(3, 3), stride=(1, 1))
+            # (fc1): Linear(in_features=400, out_features=120, bias=True)
+            # (fc2): Linear(in_features=120, out_features=84, bias=True)
+            # (fc3): Linear(in_features=84, out_features=10, bias=True)
+            # )
+
+    for param in model.parameters():
+        print(param.numel())
+
+
     
 
 
