@@ -431,7 +431,7 @@
 
     - For the labes, we'll use One-Hot Encoding.
 
-        - One-Hot Encoding is a process by which categorical variables are converted into a form that could be provided to ML algorithms to do a better job in prediction.
+        - One-Hot Encoding is a process by which categorical variables are converted into a form that could be provided to ML algorithms to do a better job in prediction, ie that instead of having labels such as "One", "Two", "Three", we have labels such as [1, 0, 0], [0, 1, 0], [0, 0, 1] -  single array of 1s and 0s for each label.
 
         - It is a process of converting categorical variables into a binary vector.
 
