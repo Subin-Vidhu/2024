@@ -751,5 +751,5 @@
 
         - Use a service like DeepCognition.
 
-    
+    - Follow NVIDIA documentation to install CUDA and cuDNN on your system.
 
