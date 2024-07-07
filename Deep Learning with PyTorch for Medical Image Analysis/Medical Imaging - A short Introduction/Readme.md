@@ -188,4 +188,12 @@
 
         - Image contrast depends on specific treacer
 
-            ![ ](image-8.png)
+            ![alt text](image-8.png)
+
+        - Applications of PET
+
+            - Cancer imaging
+
+            - Imaging in inflammation
+
+            - Neurological imaging
