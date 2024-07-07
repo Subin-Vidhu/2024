@@ -145,5 +145,9 @@
 
     - Takes larger time than CT scans, therefore not used in emergency cases.
 
-    
+    - Images are acquired by:
+
+        - electromagnetic excitation of protons in the body
+        - in a strong magnetic field
+        - and subsequent measurement of the emitted electromagnetic signals
 
