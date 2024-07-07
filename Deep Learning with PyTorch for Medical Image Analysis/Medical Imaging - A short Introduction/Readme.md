@@ -85,3 +85,11 @@
         - Different degrees of X-ray absorption by different tissues.
 
         - Image intensities are relative values, ie they are not absolute.
+
+        - Usually:
+
+            - high x-ray absorption: high image intensity ie white
+
+            - low x-ray absorption: low image intensity ie black
+
+            - Careful with the interpretation of the images, they can be inverted.
