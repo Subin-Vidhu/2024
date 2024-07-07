@@ -188,4 +188,4 @@
 
         - Image contrast depends on specific treacer
 
-            ![alt text](image-8.png)
+            ![ ](image-8.png)
