@@ -179,3 +179,11 @@
         - PET + MRI: PET/MRI
 
     - PET acquisition takes several minutes, as the tracer needs time to accumulate in the body.
+
+    - Contrast Mechanism
+
+        - Differences in tracer concentration in different tissues.
+
+        - Image intensities are absolute values (standardized uptake value, SUV).
+
+        - Image contrast depends on specific treacer
