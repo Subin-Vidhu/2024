@@ -197,3 +197,5 @@
             - Imaging in inflammation
 
             - Neurological imaging
+
+            ![alt text](image-9.png)
