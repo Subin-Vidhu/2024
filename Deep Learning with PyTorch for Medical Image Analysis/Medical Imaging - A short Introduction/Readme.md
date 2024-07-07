@@ -69,3 +69,7 @@
         - Transverse plane: Divides the body into upper and lower parts.
 
             ![alt text](image-3.png)
+
+- X-RAY:
+
+    - 
