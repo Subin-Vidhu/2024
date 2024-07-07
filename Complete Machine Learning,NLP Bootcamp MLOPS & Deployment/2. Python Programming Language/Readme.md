@@ -15,3 +15,20 @@
 
     - Use  `shift + enter` to run the code in the jupyter notebook.
 
+- Different ways of Creating Virtual Environment
+
+    - `python -m venv myenv`
+
+        - To activate:
+                
+                - `myenv\Scripts\activate`
+        
+        - To check python version:
+                
+                - `python --version`
+
+        - To deactivate:
+                
+                - `deactivate`
+        
+    
