@@ -111,6 +111,8 @@
         - eg: `a = 1` and `A = 2` are different.
 
     - Statements in Python are written in new lines ie `end of a statement is marked by a newline character`.
+    
+            - eg: `print("Hello World")`
 
     - Indentation ie `whitespace at the beginning of the line is important`.
 
@@ -126,8 +128,23 @@
 
     - Comments ie `#` is used to comment a single line and `'''` or `"""` is used to comment multiple lines.
 
+        - eg: `# This is a comment`
+            
+            - `''' This is a multiline comment '''`
+
     - Multiple statements on a single line ie `semicolon` is used to separate multiple statements on a single line.
 
         - eg: `a = 1; b = 2; c = 3`
+
+    - Line Continuation ie `backslash` is used to continue a statement to the next line.
+
+        - eg: `total = 1 + 2 + 3 + \`
+                
+            `4 + 5 + 6`   
+            print(total) # 21
+
+    
+
+
 
     
