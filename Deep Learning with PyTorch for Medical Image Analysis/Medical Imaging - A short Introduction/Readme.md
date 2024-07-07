@@ -137,3 +137,10 @@
         - Distances between voxels(pixel in 3D) can be exactly quantified and directly translated to physical distances.
 
             ![alt text](image-6.png)
+
+
+- MRI
+
+    - Magnetic resonance imaging(MRI) is a medical imaging technique that uses a magnetic field and radio waves to create detailed images of the body.
+
+    
