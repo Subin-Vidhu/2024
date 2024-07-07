@@ -126,4 +126,10 @@
 
         - Image intensities are absolute values (Hounsfield units: air = -1000 HHU, water = 0 HU).
 
+        - Usually:
+
+            - high x-ray absorption: high image intensity ie white
+
+            - low x-ray absorption: low image intensity ie black
+
         
