@@ -23,3 +23,25 @@
             ![alt text](image.png)
 
 - What is Medical Imaging?
+
+    - Provides spatially resolved information from within the human body.
+
+    - Has a wide range of applications in clinical practice, including:
+
+        - Diagnosis
+
+        - Treatment planning
+
+        - Monitoring of disease progression
+
+    - Is performed using different imaging modalities, such as:
+
+        - X-ray
+
+        - Computed Tomography (CT)
+
+        - Magnetic Resonance Imaging (MRI)
+
+        - Ultrasound
+
+        - Positron Emission Tomography (PET)
