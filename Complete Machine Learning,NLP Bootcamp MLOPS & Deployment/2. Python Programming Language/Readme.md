@@ -177,7 +177,7 @@
 
     - type() function ie `used to get the data type of an object`.
 
-        - eg: `type(25)` # <class 'int'>
+        - eg: ` print(type(25))` # <class 'int'>
 
     - Operators ie `symbols that are used to perform operations on variables and values`.
 
