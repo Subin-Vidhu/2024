@@ -110,6 +110,20 @@
 
         - eg: `a = 1` and `A = 2` are different.
 
+        - Some naming conventions include:
+
+            - Variable names should be descriptive
+
+            - Variable names should be short and concise
+
+            - They must start with a letter or an underscore
+
+            - `snake_case` ie `all lowercase with underscores between words`.
+
+            - `camelCase` ie `first letter of each word is capitalized except the first word`.
+
+            - `PascalCase` ie `first letter of each word is capitalized`.
+
     - Statements in Python are written in new lines ie `end of a statement is marked by a newline character`.
     
             - eg: `print("Hello World")`
