@@ -143,6 +143,7 @@
 
     - Magnetic resonance imaging(MRI) is a medical imaging technique that uses a magnetic field and radio waves to create detailed images of the body.
 
-    - Takes larger time than CT scans.
+    - Takes larger time than CT scans, therefore not used in emergency cases.
 
     
+
