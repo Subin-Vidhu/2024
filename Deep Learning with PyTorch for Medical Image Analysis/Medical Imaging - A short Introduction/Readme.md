@@ -120,3 +120,10 @@
 
     - The images are then processed by a computer to create detailed cross-sectional images of the body.
 
+    - Contrast Mechanism
+
+        - Different degrees of X-ray absorption by different tissues.
+
+        - Image intensities are absolute values (Hounsfield units: air = -1000 HHU, water = 0 HU).
+
+        
