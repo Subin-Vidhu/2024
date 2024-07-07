@@ -143,6 +143,53 @@
             `4 + 5 + 6`   
             print(total) # 21
 
+    - Quotation in Python ie `single`, `double`, and `triple` quotes are used to represent strings.
+
+        - eg: `name = 'John'`
+
+            - `name = "John"`
+
+            - `name = """John"""`
+
+- Semantics in Python
+
+    - Variables ie `a name that is used to refer to a memory location that stores data`.
+
+        - eg: `age = 25`
+
+    - Data Types ie `the type of data that a variable can store`.
+
+        - eg: `int`, `float`, `complex`, `str`, `bool`, `list`, `tuple`, `set`, `dict`, `NoneType`
+
+    - type() function ie `used to get the data type of an object`.
+
+        - eg: `type(25)` # <class 'int'>
+
+    - Operators ie `symbols that are used to perform operations on variables and values`.
+
+        - eg: `+`, `-`, `*`, `/`, `//`, `%`, `**`, `==`, `!=`, `>`, `<`, `>=`, `<=`, `and`, `or`, `not`, `in`, `is`
+
+    - Conditional Statements ie `used to perform different actions based on different conditions`.
+
+        - eg: `if`, `elif`, `else`
+
+    - Loops ie `used to iterate over a sequence of elements`.
+
+        - eg: `for`, `while`
+
+    - Functions ie `a block of code that only runs when it is called`.
+
+        - eg_code:
+        
+            ```python
+            def my_function():
+                print("Hello from a function")
+            my_function()
+            ```
+
+
+
+    
     
 
 
