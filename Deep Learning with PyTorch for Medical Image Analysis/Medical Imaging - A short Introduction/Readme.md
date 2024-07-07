@@ -153,3 +153,14 @@
 
     - No ionizing radiation is used, making it safer than X-ray and CT scans(CT scans use ionizing radiation).
 
+    - Contrast Mechanism
+
+        - Mutliple contrasts exist in MRI images, such as T1-weighted, T2-weighted, and proton density images.
+
+        - Image intensitiesa are usually relative values.
+
+        - Usually:
+
+            - high signal intensity: high image intensity ie white
+
+            - low signal intensity: low image intensity ie black
