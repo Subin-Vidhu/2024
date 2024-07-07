@@ -12,3 +12,6 @@
 
     - `pip install ipykernel` # This package is required to run the jupyter notebook in the new environment.
 
+
+    - Use  `shift + enter` to run the code in the jupyter notebook.
+
