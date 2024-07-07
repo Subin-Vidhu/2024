@@ -164,3 +164,10 @@
             - high signal intensity: high image intensity ie white
 
             - low signal intensity: low image intensity ie black
+
+
+- PET
+
+    - Positron emission tomography(PET) is a medical imaging technique that uses a radioactive tracer to create detailed images of the body.
+
+        ![alt text](image-7.png)
