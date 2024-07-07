@@ -95,3 +95,11 @@
             - low x-ray absorption: low image intensity ie black
 
             - Careful with the interpretation of the images, they can be inverted.
+
+    - Measuring Distances
+
+        - Radiologists diagnoses diseases by measuring distances between anatomical structures.
+
+        - Distances are measured as the number of pixels on the detector.
+
+        - Can be translated to approximate physical distances(e.g. in cm) through calibration.
