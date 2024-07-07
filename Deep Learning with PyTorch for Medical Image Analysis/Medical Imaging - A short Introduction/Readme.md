@@ -79,3 +79,9 @@
     - X-ray images are produced by passing X-rays through the body and capturing the resulting image on a detector.
 
         ![alt text](image-4.png)
+
+    - Contrast Mechanism
+
+        - Different degrees of X-ray absorption by different tissues.
+
+        - Image intensities are relative values, ie they are not absolute.
