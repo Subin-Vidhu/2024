@@ -151,3 +151,5 @@
         - in a strong magnetic field
         - and subsequent measurement of the emitted electromagnetic signals
 
+    - No ionizing radiation is used, making it safer than X-ray and CT scans(CT scans use ionizing radiation).
+
