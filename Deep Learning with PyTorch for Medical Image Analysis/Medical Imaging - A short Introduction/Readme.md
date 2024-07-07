@@ -10,4 +10,6 @@
 
         - Has had a cold for the past week
 
-        
+        - Experiences sudden onset pain in the right chest region
+
+        - Has difficulty breathing
