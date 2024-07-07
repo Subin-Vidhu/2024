@@ -31,4 +31,25 @@
                 
                 - `deactivate`
         
-    
+
+    - `virtualenv -p python3 myenv`
+
+        - `pip install virtualenv` if not installed
+
+        - To activate:
+                
+                - `myenv\Scripts\activate`
+        
+        - To deactivate:
+                
+                - `deactivate`
+                
+    - `conda create -p myenv python=3.12`
+
+        - To activate:
+                
+                - `conda activate myenv`
+        
+        - To deactivate:
+                
+                - `conda deactivate`
