@@ -36,12 +36,6 @@
 
     - Is performed using different imaging modalities, such as:
 
-        - X-ray
+        - Radiography(X-ray imaging)
 
-        - Computed Tomography (CT)
-
-        - Magnetic Resonance Imaging (MRI)
-
-        - Ultrasound
-
-        - Positron Emission Tomography (PET)
+    
