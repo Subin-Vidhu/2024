@@ -132,4 +132,4 @@
 
             - low x-ray absorption: low image intensity ie black
 
-        
+        - CT scans are never inverted.
