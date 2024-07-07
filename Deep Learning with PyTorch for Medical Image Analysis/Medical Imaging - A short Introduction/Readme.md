@@ -41,3 +41,9 @@
             - Projection radiography(2D, e.g. chest X-ray imaging)
 
             - Computed tomography(CT, 3D, e.g. CT scan)
+
+        - Magnetic resonance imaging(MRI, 3D)
+
+        - Ultrasound imaging(2D/3D)
+
+        - Nuclear medicine imaging(PET, SPECT, 3D)
