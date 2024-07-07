@@ -13,3 +13,11 @@
         - Experiences sudden onset pain in the right chest region
 
         - Has difficulty breathing
+
+        - Doctor orders a chest X-ray
+
+        - Chest X-ray shows a large white area in the right lung
+
+        - Diagnosis: Pneumothorax (collapsed lung)
+
+            ![alt text](image.png)
