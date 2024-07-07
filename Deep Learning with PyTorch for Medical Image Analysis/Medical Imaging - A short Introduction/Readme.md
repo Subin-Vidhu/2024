@@ -59,3 +59,11 @@
     - We usually look at 3D images/volumes using 2D cross-sections.
 
         ![alt text](image-2.png)
+
+    - Anatomical Orientation:
+
+        - Sagittal plane: Divides the body into left and right parts.
+
+        - Coronal plane: Divides the body into front and back parts.
+
+        - Transverse plane: Divides the body into upper and lower parts.
