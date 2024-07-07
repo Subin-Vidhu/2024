@@ -96,3 +96,6 @@
 
 - Python Basics-Syntax and Semantics
 
+- Syntax
+
+    - refers to the set of rules that defines the combinations of symbols that are considered to be correctly structured programs in that language ie, the correct arrangement of words, phrases, and symbols in a program.
