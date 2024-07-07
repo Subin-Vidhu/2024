@@ -171,7 +171,7 @@
 
         - eg: `age = 25`
 
-    - Data Types ie `the type of data that a variable can store`.
+    - Data Types ie `the type of data that a variable can store`. Python is dynamically typed ie `the type of the variable is determined at runtime`.
 
         - eg: `int`, `float`, `complex`, `str`, `bool`, `list`, `tuple`, `set`, `dict`, `NoneType`
 
@@ -201,6 +201,15 @@
             my_function()
             ```
 
+    - Type checking and conversion
+
+        - eg: `isinstance(25, int)` # True
+
+            - `int(25.0)` # 25
+
+            - `float(25)` # 25.0
+
+            - `str(25)` # '25'
 
 
     
