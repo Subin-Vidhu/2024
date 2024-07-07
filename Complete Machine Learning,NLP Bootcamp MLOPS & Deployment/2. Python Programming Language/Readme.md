@@ -8,3 +8,7 @@
     
     - `conda activate myenv`
 
+- Install ipykernel package
+
+    - `pip install ipykernel` # This package is required to run the jupyter notebook in the new environment.
+
