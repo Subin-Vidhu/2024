@@ -133,3 +133,7 @@
             - low x-ray absorption: low image intensity ie black
 
         - CT scans are never inverted.
+
+        - Distances between voxels(pixel in 3D) can be exactly quantified and directly translated to physical distances.
+
+        
