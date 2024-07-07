@@ -171,3 +171,11 @@
     - Positron emission tomography(PET) is a medical imaging technique that uses a radioactive tracer to create detailed images of the body.
 
         ![alt text](image-7.png)
+
+    - PET scanners are usually combined with other imaging modalities (hybrid imaging), such as CT or MRI, to provide complementary information.
+
+        - PET + CT: PET/CT
+
+        - PET + MRI: PET/MRI
+
+    - PET acquisition takes several minutes, as the tracer needs time to accumulate in the body.
