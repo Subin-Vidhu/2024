@@ -98,4 +98,8 @@
 
 - Syntax
 
-    - refers to the set of rules that defines the combinations of symbols that are considered to be correctly structured programs in that language ie, the correct arrangement of words, phrases, and symbols in a program.
+    - refers to the set of rules that defines the combinations of symbols that are considered to be correctly structured programs in that language ie, `the correct arrangement of words, phrases, and symbols in a program`.
+
+- Semantics
+
+    - refers to the meaning of the words, phrases, and symbols in a program ie the interpretation of the program, `what the code is supposed to do when it runs`.
