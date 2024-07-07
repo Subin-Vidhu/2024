@@ -21,3 +21,5 @@
         - Diagnosis: Pneumothorax (collapsed lung)
 
             ![alt text](image.png)
+
+- What is Medical Imaging?
