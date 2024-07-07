@@ -43,7 +43,7 @@
         - To deactivate:
                 
                 - `deactivate`
-                
+
     - `conda create -p myenv python=3.12`
 
         - To activate:
@@ -53,3 +53,46 @@
         - To deactivate:
                 
                 - `conda deactivate`
+
+        - some other commands:
+                
+            - `conda env list` # To list all the environments
+            
+            - `conda env remove -n myenv` # To remove the environment
+
+        - what -p and -y and similar does?
+
+          - `-p` is the path where the environment is created.
+
+            - `-y` is used to skip the confirmation prompt.
+
+            - similarly we have other flags like: 
+
+                - `--name` or `-n` to specify the name of the environment.
+
+                - `--file` or `-f` to specify the file containing the dependencies.
+
+                - `--channel` or `-c` to specify the channel to install the packages from.
+
+                - `--no-deps` to skip the installation of dependencies.
+
+                - `--force-reinstall` to force the reinstallation of the packages.
+
+                - `--no-pin` to not pin the dependencies.
+
+                - `--copy` to copy the packages instead of linking them.
+
+                - `--update-deps` to update the dependencies.
+
+                - `--dry-run` to simulate the installation.
+
+                - `--json` to output the result in JSON format.
+
+                - `--all` to update all the packages.
+
+                - `--no-update-deps` to not update the dependencies.
+
+                - `--no-builds` to not build the packages.
+
+- Python Basics-Syntax and Semantics
+
