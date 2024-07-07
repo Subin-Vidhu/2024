@@ -72,4 +72,10 @@
 
 - X-RAY:
 
-    - 
+    - Projection radiography is the most common form of X-ray imaging.
+
+    - It is used to visualize the internal structures of the body, such as bones, organs, and tissues.
+
+    - X-ray images are produced by passing X-rays through the body and capturing the resulting image on a detector.
+
+        ![alt text](image-4.png)
