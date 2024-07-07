@@ -30,9 +30,11 @@
 
         - Diagnosis
 
-        - Treatment planning
+        - Treatment/Therapies planning
 
         - Monitoring of disease progression
+
+        - Image-guided interventions
 
     - Is performed using different imaging modalities, such as:
 
@@ -46,4 +48,4 @@
 
         - Ultrasound imaging(2D/3D)
 
-        - Nuclear medicine imaging(PET, SPECT, 3D)
+        - Nuclear medicine imaging(PET, SPECT, 3D) 
