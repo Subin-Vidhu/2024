@@ -86,6 +86,8 @@
 
         - Image intensities are relative values, ie they are not absolute.
 
+        - Dense or thick objects results in an x-ray shadow with less x-ray reaching the detector. eg bones and air, bones absorb more x-ray than air hence bones appear white and air appears black.
+
         - Usually:
 
             - high x-ray absorption: high image intensity ie white
