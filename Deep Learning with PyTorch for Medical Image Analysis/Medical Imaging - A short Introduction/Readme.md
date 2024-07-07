@@ -49,3 +49,7 @@
         - Ultrasound imaging(2D/3D)
 
         - Nuclear medicine imaging(PET, SPECT, 3D) 
+
+- Always mentions sides with respect to the patient's perspective, ie left and right are reversed.
+
+    ![alt text](image-1.png)
