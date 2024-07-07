@@ -211,6 +211,29 @@
 
             - `str(25)` # '25'
 
+            - You can't convert everything to everything.
+
+                - ```python
+                    str(25.0) # '25.0'
+                    int('25') # ValueError: invalid literal for int() with base 10: '25'
+                    float('25') # 25.0
+
+                    name = 'John'
+                    int(name) # ValueError: invalid literal for int() with base 10: 'John'
+                    name + 25 # TypeError: can only concatenate str (not "int") to str
+                    ```
+
+    - Dynamic Typing
+
+        - eg: 
+
+            ```python
+            # Python allows the type of a variable to be changed during runtime.
+            a = 25
+            print(a) # 25
+            a = 'John'
+            print(a) # John
+            ```
 
     
     
