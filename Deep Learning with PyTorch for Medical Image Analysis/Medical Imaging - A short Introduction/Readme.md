@@ -70,7 +70,7 @@
 
             ![alt text](image-3.png)
 
-- X-RAY:
+- X-RAY
 
     - Projection radiography is the most common form of X-ray imaging.
 
@@ -103,3 +103,20 @@
         - Distances are measured as the number of pixels on the detector.
 
         - Can be translated to approximate physical distances(e.g. in cm) through calibration.
+
+- CT Scan
+
+    - Computed tomography(CT) is a medical imaging technique that uses X-rays to create detailed images of the body.
+
+    - CT scans are used to diagnose a wide range of conditions, including injuries, infections, and tumors.
+
+    - CT scans provide cross-sectional images of the body, allowing doctors to see inside the body from different angles.
+
+    - CT scans are particularly useful for imaging the brain, chest, abdomen, and pelvis.
+
+    - CT scans are performed using a CT scanner, which rotates around the patient and takes multiple X-ray images from different angles.
+
+        ![alt text](image-5.png)
+
+    - The images are then processed by a computer to create detailed cross-sectional images of the body.
+
