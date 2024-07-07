@@ -38,4 +38,6 @@
 
         - Radiography(X-ray imaging)
 
-    
+            - Projection radiography(2D, e.g. chest X-ray imaging)
+
+            - Computed tomography(CT, 3D, e.g. CT scan)
