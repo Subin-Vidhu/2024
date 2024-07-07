@@ -114,7 +114,7 @@
 
     - CT scans are particularly useful for imaging the brain, chest, abdomen, and pelvis.
 
-    - CT scans are performed using a CT scanner, which rotates around the patient and takes multiple X-ray images from different angles.
+    - CT scans are performed using a CT scanner, `which rotates around the patient and takes multiple X-ray images from different angles`.
 
         ![alt text](image-5.png)
 
