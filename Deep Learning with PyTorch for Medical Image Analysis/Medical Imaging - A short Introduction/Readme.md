@@ -136,4 +136,4 @@
 
         - Distances between voxels(pixel in 3D) can be exactly quantified and directly translated to physical distances.
 
-        
+            ![alt text](image-6.png)
