@@ -53,3 +53,9 @@
 - Always mentions sides with respect to the patient's perspective, ie left and right are reversed.
 
     ![alt text](image-1.png)
+
+- Planes and Orientation
+
+    - We usually look at 3D images/volumes using 2D cross-sections.
+
+        ![alt text](image-2.png)
