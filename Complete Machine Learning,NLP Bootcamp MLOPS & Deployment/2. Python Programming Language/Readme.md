@@ -103,3 +103,31 @@
 - Semantics
 
     - refers to the meaning of the words, phrases, and symbols in a program ie the interpretation of the program, `what the code is supposed to do when it runs`.
+
+- Basic Syntax Rules in Python
+
+    - Python is case-sensitive ie `variable` and `Variable` are different.
+
+        - eg: `a = 1` and `A = 2` are different.
+
+    - Statements in Python are written in new lines ie `end of a statement is marked by a newline character`.
+
+    - Indentation ie `whitespace at the beginning of the line is important`.
+
+        - eg: `if a > b:`
+
+                - `print("a is greater than b")`
+                 
+                - Python uses indentation to define the block of code - ie structure and hierarchy of the code.
+
+                - Unlike other programming languages, Python does not use braces `{}` to define the block of code
+
+                - This means that all the statements within a block must be indented by the same amount.
+
+    - Comments ie `#` is used to comment a single line and `'''` or `"""` is used to comment multiple lines.
+
+    - Multiple statements on a single line ie `semicolon` is used to separate multiple statements on a single line.
+
+        - eg: `a = 1; b = 2; c = 3`
+
+    
