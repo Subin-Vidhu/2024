@@ -121,6 +121,10 @@
         dicom_file.Rows # 512
 
         # Display the image
-        plt.imshow(ds.pixel_array, cmap=plt.cm.bone)
-        plt.show()
+        ct_image = dicom_file.pixel_array
+        plt.figure(figsize=(10, 10))
+        plt.imshow(ct_image, cmap='gray')
+
+        path_to_head_mri = Path('path/to/mri/dicom/files')
+        all_files = list(path_to_head_mri.glob('*.dcm'))
         ```
