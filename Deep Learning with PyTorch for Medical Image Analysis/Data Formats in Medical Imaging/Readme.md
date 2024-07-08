@@ -105,3 +105,6 @@
 
         - 3D Slicer
 
+- DICOM in python
+
+    
