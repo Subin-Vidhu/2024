@@ -209,3 +209,51 @@
                 axis[i][j].imshow(head_mri[slice_count], cmap='gray')
                 slice_count += 1
         ```
+
+- Nifti
+
+    - Neuroimaging Informatics Technology Initiative
+
+    - Open file format for storage of medical imaging data (historically used for neuroimaging, hence the name but not restricted to neuroimaging)
+
+    - What is Nifti used for?
+
+        - Efficiently store medical image data together with necessary metadata
+
+        - Mainly used in research settings
+
+        - Not a clinical standard
+
+    - Nifti file format:
+
+        - Contains a header and image data
+
+            - Header
+
+                - Image information - mainly about image geometry - resolution, position, orientation (shape, affine matrix, etc.)
+
+            - Body
+
+                - Actual image pixel data (3D, 4D)
+
+            - In general, easier to handle than dicom files.
+
+            - Extensions: .nii, .nii.gz
+
+        - Header contains metadata about the image
+
+        - Image data is the actual image
+
+            ![alt text](image-2.png)
+
+        - Nifti is a simpler format than DICOM
+
+            - No private tags
+
+            - 3D volumes stored in a single file
+
+            - Nifti files are not compressed or encrypted
+
+            - Nifti files can be anonymized
+
+            - Nifti files can be converted to other formats for research/ ML
