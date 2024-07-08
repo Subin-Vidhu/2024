@@ -8,207 +8,207 @@
 
     - Defines the formats for medical images that can be exchanged with the data and quality necessary for clinical use
 
-- What is DICOM used for?
+    - What is DICOM used for?
 
-    - Store and share medical images
+        - Store and share medical images
 
-    - Communication between medical imaging devices
+        - Communication between medical imaging devices
 
-    - Most medical image data in hospitals is stored in DICOM format
+        - Most medical image data in hospitals is stored in DICOM format
 
-- Dicom file format:
+    - Dicom file format:
 
-    - Contains a header and image data
+        - Contains a header and image data
 
-        - Header
+            - Header
 
-            - Device information (manufacturer, model, etc.)
-            - Patient information (name, ID, age, sex, etc.)
-            - Study UID and Series UID (unique identifiers for the study and series - assign the scan to a patient and a study)
-            - Image information (shape, slice thickness, pixel spacing, etc.)
+                - Device information (manufacturer, model, etc.)
+                - Patient information (name, ID, age, sex, etc.)
+                - Study UID and Series UID (unique identifiers for the study and series - assign the scan to a patient and a study)
+                - Image information (shape, slice thickness, pixel spacing, etc.)
 
-        - Body
+            - Body
 
-            - Actual image pixel data (2D, 3D, 4D)
+                - Actual image pixel data (2D, 3D, 4D)
 
-    - Header contains metadata about the image
+        - Header contains metadata about the image
 
-    - Image data is the actual image
+        - Image data is the actual image
 
-        ![alt text](image-1.png)
+            ![alt text](image-1.png)
 
-    - Data Tag - Each entry is accessible by a unique tag
+        - Data Tag - Each entry is accessible by a unique tag
 
-        - eg. (0010, 0010) - Patient's name
-            
-              (0018, 0015) - Body part examined
+            - eg. (0010, 0010) - Patient's name
+                
+                (0018, 0015) - Body part examined
 
-              (0020, 000D) - Study Instance UID
+                (0020, 000D) - Study Instance UID
 
-              (0020, 000E) - Series Instance UID
+                (0020, 000E) - Series Instance UID
 
-              (0028, 0002) - Samples per pixel
+                (0028, 0002) - Samples per pixel
 
-              (0028, 0004) - Photometric Interpretation
+                (0028, 0004) - Photometric Interpretation
 
-              (0028, 0010) - Rows
+                (0028, 0010) - Rows
 
-              (0028, 0011) - Columns
+                (0028, 0011) - Columns
 
-              (0028, 0030) - Pixel Spacing
+                (0028, 0030) - Pixel Spacing
 
-              (0028, 0100) - Bits Allocated
+                (0028, 0100) - Bits Allocated
 
-              (0028, 0101) - Bits Stored
+                (0028, 0101) - Bits Stored
 
-              (0028, 0102) - High Bit
+                (0028, 0102) - High Bit
 
-              (0028, 0103) - Pixel Representation
+                (0028, 0103) - Pixel Representation
 
-              (7FE0, 0010) - Pixel Data
+                (7FE0, 0010) - Pixel Data
 
-    - Dicom can be confusing because it is a very flexible format
+        - Dicom can be confusing because it is a very flexible format
 
-        - Vendor-specific tags (private tags) can be added
+            - Vendor-specific tags (private tags) can be added
 
-        - 3D volumes often stored as multiple 2D DICOM files
+            - 3D volumes often stored as multiple 2D DICOM files
 
-        - DICOM file extension variable (.dcm, .dicom, .ima, sometimes none)
+            - DICOM file extension variable (.dcm, .dicom, .ima, sometimes none)
 
-        - DICOM files can be compressed (lossless or lossy)
+            - DICOM files can be compressed (lossless or lossy)
 
-        - DICOM files can be encrypted (for security)
+            - DICOM files can be encrypted (for security)
 
-        - DICOM files can be `anonymized` (remove patient information)
+            - DICOM files can be `anonymized` (remove patient information)
 
-        - Due to the flexibility, there are many DICOM libraries and tools, also dicom often requires conversion to other formats for research/ ML
+            - Due to the flexibility, there are many DICOM libraries and tools, also dicom often requires conversion to other formats for research/ ML
 
-- Work with DICOM files
+    - Work with DICOM files
 
-    - Python libraries
+        - Python libraries
 
-        - pydicom
+            - pydicom
 
-        - SimpleITK
+            - SimpleITK
 
-        - dicom2nifti
+            - dicom2nifti
 
-        - nibabel
+            - nibabel
 
-    - DICOM viewers
+        - DICOM viewers
 
-        - RadiAnt
+            - RadiAnt
 
-        - Osirix
+            - Osirix
 
-        - Horos
+            - Horos
 
-        - 3D Slicer
+            - 3D Slicer
 
-- DICOM in python
+    - DICOM in python
 
-     - ```python
-        from pathlib import Path
-        import pydicom
-        import matplotlib.pyplot as plt
+        - ```python
+            from pathlib import Path
+            import pydicom
+            import matplotlib.pyplot as plt
 
-        # Load the DICOM file
-        dicom_file = pydicom.read_file('path/to/dicom/file.dcm')
-        print(dicom_file) # display the DICOM file metadata
+            # Load the DICOM file
+            dicom_file = pydicom.read_file('path/to/dicom/file.dcm')
+            print(dicom_file) # display the DICOM file metadata
 
-        dicom_file[0x0028, 0x0010] # (0028, 0010) - Rows
+            dicom_file[0x0028, 0x0010] # (0028, 0010) - Rows
 
-        dicom_file.Rows # 512
+            dicom_file.Rows # 512
 
-        # Display the image
-        ct_image = dicom_file.pixel_array
-        plt.figure(figsize=(10, 10))
-        plt.imshow(ct_image, cmap='gray')
+            # Display the image
+            ct_image = dicom_file.pixel_array
+            plt.figure(figsize=(10, 10))
+            plt.imshow(ct_image, cmap='gray')
 
-        path_to_head_mri = Path('path/to/mri/dicom/files')
-        all_files = list(path_to_head_mri.glob('*.dcm'))
+            path_to_head_mri = Path('path/to/mri/dicom/files')
+            all_files = list(path_to_head_mri.glob('*.dcm'))
 
-        mri_data = []
-        for file in all_files:
-            dicom_file = pydicom.read_file(file)
-            mri_data.append(dicom_file)
+            mri_data = []
+            for file in all_files:
+                dicom_file = pydicom.read_file(file)
+                mri_data.append(dicom_file)
 
-        for slice in mri_data[:5]:
-            print(slice.SliceLocation) # 89.999999995555
-            #107. 99999999555
-            #125.99999999555
-            #144.99999999555
-            #162.99999999555
+            for slice in mri_data[:5]:
+                print(slice.SliceLocation) # 89.999999995555
+                #107. 99999999555
+                #125.99999999555
+                #144.99999999555
+                #162.99999999555
 
-        # Seems that dicom files are not ordered by SliceLocation, so to sort them
-        mri_data.sort(key=lambda x: x.SliceLocation) #or
-        mri_data_sorted = sorted(mri_data, key=lambda x: x.SliceLocation)
+            # Seems that dicom files are not ordered by SliceLocation, so to sort them
+            mri_data.sort(key=lambda x: x.SliceLocation) #or
+            mri_data_sorted = sorted(mri_data, key=lambda x: x.SliceLocation)
 
-        for slice in mri_data_sorted[:5]:
-            print(slice.SliceLocation) # 89.999999995555
-            #107. 99999999555
-            #125.99999999555
-            #144.99999999555
-            #162.99999999555
+            for slice in mri_data_sorted[:5]:
+                print(slice.SliceLocation) # 89.999999995555
+                #107. 99999999555
+                #125.99999999555
+                #144.99999999555
+                #162.99999999555
 
-        full_volume = [slice.pixel_array for slice in mri_data_sorted]
+            full_volume = [slice.pixel_array for slice in mri_data_sorted]
 
-        fig, axis = plt.subplots(1, 5, figsize=(20, 20))
+            fig, axis = plt.subplots(1, 5, figsize=(20, 20))
 
-        slice_count = 0
-        for i in range(5):
-            for j in range(5):
-                axis[i][j].imshow(full_volume[slice_count], cmap='gray')
-                slice_count += 1
-        ```
+            slice_count = 0
+            for i in range(5):
+                for j in range(5):
+                    axis[i][j].imshow(full_volume[slice_count], cmap='gray')
+                    slice_count += 1
+            ```
 
-- SimpleITK
+    - SimpleITK
 
-    - SimpleITK is a simplified interface to the Insight Segmentation and Registration Toolkit (ITK) for image analysis
+        - SimpleITK is a simplified interface to the Insight Segmentation and Registration Toolkit (ITK) for image analysis
 
-    - ITK is a powerful library for image analysis, but it can be complex to use
+        - ITK is a powerful library for image analysis, but it can be complex to use
 
-    - SimpleITK provides a simplified interface to ITK, making it easier to work with medical images
+        - SimpleITK provides a simplified interface to ITK, making it easier to work with medical images
 
-    - SimpleITK supports many image formats, including DICOM
+        - SimpleITK supports many image formats, including DICOM
 
-    - SimpleITK can be used for image processing, registration, segmentation, and more
+        - SimpleITK can be used for image processing, registration, segmentation, and more
 
-        ```python
-        import SimpleITK as sitk
+            ```python
+            import SimpleITK as sitk
 
-        # Load the DICOM files
-        series_ids = sitk.ImageSeriesReader.GetGDCMSeriesFileNames(str('path/to/dicom/files'))
-        print(series_ids) # list of DICOM files
+            # Load the DICOM files
+            series_ids = sitk.ImageSeriesReader.GetGDCMSeriesFileNames(str('path/to/dicom/files'))
+            print(series_ids) # list of DICOM files
 
-        series_file_names = sitk.ImageSeriesReader.GetGDCMSeriesFileNames(str('path/to/dicom/files'), series_ids[0]) # get the file names for the first series- sorted by slice location
+            series_file_names = sitk.ImageSeriesReader.GetGDCMSeriesFileNames(str('path/to/dicom/files'), series_ids[0]) # get the file names for the first series- sorted by slice location
 
-        series_reader = sitk.ImageSeriesReader() # create the reader
-        series_reader.SetFileNames(series_file_names) # set the file names
+            series_reader = sitk.ImageSeriesReader() # create the reader
+            series_reader.SetFileNames(series_file_names) # set the file names
 
-        image = series_reader.Execute() # load the image
+            image = series_reader.Execute() # load the image
 
-        head_mri = sitk.GetArrayFromImage(image) # convert the image to a numpy array
+            head_mri = sitk.GetArrayFromImage(image) # convert the image to a numpy array
 
-        print(head_mri.shape) # (slices, rows, columns) - (20, 512, 512)
+            print(head_mri.shape) # (slices, rows, columns) - (20, 512, 512)
 
-        plt.figure(figsize=(10, 10))
-        plt.imshow(head_mri[10], cmap='gray') # display the 10th slice
+            plt.figure(figsize=(10, 10))
+            plt.imshow(head_mri[10], cmap='gray') # display the 10th slice
 
-        plt.figure(figsize=(10, 10))
-        for i in range(5):
-            plt.subplot(1, 5, i+1)
-            plt.imshow(head_mri[i], cmap='gray')
+            plt.figure(figsize=(10, 10))
+            for i in range(5):
+                plt.subplot(1, 5, i+1)
+                plt.imshow(head_mri[i], cmap='gray')
 
 
-        fig, axis = plt.subplots(1, 5, figsize=(20, 20))
+            fig, axis = plt.subplots(1, 5, figsize=(20, 20))
 
-        slice_count = 0
-        for i in range(5):
-            for j in range(5):
-                axis[i][j].imshow(head_mri[slice_count], cmap='gray')
-                slice_count += 1
-        ```
+            slice_count = 0
+            for i in range(5):
+                for j in range(5):
+                    axis[i][j].imshow(head_mri[slice_count], cmap='gray')
+                    slice_count += 1
+            ```
 
 - Nifti
 
@@ -314,3 +314,166 @@
         nib.save(nifti_file_processed, 'path/to/nifti/file_processed.nii.gz')
 
         ```
+
+- Preprocessing
+
+    - Preprocessing is an important step in medical image analysis
+
+    - Preprocessing steps can include
+
+        - Image registration
+
+        - Image normalization
+
+        - Image denoising
+
+        - Image segmentation
+
+        - Image augmentation
+
+    - Preprocessing can improve the quality of the images and make them easier to analyze
+
+    - Preprocessing can also help to remove noise, artifacts, and other unwanted features from the images
+
+    - Preprocessing can be done using a variety of techniques, including
+
+        - SimpleITK
+
+        - nibabel
+
+        - scikit-image
+
+        - OpenCV
+
+    - Why Preprocessing?
+
+        - Data need to be prepared for training and testing
+
+            - Modality specific preprocessing steps
+
+            - Normalization and Standardization
+
+            - Homogenization of image resolution / size / orientation
+
+        - ML methods may require specific input formats (e.g. images of certain size)
+
+        - Faster access to data during training 
+
+    - Preprocessing steps
+
+        1. Modality specific preprocessing steps - finding suitable techniques for the specific modality
+
+            - Image Reconstruction algorithms (e.g. CT, MRI, PET) - convert the raw output of the scanner to a form that the human can actually understand. Usually, these are already applied by the scanner and are not necessary for further processing
+
+            - Denoising algorithms (e.g. MRI, CT) - remove noise from the image
+
+            - Complex artifact correction algorithms (e.g. motion, bias-field) - remove artifacts from the image
+
+            - Quantification algorithms - convert the image to a quantitative measure ie standard units
+
+        2. Orientation
+
+            - Image orientation can vary between different scanners and imaging protocols
+
+            - Images may need to be rotated, flipped, or resliced to a standard orientation
+
+            - This is important for consistency and comparability between images
+
+            - Goal: Standardized image orientation for the whole dataset
+
+            - Data array axis should always correspond to the same physical dimensions - > axial, coronal, sagittal - > superior-inferior, anterior-posterior, left-right
+
+        3. Spatial resampling / resizing
+
+            - Goal: Standardized physical resolution and size
+
+                - All your scans in the dataset should have the same shape and all the voxels in all slices should represent the same physical dimension
+
+                - eg. 1mm x 1mm x 1mm - each voxel represents a 1mm x 1mm x 1mm cube, can be performed by resampling, padding, cropping
+
+                - Most of the time used to reduce the size of the volume (eg. 512 x 512 x 512 -> 256 x 256 x 256)
+
+            - Each pixel of a data array should represent the same physical dimension - Resampling, Padding, Cropping 
+
+        4. Intensity normalization and Standardization
+
+            - Goal: Standardized intensity values
+
+                - All your scans in the dataset should have the same intensity range
+
+                - Normalization: Rescale the intensity values to a specific range (eg. 0-1)
+
+                - Standardization: Rescale the intensity values to have a mean of 0 and a standard deviation of 1
+
+            - Modality specific standardization to defined values intervals (eg. [0, 1], [-1, 1])
+
+                - Normalization and standardization per subject(eg. MR)
+
+                - Standardization per dataset(eg. CT)
+
+            - Advanced Methods: Log, Exponential, Histogram Equalization, Contrast Limited Adaptive Histogram Equalization (CLAHE), MNI-Template matching
+
+            - Overview
+
+                ![alt text](image-2.png)
+
+                Always try different preprocessing steps and check the results - the above table is just a guideline
+
+        5. Conversion to algorithm input format
+
+            - Goal: Convert data to convenient format for ML algorithms
+
+                - Convert data to numpy arrays
+
+                - Convert data to tensors
+
+                - Convert data to specific format required by the algorithm
+
+            - Suitable medical image formats
+
+                - Nifti
+
+                - NRRD
+
+            - Efficient storage for ML Data pipelines
+
+                - HDF5
+
+                - npy
+
+                - pickle
+
+                - zarr
+
+                - TFRecord
+
+            
+    - Physical and Voxel coordinates
+
+        - Physical coordinates: The physical location of a voxel in the real world
+
+        - Voxel coordinates: The location of a voxel in the data array
+
+        - Voxel coordinates[i, j, k] refer to the location of the voxel in the data array
+
+        - Physical coordinates[x, y, z] refer to the location of the voxel in the real world
+
+        - All voxel coordinates correspond to the physical coordinates in a one to one manner
+
+        - Physical coordinate have SI-units (eg. mm, cm, m) and a standardised reference system(origina and axis orientation) wrt the scanner.
+
+        - Conversion between physical and voxel coordinates is done using the affine matrix - a 4x4 matrix that defines the mapping between voxel and physical coordinates
+
+            - X_physical = AX_voxel + X_origin, where A is a 3*3 matrix (Affine matrix)
+
+                - A: Define the linear transformation corresponding of:
+
+                    - Scaling
+
+                    - Rotation
+
+                    - Shearing(tilting)
+
+                - By expanding the 3*3 matrix to a 4*4 matrix,it can directly incorporate the translation from the offset X_origin ie X_physical = AX_voxel + X_origin
+
+                - The combination of these all transformations is called `affine transformation`
