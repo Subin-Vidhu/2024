@@ -36,3 +36,33 @@
     - Image data is the actual image
 
             ![alt text](image.png)
+
+    - Data Tag - Each entry is accessible by a unique tag
+
+        - eg. (0010, 0010) - Patient's name
+            
+              (0018, 0015) - Body part examined
+
+              (0020, 000D) - Study Instance UID
+
+              (0020, 000E) - Series Instance UID
+
+              (0028, 0002) - Samples per pixel
+
+              (0028, 0004) - Photometric Interpretation
+
+              (0028, 0010) - Rows
+
+              (0028, 0011) - Columns
+
+              (0028, 0030) - Pixel Spacing
+
+              (0028, 0100) - Bits Allocated
+
+              (0028, 0101) - Bits Stored
+
+              (0028, 0102) - High Bit
+
+              (0028, 0103) - Pixel Representation
+
+              (7FE0, 0010) - Pixel Data
