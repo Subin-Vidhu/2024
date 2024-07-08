@@ -107,4 +107,17 @@
 
 - DICOM in python
 
-    
+     - ```python
+        from pathlib import Path
+        import pydicom
+        import matplotlib.pyplot as plt
+
+        # Load the DICOM file
+        dicom_file = pydicom.read_file('path/to/dicom/file.dcm')
+        print(dicom_file) # display the DICOM file metadata
+        
+
+        # Display the image
+        plt.imshow(ds.pixel_array, cmap=plt.cm.bone)
+        plt.show()
+        ```
