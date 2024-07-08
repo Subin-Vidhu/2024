@@ -240,12 +240,6 @@
 
             - Extensions: .nii, .nii.gz
 
-        - Header contains metadata about the image
-
-        - Image data is the actual image
-
-            ![alt text](image-2.png)
-
         - Nifti is a simpler format than DICOM
 
             - No private tags
@@ -257,3 +251,25 @@
             - Nifti files can be anonymized
 
             - Nifti files can be converted to other formats for research/ ML
+
+    - Work with Nifti files
+
+        - Python libraries
+
+            - nibabel
+
+            - SimpleITK
+
+        - Nifti viewers
+
+            - FSL
+
+            - MRIcron
+
+            - ITK-SNAP
+
+        - Transform DICOM to Nifti
+
+            - dicom2nifti
+
+        
