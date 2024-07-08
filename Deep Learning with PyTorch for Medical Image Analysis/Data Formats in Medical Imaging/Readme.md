@@ -15,3 +15,4 @@
     - Communication between medical imaging devices
 
     - Most medical image data in hospitals is stored in DICOM format
+
