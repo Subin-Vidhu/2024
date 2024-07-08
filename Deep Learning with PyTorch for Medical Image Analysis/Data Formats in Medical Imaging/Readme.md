@@ -66,3 +66,13 @@
               (0028, 0103) - Pixel Representation
 
               (7FE0, 0010) - Pixel Data
+
+    - Dicom can be confusing because it is a very flexible format
+
+        - Vendor-specific tags (private tags) can be added
+
+        - 3D volumes often storeda s multiple 2D DICOM files
+
+        - DICOM file extension variable (.dcm, .dicom, .ima, sometimes none)
+
+        - DICOM files can be compressed (lossless or lossy)
