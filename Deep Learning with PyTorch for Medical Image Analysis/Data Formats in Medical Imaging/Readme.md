@@ -20,6 +20,17 @@
 
     - Contains a header and image data
 
+        - Header
+
+            - Device information (manufacturer, model, etc.)
+            - Patient information (name, ID, age, sex, etc.)
+            - Study UID and Series UID (unique identifiers for the study and series - assign the scan to a patient and a study)
+            - Image information (shape, slice thickness, pixel spacing, etc.)
+
+        - Body
+
+            - Actual image pixel data (2D, 3D, 4D)
+
     - Header contains metadata about the image
 
     - Image data is the actual image
