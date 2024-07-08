@@ -71,7 +71,7 @@
 
         - Vendor-specific tags (private tags) can be added
 
-        - 3D volumes often storeda s multiple 2D DICOM files
+        - 3D volumes often stored as multiple 2D DICOM files
 
         - DICOM file extension variable (.dcm, .dicom, .ima, sometimes none)
 
