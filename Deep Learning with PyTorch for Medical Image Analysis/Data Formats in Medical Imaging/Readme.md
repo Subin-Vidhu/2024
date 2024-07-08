@@ -161,3 +161,24 @@
                 axis[i][j].imshow(full_volume[slice_count], cmap='gray')
                 slice_count += 1
         ```
+
+- SimpleITK
+
+    - SimpleITK is a simplified interface to the Insight Segmentation and Registration Toolkit (ITK) for image analysis
+
+    - ITK is a powerful library for image analysis, but it can be complex to use
+
+    - SimpleITK provides a simplified interface to ITK, making it easier to work with medical images
+
+    - SimpleITK supports many image formats, including DICOM
+
+    - SimpleITK can be used for image processing, registration, segmentation, and more
+
+        - ```python
+            import SimpleITK as sitk
+
+            # Load the DICOM files
+            series_ids = sitk.ImageSeriesReader.GetGDCMSeriesFileNames(str('path/to/dicom/files'))
+            print(series_ids) # list of DICOM files
+            
+            ```
