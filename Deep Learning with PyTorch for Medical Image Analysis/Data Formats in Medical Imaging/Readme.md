@@ -115,7 +115,10 @@
         # Load the DICOM file
         dicom_file = pydicom.read_file('path/to/dicom/file.dcm')
         print(dicom_file) # display the DICOM file metadata
-        
+
+        dicom_file[0x0028, 0x0010] # (0028, 0010) - Rows
+
+        dicom_file.Rows # 512
 
         # Display the image
         plt.imshow(ds.pixel_array, cmap=plt.cm.bone)
