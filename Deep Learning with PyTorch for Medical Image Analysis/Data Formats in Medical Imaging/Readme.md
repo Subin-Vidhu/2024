@@ -474,6 +474,119 @@
 
                     - Shearing(tilting)
 
-                - By expanding the 3*3 matrix to a 4*4 matrix,it can directly incorporate the translation from the offset X_origin ie X_physical = AX_voxel + X_origin
+                - By expanding the 3 * 3 matrix to a 4 * 4 matrix,it can directly incorporate the translation from the offset X_origin ie X_physical = AX_voxel + X_origin
 
                 - The combination of these all transformations is called `affine transformation`
+
+    - Preprocessing in Python
+
+        - ```python
+            %matplotlib notebook
+            import nibabel as nib
+            import numpy as np
+            import matplotlib.pyplot as plt
+
+            brain_mri = nib.load('path/to/nifti/file.nii.gz')
+            brain_mri_data = brain_mri.get_fdata()
+            affine = brain_mri.affine
+            shape = brain_mri_data.shape
+
+            print(shape) # (512, 512, 20)
+            prnt(affine) # array([[ 1.,  0.,  0.,  0.],
+            # [ 0.,  1.,  0.,  0.],
+            # [ 0.,  0.,  1.,  0.],
+            # [ 0.,  0.,  0.,  1.]])
+
+            # size of a voxel in volume
+            brain_mri.header.get_zooms() # (0.9375, 0.9375, 1.25) # (x, y, z)
+
+            # To find the orientation
+            nib2axcodes = nib.aff2axcodes(affine)
+            print(nib2axcodes) # ('R', 'A', 'S') - Right, Anterior, Superior - these are the end points of the axes, ie the movement in the first axis is from left to right, in the second axis is from posterior to anterior and in the third axis is from inferior to superior
+
+            # Lets go through each axis and plot some images
+            fig, axis = plt.subplots(1, 5, figsize=(20, 20))
+            axis[0].imshow(brain_mri_data[:, :, 10], cmap='gray') # 10th slice in the z-axis
+            axis[1].imshow(brain_mri_data[:, :, 20], cmap='gray') # 20th slice in the z-axis
+
+            # Voxel to physical coordinates
+            voxel_coords = np.array([0, 0, 0, 1])
+            physical_coords = affine @ voxel_coords
+            physical_coords # array([-90.679, 102.829, -114.823, 1.])
+
+            # To verify the results, print the last column of the affine matrix
+            affine[:, 3:] # array([-90.679],
+            # [102.829],
+            # [-114.823],
+            # [1.])
+
+            # to calculate the physical coordinates manually
+            physical_coords_manual = affine[:3, :3] @ np.array([0, 0, 0]) + affine[:3, 3]
+            physical_coords_manual # array([-90.679, 102.829, -114.823])
+
+            # Physical to voxel coordinates
+            physical_coords = np.array([-90.679, 102.829, -114.823, 1.])
+            voxel_coords = np.linalg.inv(affine) @ physical_coords
+            voxel_coords.round() # array([0., 0., 0.])
+
+
+            # Resampling - Resizing a volume is not as simple as resizing an image, because we have to take into account the physical dimensions of the voxels
+            print(brain_mri.header.get_zooms()) # (0.9375, 0.9375, 1.25)
+            print(brain_mri_data.shape) # (512, 512, 20)
+
+            # Lets resize the brain_mri from 512 x 512 x 20 to 128 x 128 x 10
+            import nibabel.processing
+            voxel_size = (2, 2, 2.5) # new voxel size
+            brain_mri_resampled = nib.processing.confirm(brain_mri, (128,128,10) , voxel_size, orientation='RAS') # resample the volume to 128 x 128 x 10 with voxel size 2 x 2 x 2.5
+            brain_mri_resampled_data = brain_mri_resampled.get_fdata()
+            print(brain_mri_resampled_data.shape) # (128, 128, 10)
+            print(brain_mri_resampled.header.get_zooms()) # (2.0, 2.0, 2.5)
+
+            # Lets compare the original and resampled images
+            fig, axis = plt.subplots(1, 2, figsize=(20, 20))
+            axis[0].imshow(brain_mri_data[:, :, 10], cmap='gray') # original image
+            axis[1].imshow(brain_mri_resampled_data[:, :, 10], cmap='gray') # resampled image
+
+            # Normalization and Standardization
+            # CT scans have fixed and absolute values from -1024 to 3071. Don't need normalization here to keep these scales. We can assume that all the values lie between -1024 and 3071. Thus we can standardize the data by multiplying by 1/3071
+            lung_ct = nib.load('path/to/nifti/file.nii.gz')
+            lung_ct_data = lung_ct.get_fdata()
+
+            lung_ct_data_standardized = lung_ct_data / 3071
+
+            # Lets plot the original and standardized images
+            fig, axis = plt.subplots(1, 2, figsize=(20, 20))
+            axis[0].imshow(lung_ct_data[:, :, 10], cmap='gray') # original image
+            axis[1].imshow(lung_ct_data_standardized[:, :, 10], cmap='gray') # standardized image
+
+            plt.imshow(np.rot90(lung_ct_data[:, :, 10]), cmap='gray') # rotate the image 90 degrees
+
+            # windowing
+            # Windowing is a technique used to adjust the contrast and brightness of an image by changing the intensity values of the pixels
+            lung_ct_data_windowed = np.clip(lung_ct_data, -1024, -500) # clip the values to the range -1024 to -500
+            plt.figure()
+            plt.imshow(np.rot(lung_ct_data_windowed[:, :, 10], cmap='bone')) # display the windowed image
+
+            lung_ct_soft_tissue = np.clip(lung_ct_data, -250, 250) # clip the values to the range -250 to 250
+            plt.figure()
+            plt.imshow(np.rot90(lung_ct_soft_tissue[:, :, 10], cmap='gray')) # display the windowed image
+
+
+            # MRI - Normalization and Standardization
+            cardiac_mri = nib.load('path/to/nifti/file.nii.gz')
+            cardiac_mri_data = cardiac_mri.get_fdata()
+
+            mean, std = np.mean(cardiac_mri_data), np.std(cardiac_mri_data)
+            cardiac_mri_data_norm = (cardiac_mri_data - mean) / std # z-score normalization
+
+            # min-max scaling
+            cardiac_mri_standardized = (cardiac_mri_data_norm - np.min(cardiac_mri_data_norm)) / (np.max(cardiac_mri_data_norm) - np.min(cardiac_mri_data_norm))
+
+            # To verify the values
+            print(np.mean(cardiac_mri_standardized),np.min(cardiac_mri_standardized), np.max(cardiac_mri_standardized)) # 0.5, 0.0, 1.0
+
+            # Lets plot the original and standardized images
+            fig, axis = plt.subplots(1, 2, figsize=(20, 20))
+            axis[0].imshow(cardiac_mri_data[:, :, 10], cmap='gray') # original image
+            axis[1].imshow(cardiac_mri_standardized[:, :, 10], cmap='gray') # standardized image
+            ```
