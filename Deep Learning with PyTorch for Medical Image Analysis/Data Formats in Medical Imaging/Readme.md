@@ -127,4 +127,37 @@
 
         path_to_head_mri = Path('path/to/mri/dicom/files')
         all_files = list(path_to_head_mri.glob('*.dcm'))
+
+        mri_data = []
+        for file in all_files:
+            dicom_file = pydicom.read_file(file)
+            mri_data.append(dicom_file)
+
+        for slice in mri_data[:5]:
+            print(slice.SliceLocation) # 89.999999995555
+            #107. 99999999555
+            #125.99999999555
+            #144.99999999555
+            #162.99999999555
+
+        # Seems that dicom files are not ordered by SliceLocation, so to sort them
+        mri_data.sort(key=lambda x: x.SliceLocation) #or
+        mri_data_sorted = sorted(mri_data, key=lambda x: x.SliceLocation)
+
+        for slice in mri_data_sorted[:5]:
+            print(slice.SliceLocation) # 89.999999995555
+            #107. 99999999555
+            #125.99999999555
+            #144.99999999555
+            #162.99999999555
+
+        full_volume = [slice.pixel_array for slice in mri_data_sorted]
+
+        fig, axis = plt.subplots(1, 5, figsize=(20, 20))
+
+        slice_count = 0
+        for i in range(5):
+            for j in range(5):
+                axis[i][j].imshow(full_volume[slice_count], cmap='gray')
+                slice_count += 1
         ```
