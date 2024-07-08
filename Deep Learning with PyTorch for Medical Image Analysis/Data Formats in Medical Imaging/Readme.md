@@ -174,11 +174,38 @@
 
     - SimpleITK can be used for image processing, registration, segmentation, and more
 
-        - ```python
-            import SimpleITK as sitk
+        ```python
+        import SimpleITK as sitk
 
-            # Load the DICOM files
-            series_ids = sitk.ImageSeriesReader.GetGDCMSeriesFileNames(str('path/to/dicom/files'))
-            print(series_ids) # list of DICOM files
-            
-            ```
+        # Load the DICOM files
+        series_ids = sitk.ImageSeriesReader.GetGDCMSeriesFileNames(str('path/to/dicom/files'))
+        print(series_ids) # list of DICOM files
+
+        series_file_names = sitk.ImageSeriesReader.GetGDCMSeriesFileNames(str('path/to/dicom/files'), series_ids[0]) # get the file names for the first series- sorted by slice location
+
+        series_reader = sitk.ImageSeriesReader() # create the reader
+        series_reader.SetFileNames(series_file_names) # set the file names
+
+        image = series_reader.Execute() # load the image
+
+        head_mri = sitk.GetArrayFromImage(image) # convert the image to a numpy array
+
+        print(head_mri.shape) # (slices, rows, columns) - (20, 512, 512)
+
+        plt.figure(figsize=(10, 10))
+        plt.imshow(head_mri[10], cmap='gray') # display the 10th slice
+
+        plt.figure(figsize=(10, 10))
+        for i in range(5):
+            plt.subplot(1, 5, i+1)
+            plt.imshow(head_mri[i], cmap='gray')
+
+
+        fig, axis = plt.subplots(1, 5, figsize=(20, 20))
+
+        slice_count = 0
+        for i in range(5):
+            for j in range(5):
+                axis[i][j].imshow(head_mri[slice_count], cmap='gray')
+                slice_count += 1
+        ```
