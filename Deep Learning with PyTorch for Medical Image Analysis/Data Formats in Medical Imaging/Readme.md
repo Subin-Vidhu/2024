@@ -16,3 +16,12 @@
 
     - Most medical image data in hospitals is stored in DICOM format
 
+- Dicom file format:
+
+    - Contains a header and image data
+
+    - Header contains metadata about the image
+
+    - Image data is the actual image
+
+            
