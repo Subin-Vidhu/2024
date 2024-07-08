@@ -79,7 +79,7 @@
 
         - DICOM files can be encrypted (for security)
 
-        - DICOM files can be anonymized (remove patient information)
+        - DICOM files can be `anonymized` (remove patient information)
 
         - Due to the flexibility, there are many DICOM libraries and tools, also dicom often requires conversion to other formats for research/ ML
 
