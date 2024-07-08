@@ -7,7 +7,7 @@
 
         - [Python Course Materials](https://github.com/krishnaik06/Complete-Python-Bootcamp)
 
-    - Please find the complete Materials with handritten notes
+    - Please find the complete Materials with handwritten notes
 
         - [Course Materials](https://github.com/krishnaik06/Complete-Data-Science-With-Machine-Learning-And-NLP-2024)
 
