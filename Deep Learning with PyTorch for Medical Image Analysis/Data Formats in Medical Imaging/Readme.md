@@ -272,4 +272,45 @@
 
             - dicom2nifti
 
+    - Nifti in Python
+
+        ```python
+        import dicom2nifti
+        path_to_dicom = 'path/to/dicom/files'
+        dicom2nifti.convert_directory(path_to_dicom, 'path/to/nifti/file.nii.gz', compression=True) # convert dicom files to compressed nifti
+
+        import nibabel as nib
+        import matplotlib.pyplot as plt
+
+        nifti_file = nib.load('path/to/nifti/file.nii.gz')
+        print(nifti_file) # display the Nifti file metadata, only necessary information not like dicom
+
+        nifti_file.header["qoffset_x"] # array(115.27232, dtype=float32)
+        nifti.shape # (512, 512, 20)
+
+        image_array = nifti_file.get_fdata() # get the image data as a numpy array
         
+        fig, axis = plt.subplots(1, 5, figsize=(20, 20))
+        slice_count = 0
+        for i in range(5):
+            for j in range(5):
+                axis[i][j].imshow(image_array[:, :, slice_count], cmap='gray') # we have to use [:, :, slice_count] to get the slice because of the shape of the array during conversion from dicom to nifti
+                slice_count += 1
+
+        # The plotted images appears to be rotated as well as flipped, this is due to the difference in the orientation of the image in dicom and nifti formats which may have happened during the conversion process
+
+        # We can not use nibabel only to load nifti but also to save nifti files - the reason is that many times you receive data that is preprocessed using some algorithm and you want to save the results in nifti format
+
+        #eg:
+        image_array_processed = image_array * (image_array > 300) # threshold the image
+        #compare the original and processed images
+        fig, axis = plt.subplots(1, 2, figsize=(20, 20))
+        axis[0].imshow(image_array[:, :, 10], cmap='gray')
+        axis[1].imshow(image_array_processed[:, :, 10], cmap='gray')
+
+        # Save the processed image - to store the processed volume as a nifti, we have to create a nifti image first
+        nifti_file_processed = nib.Nifti1Image(image_array_processed, nifti_file.affine) # nifti.afine is the affine matrix that defines the image orientation and position - we can use the same as that of the original image since we only changed the pixel values and not the orientation
+
+        nib.save(nifti_file_processed, 'path/to/nifti/file_processed.nii.gz')
+
+        ```
