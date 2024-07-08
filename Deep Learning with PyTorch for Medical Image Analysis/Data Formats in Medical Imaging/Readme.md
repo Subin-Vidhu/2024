@@ -76,3 +76,5 @@
         - DICOM file extension variable (.dcm, .dicom, .ima, sometimes none)
 
         - DICOM files can be compressed (lossless or lossy)
+
+        - DICOM files can be encrypted (for security)
