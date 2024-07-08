@@ -181,7 +181,23 @@
 
     - Operators ie `symbols that are used to perform operations on variables and values`.
 
-        - eg: `+`, `-`, `*`, `/`, `//`, `%`, `**`, `==`, `!=`, `>`, `<`, `>=`, `<=`, `and`, `or`, `not`, `in`, `is`
+        - eg: `+`, `-`, `*`, `/`- returns float, `//` - returns int, `%`, `**`, `==`, `!=`, `>`, `<`, `>=`, `<=`, `and`, `or`, `not`, `in`, `is`
+
+        - logical operator examples:
+
+            ```python
+            a = 25
+            b = 30
+            print(a > b) # False
+            print(a < b) # True
+            print(a == b) # False
+            print(a != b) # True
+            print(a >= b) # False
+            print(a <= b) # True
+            print(a and b) # 30 - returns the second value if both are true, else returns the first value
+            print(a or b) # 25 - returns the first value if one is true, else returns the second value
+            print(not a) # False - returns the opposite of the value
+            ```
 
     - Conditional Statements ie `used to perform different actions based on different conditions`.
 
@@ -233,6 +249,18 @@
             print(a) # 25
             a = 'John'
             print(a) # John
+            ```
+
+    - Type Casting
+
+        - eg: 
+
+            ```python
+            # Type casting is the process of converting the value of one data type to another data type.
+            a = 25
+            print(type(a)) # <class 'int'>
+            a = str(a)
+            print(type(a)) # <class 'str'>
             ```
 
     
