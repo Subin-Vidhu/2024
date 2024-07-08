@@ -35,7 +35,7 @@
 
     - Image data is the actual image
 
-            ![alt text](image.png)
+        ![alt text](image-1.png)
 
     - Data Tag - Each entry is accessible by a unique tag
 
