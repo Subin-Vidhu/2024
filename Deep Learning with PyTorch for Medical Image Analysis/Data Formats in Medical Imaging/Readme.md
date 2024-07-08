@@ -82,3 +82,25 @@
         - DICOM files can be anonymized (remove patient information)
 
         - Due to the flexibility, there are many DICOM libraries and tools, also dicom often requires conversion to other formats for research/ ML
+
+- Work with DICOM files
+
+    - Python libraries
+
+        - pydicom
+
+        - SimpleITK
+
+        - dicom2nifti
+
+        - nibabel
+
+    - DICOM viewers
+
+        - RadiAnt
+
+        - Osirix
+
+        - Horos
+
+        - 3D Slicer
