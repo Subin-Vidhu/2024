@@ -123,4 +123,4 @@
 
     - Why does our model output "Pneumonia" for a given image?
 
-        - 
+        - Find out by extracting the image region with the largeset influence on the prediciton.
