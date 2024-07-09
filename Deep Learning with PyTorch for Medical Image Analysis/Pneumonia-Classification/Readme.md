@@ -93,3 +93,5 @@
             - Change the output dimension from 1000 to 1
 
     - Loss function
+
+        - Binary Cross-Entropy with Logits loss
