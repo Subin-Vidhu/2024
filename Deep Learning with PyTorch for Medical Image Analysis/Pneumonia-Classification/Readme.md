@@ -212,4 +212,16 @@
 
     # Preprocessing
 
+    sums, sums_squared = 0, 0
+
+    for c, patient_id in enumerate(tqdm(labels.patientId)):
+        patient_id = labels.patientId.iloc[c]
+        dcm_path = ROOT_PATH / patient_id
+        dcm_path = dcm_path.with_suffix(".dcm")
+        dcm_data = pydicom.read_file(dcm_path).pixel_array/255 # Scale the pixel values to [0, 1]
+
+        dcm_array = cv2.resize(dcm_data, (224, 224)).astype(np.float16) # Resize the image to 224 x 224
+        sums += np.sum(dcm_data)
+        sums_squared += np.sum(dcm_data ** 2)
+
             
