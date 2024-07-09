@@ -384,7 +384,8 @@
     print(f"Confusion Matrix: {confusion_matrix}") # Confusion Matrix: tensor([[2000,  300], [ 400,  984]])
          
     # Interpretability
-    # CAM
+    # CAM - Class Activation Maps
+    # key idea of cam is to multiply the output of the last convolutional layer with the weights of the subsequent fully connected layer to get the class activation map
     import torch
     import torchvison
     from torchvision import transforms
@@ -406,15 +407,16 @@
 
     val_dataset = torchvision.datasets.DatasetFolder("Processed/val", loader=load_file, extensions=(".npy"), transform=val_transform)
 
+    # key idea of cam is to multiply the output of the last convolutional layer with the weights of the subsequent fully connected layer to get the class activation map, so we need to remove the last two layers from the model
     temp_model = torchvision.models.resnet18()
 
-    temp_model.children() # Display the children of the model
+    temp_model.children() # Display the children of the model, .children() converts the model to a generator
 
     list(temp_model.children())[:-2] # Display the layers of the model except the last two layers
 
-    torch.nn.Sequential(*list(temp_model.children())[:-2]) # Create a new model with the layers except the last two layers
+    torch.nn.Sequential(*list(temp_model.children())[:-2]) # Create a new model with the layers except the last two layers, * is used to unpack the list into positional arguments
 
-    class PneumoniaModel(torch.nn.Module):
+    class PneumoniaModel(pl.LightningModule):
         def __init__(self):
             super().__init__()
             self.model = torchvision.models.resnet18(pretrained=True)
@@ -425,7 +427,7 @@
         def forward(self, data):
             feature_map = self.feature_map(data) # Get the feature map from the model
             avg_pool = torch.nn.functional.adaptive_avg_pool2d(feature_map, (1, 1)) # Apply global average pooling to the feature map # converts the feature map with dimensions 7*7*512 to 1*1*512 by taking the mean along the last axis
-            avg_output_flatten = torch.flatten(avg_pool, 1) # Flatten the output of the global average pooling layer
+            avg_output_flatten = torch.flatten(avg_pool, 1) # Flatten the output of the global average pooling layer, 1 is used to keep the batch dimension, so the shape becomes (1, 512)
             pred = self.model.fc(avg_output_flatten) # Get the prediction from the fully connected layer
             return pred, feature_map
 
@@ -437,18 +439,18 @@
     def cam(model, img):
         with torch.no_grad(): # Disable gradient computation
             pred, feature_map = model(img.unsqueeze(0)) # Get the prediction and feature map from the model, unsqueeze(0) is used to add a batch dimension
-        features = features.reshape(-1, 512) # Reshape the feature map - 512 is the number of filters in the last convolutional layer, -1 is used to infer the number of rows based on the number of columns, so the shape becomes (49, 512)
-        weight_params = list(model.model.fc.parameters())[0] # Get the weights of the fully connected layer, [0] is used to get the weights
+        features = features.reshape(-1, 512) # Reshape the feature map - 512 is the number of filters in the last convolutional layer, -1 is used to infer the number of rows based on the number of columns, so the shape becomes (512, 49)
+        weight_params = list(model.model.fc.parameters())[0] # Get the weights of the fully connected layer, [0] is used to get the weights, contains 512 weights for each filter
         weight = weight_params[0].detach() # Detach the weights from the computation graph
 
-        cam = torch.matmul(features, weight) # Compute the dot product of the features and weights
+        cam = torch.matmul(weight, features) # Compute the dot product of the features and weights, weight is an array of 512 weights, features matrix have a shape of (512, 49), so the output will be a matrix of shape (1, 49)
         cam_img = cam.reshape(7, 7).cpu() # Reshape the CAM image to the size of the feature map
         return cam_img, torch.sigmoid(pred) # Return the CAM image and the prediction
 
 
     def visualize(img, cam, pred):
-        img = img[0]
-        cam = transforms.functional.resize(cam.unsqueeze(0), (224, 224))[0] # Resize the CAM image to the size of the original image, unsqueeze(0) is used to add a batch dimension
+        img = img[0] # Remove the channel dimension from the image
+        cam = transforms.functional.resize(cam.unsqueeze(0), (224, 224))[0] # Resize the CAM image to the size of the original image, unsqueeze(0) is used to add a batch dimension - because resize expects a grayscale image with a batch dimension
         fig, axis = plt.subplots(1, 2, figsize=(10, 5))
         axis[0].imshow(img, cmap="bone") # Display the original image
         axis[0].set_title("Original Image")
@@ -463,3 +465,4 @@
 
     visualize(img, activation_map, pred)
     ```
+    ![alt text](image-1.png){: width="200" height="150"}
