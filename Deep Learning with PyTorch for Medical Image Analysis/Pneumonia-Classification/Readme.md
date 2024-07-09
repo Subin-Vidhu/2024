@@ -185,3 +185,5 @@
     import pandas as pd
     import matplotlib.pyplot as plt
     from tqdm.notebook import tqdm
+
+    labels = pd.read_csv('stage_2_train_labels.csv')
