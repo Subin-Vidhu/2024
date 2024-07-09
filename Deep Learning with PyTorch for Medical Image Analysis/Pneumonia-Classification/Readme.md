@@ -252,6 +252,39 @@
     from tqdm.notebook import tqdm
     import numpy as np
     import matplotlib.pyplot as plt
-        
 
+    def load_file(file_path):
+        return np.load(file_path).astype(np.float32) # Load the numpy file and convert it to float32
+        
+    train_transform = transforms.Compose([
+        transforms.ToTensor(), # Convert the image to a tensor
+        transforms.Normalize(mean=[0.482], std=[0.229]),  # Normalize the pixel values from the mean and standard deviation obtained earlier
+        transforms.RandomAffine(degrees=(-5, 5), translate=(0, 0.05), scale=(0.9, 1.1)), # Apply random rotations, translations, and scales to the image so that the model can learn from different perspectives
+        transforms.RandomResizedCrop((224, 224), scale=(0.35, 1)), # Apply random resized crops to the image
+       
+    ])
+
+    val_transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.482], std=[0.229]),
+    ]) # here we are not applying any data augmentation to the validation images because we want to evaluate the model on the original images
+
+    train_dataset = torchvision.datasets.DatasetFolder("Processed/train", loader=load_file, extensions=(".npy"), transform=train_transform)
+
+    val_dataset = torchvision.datasets.DatasetFolder("Processed/val", loader=load_file, extensions=(".npy"), transform=val_transform)
+
+    fig, axis = plt.subplots(1, 2, figsize=(10, 5))
+    for i in range(2):
+        for j in range(2):
+            randon_index = np.random.randint(0, len(train_dataset))
+            x_ray, label = train_dataset[randon_index]
+            axis[i][j].imshow(x_ray[0], cmap="bone") #[0] is used to remove the channel dimension otherwise the image will not be displayed and will be ended up with an error
+            axis[i][j].set_title(f"Label: {label}")
             
+
+    # Define batch_size and num_workers based on the available resources
+    batch_size = 64
+    num_workers = 4
+
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers) # shuffle the training data is important to prevent the model from memorizing the order of the images
+    val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers) # shuffle the validation data is not necessary because we are not training the model on it
