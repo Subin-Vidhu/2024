@@ -145,4 +145,10 @@
 
                         ![alt text](image.png)
 
+            - Restrictions
+
+                - Only works with CNNs
+
+                
+
                      
