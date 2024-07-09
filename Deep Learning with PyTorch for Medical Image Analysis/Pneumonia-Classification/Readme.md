@@ -20,3 +20,5 @@
 
         - 6012 images with pneumonia
 
+- Preprocessing
+
