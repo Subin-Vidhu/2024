@@ -120,3 +120,7 @@
         - 30
 
 - Interpretability
+
+    - Why does our model output "Pneumonia" for a given image?
+
+        - 
