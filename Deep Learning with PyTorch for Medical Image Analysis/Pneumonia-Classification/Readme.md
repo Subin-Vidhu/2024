@@ -177,4 +177,11 @@
 
 - Code
 
-    
+    ```python
+    from pathlib import Path
+    import pydicom
+    import numpy as np
+    import cv2
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    from tqdm.notebook import tqdm
