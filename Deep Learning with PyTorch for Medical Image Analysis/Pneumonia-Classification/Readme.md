@@ -30,3 +30,9 @@
 
     - Split dataset into 24000 training images and 2684 validation images
 
+    - Srore converted images in folders corresponding to their classes
+
+        - 0 if no pneumonia
+
+        - 1 if pneumonia
+
