@@ -22,3 +22,11 @@
 
 - Preprocessing
 
+    - Original image size: 1024 x 1024
+
+        - Resized image size: 224 x 224
+
+    - Standardize the pixel values into the interval [0, 1] by scaling with 1/255
+
+    - 
+
