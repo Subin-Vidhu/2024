@@ -96,6 +96,12 @@
 
         - Binary Cross-Entropy with Logits loss
 
+            - This loss is directly applied to the logits or in other words raw predictions by neural networks.
+
+
+            - negative logits means that the network did not see any sign of pneumonia in the image
+
+            - positive logits means that the network saw some signs of pneumonia in the image
+
     - Optimizer
 
-        
