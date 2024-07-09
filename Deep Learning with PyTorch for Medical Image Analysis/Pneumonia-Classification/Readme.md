@@ -153,6 +153,20 @@
 
             - Alternatives
 
+                - Grad-CAM
+
+                    - Gradient-weighted Class Activation Mapping
+
+                    - Works with any differentiable model
+
+                    - Produces similar results to CAM
+
+                - Grad-CAM++
+
+                    - Improved version of Grad-CAM
+
+                    - Produces better visualizations
+
                 
 
                      
