@@ -288,3 +288,59 @@
 
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers) # shuffle the training data is important to prevent the model from memorizing the order of the images
     val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers) # shuffle the validation data is not necessary because we are not training the model on it
+
+    # To check how many images actually show signs of pneumonia
+    np.unique(train_dataset.targets, return_counts=True) # (array([0, 1]), array([18593, 5407])) - imbalance dataset as there are more images without pneumonia than with pneumonia
+
+    # Methods to overcome class imbalance
+    # 1. To do Nothing - Let the model learn from the imbalanced dataset
+    # 2. Weighted Loss - Assign higher loss to a prediction if the model gets it wrong for the minority class
+    # 3. Oversampling - Duplicate the minority class samples to balance the dataset, here 3 times the minority class samples are duplicated
+
+    # Define the model - model creation
+    # to display the details of a model
+    torchvision.models.resnet18() # ResNet-18 model- 18 layers deep, prints out the data of each layer
+
+    class PneumoniaClassifier(pl.LightningModule):
+        def __init__(self):
+            super().__init__()
+            self.resnet = torchvision.models.resnet18(pretrained=True) # Load the pre-trained ResNet-18 model to use the pre-trained weights
+            self.resnet.conv1 = torch.nn.Conv2d(1, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False) # Change the input channels from 3 to 1 as we are using grayscale images
+            self.resnet.fc = torch.nn.Linear(in_features=512, out_features=1, bias=True) # Change the output dimension from 1000 to 1 as our task is binary classification
+            self.optimizer = torch.optim.Adam(self.model.parameters(), lr = 1e-4) # Define the optimizer
+            self.loss_fn = torch.nn.BCEWithLogitsLoss(pos_weight = torch.tensor([3])) # Define the loss function - Binary Cross-Entropy with Logits loss , pos_weight is used to assign higher loss to a prediction if the model gets it wrong for the minority class
+            self.train_accuracy = torchmetrics.Accuracy() # Define the training accuracy metric
+            self.val_accuracy = torchmetrics.Accuracy() # Define the validation accuracy metric
+
+
+        def forward(self, data):
+            return self.model(data) 
+
+        def training_step(self, batch, batch_idx):
+            x_ray, label = batch
+            label = label.float() # Convert the label to float
+            pred = self(x_ray)[:,0] # Get the predictions from the model, [:,0] is used to remove the channel dimension
+            loss = self.loss_fn(pred, label) # Compute the loss
+            self.log("train_loss", loss) # Log the training loss
+            self.log("train_accuracy", self.train_accuracy(torch.sigmoid(pred), label.int())) # Log the training accuracy
+            return loss
+
+        def training_epoch_end(self, outputs):
+            self.log("train_accuracy_epoch", self.train_accuracy.compute()) # Log the training accuracy at the end of the epoch
+
+        # Validation step - similar to the training step, but we are not computing the gradients, hence no need to return the loss
+        def validation_step(self, batch, batch_idx):
+            x_ray, label = batch
+            label = label.float()
+            pred = self(x_ray)[:,0]
+            loss = self.loss_fn(pred, label)
+            self.log("val_loss", loss)
+            self.log("val_accuracy", self.val_accuracy(torch.sigmoid(pred), label.int()))
+
+        def validation_epoch_end(self, outputs):
+            self.log("val_accuracy_epoch", self.val_accuracy.compute())
+
+        def configure_optimizers(self):
+            return [self.optimizer] # Return the optimizer to be used for training
+ 
+        
