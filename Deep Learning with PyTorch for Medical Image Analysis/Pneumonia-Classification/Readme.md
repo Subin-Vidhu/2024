@@ -236,4 +236,7 @@
             sums += np.sum(dcm_array)/normalizer
             sums_squared += np.sum(dcm_array**2)/normalizer
 
+        mean = sums/24000
+        std = np.sqrt(sums_squared/24000 - mean**2)
+
             
