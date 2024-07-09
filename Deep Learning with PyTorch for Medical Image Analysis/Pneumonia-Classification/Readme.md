@@ -384,3 +384,82 @@
     print(f"Confusion Matrix: {confusion_matrix}") # Confusion Matrix: tensor([[2000,  300], [ 400,  984]])
          
     # Interpretability
+    # CAM
+    import torch
+    import torchvison
+    from torchvision import transforms
+    import torch_metrics
+    import pytorch_lightning as pl
+    from pytorch_lightning.callbacks import ModelCheckpoint
+    from pytorch_lightning.loggers import TensorBoardLogger
+    from tqdm.notebook import tqdm
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    def load_file(file_path):
+        return np.load(file_path).astype(np.float32) # Load the numpy file and convert it to float32
+
+    val_transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.482], std=[0.229]),
+    ]) # here we are not applying any data augmentation to the validation images because we want to evaluate the model on the original images
+
+    val_dataset = torchvision.datasets.DatasetFolder("Processed/val", loader=load_file, extensions=(".npy"), transform=val_transform)
+
+    temp_model = torchvision.models.resnet18()
+
+    temp_model.children() # Display the children of the model
+
+    list(temp_model.children())[:-2] # Display the layers of the model except the last two layers
+
+    torch.nn.Sequential(*list(temp_model.children())[:-2]) # Create a new model with the layers except the last two layers
+
+    class PneumoniaModel(torch.nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.model = torchvision.models.resnet18(pretrained=True)
+            self.model.conv1 = torch.nn.Conv2d(1, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+            self.model.fc = torch.nn.Linear(in_features=512, out_features=1, bias=True)
+            self.feature_map = torch.nn.Sequential(*list(self.model.children())[:-2]) # Remove the last two layers from the model
+
+        def forward(self, data):
+            feature_map = self.feature_map(data) # Get the feature map from the model
+            avg_pool = torch.nn.functional.adaptive_avg_pool2d(feature_map, (1, 1)) # Apply global average pooling to the feature map # converts the feature map with dimensions 7*7*512 to 1*1*512 by taking the mean along the last axis
+            avg_output_flatten = torch.flatten(avg_pool, 1) # Flatten the output of the global average pooling layer
+            pred = self.model.fc(avg_output_flatten) # Get the prediction from the fully connected layer
+            return pred, feature_map
+
+
+    model = PneumoniaModel.load_from_checkpoint("path_to_checkpoint", strict = False) # Load the best model from the checkpoint, strict = False is used to ignore the missing keys in the checkpoint
+    model.eval(); # Set the model to evaluation mode, ; is used to suppress the output - prevent from printing the model summary
+
+
+    def cam(model, img):
+        with torch.no_grad(): # Disable gradient computation
+            pred, feature_map = model(img.unsqueeze(0)) # Get the prediction and feature map from the model, unsqueeze(0) is used to add a batch dimension
+        features = features.reshape(-1, 512) # Reshape the feature map - 512 is the number of filters in the last convolutional layer, -1 is used to infer the number of rows based on the number of columns, so the shape becomes (49, 512)
+        weight_params = list(model.model.fc.parameters())[0] # Get the weights of the fully connected layer, [0] is used to get the weights
+        weight = weight_params[0].detach() # Detach the weights from the computation graph
+
+        cam = torch.matmul(features, weight) # Compute the dot product of the features and weights
+        cam_img = cam.reshape(7, 7).cpu() # Reshape the CAM image to the size of the feature map
+        return cam_img, torch.sigmoid(pred) # Return the CAM image and the prediction
+
+
+    def visualize(img, cam, pred):
+        img = img[0]
+        cam = transforms.functional.resize(cam.unsqueeze(0), (224, 224))[0] # Resize the CAM image to the size of the original image, unsqueeze(0) is used to add a batch dimension
+        fig, axis = plt.subplots(1, 2, figsize=(10, 5))
+        axis[0].imshow(img, cmap="bone") # Display the original image
+        axis[0].set_title("Original Image")
+        axis[0].axis("off")
+        axis[1].imshow(img, cmap="bone") # Display the original image
+        axis[1].imshow(cam, alpha=0.5, cmap="jet") # Overlay the CAM image on the original image
+        plt.title(pred>0.5)
+
+
+    img = val_dataset[-6][0]
+    activation_map, pred = cam(model, img)
+
+    visualize(img, activation_map, pred)
+    ```
