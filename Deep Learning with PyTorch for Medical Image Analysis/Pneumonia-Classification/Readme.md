@@ -58,4 +58,12 @@
 
                 - X_normalized = (X - μ) / σ
 
-        
+        - Apply data augmentation:
+
+            - Random Rotations
+
+            - Random Translations
+
+            - Random Scales
+
+            - Random resized crops
