@@ -68,4 +68,4 @@
 
         - Random resized crops
 
-    
+- Training    
