@@ -151,4 +151,8 @@
 
                     - Only works on networks with single fully connected layer
 
+            - Alternatives
+
+                
+
                      
