@@ -466,4 +466,4 @@
     visualize(img, activation_map, pred)
     ```
     <!-- ![alt text](image-1.png) -->
-    <img src="image-1.png" width="100" height="100">
+    <img src="image-1.png" width="300" height="300">
