@@ -81,3 +81,15 @@
             - Simple logging and callback interfaces
 
             - Full access to all variables and parameters
+
+    - Network Architecture
+
+        - ResNet-18
+
+            - Pre-trained on ImageNet
+
+            - Change the input channels from 3 to 1
+
+            - Change the output dimension from 1000 to 1
+
+    - Loss function
