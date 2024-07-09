@@ -238,5 +238,8 @@
 
         mean = sums/24000
         std = np.sqrt(sums_squared/24000 - mean**2)
+        print(f"Mean: {mean}, Std: {std}") # Mean: 0.482, Std: 0.229
+
+        
 
             
