@@ -127,9 +127,7 @@
 
             - Which part of the image supports the classifier the most in its prediction?
         
-        - Compute Class Activation Maps (CAMs) using the Grad-CAM algorithm
-
-            - Grad-CAM: Gradient-weighted Class Activation Mapping
+        - Compute Class Activation Maps (CAMs) 
 
             - Produces a heatmap highlighting the important regions in the image for the classifier's decision
 
