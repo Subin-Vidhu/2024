@@ -133,4 +133,12 @@
 
             - Produces a heatmap highlighting the important regions in the image for the classifier's decision
 
-            - Class 
+            - Class Activation Map
+
+                - Extract output A(features) with k filters of the last convolutional layer
+
+                - Extract weights w of the fully connected layer
+
+                - Compute the dot product of A and w
+
+                    - M = Σk(w_k * A_k)
