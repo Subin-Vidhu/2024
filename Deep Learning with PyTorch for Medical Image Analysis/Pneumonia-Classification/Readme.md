@@ -46,24 +46,26 @@
 
             - σ = sqrt(∑x^2 / N - μ^2), sqrt(squared_sums / N - μ^2)
 
-    - Dataset
+- Dataset
 
-        - Make use of `torchvision.DatasetFolder` to load images from the folders
+    - Make use of `torchvision.DatasetFolder` to load images from the folders
 
-            - No need for custom dataset class
+        - No need for custom dataset class
 
-        - Z- score normalization
+    - Z- score normalization
 
-            - Normalize the pixel values by subtracting the mean and dividing by the standard deviation
+        - Normalize the pixel values by subtracting the mean and dividing by the standard deviation
 
-                - X_normalized = (X - μ) / σ
+            - X_normalized = (X - μ) / σ
 
-        - Apply data augmentation:
+    - Apply data augmentation:
 
-            - Random Rotations
+        - Random Rotations
 
-            - Random Translations
+        - Random Translations
 
-            - Random Scales
+        - Random Scales
 
-            - Random resized crops
+        - Random resized crops
+
+    
