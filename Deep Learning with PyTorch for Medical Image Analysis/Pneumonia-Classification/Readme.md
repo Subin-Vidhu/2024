@@ -36,3 +36,7 @@
 
         - 1 if pneumonia
 
+    - Compute training mean and standard deviation for normalization
+
+        - Dataset does not fit into the memory -> Use a trick to compute mean and standard deviation
+
