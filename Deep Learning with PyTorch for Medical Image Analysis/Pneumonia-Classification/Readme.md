@@ -149,6 +149,8 @@
 
                 - Only works with CNNs
 
-                
+                - Needs specific structure: Convolution -> Global Average Pooling -> Fully Connected
+
+                    - Only works on networks with single fully connected layer
 
                      
