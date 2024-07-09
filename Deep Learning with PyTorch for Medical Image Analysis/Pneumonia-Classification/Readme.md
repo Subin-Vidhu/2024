@@ -72,4 +72,4 @@
 
     - Pytorch-lightning
 
-        
+        - High-level pytorch wrapper for simple and effective training
