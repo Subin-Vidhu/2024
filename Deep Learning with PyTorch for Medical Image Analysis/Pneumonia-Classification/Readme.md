@@ -190,4 +190,23 @@
     labels.head(6) # Display the first 6 rows of the dataframe
 
     labels = labels.drop_duplicates("patiendID")
-    
+    ROOT_PATH = Path("stage_2_train_images/")
+    SAVE_PATH = Path("Processed")
+
+    fig, axis = plt.subplots(1, 2, figsize=(10, 5))
+    c = 0
+    for i in range(3):
+        for j in range(3):
+            patientId = labels.patientId.iloc[c]
+            dcm_path = ROOT_PATH / patientId
+            dcm_path = dcm_path.with_suffix(".dcm") # Change the extension to .dcm
+            dcm_data = pydicom.read_file(dcm_path).pixel_array
+
+            label = labels["Target"].iloc[c]
+
+            axis[i][j].imshow(dcm_data, cmap="bone")
+            axis[i][j].set_title(f"Label: {label}")
+            axis[i][j].axis("off")
+            c += 1
+
+            
