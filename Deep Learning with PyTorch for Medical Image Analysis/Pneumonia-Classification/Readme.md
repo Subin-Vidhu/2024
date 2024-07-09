@@ -95,3 +95,7 @@
     - Loss function
 
         - Binary Cross-Entropy with Logits loss
+
+    - Optimizer
+
+        
