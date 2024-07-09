@@ -343,4 +343,44 @@
         def configure_optimizers(self):
             return [self.optimizer] # Return the optimizer to be used for training
  
-        
+
+    # Training the model
+    model = PneumoniaClassifier()
+    # Define the checkpoint callback to save the best model based on the validation accuracy
+    checkpoint_callback = ModelCheckpoint(monitor="val_accuracy_epoch", save_top_k=10, mode="max") # Save the top 10 models based on the validation accuracy
+
+    gpus = 1 # Number of GPUs to use for training - make sure to have the required hardware to use multiple GPUs
+    trainer = pl.Trainer(max_epochs=30, gpus=gpus, callbacks=[checkpoint_callback], logger=TensorBoardLogger(save_dir = "./logs", name="Pneumonia_Classifier"), log_every_n_steps = 1) # Define the trainer - max_epochs is the number of epochs to train the model, log_every_n_steps is the number of steps after which the logs are updated, TensorBoardLogger is used to log the training and validation metrics - logs are saved in the logs directory
+
+    trainer.fit(model, train_loader, val_loader) # Fit the model to the training data
+
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") # Check if GPU is available, if not use CPU
+
+    model = PneumoniaModel.load_from_checkpoint("path_to_checkpoint") # Load the best model from the checkpoint
+    model.eval() # Set the model to evaluation mode
+    model.to(device) # Move the model to the device
+
+
+    preds = []
+    labels = []
+    with torch.no_grad():
+        for data, label in tqdm(val_dataset):
+            data = data.to(device).float().unsqueeze(0) # Convert the data to float and add a batch dimension
+            pred = torch.sigmoid(model(data)[0].cpu()) # Get the prediction from the model and convert it to the CPU, [0] is used to remove the batch dimension
+            preds.append(pred) # Append the prediction to the list
+            labels.append(label) # Append the label to the list
+    
+    preds = torch.tensor(preds)
+    labels = torch.tensor(labels).int() # convert both to tensor so that we can use torch metrics
+
+    acc = torchmetrics.Accuracy()(preds, labels) # Compute the accuracy
+    print(f"Accuracy: {acc}") # Accuracy: 0.85
+    precision = torchmetrics.Precision()(preds, labels) # Compute the precision
+    print(f"Precision: {precision}") # Precision: 0.75
+    recall = torchmetrics.Recall()(preds, labels) # Compute the recall
+    print(f"Recall: {recall}") # Recall: 0.65
+
+    confusion_matrix = torchmetrics.ConfusionMatrix(num_classes = 2)(preds, labels) # Compute the confusion matrix
+    print(f"Confusion Matrix: {confusion_matrix}") # Confusion Matrix: tensor([[2000,  300], [ 400,  984]])
+         
+    # Interpretability
