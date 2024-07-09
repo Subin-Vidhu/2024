@@ -167,6 +167,12 @@
 
                     - Produces better visualizations
 
-                
+                - Score-CAM
+
+                    - Score-weighted Class Activation Mapping
+
+                    - Uses the output score to weight the importance of each feature map
+
+                    - Produces better visualizations
 
                      
