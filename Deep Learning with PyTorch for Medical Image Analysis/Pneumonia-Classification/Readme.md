@@ -105,3 +105,16 @@
 
     - Optimizer
 
+        - Adam
+
+            - Adaptive moment estimation
+
+            - Combines the advantages of two other extensions of stochastic gradient descent
+
+                - Adaptive Gradient Algorithm (AdaGrad)
+
+                - Root Mean Square Propagation (RMSProp)
+
+    - Epochs
+
+        - 30
