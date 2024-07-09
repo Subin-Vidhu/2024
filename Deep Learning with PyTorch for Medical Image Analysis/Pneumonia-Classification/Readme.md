@@ -221,7 +221,19 @@
         dcm_data = pydicom.read_file(dcm_path).pixel_array/255 # Scale the pixel values to [0, 1]
 
         dcm_array = cv2.resize(dcm_data, (224, 224)).astype(np.float16) # Resize the image to 224 x 224
-        sums += np.sum(dcm_data)
-        sums_squared += np.sum(dcm_data ** 2)
+
+        label = labels["Target"].iloc[c]
+
+        train_or_val = "train" if c < 24000 else "val"
+
+        current_save_path = SAVE_PATH / train_or_val / str(label) / f"{patient_id}.npy"
+        current_save_path.parent.mkdir(parents=True, exist_ok=True)
+        np.save(current_save_path, dcm_array)
+
+        normalized_dcm_data = 224*224
+        
+        if train_or_val == "train":
+            sums += np.sum(dcm_array)/normalizer
+            sums_squared += np.sum(dcm_array**2)/normalizer
 
             
