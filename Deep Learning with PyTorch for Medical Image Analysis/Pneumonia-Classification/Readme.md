@@ -45,3 +45,17 @@
             - μ = ∑x / N, (sums / N)
 
             - σ = sqrt(∑x^2 / N - μ^2), sqrt(squared_sums / N - μ^2)
+
+    - Dataset
+
+        - Make use of `torchvision.DatasetFolder` to load images from the folders
+
+            - No need for custom dataset class
+
+        - Z- score normalization
+
+            - Normalize the pixel values by subtracting the mean and dividing by the standard deviation
+
+                - X_normalized = (X - μ) / σ
+
+        
