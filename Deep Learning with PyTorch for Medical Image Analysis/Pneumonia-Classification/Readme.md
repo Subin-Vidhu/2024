@@ -88,7 +88,7 @@
 
             - Pre-trained on ImageNet
 
-            - Change the input channels from 3 to 1
+            - Change the input channels from 3 to 1 (because the medical images are not RGB but grayscale)
 
             - Change the output dimension from 1000 to 1
 
