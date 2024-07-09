@@ -32,3 +32,5 @@ Courses and Challenges Completed
     Telegram : 11
 19. Programming For Everybody Specialization - Book || [Github Link](https://github.com/Subin-Vidhu/2024/blob/main/Books/pythonlearn.pdf) ||
     Telegram : 12
+20. 10 data science projects || [[Source](https://www.udemy.com/course/10-real-life-data-science-projects-2021/learn/lecture/30948586?src=sac&kw=10+d#overview)] || [Github Link](https://github.com/Subin-Vidhu/2024/tree/main/10%20data%20science%20projects) ||
+    Telegram : 20
