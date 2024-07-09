@@ -28,5 +28,5 @@
 
     - Standardize the pixel values into the interval [0, 1] by scaling with 1/255
 
-    - 
+    - Split dataset into 24000 training images and 2684 validation images
 
