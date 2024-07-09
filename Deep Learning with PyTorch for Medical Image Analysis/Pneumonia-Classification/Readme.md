@@ -240,6 +240,18 @@
         std = np.sqrt(sums_squared/24000 - mean**2)
         print(f"Mean: {mean}, Std: {std}") # Mean: 0.482, Std: 0.229
 
+
+    # Training
+    import torch
+    import torchvison
+    from torchvision import transforms
+    import torch_metrics
+    import pytorch_lightning as pl
+    from pytorch_lightning.callbacks import ModelCheckpoint
+    from pytorch_lightning.loggers import TensorBoardLogger
+    from tqdm.notebook import tqdm
+    import numpy as np
+    import matplotlib.pyplot as plt
         
 
             
