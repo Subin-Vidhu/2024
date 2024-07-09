@@ -73,3 +73,11 @@
     - Pytorch-lightning
 
         - High-level pytorch wrapper for simple and effective training
+
+            - No manual implementation of training loop needed
+
+            - Automatically handles multi-GPU training
+
+            - Simple logging and callback interfaces
+
+            - Full access to all variables and parameters
