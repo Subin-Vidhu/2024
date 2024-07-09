@@ -69,3 +69,7 @@
         - Random resized crops
 
 - Training    
+
+    - Pytorch-lightning
+
+        
