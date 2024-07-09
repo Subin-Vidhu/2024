@@ -124,3 +124,13 @@
     - Why does our model output "Pneumonia" for a given image?
 
         - Find out by extracting the image region with the largeset influence on the prediciton.
+
+            - Which part of the image supports the classifier the most in its prediction?
+        
+        - Compute Class Activation Maps (CAMs) using the Grad-CAM algorithm
+
+            - Grad-CAM: Gradient-weighted Class Activation Mapping
+
+            - Produces a heatmap highlighting the important regions in the image for the classifier's decision
+
+            - Class 
