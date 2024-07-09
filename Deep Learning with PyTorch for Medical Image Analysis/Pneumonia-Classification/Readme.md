@@ -40,3 +40,8 @@
 
         - Dataset does not fit into the memory -> Use a trick to compute mean and standard deviation
 
+            - Compute ∑x and ∑x^2 for each image X and add those values to the global variables sums and squared_sums
+
+            - μ = ∑x / N, (sums / N)
+
+            - σ = sqrt(∑x^2 / N - μ^2), sqrt(squared_sums / N - μ^2)
