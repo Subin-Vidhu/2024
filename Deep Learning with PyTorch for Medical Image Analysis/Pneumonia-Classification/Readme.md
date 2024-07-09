@@ -187,3 +187,6 @@
     from tqdm.notebook import tqdm
 
     labels = pd.read_csv('stage_2_train_labels.csv')
+    labels.head(6) # Display the first 6 rows of the dataframe
+
+    
