@@ -142,3 +142,7 @@
                 - Compute the dot product of A and w
 
                     - M = Σk(w_k * A_k)
+
+                        ![alt text](image.png)
+
+                     
