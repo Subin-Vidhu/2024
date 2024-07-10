@@ -38,4 +38,8 @@
 
 - Dataset
 
+    - Task:
+
+        - Given a subject idx, load the corresponding X-ray image and bounding box coordinates(xmin, xmax, ymin, ymax) of the heart.
+
     
