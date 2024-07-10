@@ -148,6 +148,11 @@
     np.save("stage_2_train_images_resized/train_subjects", train_ids)
     np.save("stage_2_train_images_resized/val_subjects", val_ids)
 
+    mean = sums/ len(train_ids)
+    std = np.sqrt(sums_squared/len(train_ids) - mean**2)
+
+    
+
 
 
         
