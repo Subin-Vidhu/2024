@@ -264,4 +264,89 @@
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
     val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
 
+    class CardiacDetectionModel(pl.LightningModule):
+
+        def __init__(self):
+            super().__init__()
+            self.model = torchvision.models.resnet18(pretrained=True) # pretrained=True is used as our dataset it too small to train from scratch, therefore we randomly initialize the weights with the weights of a model trained on ImageNet - Transfer Learning (is a machine learning method where a model developed for a task is reused as the starting point for a model on a second task)
+            self.resnet.conv1 = torch.nn.Conv2d(1, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False) # Change the input channels from 3 to 1, as we have grayscale images, bias=False is used to not add a bias term
+            self.resnet.fc = torch.nn.Linear(in_features=512, out_features=4) # Replace the last layer with a fully connected layer with 4 output units (xmin, xmax, ymin, ymax)
+            self.optimizer = torch.optim.Adam(self.model.parameters(), lr=1e-4)
+            self.loss = torch.nn.MSELoss() # Mean Squared Error (MSE)
+
+        def forward(self, x):
+            return self.model(data)
+
+        def training_step(self, batch, batch_idx):
+            x_ray, label = batch
+            label = label.float()
+            pred = self(x_ray)
+            loss = self.loss_fn(pred, label)
+
+            self.log('train_loss', loss)
+
+            if batch_idx%50 == 0:
+                self.log_images(x_ray.cpu(),pred.cpu(),label.cpu(),"Train")
+
+            return loss
+
+        def validation_step(self, batch, batch_idx):
+            x_ray, label = batch
+            label = label.float()
+            pred = self(x_ray)
+            loss = self.loss_fn(pred, label)
+
+            self.log('val_loss', loss)
+
+            if batch_idx%50 == 0:
+                self.log_images(x_ray.cpu(),pred.cpu(),label.cpu(),"Val")
+
+            return loss
+
+        def log_images(self, x_ray, pred, label, name):
+            results = []
+
+            for i in range(4):
+                coords_label = label[i]
+                coords_pred = pred[i]
+
+                img = (x_ray[i] * std + mean).numpy()[0] # Z-normalize the image, Calculate in preprocessing
+                x0, y0 = coords_label[0].int().item(), coords_label[1].int().item()
+                x1, y1 = coords_label[2].int().item(), coords_label[3].int().item()
+
+                img = cv2.rectangle(img, (x0, y0), (x1, y1), (0, 0, 0), 2) # (x0, y0), (x1, y1), (0, 0, 0) - is the color of the rectangle, 2 - is the thickness of the rectangle edge, here the color is black
+
+                x0, y0 = coords_pred[0].int().item(), coords_pred[1].int().item()
+                x1, y1 = coords_pred[2].int().item(), coords_pred[3].int().item()
+
+                img = cv2.rectangle(img, (x0, y0), (x1, y1), (1, 1, 1), 2) # (x0, y0), (x1, y1), (1, 1, 1) - is the color of the rectangle, 2 - is the thickness of the rectangle edge, here the color is white
+
+                results.append(torch.Tensor(img).unsqueeze(0)) # unsqueeze(0) is used to add a dimension at the beginning
+
+
+            grid = torchvision.utils.make_grid(results, 2)
+            self.logger.experiment.add_image(f'{name}_images', grid, self.global_step) # self.logger.experiment.add_image is used to log the images to tensorboard, here we are logging the images to tensorboard
+
+        def configure_optimizers(self):
+            return [self.optimizer]
+
     model = CardiacDetectionModel()
+
+    checkpoint_callback = ModelCheckpoint(
+        monitor='val_loss',
+        dirpath='checkpoints',
+        filename='cardiac-detection-{epoch:02d}-{val_loss:.2f}',
+        save_top_k=10,
+        mode='min'
+    )
+
+    trainer = pl.Trainer(
+        gpus=1,
+        max_epochs=50,
+        callbacks=checkpoint_callback,
+        logger=TensorBoardLogger('logs', name='cardiac-detection'),
+        log_every_n_steps=1
+    )
+
+    trainer.fit(model, train_loader, val_loader)
+    ```
