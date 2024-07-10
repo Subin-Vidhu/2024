@@ -80,4 +80,13 @@
 
 - Preprocessing
 
+    ```python
+    from pathlib import Path
+    import pydicom
+    import numpy as np
+    import cv2
+    import matplotlib.pyplot as plt
+    import pandas as pd
+    import matplotlib.patches as patches
+    
         
