@@ -134,6 +134,10 @@
         else:
             val_ids.append(patientId)
 
+        current_save_path = SAVE_PATH / train_or_val
+        current_save_path.mkdir(parents=True, exist_ok=True)
+
+        np.save(current_save_path/patient_id, dcm_array)
 
 
 
