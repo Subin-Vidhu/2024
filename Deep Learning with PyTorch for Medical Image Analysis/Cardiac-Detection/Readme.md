@@ -27,3 +27,8 @@
     - **Caution**: Bounding boxes must also be scaled accordingly
 
     - Standardize the pixel values into the interval [0, 1] by scaling with 1/255
+
+    - Split the dataset into 400 training images and 96 validation images
+
+        - Store train and validation subject ids
+        
