@@ -20,4 +20,6 @@
 
 - Preprocessing
 
-    
+    - Original images are 1024x1024 pixels
+
+    - Images are resized to 224x224 pixels
