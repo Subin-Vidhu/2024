@@ -33,3 +33,5 @@
         - Store train and validation subject ids
 
     - Compute training mean and standard deviation for normalization
+
+    - Here unlike pneumonia classification we are not having any pre-labelled data for heart detection. So, we need to programmatically generate the bounding boxes for the heart in the images.
