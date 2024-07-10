@@ -30,7 +30,7 @@
 
             - 32 pixel from all borders
 
-            - Also applied to segmentation mask
+            - **Also applied to segmentation mask**
 
     - Z-Normalization per subject
 
