@@ -41,3 +41,19 @@
         - X_std = (X_n - min(X_n)) / (max(X_n) - min(X_n))
 
     - Use 16 patients as training data and the remaining 4 as validation data.
+
+- Dataset
+
+    - Task
+
+        - Create a list of all 2D slices and their corresponding masks.
+        - Extract and load slice and mask from the list.
+        - Data Augmentation: Augment slice and mask identically
+        - Return augmented slice and mask.
+
+    - Data Augmentation
+
+        - Scaling (0.85, 1.15)
+        - Rotation (-45, 45)
+        - Elastic Transformation
+        
