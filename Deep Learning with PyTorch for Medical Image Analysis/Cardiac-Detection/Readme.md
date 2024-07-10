@@ -94,6 +94,18 @@
     labels.head() # patientId, x, y, width, height, Target
 
     ROOT_PATH = Path('stage_2_train_images')
-    SAVE_PATH = Path('stage_2_train_images_resized')    
+    SAVE_PATH = Path('stage_2_train_images_resized') 
+
+    fig, axis = plt.subplots(1, 2, figsize=(10, 5))
+    count = 0
+    for i in range(2):
+        for j in range(2):
+            patientId = labels.iloc[count]['name']
+            dcm_path = ROOT_PATH / f'{patientId}.dcm'
+            image = pydicom.read_file(dcm_path).pixel_array
+            
+            dcm_array = cv2.resize(image, (224, 224))
+
+            
 
         
