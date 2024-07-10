@@ -42,4 +42,6 @@
 
         - Given a subject idx, load the corresponding X-ray image and bounding box coordinates(xmin, xmax, ymin, ymax) of the heart.
 
-    
+    - Z-normalize images with computed mean and std
+
+        x_normalized = (x - mean) / std
