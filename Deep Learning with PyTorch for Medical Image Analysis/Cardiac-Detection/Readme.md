@@ -350,3 +350,42 @@
 
     trainer.fit(model, train_loader, val_loader)
     ```
+
+- Evaluation
+
+    ```python
+    import matplotlib.pyplot as plt
+    import matplotlib.patches as patches
+    import torch
+
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    model = model.load_from_checkpoint('checkpoints/cardiac-detection-epoch=49-val_loss=0.00.ckpt') # Load the best model from the checkpoints
+    model.eval(); # Set the model to evaluation mode
+    model.to(device) # Move the model to the device
+
+    preds = []
+    labels = []
+
+    with torch.no_grad():
+        for data, label in val_loader:
+            data = data.to(device).float().unsqueeze(0) # unsqueeze(0) is used to add a dimension at the beginning, convert to float as the model expects float input
+            pred = model(data)[0].cpu() # Move the prediction to the cpu
+            preds.append(pred)
+            labels.append(label)
+
+    preds = torch.stack(preds) # stack is used to concatenate a sequence of tensors along a new dimension
+    labels = torch.stack(labels) # stack is used to concatenate a sequence of tensors along a new dimension
+
+    # To compute the mean deviation between the predicted and the ground truth bounding boxes
+    mean_deviation = torch.mean(torch.abs(preds - labels), dim=0) # abs is used to compute the absolute value of the tensor, mean is used to compute the mean of the tensor, dim=0 is used to compute the mean along the first dimension # abs(preds - labels).mean(dim=0) can also be used, you will get an output like tensor([4.70, 4.90, 6.05, 4.5538])- which means the mean deviation in x_min is 4.70, in x_max is 4.90, in y_min is 6.05, in y_max is 4.5538
+
+    # Inspect some of the predictions
+    IDX = 0
+    img, label = val_dataset[IDX]
+    pred = preds[IDX]
+
+    fig, ax = plt.subplots(1, 1)
+    ax.imshow(img[0], cmap='bone')
+    heart = patches.Rectangle((pred[0], pred[1]), pred[2]-pred[0], pred[3]-pred[1], linewidth=1, edgecolor='r', facecolor='none') # (x, y), width, height, linewidth - is the thickness of the rectangle edge, edgecolor - is the color of the rectangle edge, facecolor - is the color of the rectangle face, we need to subtract the x and y values to get the width and height  
+    axis.add_patch(heart)
+    ```
