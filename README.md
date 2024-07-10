@@ -34,3 +34,5 @@ Courses and Challenges Completed
     Telegram : 12
 20. 10 data science projects || [[Source](https://www.udemy.com/course/10-real-life-data-science-projects-2021/learn/lecture/30948586?src=sac&kw=10+d#overview)] || [Github Link](https://github.com/Subin-Vidhu/2024/tree/main/10%20data%20science%20projects) ||
     Telegram : 20
+
+21. Complete SQL + Databases Bootcamp || [Link](https://github.com/Subin-Vidhu/2024/tree/main/Complete%20SQL%20%2B%20Databases%20Bootcamp)  || Telegram : 21
