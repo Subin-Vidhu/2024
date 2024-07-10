@@ -57,3 +57,25 @@
         - Translation (-0.1, 0.1)
 
         - **Important**: Augment image and bounding box identically
+
+- Training
+
+    - Network Architecture
+
+        - ResNet-18
+
+        - Change the input channels from 3 to 1
+
+        - Replace the last layer with a fully connected layer with 4 output units (xmin, xmax, ymin, ymax)
+
+    - Loss Function
+    
+        - Mean Squared Error (MSE)
+    
+    - Optimizer
+
+        - Adam (lr=1e-4)
+
+    - Train for 50 epochs
+
+        
