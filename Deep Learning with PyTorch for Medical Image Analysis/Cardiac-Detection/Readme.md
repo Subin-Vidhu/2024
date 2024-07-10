@@ -25,3 +25,5 @@
     - Images are resized to 224x224 pixels
 
     - **Caution**: Bounding boxes must also be scaled accordingly
+
+    - Standardize the pixel values into the interval [0, 1] by scaling with 1/255
