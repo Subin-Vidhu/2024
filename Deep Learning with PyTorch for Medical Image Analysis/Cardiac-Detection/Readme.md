@@ -4,4 +4,4 @@
 
 - Medical background
 
-    - Cardiac Detection indicates size and position of the heart
+    - Cardiac Detection indicates size and position of the heart.
