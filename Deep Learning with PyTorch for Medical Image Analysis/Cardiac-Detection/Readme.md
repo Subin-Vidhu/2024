@@ -106,6 +106,11 @@
             
             dcm_array = cv2.resize(image, (224, 224))
 
+            x = labels.iloc[count]['x0']
+            y = labels.iloc[count]['y0']
+            width = labels.iloc[count]['w']
+            height = labels.iloc[count]['h']
+
             
 
         
