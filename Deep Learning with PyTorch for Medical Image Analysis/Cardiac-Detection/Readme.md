@@ -139,6 +139,12 @@
 
         np.save(current_save_path/patient_id, dcm_array)
 
+    
+        normalizer = 224*224
+        if train_or_val == "train":
+            sums += np.sum(dcm_array)/normalizer
+            sums_squared += np.sum(dcm_array**2)/normalizer
+
 
 
         
