@@ -11,3 +11,4 @@
         - Pneumothorax and Atelectasis (collapsed lung) can also be detected by the size and position of the heart.(may lead to cardiac displacement) 
 
     - Early detection reduces the risk of severe courses and long-term consequences.
+
