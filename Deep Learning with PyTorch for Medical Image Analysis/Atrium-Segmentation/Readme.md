@@ -15,3 +15,9 @@
 - Data
 
     - Medical Segmentation Decathlon dataset[Link](http://medicaldecathlon.com/dataaws/)
+
+    - 20 cardiac MR images with corresponding Ground Truth masks.
+
+        - 4542 2D MRI and label slices.
+
+    
