@@ -154,6 +154,55 @@
     print(f"Mean: {mean}, Std: {std}") # Mean: 0.482, Std: 0.244
     ```
 
+- Create the custom dataset for cardiac-detection task
+
+    ```python
+    from pathlib import Path # Path handling
+    import torch # for dataset creation
+    import numpy as np  # to load the preprocessed images
+    import pandas as pd # to load the labels
+    import imgaug # for data augmentation
+    from imgaug.augmentables.bbs import BoundingBox, BoundingBoxesOnImage # automatically augmenting images and bounding boxes in the same way
+
+    class CardiacDataset(torch.utils.data.Dataset):
+
+        def __init__(self, path_to_labels_csv, patients, root_path, augs):
+
+            self.labels = pd.read_csv(path_to_labels_csv)
+            self.patients = np.load(patients)
+            self.root_path = Path(root_path)
+            self.augment = 
+            
+
+        def __len__(self):
+            return len(self.patients)
+
+        def __getitem__(self, idx):
+            patient = self.patients[idx]
+            data = self.labels[self.labels['name'] == patient]
+
+            x_min = data['x0'].item() # item() is used to get the value of the scalar
+            y_min = data['y0'].item()
+            x_max = x_min + data['w'].item()
+            y_max = y_min + data['h'].item()
+            bbox = BoundingBox(x1=x_min, y1=y_min, x2=x_max, y2=y_max)
+
+            file_path = self.root_path / patient
+            img = np.load(f"{file_path}.npy").astype(np.float32)
+
+            if self.augment:
+                bb = BoundingBox(x1=bbox[0], y1=bbox[1], x2=bbox[2], y2=bbox[3])
+                random_seed = torch.randint(0, 10000, (1,)).item()
+                imgaud.seed(random_seed)
+
+                img, aug_bbox = self.augment(image=img, bounding_boxes=bb)
+                bbox = aug_bbox[0][0], aug_bbox[0][1], aug_bbox[1][0], aug_bbox[1][1]
+
+            img = (img - mean) / std
+            img = torch.Tensor(img).unsqueeze(0) # unsqueeze(0) is used to add a dimension at the beginning
+            bbox = torch.Tensor(bbox)
+            return img, bbox
+    ```
 
 
 
