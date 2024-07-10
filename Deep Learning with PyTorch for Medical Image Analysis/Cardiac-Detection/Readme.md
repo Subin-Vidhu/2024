@@ -205,7 +205,7 @@
             return img, bbox
     ```
 
-- Evaluate our functionality
+- Evaluate our functionality of creating the dataset
 
     ```python
     import imgaug.augmenters as iaa
@@ -224,9 +224,44 @@
 
     img, bbox = dataset[0]
 
-    fig, ax = plt.subplots(1)
+    fig, ax = plt.subplots(1, 1)
     ax.imshow(img.squeeze(0), cmap='bone') # squeeze(0) is used to remove the first dimension
     rect = patches.Rectangle((bbox[0], bbox[1]), bbox[2]-bbox[0], bbox[3]-bbox[1], linewidth=1, edgecolor='r', facecolor='none') # (x, y), width, height, linewidth - is the thickness of the rectangle edge, edgecolor - is the color of the rectangle edge, facecolor - is the color of the rectangle face, we need to subtract the x and y values to get the width and height
     ```
+    axis.add_patch(rect)
     <!-- ![alt text](image-1.png) -->
     <img src="image-1.png" alt="drawing" width="150"/>
+
+- Train 
+
+    ```python
+    import torch
+    import torchvision
+    import pytorch_lightning as pl
+    from pytorch_lightning.callbacks import ModelCheckpoint
+    from pytorch_lightning.loggers import TensorBoardLogger
+    import numpy as np
+    import cv2
+    import imgaug.augmenters as iaa
+    from dataset import CardiacDataset # assuming the dataset is saved in a file named dataset.py
+
+    train_root_path = 'stage_2_train_images_resized/train'
+    train_subjects = 'stage_2_train_images_resized/train_subjects.npy'
+    val_root_path = 'stage_2_train_images_resized/val'
+    val_subjects = 'stage_2_train_images_resized/val_subjects.npy'
+
+    train_transforms = iaa.Sequential([
+        iaa.GammaContrast(),
+        iaa.Affine(scale=(0.8, 1.2), rotate=(-10, 10), translate_px=(-10, 10))
+    ])
+
+    train_dataset = CardiacDataset('stage_2_train_labels.csv', train_subjects, train_root_path, train_transforms)
+    val_dataset = CardiacDataset('stage_2_train_labels.csv', val_subjects, val_root_path, None)
+
+    batch_size = 16
+    num_workers = 4
+
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
+    val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
+
+    model = CardiacDetectionModel()
