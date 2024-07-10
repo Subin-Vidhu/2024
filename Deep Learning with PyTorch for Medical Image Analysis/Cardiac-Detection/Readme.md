@@ -111,6 +111,13 @@
             width = labels.iloc[count]['w']
             height = labels.iloc[count]['h']
 
+            axis[i][j].imshow(dcm_array, cmap='bone')
+            rect = patches.Rectangle((x, y), width, height, linewidth=1, edgecolor='r', facecolor='none') # (x, y), width, height, linewidth - is the thickness of the rectangle edge, edgecolor - is the color of the rectangle edge, facecolor - is the color of the rectangle face
+            axis[i][j].add_patch(rect)
+            count += 1
             
+
+
+
 
         
