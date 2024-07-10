@@ -153,8 +153,6 @@
 
     print(f"Mean: {mean}, Std: {std}") # Mean: 0.482, Std: 0.244
     ```
-    ```python
-    ```
 
 
 
