@@ -117,6 +117,22 @@
             count += 1
     ```
     ![alt text](image.png)
+    ```python
+    sums, sums_squared = 0, 0
+    train_ids, val_ids = [], []
+
+    for counter, patientId in enumerate(list(labels['name'])):
+        dcm_path = ROOT_PATH / f'{patientId}.dcm'
+        dcm = pydicom.read_file(dcm_path)
+        dcm_array = dc.pixel_array
+        dcm_array = cv2.resize(dcm_array, (224, 224))/255 # Normalizing the pixel values
+
+        train_or_val = "train" if counter < 400 else "val"
+
+        if train_or_val == "train":
+            train_ids.append(patientId)
+        else:
+            val_ids.append(patientId)
 
 
 
