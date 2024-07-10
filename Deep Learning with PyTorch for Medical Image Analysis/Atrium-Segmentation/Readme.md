@@ -11,3 +11,7 @@
     - Changes in atrial volume are associated with cardiac disorders, sucha s atrial fibrillation or mitral valve stenosis(Narrowing of the mitral valve orifice, blocking blood flow).
 
     - Manual segmentation is time-consuming and tedious - Automation is needed.
+
+- Data
+
+    - Medical Segmentation Decathlon dataset[Link](http://medicaldecathlon.com/dataaws/)
