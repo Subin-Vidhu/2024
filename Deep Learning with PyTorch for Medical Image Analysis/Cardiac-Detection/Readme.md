@@ -171,7 +171,7 @@
             self.labels = pd.read_csv(path_to_labels_csv)
             self.patients = np.load(patients)
             self.root_path = Path(root_path)
-            self.augment = 
+            self.augment = augs
             
 
         def __len__(self):
@@ -185,20 +185,21 @@
             y_min = data['y0'].item()
             x_max = x_min + data['w'].item()
             y_max = y_min + data['h'].item()
-            bbox = BoundingBox(x1=x_min, y1=y_min, x2=x_max, y2=y_max)
+            bbox = [x_min, y_min, x_max, y_max]
 
             file_path = self.root_path / patient
             img = np.load(f"{file_path}.npy").astype(np.float32)
 
             if self.augment:
                 bb = BoundingBox(x1=bbox[0], y1=bbox[1], x2=bbox[2], y2=bbox[3])
-                random_seed = torch.randint(0, 10000, (1,)).item()
-                imgaud.seed(random_seed)
+                # due to multi threading in combination with pytorch data loaders, all augmentations are continously repeated and not randomly applied when using imgaug. So, we need to set a random seed for each image to get different augmentations for each image.
+                random_seed = torch.randint(0, 10000, (1,)).item() # .item to convert the tensor to a scalar 
+                imgaug.seed(random_seed)
 
                 img, aug_bbox = self.augment(image=img, bounding_boxes=bb)
                 bbox = aug_bbox[0][0], aug_bbox[0][1], aug_bbox[1][0], aug_bbox[1][1]
 
-            img = (img - mean) / std
+            img = (img - mean) / std # Z-normalize the image, Calculate in preprocessing
             img = torch.Tensor(img).unsqueeze(0) # unsqueeze(0) is used to add a dimension at the beginning
             bbox = torch.Tensor(bbox)
             return img, bbox
