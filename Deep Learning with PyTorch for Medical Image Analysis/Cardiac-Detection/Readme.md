@@ -227,10 +227,10 @@
     fig, ax = plt.subplots(1, 1)
     ax.imshow(img.squeeze(0), cmap='bone') # squeeze(0) is used to remove the first dimension
     rect = patches.Rectangle((bbox[0], bbox[1]), bbox[2]-bbox[0], bbox[3]-bbox[1], linewidth=1, edgecolor='r', facecolor='none') # (x, y), width, height, linewidth - is the thickness of the rectangle edge, edgecolor - is the color of the rectangle edge, facecolor - is the color of the rectangle face, we need to subtract the x and y values to get the width and height
-    ```
     axis.add_patch(rect)
-    <!-- ![alt text](image-1.png) -->
+    # ![alt text](image-1.png)
     <img src="image-1.png" alt="drawing" width="150"/>
+    ```
 
 - Train 
 
