@@ -151,7 +151,11 @@
     mean = sums/ len(train_ids)
     std = np.sqrt(sums_squared/len(train_ids) - mean**2)
 
-    
+    print(f"Mean: {mean}, Std: {std}") # Mean: 0.482, Std: 0.244
+    ```
+    ```python
+    ```
+
 
 
 
