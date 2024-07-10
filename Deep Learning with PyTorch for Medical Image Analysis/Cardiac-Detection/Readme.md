@@ -31,4 +31,5 @@
     - Split the dataset into 400 training images and 96 validation images
 
         - Store train and validation subject ids
-        
+
+    - Compute training mean and standard deviation for normalization
