@@ -32,4 +32,12 @@
 
             - Also applied to segmentation mask
 
-    
+    - Z-Normalization per subject
+
+        - Compute mean and standard deviation for each subject separately.
+
+    - Standardize the normalized subject into the interval [0, 1]
+
+        - X_std = (X_n - min(X_n)) / (max(X_n) - min(X_n))
+
+    - Use 16 patients as training data and the remaining 4 as validation data.
