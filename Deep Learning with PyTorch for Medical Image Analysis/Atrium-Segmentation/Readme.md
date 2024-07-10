@@ -20,4 +20,16 @@
 
         - 4542 2D MRI and label slices.
 
+- Preprocessing
+
+    - Two dimensional setting, Extract slices.
+
+    - Original image shape (352 * 352)
+
+        - Crop away non-cardiac regions and background.
+
+            - 32 pixel from all borders
+
+            - Also applied to segmentation mask
+
     
