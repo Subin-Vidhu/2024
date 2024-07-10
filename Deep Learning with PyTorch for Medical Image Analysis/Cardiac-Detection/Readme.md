@@ -6,4 +6,6 @@
 
     - Cardiac Detection indicates size and position of the heart.
 
-        - Cardiomyopath ( heart muscle disease muscle which might lead to heart failure or blood clots) often comes with an increased heart size. 
+        - Cardiomyopath ( heart muscle disease muscle which might lead to heart failure or blood clots) often comes with an increased heart size.
+
+        - Pneumothorax and Atelectasis (collapsed lung) can also be detected by the size and position of the heart.(may lead to cardiac displacement) 
