@@ -93,6 +93,7 @@
     labels = pd.read_csv('stage_2_train_labels.csv')
     labels.head() # patientId, x, y, width, height, Target
 
-    
+    ROOT_PATH = Path('stage_2_train_images')
+    SAVE_PATH = Path('stage_2_train_images_resized')    
 
         
