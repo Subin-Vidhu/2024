@@ -8,4 +8,4 @@
 
     - Enables exact volume measurements of the left atrium.
 
-    - 
+    - Changes in atrial volume are associated with cardiac disorders, sucha s atrial fibrillation or mitral valve stenosis(Narrowing of the mitral valve orifice, blocking blood flow).
