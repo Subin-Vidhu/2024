@@ -205,6 +205,28 @@
             return img, bbox
     ```
 
+- Evaluate our functionality
 
+    ```python
+    import imgaug.augmenters as iaa
+    import matplotlib.pyplot as plt
+    import matplotlib.patches as patches
 
-        
+    seq = iaa.Sequential([
+        iaa.GammaContrast(),
+        iaa.Affine(scale=(0.8, 1.2), rotate=(-10, 10),translate_px=(-10, 10))
+    ]) # Sequential is used to apply the augmentations sequentially
+
+    labels_path = 'stage_2_train_labels.csv'
+    patients_path = 'stage_2_train_images_resized/train_subjects.npy'
+    root_path = 'stage_2_train_images_resized/train'
+    dataset = CardiacDataset(labels_path, patients_path, root_path, seq)
+
+    img, bbox = dataset[0]
+
+    fig, ax = plt.subplots(1)
+    ax.imshow(img.squeeze(0), cmap='bone') # squeeze(0) is used to remove the first dimension
+    rect = patches.Rectangle((bbox[0], bbox[1]), bbox[2]-bbox[0], bbox[3]-bbox[1], linewidth=1, edgecolor='r', facecolor='none') # (x, y), width, height, linewidth - is the thickness of the rectangle edge, edgecolor - is the color of the rectangle edge, facecolor - is the color of the rectangle face, we need to subtract the x and y values to get the width and height
+    ```
+    <!-- ![alt text](image-1.png) -->
+    <img src="image-1.png" alt="drawing" width="150"/>
