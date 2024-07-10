@@ -145,6 +145,9 @@
             sums += np.sum(dcm_array)/normalizer
             sums_squared += np.sum(dcm_array**2)/normalizer
 
+    np.save("stage_2_train_images_resized/train_subjects", train_ids)
+    np.save("stage_2_train_images_resized/val_subjects", val_ids)
+
 
 
         
