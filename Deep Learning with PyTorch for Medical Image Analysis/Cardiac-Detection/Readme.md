@@ -45,3 +45,15 @@
     - Z-normalize images with computed mean and std
 
         x_normalized = (x - mean) / std
+
+    - Apply data augmentation
+
+        - (Gamma) Contrast changes (0.7, 1.7)
+
+        - Scaling (0.8, 1.2)
+
+        - Rotation (-10, 10)
+
+        - Translation (-0.1, 0.1)
+
+        - **Important**: Augment image and bounding box identically
