@@ -88,5 +88,11 @@
     import matplotlib.pyplot as plt
     import pandas as pd
     import matplotlib.patches as patches
+
+    # Load the dataset
+    labels = pd.read_csv('stage_2_train_labels.csv')
+    labels.head() # patientId, x, y, width, height, Target
+
     
+
         
