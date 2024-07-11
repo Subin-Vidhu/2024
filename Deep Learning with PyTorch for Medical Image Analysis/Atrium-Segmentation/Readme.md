@@ -77,6 +77,9 @@
 
             - Output: Sigmoid activation function.
 
+                <!-- ![alt text](image.png) -->
+                <img src="image.png" width="200" height="200">
+
     - Loss Function: Binary Cross-Entropy
 
     - Optimizer: Adam
