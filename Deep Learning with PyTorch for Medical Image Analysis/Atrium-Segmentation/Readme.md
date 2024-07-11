@@ -78,18 +78,21 @@
                 <!-- ![alt text](image.png) -->
                 <img src="image.png" width="200" height="200">
 
-    - Loss Function: Binary Cross-Entropy
+- Training
 
-    - Optimizer: Adam
+    - Optimizer: Adam(lr=1e-4)
 
-    - Training
+    - Loss: Dice Loss
 
-        - Batch size: 16
-        - Learning rate: 0.001
-        - Epochs: 100
-        - Early stopping: Stop training if validation loss does not improve for 10 epochs.
+        - L(y, y_hat) = 1 - 2 * |y ∩ y_hat| / |y| + |y_hat| # Intersection over Union
 
-    - Evaluation
+    - Use sigmoid activation function on the prediction
 
-        - Dice Coefficient: 0.85
-        - Jaccard Index: 0.74
+        - Threshold at 0.5 to obtain binary masks.
+
+            - Predictions > 0.5 -> 1 (Left Atrium)
+            - Predictions <= 0.5 -> 0 (Not Left Atrium)
+
+    - Train for 75 epochs
+
+        - Save the model with the best validation loss.
