@@ -272,4 +272,14 @@
     path = Path("processed_data/train")
     dataset = CardiacDataset(path, seq)
 
-    
+    fig, axis = plt.subplots(3,3 , figsize=(10,10))
+    for i in range(3):
+        for j in range(3):
+            slice, mask = dataset[1]
+            mask = np.ma.maske_where(mask == 0, mask)
+            axis[i][j].imshow(slice[0], cmap="bone")
+            axis[i][j].imshow(mask[0], cmap="cool", alpha=0.5)
+
+    # Take all this and save it to a file called dataset.py so that we can import it later.
+    ``` 
+
