@@ -8,13 +8,13 @@
 
     - Enables exact volume measurements of the left atrium.
 
-    - Changes in atrial volume are associated with cardiac disorders, sucha s atrial fibrillation or mitral valve stenosis(Narrowing of the mitral valve orifice, blocking blood flow).
+    - Changes in atrial volume are associated with cardiac disorders, such as atrial fibrillation or mitral valve stenosis(Narrowing of the mitral valve orifice, blocking blood flow).
 
     - Manual segmentation is time-consuming and tedious - Automation is needed.
 
 - Data
 
-    - Medical Segmentation Decathlon dataset[Link](http://medicaldecathlon.com/dataaws/)
+    - Medical Segmentation Decathlon dataset [Link](http://medicaldecathlon.com/dataaws/)
 
     - 20 cardiac MR images with corresponding Ground Truth masks.
 
@@ -67,16 +67,17 @@
 
                 - reduces the feature maps by using convolutions + max pooling.
 
-            - Decoder: Convolutional layers with upsampling.
-                
-                    - reconstructs segmentation masks based on the original image and features by using Upsampling + Convolutional layers.
+        - Decoder: Convolutional layers with upsampling.
+            
+                - reconstructs segmentation masks based on the original image and features by using Upsampling + Convolutional layers.
 
-            - Skip connections: Concatenate encoder output with decoder input.
+        - Skip connections: Concatenate encoder output with decoder input.
 
-                - allow information flow from encoder to decoder, this directly allows to solve the problem of vanishing gradients.(Vanishing gradients occur when the gradients become very small and the network stops learning.)
+            - allow information flow from encoder to decoder, this directly allows to solve the problem of vanishing gradients.(Vanishing gradients occur when the gradients become very small and the network stops learning.)
+            
 
                 <!-- ![alt text](image.png) -->
-                <img src="image.png" width="200" height="200">
+                <img src="image.png" width="300" height="300">
 
 - Training
 
