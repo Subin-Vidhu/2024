@@ -67,17 +67,17 @@
 
                 - reduces the feature maps by using convolutions + max pooling.
 
-        - Decoder: Convolutional layers with upsampling.
-            
+            - Decoder: Convolutional layers with upsampling.
+                
                 - reconstructs segmentation masks based on the original image and features by using Upsampling + Convolutional layers.
 
-        - Skip connections: Concatenate encoder output with decoder input.
+            - Skip connections: Concatenate encoder output with decoder input.
 
-            - allow information flow from encoder to decoder, this directly allows to solve the problem of vanishing gradients.(Vanishing gradients occur when the gradients become very small and the network stops learning.)
+                - allow information flow from encoder to decoder, this directly allows to solve the problem of vanishing gradients.(Vanishing gradients occur when the gradients become very small and the network stops learning.)
             
 
-                <!-- ![alt text](image.png) -->
-                <img src="image.png" width="300" height="300">
+                    <!-- ![alt text](image.png) -->
+                    <img src="image.png" width="300" height="300">
 
 - Training
 
