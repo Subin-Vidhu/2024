@@ -221,7 +221,7 @@
             self.all_files = self.extract_files(root)
             self.augment_params = augment_params
 
-        @staticmethod
+        @staticmethod # Static method can be called without creating an instance of the class
         def extract_files(root):
             files = []
             for subject in root.glob("*"):
