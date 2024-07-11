@@ -201,5 +201,8 @@
     slice = np.load(path/"data"/file)   
     mask = np.load(path/"mask"/file)
 
-    
+    plt.figure()
+    plt.imshow(slice, cmap="bone")
+    mask_ = np.ma.masked_where(mask == 0, mask) # Mask the background, mask == 0 is the background, how this works is that it will show the mask where the mask is not equal to 0.
+    plt.imshow(mask_, cmap="cool", alpha=0.5)
     ```
