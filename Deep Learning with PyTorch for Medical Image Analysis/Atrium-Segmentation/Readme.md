@@ -176,7 +176,7 @@
 
         # Normalize the images
         normalized_mri_data = normalize(mri_data)
-        standardized_mri_data = standardize(normalized)
+        standardized_mri_data = standardize(normalized_mri_data)
 
         if conter < 17:
             current_path = save_root / "train"/ str(counter)
