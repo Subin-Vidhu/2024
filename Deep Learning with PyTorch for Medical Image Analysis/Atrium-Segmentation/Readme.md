@@ -193,4 +193,13 @@
 
             np.save(slice_path/str(i), slice)
             np.save(mask_path/str(i), mask)
+
+    # Check the files created
+    path = Path("processed_data/train/0")
+    file= "50.npy"
+
+    slice = np.load(path/"data"/file)   
+    mask = np.load(path/"mask"/file)
+
+    
     ```
