@@ -97,3 +97,15 @@
     - Train for 75 epochs
 
         - Save the model with the best validation loss.
+
+- Preprocessing
+
+    ```python
+    %matplotlib notebook 
+    from pathlib import Path
+    import nibabel as nib
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from tqdm.notebook import tqdm
+
+    
