@@ -55,5 +55,4 @@
 
         - Scaling (0.85, 1.15)
         - Rotation (-45, 45)
-        - Elastic Transformation
-        
+        - Elastic Transformation - augment the image by moving the pixels locally around using a displacement field.
