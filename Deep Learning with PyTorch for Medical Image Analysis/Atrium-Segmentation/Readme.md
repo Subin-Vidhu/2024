@@ -108,4 +108,42 @@
     import matplotlib.pyplot as plt
     from tqdm.notebook import tqdm
 
-    
+    root = Path("Task02_Heart/imagesTr")
+    labels = Path("Task02_Heart/labelsTr")
+
+    def change_img_to_label_path(path):
+        parts = list(path.parts) # Convert to list to modify
+        parts[parts.index("imagesTr")] = "labelsTr" # Change the part
+        return Path(*parts) # Convert back to Path
+
+    sample_path  = list(root.glob("la*"))[0]
+    sample_label = change_img_to_label_path(sample_path)
+
+    print(sample_path, sample_label) # Check if the paths are correct
+
+    data = nib.load(sample_path)
+    label = nib.load(sample_label)
+
+    mri = data.get_fdata()
+    mask = label.get_fdata().astype(np.uint8) # Convert to uint8 for visualization because the mask has only 0 and 1, why not float? - It's a mask, not a probability map.
+
+    print(mri.shape, mask.shape) # Check the shapes
+
+    nib.aff2axcodes(data.affine) # Check the orientation of the image -('R', 'A', 'S') - Right, Anterior, Superior
+
+    from celluloid import Camera
+    from IPython.display import HTML
+
+    fig = plt.figure()
+    camera = Camera(fig)
+
+    for i in range(mri.shape[2]):
+        plt.imshow(mri[:,:,i], cmap="gray")
+        mask_ = np.ma.masked_where(mask[:,:,i] == 0, mask[:,:,i]) # Mask the background
+        plt.imshow(mask_, cmap="cool", alpha=0.5) # Overlay the mask
+        camera.snap()
+
+    animation = camera.animate(interval=100) # Interval in milliseconds between frames
+
+    HTML(animation.to_html5_video()) # Display the animation as a video in the notebook
+    ```
