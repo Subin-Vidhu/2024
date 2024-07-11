@@ -438,23 +438,24 @@
         def configure_optimizers(self):
             return [self.optimizer]
 
-        torch.manual_seed(0)
-        model = AtriumSegmentation()
+    torch.manual_seed(0)
+    model = AtriumSegmentation()
 
-        checkpoint_callback = ModelCheckpoint(
-            monitor="val Dice",
-            dirpath="checkpoints",
-            filename="best-checkpoint",
-            save_top_k=10,
-            mode="min"
-        )
+    checkpoint_callback = ModelCheckpoint(
+        monitor="val Dice",
+        dirpath="checkpoints",
+        filename="best-checkpoint",
+        save_top_k=10,
+        mode="min"
+    )
 
-        trainer = pl.Trainer(
-            gpus=1,
-            max_epochs=75,
-            callbacks=[checkpoint_callback],
-            logger=TensorBoardLogger("logs", name="atrium_segmentation"),
-            log_every_n_steps=50
-        )
+    trainer = pl.Trainer(
+        gpus=1,
+        max_epochs=75,
+        callbacks=[checkpoint_callback],
+        logger=TensorBoardLogger("logs", name="atrium_segmentation"),
+        log_every_n_steps=50
+    )
 
-        trainer.fit(model, train_loader, val_loader)
+    trainer.fit(model, train_loader, val_loader)
+
