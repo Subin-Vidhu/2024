@@ -382,3 +382,55 @@
 
             counter = (pred * mask).sum() # Intersection
             denum = pred.sum() + mask.sum() + 1e-8 # Add a small number to avoid division by zero
+    
+    class AtriumSegmentation(pl.LightningModule):
+        def __init__(self):
+            super().__init__()
+            self.model = UNet()
+            self.optimizer = torch.optim.Adam(self.model.parameters(), lr=1e-4)
+            self.loss = DiceLoss()
+
+        def forward(self, data):
+            return torch.sigmoid(self.model(data))
+
+        def training_step(self, batch, batch_idx):
+            mri, mask = batch
+            mask = mask.float()
+            pred = self(mri)
+
+            loss = self.loss(pred, mask)
+
+            self.log("train_loss", loss)
+
+            if batch_idx % 50 == 0:
+                self.log_images(mri.cpu(), pred.cpu(), mask.cpu(), "train")
+
+            return loss
+
+        def validation_step(self, batch, batch_idx):
+            mri, mask = batch
+            mask = mask.float()
+            pred = self(mri)
+
+            loss = self.loss(pred, mask)
+
+            self.log("val_loss", loss)
+
+            if batch_idx % 50 == 0:
+                self.log_images(mri.cpu(), pred.cpu(), mask.cpu(), "val")
+
+            return loss
+
+        def log_images(self, mri, pred, mask, name):
+
+            pred = pred > 0.5
+            fig, axis = plt.subplots(1, 2)
+            axis[0].imshow(mri[0][0], cmap="bone") # First image, first channel, [0][0] is the batch dimension
+            mask_ = np.ma.masked_where(mask[0][0] == 0, mask[0][0]) # Mask the background
+            axis[0].imshow(mask_, cmap="cool", alpha=0.5) # Overlay the mask
+
+            axis[1].imshow(mri[0][0], cmap="bone")
+            mask_ = np.ma.masked_where(pred[0][0] == 0, pred[0][0])
+            axis[1].imshow(mask_, cmap="cool", alpha=0.5)
+
+            self.logger.experiment.add_figure(f"{name}_images", fig, self.global_step)
