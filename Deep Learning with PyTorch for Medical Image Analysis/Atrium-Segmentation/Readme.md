@@ -56,3 +56,39 @@
         - Scaling (0.85, 1.15)
         - Rotation (-45, 45)
         - Elastic Transformation - augment the image by moving the pixels locally around using a displacement field.
+
+- Model
+
+    - U-Net(Miccai, 2015)
+
+        - Encoder-Decoder architecture with skip connections.
+
+            - Encoder: Convolutional layers with max pooling.
+
+                - reduces the feature maps by using convolutions + max pooling.
+
+            - Decoder: Convolutional layers with upsampling.
+                
+                    - reconstructs segmentation masks based on the original image and features by using Upsampling + Convolutional layers.
+
+            - Skip connections: Concatenate encoder output with decoder input.
+
+                - allow information flow from encoder to decoder, this directly allows to solve the problem of vanishing gradients.(Vanishing gradients occur when the gradients become very small and the network stops learning.)
+
+            - Output: Sigmoid activation function.
+
+    - Loss Function: Binary Cross-Entropy
+
+    - Optimizer: Adam
+
+    - Training
+
+        - Batch size: 16
+        - Learning rate: 0.001
+        - Epochs: 100
+        - Early stopping: Stop training if validation loss does not improve for 10 epochs.
+
+    - Evaluation
+
+        - Dice Coefficient: 0.85
+        - Jaccard Index: 0.74
