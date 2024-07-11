@@ -146,4 +146,51 @@
     animation = camera.animate(interval=100) # Interval in milliseconds between frames
 
     HTML(animation.to_html5_video()) # Display the animation as a video in the notebook
+
+    def normalize(full_volume):
+        mu = full_volume.mean()
+        std = np.std(full_volume)
+        normalized = (full_volume - mu) / std
+        return normalized
+
+    def standardize(normalized):
+        standardized = (normalized - normalized.min()) / (normalized.max() - normalized.min())
+        return standardized
+
+    all_files = list(root.glob("la*"))
+    len(all_files) # Check the number of files - 20
+
+    save_root = Path("processed_data")
+
+    for counter, path_to_mri_data in enumerate(tqdm(all_files)):
+        path_to_mri_label = change_img_to_label_path(path_to_mri_data)
+
+        mri = nib.load(path_to_mri_data)
+        assert nib.aff2axcodes(mri.affine) == ('R', 'A', 'S') # Check the orientation of the image, if the orientation is not correct, you need to reorient the image.
+        mri_data = mri.get_fdata()
+        label_data = nib.load(path_to_mri_label).get_fdata().astype(np.uint8)
+
+        # Crop the images
+        mri_data = mri_data[32:-32, 32:-32] # Crop 32 pixels from all borders
+        label_data = label_data[32:-32, 32:-32]
+
+        # Normalize the images
+        normalized_mri_data = normalize(mri_data)
+        standardized_mri_data = standardize(normalized)
+
+        if conter < 17:
+            current_path = save_root / "train"/ str(counter)
+        else:
+            current_path = save_root / "val" / str(counter)
+
+        for i in range(standardized_mri_data.shape[2]):
+            slice = standardized_mri_data[:,:,i]
+            mask = label_data[:,:,i]
+            slice_path = current_path/"data"
+            mask_path = current_path/"mask"
+            slice_path.mkdir(parents=True, exist_ok=True)
+            mask_path.mkdir(parents=True, exist_ok=True)
+
+            np.save(slice_path/str(i), slice)
+            np.save(mask_path/str(i), mask)
     ```
