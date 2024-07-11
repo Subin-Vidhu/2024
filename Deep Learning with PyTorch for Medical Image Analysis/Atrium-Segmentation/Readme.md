@@ -340,3 +340,45 @@
 
         model = UNet()
         ```
+
+- Data Loading and Loss
+
+    ```python
+    from pathlib import Path
+    import torch
+    import pytorch_lightning as pl
+    import pytorch_lightning.callbacks import ModelCheckpoint
+    from pytorch_lightning.loggers import TensorBoardLogger
+    import imgaug.augmenters as iaa
+    import cv2
+    import matplotlib.pyplot as plt
+
+    from dataset import CardiacDataset
+    from model import UNet
+    
+    seq = iaa.Sequential([
+        iaa.Affine(scale=(0.85, 1.15), rotate=(-45, 45)),
+        iaa.ElasticTransformation()
+    ])
+
+    train_path = Path("processed_data/train")
+    val_path = Path("processed_data/val")
+
+    train_dataset = CardiacDataset(train_path, seq)
+    val_dataset = CardiacDataset(val_path, None)
+
+    batch_size = 4
+    num_workers = 4
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
+    val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
+
+    class DiceLoss(torch.nn.Module):
+        def __init__(self):
+            super().__init__()
+
+        def forward(self, mask, true):
+            pred = torch.flatten(pred) # Flatten the prediction
+            mask = torch.flatten(mask) # Flatten the mask
+
+            counter = (pred * mask).sum() # Intersection
+            denum = pred.sum() + mask.sum() + 1e-8 # Add a small number to avoid division by zero
