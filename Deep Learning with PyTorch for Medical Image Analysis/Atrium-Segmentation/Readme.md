@@ -75,8 +75,6 @@
 
                 - allow information flow from encoder to decoder, this directly allows to solve the problem of vanishing gradients.(Vanishing gradients occur when the gradients become very small and the network stops learning.)
 
-            - Output: Sigmoid activation function.
-
                 <!-- ![alt text](image.png) -->
                 <img src="image.png" width="200" height="200">
 
