@@ -232,9 +232,9 @@
 
         @staticmethod
         def change_img_to_label_path(path):
-        parts = list(path.parts) # Convert to list to modify
-        parts[parts.index("data")] = "masks" # Change the part
-        return Path(*parts) # Convert back to Path
+            parts = list(path.parts) # Convert to list to modify
+            parts[parts.index("data")] = "masks" # Change the part
+            return Path(*parts) # Convert back to Path
 
         def augment(self, slice, mask):
             random_seed = torch.randint(0, 100000, (1,)).item() # Generate a random seed as the threading and multiprocessing in PyTorch can cause the random number generator to generate the same random numbers.
