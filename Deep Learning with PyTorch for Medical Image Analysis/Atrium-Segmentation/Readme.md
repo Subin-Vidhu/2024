@@ -434,3 +434,6 @@
             axis[1].imshow(mask_, cmap="cool", alpha=0.5)
 
             self.logger.experiment.add_figure(f"{name}_images", fig, self.global_step)
+
+        def configure_optimizers(self):
+            return [self.optimizer]
