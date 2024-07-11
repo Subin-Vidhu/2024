@@ -259,3 +259,17 @@
                 slice, mask = self.augment(slice, mask)
 
             return np.expand_dims(slice, 0), np.expand_dims(mask, 0) # Add a channel dimension to the slice and mask so that we don't have to squeeze it later.
+
+    # Test the dataset
+    from imgaug import augmenters as iaa
+    from matplotlib import pyplot as plt
+
+    seq = iaa.Sequential([
+        iaa.Affine(scale=(0.85, 1.15), rotate=(-45, 45)),
+        iaa.ElasticTransformation()
+    ])
+
+    path = Path("processed_data/train")
+    dataset = CardiacDataset(path, seq)
+
+    
