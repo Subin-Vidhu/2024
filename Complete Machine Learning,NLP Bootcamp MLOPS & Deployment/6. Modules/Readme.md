@@ -67,3 +67,30 @@
     9
     ```
 
+- **Packages** are a way of structuring Python's module namespace by using "dotted module names".
+
+    - A directory must contain a file named __init__.py in order for Python to consider it as a package. This file can be left empty but we generally place the initialization code for that package in this file.
+
+    - We can import modules from packages using the dot (.) operator.
+
+        ```python
+        import Game.Level.start # assuming the folder structure is Game/Level/start.py - with file having the __init__.py, here level is a package
+        ```
+
+    - We can use the following syntax to import specific attributes or functions from a module.
+
+        ```python
+        from Game.Level.start import function_name
+        ```
+
+    - We can use the following syntax to import all attributes and functions from a specific module.
+
+        ```python
+        from Game.Level.start import *
+        ```
+
+    - We can use the following syntax to import a package.
+
+        ```python
+        import Game.Level
+        ```
