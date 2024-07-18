@@ -20,4 +20,4 @@
 
         - 31534 2D CT and label slices
 
-        - Problem: Large scan size, high resolution, and large number of slices.
+        - Problem: Large scan vs relatively small tumor.
