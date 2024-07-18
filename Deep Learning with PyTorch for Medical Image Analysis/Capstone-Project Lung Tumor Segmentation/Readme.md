@@ -52,4 +52,8 @@
 
     - Oversampling
 
-        - 
+        - Compute the fraction f between tumor free and tumorous slices
+
+        - Sample slices with tumor f times more often
+
+        
