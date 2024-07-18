@@ -33,3 +33,5 @@
         - 30 pixel along the last axis
 
         - Also for the label/segmentation mask
+
+    - Standardize with a factor of 1/3071 or try out different windows
