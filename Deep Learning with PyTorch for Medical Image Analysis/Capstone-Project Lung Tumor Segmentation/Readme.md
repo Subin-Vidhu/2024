@@ -67,3 +67,7 @@
         - Binary Cross Entropy
 
     - 100 epochs
+
+- Oversampling
+
+    
