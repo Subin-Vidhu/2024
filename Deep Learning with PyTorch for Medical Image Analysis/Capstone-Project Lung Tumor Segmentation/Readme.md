@@ -32,4 +32,4 @@
 
         - 30 pixel along the last axis
 
-        
+        - Also for the label/segmentation mask
