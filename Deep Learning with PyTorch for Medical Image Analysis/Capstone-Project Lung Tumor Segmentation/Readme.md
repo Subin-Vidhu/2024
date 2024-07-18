@@ -19,3 +19,5 @@
     - 64 full body CT scans and their ground truth segmentation masks.
 
         - 31534 2D CT and label slices
+
+        
