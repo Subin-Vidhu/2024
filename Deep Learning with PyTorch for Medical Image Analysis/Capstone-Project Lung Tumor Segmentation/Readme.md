@@ -58,4 +58,12 @@
 
         - Prevents the network from predicting everything as tumor free
 
-    
+    - Optimizer
+
+        - Adam(lr=1e-4)
+
+    - Loss
+
+        - Binary Cross Entropy
+
+    - 100 epochs
