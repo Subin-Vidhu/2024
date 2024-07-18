@@ -8,6 +8,6 @@
 
     - Automatic tumor segmentation has 2 advantages:
 
-        - Early detection
+        - Reduce the probability of missing a tumor.
 
         - Monitoring of tumor growth
