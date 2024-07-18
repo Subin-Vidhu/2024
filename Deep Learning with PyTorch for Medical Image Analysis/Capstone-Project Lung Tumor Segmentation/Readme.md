@@ -56,4 +56,6 @@
 
         - Sample slices with tumor f times more often
 
-        
+        - Prevents the network from predicting everything as tumor free
+
+    
