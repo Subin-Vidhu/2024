@@ -14,4 +14,6 @@
 
 - Dataset    
 
-    - Medical Segmentation Decathlon dataset
+    - Medical Segmentation Decathlon dataset [link](http://medicaldecathlon.com/dataaws/#:~:text=Task05_Prostate-,Task06_Lung,-Task07_Pancreas)
+
+    
