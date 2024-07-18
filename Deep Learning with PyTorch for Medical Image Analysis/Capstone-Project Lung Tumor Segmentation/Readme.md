@@ -104,5 +104,7 @@
     for data, label in train_loader:
         #print(data.shape, label.shape)
         print(label.sum([1,2,3]) # this means that the label is a 4D tensor and we sum over the last 3 dimensions to get the number of tumor pixels in each slice - each dimension corresponds to a different axis, and if we sum over all of them we get the total number of tumor pixels in each slice
+
+    # You can remove the sampler and use the train_loader without it to see the difference - while taking the sum, you will see that the number of tumor pixels in each slice is much lower
     ``` 
 
