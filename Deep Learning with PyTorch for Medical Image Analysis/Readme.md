@@ -19,3 +19,5 @@
 9. Cardiac - Detection
 
 10. Atrium Segmentation
+
+11. Capstone-Project Lung Tumor Segmentation
