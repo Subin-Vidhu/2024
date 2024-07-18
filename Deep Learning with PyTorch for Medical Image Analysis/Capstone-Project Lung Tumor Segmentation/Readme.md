@@ -91,5 +91,14 @@
     fraction = counts[0]/counts[1] 
     print(f"Fraction: {fraction}")
 
-    
+    weight_list = []
+    for i in target_list:
+        if i == 1:
+            weight_list.append(fraction)
+        else:
+            weight_list.append(1)
+
+    sampler = torch.utils.data.sampler.WeightedRandomSampler(weight_list, len(weight_list)) # WeightedRandomSampler is used to oversample the minority class - in this case the tumor slices
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=8, sampler=sampler) # DataLoader is used to load the data in batches, here sampler means that the data is loaded in a way that the tumor slices are oversampled so that the network does not predict everything as tumor free
+    ``` 
 
