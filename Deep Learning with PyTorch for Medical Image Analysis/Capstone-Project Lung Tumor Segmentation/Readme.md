@@ -39,3 +39,5 @@
     - Resize the single slice to 256x256[use nearest neighbor interpolation - is the method where the value of a pixel in the output image is determined by the value of the pixel at the corresponding position in the input image]
 
         - [Link](https://annmay10.medium.com/resizing-images-using-various-interpolation-techniques-4b99800999f2)
+
+        - [Link](https://gist.github.com/georgeblck/e3e0274d725c858ba98b1c36c14e2835)
