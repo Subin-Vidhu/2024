@@ -100,5 +100,9 @@
 
     sampler = torch.utils.data.sampler.WeightedRandomSampler(weight_list, len(weight_list)) # WeightedRandomSampler is used to oversample the minority class - in this case the tumor slices
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=8, sampler=sampler) # DataLoader is used to load the data in batches, here sampler means that the data is loaded in a way that the tumor slices are oversampled so that the network does not predict everything as tumor free
+
+    for data, label in train_loader:
+        #print(data.shape, label.shape)
+        print(label.sum([1,2,3]) # this means that the label is a 4D tensor and we sum over the last 3 dimensions to get the number of tumor pixels in each slice - each dimension corresponds to a different axis, and if we sum over all of them we get the total number of tumor pixels in each slice
     ``` 
 
