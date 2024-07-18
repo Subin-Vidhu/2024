@@ -24,10 +24,4 @@
 
 - Preprocessing
 
-    - Data Augmentation
-
-        - Random rotation, scaling, flipping, and elastic deformation.
-
-    - Data Normalization
-
-        - Mean and standard deviation normalization.
+    - Two dimensional setting. Extract slices!
