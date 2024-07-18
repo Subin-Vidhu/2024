@@ -35,3 +35,7 @@
         - Also for the label/segmentation mask
 
     - Standardize with a factor of 1/3071 or try out different windows
+
+    - Resize the single slice to 256x256[use nearest neighbor interpolation - is the method where the value of a pixel in the output image is determined by the value of the pixel at the corresponding position in the input image]
+
+        - [Link](https://annmay10.medium.com/resizing-images-using-various-interpolation-techniques-4b99800999f2)
