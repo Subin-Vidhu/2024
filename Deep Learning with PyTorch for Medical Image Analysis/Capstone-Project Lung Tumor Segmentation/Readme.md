@@ -17,3 +17,5 @@
     - Medical Segmentation Decathlon dataset [link](http://medicaldecathlon.com/dataaws/#:~:text=Task05_Prostate-,Task06_Lung,-Task07_Pancreas)
 
     - 64 full body CT scans and their ground truth segmentation masks.
+
+    
