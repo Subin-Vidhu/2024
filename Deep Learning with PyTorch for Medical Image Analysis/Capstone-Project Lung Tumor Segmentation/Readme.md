@@ -6,4 +6,8 @@
 
         - Makes up 25% of all cancer deaths.
 
-    
+    - Automatic tumor segmentation has 2 advantages:
+
+        - Early detection
+
+        - Monitoring of tumor growth
