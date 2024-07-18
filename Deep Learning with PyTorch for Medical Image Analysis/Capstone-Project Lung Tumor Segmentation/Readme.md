@@ -76,4 +76,20 @@
     import torch
     from dataset import LungDataset
 
+    # Load the dataset
+    train_dataset = LungDataset(Path('Preprocessed/train'), None)
+
+    # Compute the fraction of tumor free slices
+    target_list = []
+    for _,label in train_dataset:
+        if np.any(label):
+            target_list.append(1)
+        else:
+            target_list.append(0)
+
+    unique, counts = np.unique(target_list, return_counts=True)
+    fraction = counts[0]/counts[1] 
+    print(f"Fraction: {fraction}")
+
     
+
