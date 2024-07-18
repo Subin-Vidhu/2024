@@ -49,3 +49,7 @@
     - Use the same dataset and model as in the atrium segmentation
 
 - Training
+
+    - Oversampling
+
+        - 
