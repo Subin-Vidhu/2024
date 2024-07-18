@@ -30,4 +30,6 @@
 
     - Crop away tissue below the lungs
 
+        - 30 pixel along the last axis
+
         
