@@ -28,4 +28,4 @@
 
     - Original size: 512x512
 
-    
+    - Crop away tissue below the lungs
