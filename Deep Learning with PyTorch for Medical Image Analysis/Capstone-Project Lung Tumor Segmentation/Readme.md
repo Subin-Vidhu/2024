@@ -41,3 +41,5 @@
         - [Link](https://annmay10.medium.com/resizing-images-using-various-interpolation-techniques-4b99800999f2)
 
         - [Link](https://gist.github.com/georgeblck/e3e0274d725c858ba98b1c36c14e2835)
+
+    - Use the last 6 subjects as validation set
