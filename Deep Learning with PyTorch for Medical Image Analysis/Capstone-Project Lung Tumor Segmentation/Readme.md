@@ -47,3 +47,5 @@
 - Dataset and Model
 
     - Use the same dataset and model as in the atrium segmentation
+
+- Training
