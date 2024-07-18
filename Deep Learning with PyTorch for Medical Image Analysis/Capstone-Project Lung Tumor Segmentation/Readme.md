@@ -10,4 +10,4 @@
 
         - Reduce the probability of missing a tumor.[False Negative]
 
-        - Monitoring of tumor growth
+        - Directly obtain the size/volume of the tumor.
