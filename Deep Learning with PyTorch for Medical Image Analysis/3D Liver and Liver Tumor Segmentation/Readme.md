@@ -111,7 +111,7 @@
             self.layer7 = DoubleConv(128+64, 64)
             self.layer8 = torch.nn.Conv2d(64, 1, kernel_size=1) # completes the decoder part
 
-            self.maxpool = torch.nn.MaxPool2d(2)
+            self.maxpool = torch.nn.MaxPool3d(2)
 
         def forward(self, x):
             x1 = self.layer1(x)
@@ -119,15 +119,15 @@
             x3 = self.layer3(self.maxpool(x2))
             x4 = self.layer4(self.maxpool(x3)) # completes the encoder part
 
-            x5 = torch.nn.Upsample(scale_factor=2, mode="bilinear", align_corners=True)(x4)
+            x5 = torch.nn.Upsample(scale_factor=2, mode="trilinear", align_corners=True)(x4)
             x5 = torch.cat([x5, x3], dim=1) # Concatenate the feature maps from the encoder with the decoder, dim = 1 is the channel dimension
             x5 = self.layer5(x5)
 
-            x6 = torch.nn.Upsample(scale_factor=2, mode="bilinear", align_corners=True)(x5)
+            x6 = torch.nn.Upsample(scale_factor=2, mode="trilinear", align_corners=True)(x5)
             x6 = torch.cat([x6, x2], dim=1)
             x6 = self.layer6(x6)
 
-            x7 = torch.nn.Upsample(scale_factor=2, mode="bilinear", align_corners=True)(x6)
+            x7 = torch.nn.Upsample(scale_factor=2, mode="trilinear", align_corners=True)(x6)
             x7 = torch.cat([x7, x1], dim=1)
             x7 = self.layer7(x7)
 
