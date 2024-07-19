@@ -81,3 +81,64 @@
     - Loss: Binary Cross Entropy
     
     - Optimizer: Adam(lr=1e-4)
+
+    ```python
+    # To convert the 2D U-Net to 3D U-Net, we need to change the Conv2d and MaxPool2d layers to Conv3d and MaxPool3d layers, respectively, and now since we have volumes instead of slices, we need to use trilinear upsampling instead of bilinear upsampling, and increase the output channels from 1 to 3
+    import torch
+    class DoubleConv(torch.nn.module):
+        def __init__(self, in_channels, out_channels):
+            super().__init__()
+            self.step = torch.nn.Sequential(
+                torch.nn.Conv3d(in_channels, out_channels, kernel_size=3, padding=1),
+                torch.nn.ReLU(),
+                torch.nn.Conv3d(out_channels, out_channels, kernel_size=3, padding=1),
+                torch.nn.ReLU()
+            )
+
+        def forward(self, x):
+            return self.step(x)
+
+    class UNet(torch.nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.layer1 = DoubleConv(1, 64)
+            self.layer2 = DoubleConv(64, 128)
+            self.layer3 = DoubleConv(128, 256)
+            self.layer4 = DoubleConv(256, 512) # completes the encoder part
+
+            self.layer5 = DoubleConv(512+256, 256)
+            self.layer6 = DoubleConv(256+128, 128)
+            self.layer7 = DoubleConv(128+64, 64)
+            self.layer8 = torch.nn.Conv2d(64, 1, kernel_size=1) # completes the decoder part
+
+            self.maxpool = torch.nn.MaxPool2d(2)
+
+        def forward(self, x):
+            x1 = self.layer1(x)
+            x2 = self.layer2(self.maxpool(x1))
+            x3 = self.layer3(self.maxpool(x2))
+            x4 = self.layer4(self.maxpool(x3)) # completes the encoder part
+
+            x5 = torch.nn.Upsample(scale_factor=2, mode="bilinear", align_corners=True)(x4)
+            x5 = torch.cat([x5, x3], dim=1) # Concatenate the feature maps from the encoder with the decoder, dim = 1 is the channel dimension
+            x5 = self.layer5(x5)
+
+            x6 = torch.nn.Upsample(scale_factor=2, mode="bilinear", align_corners=True)(x5)
+            x6 = torch.cat([x6, x2], dim=1)
+            x6 = self.layer6(x6)
+
+            x7 = torch.nn.Upsample(scale_factor=2, mode="bilinear", align_corners=True)(x6)
+            x7 = torch.cat([x7, x1], dim=1)
+            x7 = self.layer7(x7)
+
+            ret = self.layer8(x7)
+            return ret
+
+    model = UNet()
+    # create a random input
+    x = torch.randn(1, 1, 256, 256, 256)
+    # pass it through the model
+    y = model(x)
+    print(y.shape) # torch.Size([1, 1, 256, 256])
+    ```
+
