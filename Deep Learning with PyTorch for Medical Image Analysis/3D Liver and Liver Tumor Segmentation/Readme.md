@@ -137,10 +137,31 @@
     model = UNet()
     # create a random input
     x = torch.randn(1, 1, 128, 128, 128)
-    # pass it through the model
+    # pass it through the modelfrom pathlib import Path
+    import torch
+    import pytorch_lightning as pl
+    import pytorch_lightning.callbacks import ModelCheckpoint
+    from pytorch_lightning.loggers import TensorBoardLogger
+    import imgaug.augmenters as iaa
+    import cv2
+    import matplotlib.pyplot as plt
+
+    from dataset import CardiacDataset
+    from model import UNet
     y = model(x)
     print(y.shape) # torch.Size([1, 3, 128, 128,128])
     # create a new model.py file with the UNet class and the DoubleConv class so that import it in the main script
     ```
 
 - Train
+
+    ```python
+    from pathlib import Path
+    import torch
+    import torchio as tio
+    import pytorch_lightning as pl
+    import pytorch_lightning.callbacks import ModelCheckpoint
+    from pytorch_lightning.loggers import TensorBoardLogger
+    from model import UNet
+
+    
