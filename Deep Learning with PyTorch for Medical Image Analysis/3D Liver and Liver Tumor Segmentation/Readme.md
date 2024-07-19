@@ -68,4 +68,16 @@
 
 - Model
 
+    - U-Net
     
+        - Encoder: Convolutional layers with max pooling
+        
+        - Decoder: Convolutional layers with up-sampling
+        
+        - Skip connections: Concatenate the output of the encoder with the input of the decoder
+        
+        - Output: Sigmoid activation function
+        
+    - Loss: Binary Cross Entropy
+    
+    - Optimizer: Adam(lr=1e-4)
