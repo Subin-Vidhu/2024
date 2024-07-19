@@ -49,3 +49,16 @@
     label = nib.load(sample_path_label).get_fdata().astype(int) # Load the label, cast to int
 
     print(f"CT shape: {ct.shape}") # (256, 256, 42)
+
+    # Plot the data
+    fig = plt.figure(figsize=(10, 10))
+    camera = Camera(fig)
+
+    for i in range(ct.shape[2]):
+        plt.imshow(ct[:,:,i], cmap="gray")
+        mask_ = np.ma.masked_where(label[:,:,i] == 0, label[:,:,i])
+        plt.imshow(mask_, cmap="cool", alpha=0.5)
+        plt.axis("off")
+        camera.snap()
+
+    animation = camera.animate(interval=100)
