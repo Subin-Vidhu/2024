@@ -12,3 +12,16 @@
         
         - Directly obtain the size/volume of the tumor.
 
+- Dataset
+
+    - Medical Segmentation Decathlon dataset [link](http://medicaldecathlon.com/dataaws/#:~:text=Task03_Liver,-Task04_Hippocampus)
+    
+    - 131 contrast-enhanced CT scans and their ground truth segmentation masks.
+    
+        - 131 3D CT and label volumes
+        
+        - Problem: Large scan vs relatively small tumor(Imbalance)    
+
+- Preprocessing
+
+    
