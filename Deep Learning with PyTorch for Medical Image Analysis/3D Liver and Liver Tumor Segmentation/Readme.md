@@ -101,15 +101,15 @@
     class UNet(torch.nn.Module):
         def __init__(self):
             super().__init__()
-            self.layer1 = DoubleConv(1, 64)
-            self.layer2 = DoubleConv(64, 128)
-            self.layer3 = DoubleConv(128, 256)
-            self.layer4 = DoubleConv(256, 512) # completes the encoder part
+            self.layer1 = DoubleConv(1, 32)
+            self.layer2 = DoubleConv(32, 64)
+            self.layer3 = DoubleConv(64, 128)
+            self.layer4 = DoubleConv(128, 256) # completes the encoder part
 
-            self.layer5 = DoubleConv(512+256, 256)
-            self.layer6 = DoubleConv(256+128, 128)
-            self.layer7 = DoubleConv(128+64, 64)
-            self.layer8 = torch.nn.Conv2d(64, 3, kernel_size=1) # completes the decoder part
+            self.layer5 = DoubleConv(256+128, 128)
+            self.layer6 = DoubleConv(128+64, 64)
+            self.layer7 = DoubleConv(64+32, 32)
+            self.layer8 = torch.nn.Conv3d(32, 3, kernel_size=1) # completes the decoder part
 
             self.maxpool = torch.nn.MaxPool3d(2)
 
