@@ -195,3 +195,11 @@
     val_dataset = tio.SubjectsDataset(subjects[105:], transform=val_transform)
 
     sampler = tio.data.LabelSampler(patch_size = 96, label_name = "Label", label_prob = {0: 0.2, 1: 0.3, 2: 0.5})
+
+    train_patches_queue = tio.Queue(
+        subjects_dataset=train_dataset,
+        max_length=40,
+        samples_per_volume=5,
+        sampler=sampler,
+        num_workers=4
+    ) # this is done to create patches from the volumes, detailed explanation is that the volumes are too large to fit in the memory, so we create patches of the volumes and then train the network on these patches, here we are creating 5 patches per volume and the maximum length of the queue is 40, so that we can have 40 patches in the queue at a time, queue is used to load the data in parallel. So what happens here is that the queue will load the data in parallel and create patches from the volumes and then the network will be trained on these patches. So at a time we have 40 patches in the queue and the queue will keep on loading the data in parallel and creating patches from the volumes and the network will keep on training on these patches.
