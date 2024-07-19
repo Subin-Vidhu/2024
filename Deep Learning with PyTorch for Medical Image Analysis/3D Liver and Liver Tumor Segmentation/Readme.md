@@ -36,3 +36,8 @@
     # Load the data
     root = Path("Task03_Liver_rs/imagesTr/")
     label = Path("Task03_Liver_rs/labelsTr/")
+
+    def change_img_to_label_path(img_path):
+        parts = list(img_path.parts)
+        parts[parts.index("imagesTr")] = "labelsTr"
+        return Path(*parts)
