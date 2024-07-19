@@ -34,4 +34,5 @@
     from IPython.display import HTML
 
     # Load the data
-    
+    root = Path("Task03_Liver_rs/imagesTr/")
+    label = Path("Task03_Liver_rs/labelsTr/")
