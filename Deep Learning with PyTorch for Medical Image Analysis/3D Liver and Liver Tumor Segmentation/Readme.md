@@ -47,4 +47,5 @@
 
     ct = nib.load(sample_path).get_fdata() # Load the CT scan
     label = nib.load(sample_path_label).get_fdata().astype(int) # Load the label, cast to int
-    
+
+    print(f"CT shape: {ct.shape}") # (256, 256, 42)
