@@ -215,4 +215,58 @@
     train_loader = torch.utils.data.DataLoader(train_patches_queue, batch_size=2, num_workers=0)
     val_loader = torch.utils.data.DataLoader(val_patches_queue, batch_size=2, num_workers=0 # DataLoader is used to load the data in batches, here we are loading the data in batches of 2, and we are using 0 workers, this is because we are using the queue to load the data in parallel, so we do not need to use the workers here
 
+    class Segmenter(pl.LightningModule):
+        def __init__(self):
+            super().__init__()
+            self.model = UNet()
+            self.optimizer = torch.optim.Adam(self.model.parameters(), lr=1e-4)
+            self.loss_fn = torch.nn.CrossEntropyLoss()
+
+        def forward(self, x):
+            return self.model(x)
+
+        def training_step(self, batch, batch_idx):
+            img = batch["CT"]["data"]
+            mask = batch["Label"]["data"][;0] # we are using the first channel of the label, as the label has 3 channels, we are using the first channel here
+            mask = mask.long()
+
+            pred = self(img)
+            loss = self.loss_fn(pred, mask)
+            self.log("Train Loss", loss)
+            return loss
+
+        def validation_step(self, batch, batch_idx):
+            img = batch["CT"]["data"]
+            mask = batch["Label"]["data"][;0]
+            mask = mask.long()
+
+            pred = self(img)
+            loss = self.loss_fn(pred, mask)
+            self.log("Val Loss", loss)
+            return loss
+        
+        def configure_optimizers(self):
+            return [self.optimizer]
+
+    model = Segmenter()
+
+    checkpoint_callback = ModelCheckpoint(
+        monitor="Val Loss",
+        dirpath="./checkpoints",
+        filename="best-checkpoint",
+        save_top_k=10,
+        mode="min"
+    )
+
+    trainer = pl.Trainer(
+        gpus=1,
+        max_epochs=100,
+        callbacks=[checkpoint_callback],
+        logger=TensorBoardLogger("logs", name="3D Liver Segmentation"),
+        log_every_n_steps=1
+    )
+
+    trainer.fit(model, train_loader, val_loader)
     ```
+
+- 
