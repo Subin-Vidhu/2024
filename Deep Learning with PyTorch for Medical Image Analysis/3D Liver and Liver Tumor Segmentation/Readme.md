@@ -190,4 +190,8 @@
     val_transform = process
     train_transform = tio.Compose([process, augmentation])
 
-    
+    # Lets use the first 105 for training and remaining for validation
+    train_dataset = tio.SubjectsDataset(subjects[:105], transform=train_transform)
+    val_dataset = tio.SubjectsDataset(subjects[105:], transform=val_transform)
+
+    sampler = tio.data.LabelSampler(patch_size = 96, label_name = "Label", label_prob = {0: 0.2, 1: 0.3, 2: 0.5})
