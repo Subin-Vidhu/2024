@@ -168,3 +168,19 @@
         parts = list(img_path.parts)
         parts[parts.index("imagesTr")] = "labelsTr"
         return Path(*parts)    
+
+    path = Path("Task03_Liver_rs/imagesTr/")
+    subject_paths = list(path.glob("liver_*"))
+    subjects = []
+    for subject_path in subject_paths:
+        label_path = change_img_to_label_path(subject_path)
+        subject = tio.Subject({
+            "CT"=tio.ScalarImage(subject_path),
+            "Label"=tio.LabelMap(label_path)
+        })
+        subjects.append(subject)
+
+    for subject in subjects:
+        assert subject["CT"].orientation == ("R", "A", "S")
+
+    
