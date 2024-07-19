@@ -25,12 +25,13 @@
 - Data
 
     ```python
-       %matplotlib inline
-       from pathlib import Path
-       import nibabel as nib
-       import matplotlib.pyplot as plt
-       import numpy as np
-       from celluloid import Camera
-       from IPython.display import HTML
+    %matplotlib inline
+    from pathlib import Path
+    import nibabel as nib
+    import matplotlib.pyplot as plt
+    import numpy as np
+    from celluloid import Camera
+    from IPython.display import HTML
 
-       
+    # Load the data
+    
