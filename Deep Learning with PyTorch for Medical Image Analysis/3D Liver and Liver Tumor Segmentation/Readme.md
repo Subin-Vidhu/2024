@@ -203,3 +203,16 @@
         sampler=sampler,
         num_workers=4
     ) # this is done to create patches from the volumes, detailed explanation is that the volumes are too large to fit in the memory, so we create patches of the volumes and then train the network on these patches, here we are creating 5 patches per volume and the maximum length of the queue is 40, so that we can have 40 patches in the queue at a time, queue is used to load the data in parallel. So what happens here is that the queue will load the data in parallel and create patches from the volumes and then the network will be trained on these patches. So at a time we have 40 patches in the queue and the queue will keep on loading the data in parallel and creating patches from the volumes and the network will keep on training on these patches.
+
+    val_patches_queue = tio.Queue(
+        subjects_dataset=val_dataset,
+        max_length=40,
+        samples_per_volume=5,
+        sampler=sampler,
+        num_workers=4
+    )
+
+    train_loader = torch.utils.data.DataLoader(train_patches_queue, batch_size=2, num_workers=0)
+    val_loader = torch.utils.data.DataLoader(val_patches_queue, batch_size=2, num_workers=0 # DataLoader is used to load the data in batches, here we are loading the data in batches of 2, and we are using 0 workers, this is because we are using the queue to load the data in parallel, so we do not need to use the workers here
+
+    ```
