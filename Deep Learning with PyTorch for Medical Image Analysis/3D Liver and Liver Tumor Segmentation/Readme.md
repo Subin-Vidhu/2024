@@ -109,7 +109,7 @@
             self.layer5 = DoubleConv(512+256, 256)
             self.layer6 = DoubleConv(256+128, 128)
             self.layer7 = DoubleConv(128+64, 64)
-            self.layer8 = torch.nn.Conv2d(64, 1, kernel_size=1) # completes the decoder part
+            self.layer8 = torch.nn.Conv2d(64, 3, kernel_size=1) # completes the decoder part
 
             self.maxpool = torch.nn.MaxPool3d(2)
 
