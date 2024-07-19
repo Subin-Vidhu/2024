@@ -183,4 +183,11 @@
     for subject in subjects:
         assert subject["CT"].orientation == ("R", "A", "S")
 
+    process = tio.Compose([tio.crop_or_pad((256, 256, 100)), tio.RescaleIntensity((-1, 1))])
+
+    augmentation = tio.RandomAffine(scales=(0.9, 1.1), degrees=(-10, 10))
+
+    val_transform = process
+    train_transform = tio.Compose([process, augmentation])
+
     
