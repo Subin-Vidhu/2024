@@ -140,5 +140,6 @@
     # pass it through the model
     y = model(x)
     print(y.shape) # torch.Size([1, 3, 128, 128,128])
+    # create a new model.py file with the UNet class and the DoubleConv class so that import it in the main script
     ```
 
