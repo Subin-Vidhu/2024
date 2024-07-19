@@ -143,3 +143,4 @@
     # create a new model.py file with the UNet class and the DoubleConv class so that import it in the main script
     ```
 
+- Train
