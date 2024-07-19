@@ -136,9 +136,9 @@
 
     model = UNet()
     # create a random input
-    x = torch.randn(1, 1, 256, 256, 256)
+    x = torch.randn(1, 1, 128, 128, 128)
     # pass it through the model
     y = model(x)
-    print(y.shape) # torch.Size([1, 1, 256, 256])
+    print(y.shape) # torch.Size([1, 3, 128, 128,128])
     ```
 
