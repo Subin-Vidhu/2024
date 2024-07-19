@@ -43,3 +43,8 @@
         return Path(*parts)
 
     sample_path = list(root.glob("liver*"))[0]
+    sample_path_label = change_img_to_label_path(sample_path)
+
+    ct = nib.load(sample_path).get_fdata() # Load the CT scan
+    label = nib.load(sample_path_label).get_fdata().astype(int) # Load the label, cast to int
+    
