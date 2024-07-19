@@ -276,7 +276,7 @@
     from celluloid import Camera
     import numpy as np
     import matplotlib.pyplot as plt
-    
+
     model = Segmenter.load_from_checkpoint("checkpoints/best-checkpoint.ckpt")
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     model = model.eval();
@@ -312,3 +312,6 @@
         camera.snap()
 
     animation = camera.animate(interval=100)
+
+    HTML(animation.to_html5_video())
+    ```
