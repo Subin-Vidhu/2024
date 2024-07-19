@@ -56,9 +56,13 @@
 
     for i in range(ct.shape[2]):
         plt.imshow(ct[:,:,i], cmap="gray")
-        mask_ = np.ma.masked_where(label[:,:,i] == 0, label[:,:,i])
+        mask_ = np.ma.masked_where(label[:,:,i] == 0, label[:,:,i]) # Mask the background
         plt.imshow(mask_, cmap="cool", alpha=0.5)
         plt.axis("off")
         camera.snap()
 
     animation = camera.animate(interval=100)
+
+    HTML(animation.to_html5_video())
+    ```
+
