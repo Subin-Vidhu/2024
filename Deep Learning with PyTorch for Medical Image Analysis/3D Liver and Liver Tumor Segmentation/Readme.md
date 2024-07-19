@@ -164,4 +164,7 @@
     from pytorch_lightning.loggers import TensorBoardLogger
     from model import UNet
 
-    
+    def change_img_to_label_path(img_path):
+        parts = list(img_path.parts)
+        parts[parts.index("imagesTr")] = "labelsTr"
+        return Path(*parts)    
