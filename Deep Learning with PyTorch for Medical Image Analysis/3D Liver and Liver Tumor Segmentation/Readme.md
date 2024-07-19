@@ -41,3 +41,5 @@
         parts = list(img_path.parts)
         parts[parts.index("imagesTr")] = "labelsTr"
         return Path(*parts)
+
+    sample_path = list(root.glob("liver*"))[0]
