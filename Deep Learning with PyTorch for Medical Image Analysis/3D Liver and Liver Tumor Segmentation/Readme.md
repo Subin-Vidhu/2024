@@ -269,4 +269,46 @@
     trainer.fit(model, train_loader, val_loader)
     ```
 
-- 
+- Evaluation
+
+    ```python
+    from Ipython.display import Image
+    from celluloid import Camera
+    import numpy as np
+    import matplotlib.pyplot as plt
+    
+    model = Segmenter.load_from_checkpoint("checkpoints/best-checkpoint.ckpt")
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model = model.eval();
+    model.to(device);
+
+    IDX = 4
+    imgs = val_dataset[IDX]["CT"]["data"]
+    mask = val_dataset[IDX]["Label"]["data"]
+
+    grid_sampler = tio.GridSampler(val_dataset[IDX], 96, (8,8,8))
+
+    aggregator = tio.inference.GridAggregator(grid_sampler)
+    
+    patch_loader = torch.utils.data.DataLoader(grid_sampler, batch_size=2, num_workers=0)
+
+    with torch.no_grad():
+        for patches_batch in patch_loader:
+            input_tensor = patches_batch["CT"]["data"].to(device)
+            locations = patches_batch[tio.LOCATION]
+            pred = model(input_tensor)
+            aggregator.add_batch(pred, locations)
+
+    output_tensor = aggregator.get_output_tensor()
+
+    fig = plt.figure(figsize=(10, 10))
+    camera = Camera(fig)
+    pred = output_tensor.argmax()
+
+    for i in range(0, output_tensor.shape[-1], 2):
+        plt.imshow(imgs[0,:,:,i], cmap="gray")
+        mask_ = np.ma.masked_where(mask[0,:,:,i] == 0, mask[0,:,:,i])
+        plt.imshow(mask_, cmap="autumn", alpha=0.5)
+        camera.snap()
+
+    animation = camera.animate(interval=100)
