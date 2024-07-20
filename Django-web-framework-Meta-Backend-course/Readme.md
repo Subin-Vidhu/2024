@@ -615,7 +615,7 @@
     - HTTPS uses port 443 by default.
     - HTTPS is used to protect sensitive information.
     - HTTPS is used to prevent eavesdropping and tampering.
-    - HTTPS is used to verify the identity of the server.s
+    - HTTPS is used to verify the identity of the server.
 
 - Request and Response Objects: [Refer me](https://www.coursera.org/learn/django-web-framework/supplement/DMTe5/request-and-response-objects)
 
