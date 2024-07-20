@@ -36,3 +36,5 @@ Courses and Challenges Completed
     Telegram : 20
 
 21. Complete SQL + Databases Bootcamp || [Link](https://github.com/Subin-Vidhu/2024/tree/main/Complete%20SQL%20%2B%20Databases%20Bootcamp)  || Telegram : 21
+
+22. Django-web-framework-Meta-Backend-course || [Link](https://github.com/Subin-Vidhu/2024/tree/main/Django-web-framework-Meta-Backend-course) || Telegram : 22
