@@ -56,3 +56,16 @@
     <img src="image-2.png" alt="drawing" width="300"/>
 
 ###### Insurance and Intermediaries for Risk Pooling
+
+- `Intermediaries`: entities that collect fund from a group of people, pool the funds, and uses them to pay for healthcare for people who are covered by the pool.
+
+- Risk pooling is a concept used to solve the problem of risk in healthcare delivery.
+- Intermediaries are organizations that collect funds from a group of people, pool the funds, and use them to pay for healthcare for the covered individuals.
+- Intermediaries can be private insurance companies, payers, or health plans.
+- Insurance companies sell health insurance policies that provide coverage for medical bills under certain conditions.
+- Enrollees or beneficiaries are the individuals covered by the insurance policy.
+- Insurance policies are purchased through premiums, which are the price of the policy.
+- Insurance companies pool the premiums collected from a large group of people to create a fund for paying medical bills.
+- Government programs also act as intermediaries and pool risk by collecting funds from the population to finance healthcare costs.
+- With intermediaries in the picture, funds flow from the population to the intermediaries, who then pay healthcare providers for providing care to the patients.
+- Out-of-pocket payments and cost-sharing are still common in healthcare systems, even with insurance coverage.
