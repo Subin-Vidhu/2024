@@ -39,3 +39,5 @@
 - The problem of risk broke the original transaction and our ability to treat healthcare as a simple good or service.
 - Addressing the problem of risk is crucial to ensure access to healthcare and the sustainability of healthcare providers.
 
+    <!-- ![alt text](image-1.png) -->
+    <img src="image-1.png" alt="drawing" width="300"/>
