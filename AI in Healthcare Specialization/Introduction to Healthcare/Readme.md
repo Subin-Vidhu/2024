@@ -85,3 +85,5 @@
     - Government programs: act as intermediaries by collecting funds from the population to finance healthcare costs.
 
     - Insurance companies sell insurance policies to their enrollees, who pay the insurance company a premium to be covered under that policy. Governments collect funds, either through the tax system or via a premium system, and use those funds to cover the health costs for a group of people.
+
+###### Beyond Patients, Providers, and Intermediaries: Other Players in the Health Care System
