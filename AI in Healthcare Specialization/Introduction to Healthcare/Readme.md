@@ -45,3 +45,12 @@
 ###### Risk Pooling
 
 - `Risk pooling`: sharing the risk among a group of people to reduce the financial impact of any one person's loss.
+
+- Risk pooling is a solution to the problem of risk in healthcare systems.
+- Risk pooling involves getting a group of people together to contribute an equal share to cover the medical bills of the group.
+- By pooling the risk, individuals in the group share the costs of medical care, reducing their individual risk.
+- Risk pooling helps replace uncertain and potentially large costs with more predictable and manageable costs.
+- It involves shifting the risk from individuals to the group, which is collectively better positioned to handle it.
+
+    <!-- ![alt text](image-2.png) -->
+    <img src="image-2.png" alt="drawing" width="300"/>
