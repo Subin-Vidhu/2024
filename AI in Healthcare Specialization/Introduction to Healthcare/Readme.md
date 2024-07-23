@@ -103,3 +103,20 @@ Once intermediaries hold the risk, they have a fixed pool of money collected fro
 - Intermediaries can be used in various combinations in different countries, and there is no single intermediary that covers everyone.
 - Some intermediaries may serve specific populations or geographic areas, while others offer multiple choices for individuals to opt for.
 - Examples include the Medicare program in the US for people over 65, the National Health Service in the UK, and private insurance options in both countries.
+
+    <!-- ![alt text](image-4.png) -->
+    <img src="image-4.png" alt="drawing" width="300"/>
+
+- The second video provides an overview of the different types of providers in the healthcare system.
+- It categorizes providers into two groups: medical professionals and organizations.
+- Medical professionals include physicians, nurses, nurse practitioners, physician assistants, and other specialized professionals.
+- Physicians have focused training in a particular area of medicine and work in outpatient or inpatient settings.
+- Nurses play an essential role in providing care and often work as part of a team with physicians.
+- Other professionals in the healthcare system include optometrists, midwives, pharmacists, dentists, therapists, and emergency medical providers.
+- Organizations in the healthcare system include physician practices, hospitals, and independent facilities.
+- Physician practices provide administrative and physical infrastructure for outpatient care.
+- Hospitals provide more complex care for inpatients and have facilities for surgeries and advanced testing.
+- Independent facilities include laboratories, ambulatory surgery facilities, diagnostic imaging facilities, pharmacies, rehabilitation facilities, and long-term care facilities.
+- These organizations can be owned and operated by governments or privately owned.
+- In some systems, physicians and facilities are organized separately, while in others they may be more closely integrated.
+The video emphasizes the importance of collaboration between medical professionals and organizations in delivering care.
