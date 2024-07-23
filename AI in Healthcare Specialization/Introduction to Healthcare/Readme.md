@@ -185,6 +185,11 @@ The video emphasizes the importance of collaboration between medical professiona
 - The video discusses the challenge of improving quality in healthcare systems.
 - Healthcare is complex and rapidly changing, making it difficult to provide high-quality care.
 - Underuse, overuse, and misuse of services are common challenges in healthcare.
+    - `Underuse`: People don’t use enough of a beneficial service (e.g. vaccines).
+
+    - `Overuse`: Services that only have value for some patients are used by others as well (e.g. MRI scans are given to every person who comes to the emergency department for back pain).
+
+    - `Misuse`: Giving a patient a service when it is not indicated (e.g. giving blood thinners to patient in whom they are contraindicated).
 - Providers and the healthcare system are motivated to improve quality and address these challenges.
 - Efforts to monitor care, create data, and design better systems are being made to improve quality.
 - Access to care and coverage is another challenge in healthcare systems.
