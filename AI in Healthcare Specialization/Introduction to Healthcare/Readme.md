@@ -191,3 +191,16 @@ The video emphasizes the importance of collaboration between medical professiona
 - Socioeconomic disparities, cultural issues, and lack of providers can contribute to access challenges.
 - Participants in the healthcare system are interested in finding approaches to improve access.
 - The video highlights the opportunities for improvement in quality and access in healthcare systems.
+
+###### Lessons for AI and Data
+
+- The video starts by discussing the wide variety of players in the healthcare system and the different roles they play. It emphasizes that when working on AI and healthcare, it is important to consider the different parts of the healthcare system and what they might want from AI.
+- Intermediaries, such as insurance companies, have a population to manage and are looking for tools that can help them identify possible health issues in their population and provide access to necessary resources.
+- Providers, such as physicians, are focused on providing healthcare to their patients. They need tools that can help them manage incoming information, diagnose and create treatment plans, and identify patients who may need services in the future.
+- Patients themselves have interests in keeping themselves healthy and may want to find out if they need medical care. Patient-directed solutions can be beneficial in this regard.
+- The video then shifts its focus to the data aspect of healthcare. 
+- Different entities in the healthcare system have different kinds of data.
+- Providers often have data from their work with patients, which is stored in electronic health records (EHRs). EHR data can be useful but may have idiosyncrasies, such as text fields that are not always easy to handle and less information on payments or business matters.
+- Intermediaries, on the other hand, have data associated with paying providers. This data can provide insights into where patients are receiving services and how much they cost.
+- Governments, as regulators of the healthcare system, keep track of licensed hospitals and physician licenses. Other entities, such as pharmacies, may also collect data on the drugs they sell.
+- The video concludes by emphasizing the importance of paying attention to the fact that data in healthcare comes from different sources, is used for different reasons, and has different issues. It highlights the need for innovation, new ideas, processes, and technologies to address the challenges in the healthcare system.
