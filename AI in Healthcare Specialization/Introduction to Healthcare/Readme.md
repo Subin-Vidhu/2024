@@ -21,3 +21,5 @@
 - The videos explore the transition from simple transactions to complex healthcare systems.
 - The videos highlight the importance of compensation for sustainable healthcare provision.
 
+    <!-- ![alt text](image.png) -->
+    <img src="image.png" alt="drawing" width="300"/>
