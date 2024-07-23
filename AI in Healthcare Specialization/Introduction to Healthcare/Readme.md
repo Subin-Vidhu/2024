@@ -16,7 +16,8 @@
 ###### Basic Structure of the Healthcare System
 
 - The videos discuss the interaction between patients and healthcare providers in a healthcare system.
-- The goal is to facilitate healthcare flow from providers to patients, including treatment, prevention, and information.
+- The goal is to facilitate `healthcare flow` from providers to patients, including treatment, prevention, and information.
 - Healthcare systems have evolved from simple interactions to modern systems that require compensation for providers.
 - The videos explore the transition from simple transactions to complex healthcare systems.
 - The videos highlight the importance of compensation for sustainable healthcare provision.
+
