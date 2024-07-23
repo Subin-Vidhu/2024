@@ -76,3 +76,6 @@
 - Government programs also act as intermediaries and pool risk by collecting funds from the population to finance healthcare costs.
 - With intermediaries in the picture, funds flow from the population to the intermediaries, who then pay healthcare providers for providing care to the patients.
 - Out-of-pocket payments and cost-sharing are still common in healthcare systems, even with insurance coverage.
+
+    <!-- ![alt text](image-3.png) -->
+    <img src="image-3.png" alt="drawing" width="300"/>
