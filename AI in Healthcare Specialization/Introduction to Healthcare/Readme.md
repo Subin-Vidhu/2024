@@ -93,3 +93,13 @@
 - Many companies provide goods and services used by providers and patients, such as drugs, devices, and data systems.
 - Professional societies and organizations also work with providers and contribute to the healthcare system.
 - Healthcare systems have various components, with a focus on intermediaries and providers, but other entities are also important.
+
+###### Overview of the Types and Roles of Intermediaries
+
+- Intermediaries play a crucial role in the healthcare system by pulling risk and managing the cost of care for their members.
+Once intermediaries hold the risk, they have a fixed pool of money collected from premiums and are responsible if their members require a lot of care.
+- Intermediaries have an interest in influencing the care their members receive to manage costs in a responsible way and retain customers.
+- Different intermediaries may have varying approaches to managing care, such as HMOs, PPOs, and high deductible health plans.
+- Intermediaries can be used in various combinations in different countries, and there is no single intermediary that covers everyone.
+- Some intermediaries may serve specific populations or geographic areas, while others offer multiple choices for individuals to opt for.
+- Examples include the Medicare program in the US for people over 65, the National Health Service in the UK, and private insurance options in both countries.
