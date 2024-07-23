@@ -38,3 +38,4 @@
 - Risk is common and widespread today, as healthcare costs can be significant and unpredictable.
 - The problem of risk broke the original transaction and our ability to treat healthcare as a simple good or service.
 - Addressing the problem of risk is crucial to ensure access to healthcare and the sustainability of healthcare providers.
+
