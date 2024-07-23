@@ -26,4 +26,4 @@
 
 ###### Problem of Risk
 
-- Risk: the possibility of facing a financial loss associated with the use of using a particular healthcare service.
+- `Risk`: the possibility of facing a financial loss associated with the use of using a particular healthcare service.
