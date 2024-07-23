@@ -79,3 +79,9 @@
 
     <!-- ![alt text](image-3.png) -->
     <img src="image-3.png" alt="drawing" width="300"/>
+
+- Difference between private insurance companies and government programs:
+    - Private insurance companies: sell health insurance policies that provide coverage for medical bills under certain conditions.
+    - Government programs: act as intermediaries by collecting funds from the population to finance healthcare costs.
+
+    - Insurance companies sell insurance policies to their enrollees, who pay the insurance company a premium to be covered under that policy. Governments collect funds, either through the tax system or via a premium system, and use those funds to cover the health costs for a group of people.
