@@ -120,3 +120,27 @@ Once intermediaries hold the risk, they have a fixed pool of money collected fro
 - These organizations can be owned and operated by governments or privately owned.
 - In some systems, physicians and facilities are organized separately, while in others they may be more closely integrated.
 The video emphasizes the importance of collaboration between medical professionals and organizations in delivering care.
+
+- Some key definitions:
+
+    - Specialty: Physicians often have focused training in a particular area of medicine, which is referred to as their specialty. Examples of specialties include internist, pediatrician, cardiologist, and thoracic surgeon. Physicians are often referred to by their specialty, as it indicates their area of expertise.
+
+    - Outpatient: Outpatient settings refer to healthcare settings that are outside of a hospital. Examples include physician offices, clinics, and surgical centers. In outpatient care, patients come in, see a provider, receive any necessary consultation or treatment, and then go back home on the same day.
+
+    - Inpatient: Inpatient care refers to healthcare provided to patients in hospitals. Patients needing inpatient care are admitted to the hospital, stay there for a period of time to receive care, and then go home when they are done.
+
+    - Nurse Practitioner: Nurse practitioners are advanced practice registered nurses who have additional training and education beyond that of a registered nurse. They can provide a wide range of healthcare services, including diagnosing and treating illnesses, prescribing medications, and managing overall patient care.
+
+    - Physician Assistant: Physician assistants are healthcare professionals who work under the supervision of physicians. They can perform various tasks, such as taking medical histories, conducting physical examinations, ordering and interpreting diagnostic tests, and assisting in surgeries.
+
+    - Specialty Providers: In addition to physicians, there are other professionals with specialized expertise who provide care in specific areas. Examples include optometrists (eye care), midwives (maternity care), pharmacists (medication management), dentists (oral health), therapists (mental health), and emergency medical providers (emergency care).
+
+    - Physician Practices: Physician practices are organizations within which physicians work. They provide the administrative and physical infrastructure that physicians need to deliver care. This includes rooms, equipment, and support staff like nurses and scheduling/billing personnel. Physician practices mainly focus on providing infrastructure for outpatient care.
+
+    - Hospitals: Hospitals are organizations that provide more complex care for inpatients. They have facilities such as beds, surgical suites, advanced testing and imaging equipment, and specialized departments. Hospitals also employ a range of medical professionals, including nurses, to provide care to patients.
+
+    - Independent Organizations: These are organizations that provide facilities for specific types of medical care but are not part of a physician practice or a hospital. Examples include laboratories for diagnostic testing, ambulatory surgery facilities, diagnostic imaging facilities, pharmacies, rehabilitation facilities, and long-term care facilities. These organizations can operate independently in the community or be associated with hospitals or physician practices.
+
+    - For-Profit and Nonprofit Organizations: Healthcare organizations can be owned and operated under different arrangements. In some systems, such as the United States, organizations like physician practices, hospitals, and independent facilities are privately owned and operated separately from the government. They function like businesses, providing care in exchange for compensation. Some organizations are explicitly for-profit, aiming to earn profits for their owners, while others may be nonprofit with a broader mission beyond earning profits. Nonprofits still need to be economically successful to stay in operation.
+
+    - Integration of Physicians and Facilities: In some healthcare systems, physicians or physician practices and facilities like hospitals are organized separately but work closely together. For example, in the US, a physician may provide medical care while the hospital provides the facilities. In other systems, there may be closer integration, with the hospital employing physicians and providing both facilities and physician services within the same organization.
