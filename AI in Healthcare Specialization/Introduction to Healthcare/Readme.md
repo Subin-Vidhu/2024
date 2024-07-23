@@ -43,3 +43,5 @@
     <img src="image-1.png" alt="drawing" width="300"/>
 
 ###### Risk Pooling
+
+- `Risk pooling`: sharing the risk among a group of people to reduce the financial impact of any one person's loss.
