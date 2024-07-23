@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Refresh Alert and Disable All Keyboard Shortcuts and Inspect</title>
+</head>
+<body>
+  <h1>Refresh Alert and Disable All Keyboard Shortcuts and Inspect Test Page</h1>
+  <p>Try refreshing this page to see the alert! (Note: All keyboard shortcuts for refresh and inspect are disabled)</p>
+  <script>
+    // Disable all keyboard shortcuts for refresh
+    document.addEventListener('keydown', function(event) {
+      if (event.ctrlKey && (event.key === 'r' || event.key === 'R')) { // Ctrl+R
+        event.preventDefault();
+      } else if (event.metaKey && (event.key === 'r' || event.key === 'R')) { // Command+R (Mac)
+        event.preventDefault();
+      } else if (event.key === 'F5') { // F5
+        event.preventDefault();
+      } else if (event.ctrlKey && event.shiftKey && (event.key === 'r' || event.key === 'R')) { // Ctrl+Shift+R
+        event.preventDefault();
+      } else if (event.metaKey && event.shiftKey && (event.key === 'r' || event.key === 'R')) { // Command+Shift+R (Mac)
+        event.preventDefault();
+      } else if (event.ctrlKey && event.shiftKey && event.key === 'I') { // Ctrl+Shift+I
+        event.preventDefault();
+      } else if (event.metaKey && event.shiftKey && event.key === 'I') { // Command+Shift+I (Mac)
+        event.preventDefault();
+      } else if (event.ctrlKey && event.shiftKey && event.key === 'J') { // Ctrl+Shift+J
+        event.preventDefault();
+      } else if (event.metaKey && event.shiftKey && event.key === 'J') { // Command+Shift+J (Mac)
+        event.preventDefault();
+      } else if (event.key === 'F12') { // F12
+        event.preventDefault();
+      }
+    });
+
+    // Disable right-click context menu
+    document.addEventListener('contextmenu', function(event) {
+      event.preventDefault();
+    });
+
+    // Disable inspect element
+    document.addEventListener('mouseover', function(event) {
+      if (event.ctrlKey || event.metaKey) {
+        event.preventDefault();
+      }
+    });
+
+    // Show alert on page refresh
+    window.addEventListener('beforeunload', function(event) {
+      event.preventDefault();
+      alert('You are about to refresh the page!');
+      return 'You are about to refresh the page!';
+    });
+  </script>
+</body>
+</html>
