@@ -87,3 +87,9 @@
     - Insurance companies sell insurance policies to their enrollees, who pay the insurance company a premium to be covered under that policy. Governments collect funds, either through the tax system or via a premium system, and use those funds to cover the health costs for a group of people.
 
 ###### Beyond Patients, Providers, and Intermediaries: Other Players in the Health Care System
+
+- The healthcare system involves relationships between patients, providers, and intermediaries.
+- Governments play a role in setting up and operating intermediaries, providing care, and regulating the healthcare system.
+- Many companies provide goods and services used by providers and patients, such as drugs, devices, and data systems.
+- Professional societies and organizations also work with providers and contribute to the healthcare system.
+- Healthcare systems have various components, with a focus on intermediaries and providers, but other entities are also important.
