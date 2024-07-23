@@ -144,3 +144,18 @@ The video emphasizes the importance of collaboration between medical professiona
     - For-Profit and Nonprofit Organizations: Healthcare organizations can be owned and operated under different arrangements. In some systems, such as the United States, organizations like physician practices, hospitals, and independent facilities are privately owned and operated separately from the government. They function like businesses, providing care in exchange for compensation. Some organizations are explicitly for-profit, aiming to earn profits for their owners, while others may be nonprofit with a broader mission beyond earning profits. Nonprofits still need to be economically successful to stay in operation.
 
     - Integration of Physicians and Facilities: In some healthcare systems, physicians or physician practices and facilities like hospitals are organized separately but work closely together. For example, in the US, a physician may provide medical care while the hospital provides the facilities. In other systems, there may be closer integration, with the hospital employing physicians and providing both facilities and physician services within the same organization.
+
+###### Providers and Levels of Care
+
+- The first level is primary care, which is the initial and most generalized care a patient receives.
+- Primary care providers treat a wide range of general conditions and can refer patients to specialized physicians if needed.
+- Primary care is often provided by physicians in specialties like general practice, family medicine, internal medicine, pediatrics, geriatrics, or obstetrics and gynecology.
+- Primary care can also be provided by nurse practitioners or physician assistants.
+- The next level is secondary care, which is for less common and more complex conditions that require specialized treatment.
+- Physicians providing secondary care are often called specialists or consultants.
+- Secondary care can be provided in outpatient settings or in hospitals.
+- The third level is tertiary care, which involves even more specialized care and advanced treatments.
+- Tertiary care is less commonly needed than secondary care and is associated with inpatient care.
+- Tertiary care is provided by highly specialized physicians in referral centers with advanced technologies.
+- The fourth level, quaternary care, is an extension of tertiary care and involves very advanced and experimental treatments.
+- Quaternary care is associated with large, advanced hospitals and academic institutions.- 
