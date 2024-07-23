@@ -162,3 +162,20 @@ The video emphasizes the importance of collaboration between medical professiona
 
     <!-- ![alt text](image-5.png) -->
     <img src="image-5.png" alt="drawing" width="300"/>
+
+
+##### The Challenge of Rising Health Care Costs
+
+- The video discusses the challenges in the healthcare system that drive discussions about policies and business opportunities.
+- Healthcare costs are high and continue to grow over time in many countries.
+- Healthcare spending as a percent of the gross domestic product (GDP) is used as a measure of healthcare expense.
+- Most countries spend a significant amount on healthcare, with some countries, like the US, having higher spending than others.
+- The increase in healthcare costs can be attributed to factors such as an aging population, increased population incomes, price increases, and advances in technology.
+- The high and rising costs raise questions about the value of healthcare and the fairness of prices.
+- There is a need to eliminate waste and improve value in healthcare systems.
+- Intermediaries, such as private insurers and governments, play a role in managing costs.
+- Healthcare providers and individual patients also have a stake in managing healthcare services and costs.
+- Questions about healthcare spending and costs will continue to drive discussions and the need for innovation and ideas.
+
+    <!-- ![alt text](image-6.png) -->
+    <img src="image-6.png" alt="drawing" width="300"/>
