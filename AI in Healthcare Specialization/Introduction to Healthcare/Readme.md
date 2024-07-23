@@ -179,3 +179,6 @@ The video emphasizes the importance of collaboration between medical professiona
 
     <!-- ![alt text](image-6.png) -->
     <img src="image-6.png" alt="drawing" width="300"/>
+
+###### The Challenges of Quality and Access
+
