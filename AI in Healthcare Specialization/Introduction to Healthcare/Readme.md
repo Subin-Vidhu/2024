@@ -148,14 +148,14 @@ The video emphasizes the importance of collaboration between medical professiona
 ###### Providers and Levels of Care
 
 - The first level is primary care, which is the initial and most generalized care a patient receives.
-- Primary care providers treat a wide range of general conditions and can refer patients to specialized physicians if needed.
-- Primary care is often provided by physicians in specialties like general practice, family medicine, internal medicine, pediatrics, geriatrics, or obstetrics and gynecology.
-- Primary care can also be provided by nurse practitioners or physician assistants.
+    - Primary care providers treat a wide range of general conditions and can refer patients to specialized physicians if needed.
+    - Primary care is often provided by physicians in specialties like general practice, family medicine, internal medicine, pediatrics, geriatrics, or obstetrics and gynecology.
+    - Primary care can also be provided by nurse practitioners or physician assistants.
 - The next level is secondary care, which is for less common and more complex conditions that require specialized treatment.
-- Physicians providing secondary care are often called specialists or consultants.
-- Secondary care can be provided in outpatient settings or in hospitals.
+    - Physicians providing secondary care are often called specialists or consultants.
+    - Secondary care can be provided in outpatient settings or in hospitals.
 - The third level is tertiary care, which involves even more specialized care and advanced treatments.
-- Tertiary care is less commonly needed than secondary care and is associated with inpatient care.
-- Tertiary care is provided by highly specialized physicians in referral centers with advanced technologies.
+    - Tertiary care is less commonly needed than secondary care and is associated with inpatient care.
+    - Tertiary care is provided by highly specialized physicians in referral centers with advanced technologies.
 - The fourth level, quaternary care, is an extension of tertiary care and involves very advanced and experimental treatments.
-- Quaternary care is associated with large, advanced hospitals and academic institutions.- 
+    - Quaternary care is associated with large, advanced hospitals and academic institutions.
