@@ -159,3 +159,6 @@ The video emphasizes the importance of collaboration between medical professiona
     - Tertiary care is provided by highly specialized physicians in referral centers with advanced technologies.
 - The fourth level, quaternary care, is an extension of tertiary care and involves very advanced and experimental treatments.
     - Quaternary care is associated with large, advanced hospitals and academic institutions.
+
+    <!-- ![alt text](image-5.png) -->
+    <img src="image-5.png" alt="drawing" width="300"/>
