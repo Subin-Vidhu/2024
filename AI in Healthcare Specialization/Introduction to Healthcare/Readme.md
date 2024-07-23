@@ -182,3 +182,12 @@ The video emphasizes the importance of collaboration between medical professiona
 
 ###### The Challenges of Quality and Access
 
+- The video discusses the challenge of improving quality in healthcare systems.
+- Healthcare is complex and rapidly changing, making it difficult to provide high-quality care.
+- Underuse, overuse, and misuse of services are common challenges in healthcare.
+- Providers and the healthcare system are motivated to improve quality and address these challenges.
+- Efforts to monitor care, create data, and design better systems are being made to improve quality.
+- Access to care and coverage is another challenge in healthcare systems.
+- Socioeconomic disparities, cultural issues, and lack of providers can contribute to access challenges.
+- Participants in the healthcare system are interested in finding approaches to improve access.
+- The video highlights the opportunities for improvement in quality and access in healthcare systems.
