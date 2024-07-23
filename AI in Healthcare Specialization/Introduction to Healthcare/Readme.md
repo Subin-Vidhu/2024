@@ -27,3 +27,14 @@
 ###### Problem of Risk
 
 - `Risk`: the possibility of facing a financial loss associated with the use of using a particular healthcare service.
+
+- The original transaction between patients and healthcare providers was a simple exchange of healthcare for compensation.
+- Healthcare providers became increasingly able to offer valuable services to patients, leading to a greater need for access to professional healthcare.
+- Healthcare also became more expensive as providers offered more sophisticated treatments.
+- Patients faced the risk of large, unplanned medical bills that they may have trouble paying.
+- This created discomfort for patients and affected their future willingness to use the healthcare system.
+- Providers also faced challenges when patients couldn't afford the care they received, leading to unpaid bills.
+- The problem of risk refers to the possibility of facing a financial loss associated with the use of healthcare.
+- Risk is common and widespread today, as healthcare costs can be significant and unpredictable.
+- The problem of risk broke the original transaction and our ability to treat healthcare as a simple good or service.
+- Addressing the problem of risk is crucial to ensure access to healthcare and the sustainability of healthcare providers.
