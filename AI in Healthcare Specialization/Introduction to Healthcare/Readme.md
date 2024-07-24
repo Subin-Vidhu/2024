@@ -229,3 +229,13 @@ The video emphasizes the importance of collaboration between medical professiona
 
 ###### Physicians, Intermediaries, and Networks
 
+- The video discusses the role of intermediaries in the healthcare system and how they facilitate the flow of funds between patients and providers.
+- Intermediaries: Organizations that have agreements with physician practices to provide care to their enrollees and handle payment arrangements.
+- Physician Practices: Privately run practices that have arrangements or agreements with intermediaries to provide care to patients and receive payment.
+- Physician Networks: A particular set of physicians or practices with whom insurers work, and which the members covered by the insurer will be encouraged or required to see for covered care.
+- In-Network: Physicians or practices that have negotiated an arrangement with an insurer to be part of their network, allowing the insurer to cover or contribute to the cost of their care for the insurer's members.
+- Out-of-Network: Physicians or practices that do not have an arrangement with a particular insurer, making it more difficult for the insurer's members to use their services.
+- Independent Practice Associations (IPAs): Organizations that help smaller practices by organizing them into a network and negotiating agreements with insurers on their behalf.
+- Payment Arrangements: Terms and agreements between intermediaries and physician practices regarding the payment for services provided to patients.
+- Size and Structure of Practices: The size and management structure of physician practices can influence the negotiation and arrangement process with intermediaries.
+- Contracting Directly: Some practices may choose to negotiate agreements directly with insurers instead of going through an IPA or other network organizer. 
