@@ -214,3 +214,15 @@ The video emphasizes the importance of collaboration between medical professiona
 
 ###### Characteristics of Physician Practices
 
+- The video discusses how physicians provide services and the organizations in which they work, known as physician practices.
+- Physician practices can be organized in different ways, such as independent entities or government-owned.
+- Practices can vary in size, from solo practices with one physician to large practices with hundreds or even thousands of physicians.
+- As practices get larger, they may be called medical groups or physician organizations.
+- Ownership structures also change with practice size, with smaller practices commonly owned by physicians and larger practices having more complex ownership structures.
+- Management and staffing also differ based on practice size, with larger practices having more resources and elaborate management structures.
+- Larger practices often have multi-specialty physicians and may offer in-house services like imaging and laboratory services.
+- Some practices have multiple locations, serving different communities.
+- Understanding the variety of physician practices helps in understanding different ways medical care is delivered and how physicians interact with intermediaries and the flow of funds in healthcare systems.
+
+    <!-- ![alt text](image-7.png) -->
+    <img src="image-7.png" alt="drawing" width="300"/>
