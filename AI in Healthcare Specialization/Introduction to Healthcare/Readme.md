@@ -289,10 +289,10 @@ Other coding systems, such as the Canadian Classification of - Health Interventi
 
 - Definitions mentioned in the video:
 
-- Medicare: The US government payer that provides care mainly to people over age 65.
-- Fee schedule: A list of services and their corresponding payment amounts.
-- HCPCS system: Healthcare Common Procedure Coding System, a standardized coding system for healthcare services.
-- CPT listing: Current Procedural Terminology, a listing of physician services.
-- Relative value units (RVUs): Weights assigned to each service in the fee schedule based on work, expenses, and malpractice risk.
-- Conversion factor: A factor used to convert RVUs into payment amounts.
-- Private insurers: Insurance companies that provide health insurance coverage outside of government programs like Medicare.
+    - Medicare: The US government payer that provides care mainly to people over age 65.
+    - Fee schedule: A list of services and their corresponding payment amounts.
+    - HCPCS system: Healthcare Common Procedure Coding System, a standardized coding system for healthcare services.
+    - CPT listing: Current Procedural Terminology, a listing of physician services.
+    - Relative value units (RVUs): Weights assigned to each service in the fee schedule based on work, expenses, and malpractice risk.
+    - Conversion factor: A factor used to convert RVUs into payment amounts.
+    - Private insurers: Insurance companies that provide health insurance coverage outside of government programs like Medicare.
