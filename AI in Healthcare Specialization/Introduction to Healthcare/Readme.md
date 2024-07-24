@@ -311,10 +311,10 @@ Other coding systems, such as the Canadian Classification of - Health Interventi
 - Capitation arrangements are often used in primary care practices, but can also be used for specialists.
 - Definitions mentioned in the video:
 
-- Capitation: Payment per person, per unit of time.
-- Panel of patients: Population of people associated with a practice.
-- Scope of services: Services included and excluded in the capitation arrangement.
-- Capitation rate: Fixed payment amount per panel patient, per time period.
-- Per member per month (PMPM) amount: Another term for the capitation rate.
-- Fee-for-service: Payment system where physicians get paid for each service provided.
-- Prospective payment: Payment determined before any services are provided.
+    - Capitation: Payment per person, per unit of time.
+    - Panel of patients: Population of people associated with a practice.
+    - Scope of services: Services included and excluded in the capitation arrangement.
+    - Capitation rate: Fixed payment amount per panel patient, per time period.
+    - Per member per month (PMPM) amount: Another term for the capitation rate.
+    - Fee-for-service: Payment system where physicians get paid for each service provided.
+    - Prospective payment: Payment determined before any services are provided.
