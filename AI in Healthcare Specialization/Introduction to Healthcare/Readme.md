@@ -354,3 +354,4 @@ However, dental care or vision care are often not included in capitation agreeme
     - Salaries: Physicians are paid a fixed amount for a specific period of time for carrying out agreed-upon duties.
 
 ###### Risk Shifting in Physician Payment and Multi-Layered Physician Payment Arrangements
+
