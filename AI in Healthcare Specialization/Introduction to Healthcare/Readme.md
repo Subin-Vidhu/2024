@@ -336,3 +336,4 @@ However, dental care or vision care are often not included in capitation agreeme
 
 
 ###### Episode-Based Payment Systems and Salary Systems
+
