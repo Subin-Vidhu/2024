@@ -368,3 +368,6 @@ However, dental care or vision care are often not included in capitation agreeme
     - Capitation: A payment method where an intermediary pays a fixed amount to a physician practice, transferring the financial risk to the practice.
     - Fee-for-service: A payment method where providers are paid for each service or procedure they perform, and the financial risk remains with the intermediary.
     - Independent Practice Association (IPA): An organization that contracts with payers on behalf of individual physician practices, often involving collective payment arrangements.
+
+###### Incentives Created by Physician Payments
+
