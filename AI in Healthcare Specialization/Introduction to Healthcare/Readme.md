@@ -209,3 +209,5 @@ The video emphasizes the importance of collaboration between medical professiona
 - Intermediaries, on the other hand, have data associated with paying providers. This data can provide insights into where patients are receiving services and how much they cost.
 - Governments, as regulators of the healthcare system, keep track of licensed hospitals and physician licenses. Other entities, such as pharmacies, may also collect data on the drugs they sell.
 - The video concludes by emphasizing the importance of paying attention to the fact that data in healthcare comes from different sources, is used for different reasons, and has different issues. It highlights the need for innovation, new ideas, processes, and technologies to address the challenges in the healthcare system.
+
+##### Week 2
