@@ -378,3 +378,6 @@ However, dental care or vision care are often not included in capitation agreeme
 - Designing payment systems that consider incentives and their impact on the healthcare system is essential.
 - Various approaches, such as monitoring care, steering patients towards appropriate care, and using hybrid models, are being explored to manage incentives and optimize healthcare delivery.
 - Attention to the incentives associated with different payment systems is crucial for effective healthcare management.
+
+###### Lessons for AI and Data
+
