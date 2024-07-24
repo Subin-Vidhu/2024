@@ -275,3 +275,23 @@ Other coding systems, such as the Canadian Classification of - Health Interventi
 - The video acknowledges that the specifics of how these coding systems work are beyond the scope of the video.
 
 ###### The Medicare Fee Schedule
+
+- The Medicare fee schedule is a fee schedule used in the US for Medicare payments to physicians.
+- Medicare is a US government payer that provides care mainly to people over age 65.
+- The fee schedule is based on the HCPCS system, which uses the CPT listing of physician services.
+- The Medicare fee schedule assigns a weight to each service based on the amount of work, expenses, and malpractice risk involved.
+- The weights are called relative value units (RVUs) and are used to determine the payment amounts for each service.
+- The Medicare fee schedule is publicly available and is commonly used by private insurers as well.
+- Private insurers often negotiate with physicians based on the Medicare fee schedule.
+- The fee schedule has an enumerated list of services and the number of RVUs associated with each service.
+- There is a conversion factor that converts the RVUs into payment amounts.
+- The Medicare fee schedule is a significant factor in fee-for-service payment in the US.
+- Definitions mentioned in the video:
+
+- Medicare: The US government payer that provides care mainly to people over age 65.
+- Fee schedule: A list of services and their corresponding payment amounts.
+- HCPCS system: Healthcare Common Procedure Coding System, a standardized coding system for healthcare services.
+- CPT listing: Current Procedural Terminology, a listing of physician services.
+- Relative value units (RVUs): Weights assigned to each service in the fee schedule based on work, expenses, and malpractice risk.
+- Conversion factor: A factor used to convert RVUs into payment amounts.
+- Private insurers: Insurance companies that provide health insurance coverage outside of government programs like Medicare.
