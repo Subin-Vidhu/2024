@@ -226,3 +226,5 @@ The video emphasizes the importance of collaboration between medical professiona
 
     <!-- ![alt text](image-7.png) -->
     <img src="image-7.png" alt="drawing" width="300"/>
+
+###### Physicians, Intermediaries, and Networks
