@@ -337,3 +337,17 @@ However, dental care or vision care are often not included in capitation agreeme
 
 ###### Episode-Based Payment Systems and Salary Systems
 
+- The video discusses two physician payment models: episode-based payments and salaries.
+- Episode-based payments are a middle ground between fee-for-service and capitation. In this model, physicians are paid a predefined amount for a specific episode of care, regardless of the services provided within that episode.
+- An episode of care includes a clinical dimension (set of services or medical conditions) and a time dimension (beginning and end of the episode).
+- The payment for an episode is fixed and does not vary with the specific services provided to the patient.
+- Episode-based payments are similar to capitation in that there is no additional payment for providing more services, but they differ in that the payment is for a defined episode only.
+- Salaries are another payment model where physicians are paid a fixed amount for a specific period of time (e.g., month or year) for carrying out agreed-upon duties.
+- Salaries are commonly used in larger physician practices.
+- These payment models, along with fee-for-service and capitation, are different ways of compensating physicians for their services.
+- Definitions mentioned in the video:
+
+- Fee-for-service: Physicians are paid based on the services they perform. The more services they provide, the more they get paid.
+- Capitation: Physicians receive a single payment per person per unit of time, regardless of the number of services provided.
+- Episode-based payments: Physicians are paid a predefined amount for a specific episode of care, regardless of the services provided within that episode.
+- Salaries: Physicians are paid a fixed amount for a specific period of time for carrying out agreed-upon duties.
