@@ -361,9 +361,10 @@ However, dental care or vision care are often not included in capitation agreeme
 - Physician payment arrangements often involve multiple layers. In a small practice, the intermediary pays the practice directly, and the physicians in the practice are paid based on the profits of the practice. In a larger group practice, the group administration may receive payment from the intermediary and then pay the individual doctors based on different arrangements.
 - In the case of smaller practices that have joined an Independent Practice Association (IPA), the IPA receives payment from the payer based on the collective work of all participating practices. - The IPA then pays the individual practices, and the practices determine how the individual physicians will be compensated.
 - Understanding the different layers and stages of payment is important in determining how physicians are paid and how they respond to payment incentives.
+
 - Definitions mentioned in the video:
 
-- Risk: The financial responsibility for healthcare costs, which can be transferred from intermediaries to providers through payment arrangements.
-- Capitation: A payment method where an intermediary pays a fixed amount to a physician practice, transferring the financial risk to the practice.
-- Fee-for-service: A payment method where providers are paid for each service or procedure they perform, and the financial risk remains with the intermediary.
-- Independent Practice Association (IPA): An organization that contracts with payers on behalf of individual physician practices, often involving collective payment arrangements.
+    - Risk: The financial responsibility for healthcare costs, which can be transferred from intermediaries to providers through payment arrangements.
+    - Capitation: A payment method where an intermediary pays a fixed amount to a physician practice, transferring the financial risk to the practice.
+    - Fee-for-service: A payment method where providers are paid for each service or procedure they perform, and the financial risk remains with the intermediary.
+    - Independent Practice Association (IPA): An organization that contracts with payers on behalf of individual physician practices, often involving collective payment arrangements.
