@@ -264,3 +264,12 @@ The video emphasizes the importance of collaboration between medical professiona
 
 ###### Procedure Codes and Diagnosis Codes
 
+- The video discusses coding systems used in the healthcare system, particularly in fee-for-service payment systems.
+- Coding systems are used to specify the list of services that can be provided and billed in a fee-for-service system.
+One commonly used coding system in the US is the Current Procedure Terminology (CPT), which assigns numeric or alphanumeric codes to thousands of services that physicians can provide.
+- Another coding system related to CPT is the Healthcare Common Procedure Coding System (HCPCS), which includes additional items and is commonly used in the US.
+- The International Classification of Diseases, 10th revision (ICD-10), is a coding system used to code diagnoses or conditions that patients have.
+- ICD-10 has thousands of alphanumeric codes for different diagnoses.
+Other coding systems, such as the Canadian Classification of - Health Interventions and systems used in the UK, also exist in different countries.
+- Procedure codes and diagnosis codes are used by many organizations in various contexts within the healthcare system.
+- The video acknowledges that the specifics of how these coding systems work are beyond the scope of the video.
