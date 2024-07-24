@@ -263,3 +263,4 @@ The video emphasizes the importance of collaboration between medical professiona
     - Retrospective payment system: A payment system where the amount of payment is set after the services are delivered and responds to the number of services provided.
 
 ###### Procedure Codes and Diagnosis Codes
+
