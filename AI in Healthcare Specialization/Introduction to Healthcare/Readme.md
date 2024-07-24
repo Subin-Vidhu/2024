@@ -213,3 +213,4 @@ The video emphasizes the importance of collaboration between medical professiona
 ##### Week 2
 
 ###### Characteristics of Physician Practices
+
