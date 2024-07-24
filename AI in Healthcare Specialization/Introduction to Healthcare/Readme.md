@@ -298,3 +298,4 @@ Other coding systems, such as the Canadian Classification of - Health Interventi
     - Private insurers: Insurance companies that provide health insurance coverage outside of government programs like Medicare.
 
 ###### Capitation Payment Systems: Overview and Structure
+
