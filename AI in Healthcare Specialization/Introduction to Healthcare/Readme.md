@@ -274,3 +274,4 @@ Other coding systems, such as the Canadian Classification of - Health Interventi
 - Procedure codes and diagnosis codes are used by many organizations in various contexts within the healthcare system.
 - The video acknowledges that the specifics of how these coding systems work are beyond the scope of the video.
 
+###### The Medicare Fee Schedule
