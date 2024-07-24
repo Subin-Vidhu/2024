@@ -352,3 +352,5 @@ However, dental care or vision care are often not included in capitation agreeme
     - Capitation: Physicians receive a single payment per person per unit of time, regardless of the number of services provided.
     - Episode-based payments: Physicians are paid a predefined amount for a specific episode of care, regardless of the services provided within that episode.
     - Salaries: Physicians are paid a fixed amount for a specific period of time for carrying out agreed-upon duties.
+
+###### Risk Shifting in Physician Payment and Multi-Layered Physician Payment Arrangements
