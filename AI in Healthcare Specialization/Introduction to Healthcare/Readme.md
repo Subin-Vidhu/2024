@@ -333,3 +333,5 @@ However, dental care or vision care are often not included in capitation agreeme
 - Large organizations with many providers and the capability to deliver a broad range of care are more likely to accept global capitation agreements.
 
     - Physicians are mainly paid in the US either through a fee-for-service (FFS) system, in which they are paid for each specific service given, or through a capitation model, in which they are given a panel of patients and paid a sum of money to handle those patients’ care for a given time period, regardless of services rendered during that time. Physicians might prefer that in FFS, they are incentivized to provide any care that is indicated for a patient, regardless of cost or quantity. They may also like that they do not take on any financial risk for the patients they serve. In capitation, physicians may like that they are incentivized to invest more in preventative services that will decrease a patient’s care needs over a longer time period and that they might feel a financial incentive to use services that might be considered unnecessary. 
+
+
