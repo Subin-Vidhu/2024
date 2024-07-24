@@ -211,3 +211,5 @@ The video emphasizes the importance of collaboration between medical professiona
 - The video concludes by emphasizing the importance of paying attention to the fact that data in healthcare comes from different sources, is used for different reasons, and has different issues. It highlights the need for innovation, new ideas, processes, and technologies to address the challenges in the healthcare system.
 
 ##### Week 2
+
+###### Characteristics of Physician Practices
