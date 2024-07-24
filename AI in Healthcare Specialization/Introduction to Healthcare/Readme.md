@@ -299,3 +299,22 @@ Other coding systems, such as the Canadian Classification of - Health Interventi
 
 ###### Capitation Payment Systems: Overview and Structure
 
+- Capitation is a payment model where physicians are paid a fixed amount per person, per unit of time.
+- The first step in a capitation payment model is to identify a population of people associated with a practice, called the panel of patients.
+- A scope of services is defined for the capitation arrangement, specifying the services included and excluded.
+- The practice and the intermediary (insurer) agree on a fixed payment amount per panel patient, per time period (commonly a month), called the capitation rate or per member per month (PMPM) amount.
+- Payments to the practice are determined by multiplying the number of patients in the assigned panel by the PMPM amount.
+- In a pure capitation system, there is no further payment for any particular service provided by the physicians.
+- Capitation arrangements can be applied to different situations, each with their own way of defining the panel, scope, and PMPM.
+- Capitation is the opposite of a fee-for-service system, where physicians get paid for each service provided.
+- Capitation payments are determined before any services are provided and do not change based on the services provided.
+- Capitation arrangements are often used in primary care practices, but can also be used for specialists.
+- Definitions mentioned in the video:
+
+- Capitation: Payment per person, per unit of time.
+- Panel of patients: Population of people associated with a practice.
+- Scope of services: Services included and excluded in the capitation arrangement.
+- Capitation rate: Fixed payment amount per panel patient, per time period.
+- Per member per month (PMPM) amount: Another term for the capitation rate.
+- Fee-for-service: Payment system where physicians get paid for each service provided.
+- Prospective payment: Payment determined before any services are provided.
