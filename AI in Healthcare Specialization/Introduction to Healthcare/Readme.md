@@ -348,7 +348,7 @@ However, dental care or vision care are often not included in capitation agreeme
 
 - Definitions mentioned in the video:
 
-- Fee-for-service: Physicians are paid based on the services they perform. The more services they provide, the more they get paid.
-- Capitation: Physicians receive a single payment per person per unit of time, regardless of the number of services provided.
-- Episode-based payments: Physicians are paid a predefined amount for a specific episode of care, regardless of the services provided within that episode.
-- Salaries: Physicians are paid a fixed amount for a specific period of time for carrying out agreed-upon duties.
+    - Fee-for-service: Physicians are paid based on the services they perform. The more services they provide, the more they get paid.
+    - Capitation: Physicians receive a single payment per person per unit of time, regardless of the number of services provided.
+    - Episode-based payments: Physicians are paid a predefined amount for a specific episode of care, regardless of the services provided within that episode.
+    - Salaries: Physicians are paid a fixed amount for a specific period of time for carrying out agreed-upon duties.
