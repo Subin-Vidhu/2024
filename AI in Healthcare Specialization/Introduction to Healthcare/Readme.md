@@ -273,3 +273,4 @@ One commonly used coding system in the US is the Current Procedure Terminology (
 Other coding systems, such as the Canadian Classification of - Health Interventions and systems used in the UK, also exist in different countries.
 - Procedure codes and diagnosis codes are used by many organizations in various contexts within the healthcare system.
 - The video acknowledges that the specifics of how these coding systems work are beyond the scope of the video.
+
