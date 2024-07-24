@@ -252,6 +252,7 @@ The video emphasizes the importance of collaboration between medical professiona
 - Charges on bills may differ from the actual amounts paid.
 - Fee-for-service is a retrospective payment system, where the payment amount is set after the services are delivered and responds to the number of services provided.
 - Physicians may have their own list of charge amounts, but the payer will usually pay the lesser of the charged amount and the allowed or negotiated rate.
+
 - Definitions mentioned in the video:
 
 - Fee-for-service (FFS): A payment model where doctors are paid for each service they provide.
