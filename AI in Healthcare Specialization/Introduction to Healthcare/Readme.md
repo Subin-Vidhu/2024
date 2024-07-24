@@ -239,3 +239,5 @@ The video emphasizes the importance of collaboration between medical professiona
 - Payment Arrangements: Terms and agreements between intermediaries and physician practices regarding the payment for services provided to patients.
 - Size and Structure of Practices: The size and management structure of physician practices can influence the negotiation and arrangement process with intermediaries.
 - Contracting Directly: Some practices may choose to negotiate agreements directly with insurers instead of going through an IPA or other network organizer. 
+
+###### Fee for Service Payment
