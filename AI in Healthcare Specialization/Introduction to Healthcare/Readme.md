@@ -371,3 +371,10 @@ However, dental care or vision care are often not included in capitation agreeme
 
 ###### Incentives Created by Physician Payments
 
+- Incentives in physician payment systems play a crucial role in understanding the challenges and finding solutions in healthcare.
+- Fee-for-service payment methods create incentives for physicians to perform more services or expensive treatments, which can lead to overuse of care and increased costs.
+- Capitation payment methods, on the other hand, incentivize physicians to provide less care for each patient to reduce costs.
+- Salary models offer a more neutral set of incentives for physicians in terms of the amount of care provided.
+- Designing payment systems that consider incentives and their impact on the healthcare system is essential.
+- Various approaches, such as monitoring care, steering patients towards appropriate care, and using hybrid models, are being explored to manage incentives and optimize healthcare delivery.
+- Attention to the incentives associated with different payment systems is crucial for effective healthcare management.
