@@ -241,3 +241,4 @@ The video emphasizes the importance of collaboration between medical professiona
 - Contracting Directly: Some practices may choose to negotiate agreements directly with insurers instead of going through an IPA or other network organizer. 
 
 ###### Fee for Service Payment
+
