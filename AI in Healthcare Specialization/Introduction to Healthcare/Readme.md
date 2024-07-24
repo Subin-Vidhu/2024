@@ -381,3 +381,6 @@ However, dental care or vision care are often not included in capitation agreeme
 
 ###### Lessons for AI and Data
 
+-
+    <!-- ![alt text](image-8.png) -->
+    <img src="image-8.png" alt="drawing" width="300"/>
