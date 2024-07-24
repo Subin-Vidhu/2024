@@ -322,3 +322,12 @@ Other coding systems, such as the Canadian Classification of - Health Interventi
 
 ###### Capitation Payment Systems: Scope of Capitation
 
+- Capitation systems can vary in scope, ranging from partial capitation models to global capitation.
+- Partial capitation models include a subset of medical care, such as outpatient primary care.
+- Global capitation involves accepting a single capitation payment for all medical care a patient might need in a time period.
+- The scope of capitation agreements can be broad, covering primary care, specialty care, hospitalizations, tests, etc.
+However, dental care or vision care are often not included in capitation agreements.
+- The capitation rate, also known as PMPM (per member per month) amount, depends on the scope of the agreement.
+- Global capitation arrangements entail a major change in responsibility and risk for provider organizations.
+- Provider organizations accepting global capitation need to be able to handle the financial risks associated with providing a broad range of care.
+- Large organizations with many providers and the capability to deliver a broad range of care are more likely to accept global capitation agreements.
