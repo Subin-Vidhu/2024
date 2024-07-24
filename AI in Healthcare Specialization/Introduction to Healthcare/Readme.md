@@ -286,6 +286,7 @@ Other coding systems, such as the Canadian Classification of - Health Interventi
 - The fee schedule has an enumerated list of services and the number of RVUs associated with each service.
 - There is a conversion factor that converts the RVUs into payment amounts.
 - The Medicare fee schedule is a significant factor in fee-for-service payment in the US.
+
 - Definitions mentioned in the video:
 
 - Medicare: The US government payer that provides care mainly to people over age 65.
