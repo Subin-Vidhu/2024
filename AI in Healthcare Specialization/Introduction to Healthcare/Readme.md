@@ -309,6 +309,7 @@ Other coding systems, such as the Canadian Classification of - Health Interventi
 - Capitation is the opposite of a fee-for-service system, where physicians get paid for each service provided.
 - Capitation payments are determined before any services are provided and do not change based on the services provided.
 - Capitation arrangements are often used in primary care practices, but can also be used for specialists.
+
 - Definitions mentioned in the video:
 
     - Capitation: Payment per person, per unit of time.
