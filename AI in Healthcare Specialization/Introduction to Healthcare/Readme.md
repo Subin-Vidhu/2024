@@ -255,9 +255,9 @@ The video emphasizes the importance of collaboration between medical professiona
 
 - Definitions mentioned in the video:
 
-- Fee-for-service (FFS): A payment model where doctors are paid for each service they provide.
-- Fee schedule: A list of services a physician can provide and the payment amounts associated with each one.
-- Allowed amount: The payment amount that an intermediary is willing to pay for a given service.
-- Negotiated rate: The agreed-upon payment amount between an intermediary and a physician practice for a given service.
-- Charge master: A physician practice's list of charge amounts for services.
-- Retrospective payment system: A payment system where the amount of payment is set after the services are delivered and responds to the number of services provided.
+    - Fee-for-service (FFS): A payment model where doctors are paid for each service they provide.
+    - Fee schedule: A list of services a physician can provide and the payment amounts associated with each one.
+    - Allowed amount: The payment amount that an intermediary is willing to pay for a given service.
+    - Negotiated rate: The agreed-upon payment amount between an intermediary and a physician practice for a given service.
+    - Charge master: A physician practice's list of charge amounts for services.
+    - Retrospective payment system: A payment system where the amount of payment is set after the services are delivered and responds to the number of services provided.
