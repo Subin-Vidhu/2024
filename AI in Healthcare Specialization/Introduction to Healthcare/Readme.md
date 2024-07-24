@@ -319,3 +319,5 @@ Other coding systems, such as the Canadian Classification of - Health Interventi
     - Per member per month (PMPM) amount: Another term for the capitation rate.
     - Fee-for-service: Payment system where physicians get paid for each service provided.
     - Prospective payment: Payment determined before any services are provided.
+
+###### Capitation Payment Systems: Scope of Capitation
