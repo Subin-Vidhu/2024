@@ -297,3 +297,4 @@ Other coding systems, such as the Canadian Classification of - Health Interventi
     - Conversion factor: A factor used to convert RVUs into payment amounts.
     - Private insurers: Insurance companies that provide health insurance coverage outside of government programs like Medicare.
 
+###### Capitation Payment Systems: Overview and Structure
