@@ -321,3 +321,4 @@ Other coding systems, such as the Canadian Classification of - Health Interventi
     - Prospective payment: Payment determined before any services are provided.
 
 ###### Capitation Payment Systems: Scope of Capitation
+
