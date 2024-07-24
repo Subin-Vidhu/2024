@@ -261,3 +261,5 @@ The video emphasizes the importance of collaboration between medical professiona
     - Negotiated rate: The agreed-upon payment amount between an intermediary and a physician practice for a given service.
     - Charge master: A physician practice's list of charge amounts for services.
     - Retrospective payment system: A payment system where the amount of payment is set after the services are delivered and responds to the number of services provided.
+
+###### Procedure Codes and Diagnosis Codes
