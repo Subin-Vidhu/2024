@@ -345,6 +345,7 @@ However, dental care or vision care are often not included in capitation agreeme
 - Salaries are another payment model where physicians are paid a fixed amount for a specific period of time (e.g., month or year) for carrying out agreed-upon duties.
 - Salaries are commonly used in larger physician practices.
 - These payment models, along with fee-for-service and capitation, are different ways of compensating physicians for their services.
+
 - Definitions mentioned in the video:
 
 - Fee-for-service: Physicians are paid based on the services they perform. The more services they provide, the more they get paid.
