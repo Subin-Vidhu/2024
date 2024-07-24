@@ -242,3 +242,21 @@ The video emphasizes the importance of collaboration between medical professiona
 
 ###### Fee for Service Payment
 
+- The video discusses how physicians are paid in the healthcare system.
+- One model of payment is fee-for-service (FFS), where doctors are paid for each service they provide.
+- In fee-for-service, doctors create a bill for each service and send it to the insurer for payment.
+- Fee schedules are used in fee-for-service, which list all the services a physician can provide and the payment amounts associated with each one.
+- Intermediaries using fee-for-service have a fee schedule that provides the allowed amount or negotiated rate for each service.
+- Patients see a physician for a service, and the physician sends a bill to the insurer with the charged amount.
+- The insurer then compares the charged amount with the allowed amount or negotiated rate and pays the lower amount to the physician.
+- Charges on bills may differ from the actual amounts paid.
+- Fee-for-service is a retrospective payment system, where the payment amount is set after the services are delivered and responds to the number of services provided.
+- Physicians may have their own list of charge amounts, but the payer will usually pay the lesser of the charged amount and the allowed or negotiated rate.
+- Definitions mentioned in the video:
+
+- Fee-for-service (FFS): A payment model where doctors are paid for each service they provide.
+- Fee schedule: A list of services a physician can provide and the payment amounts associated with each one.
+- Allowed amount: The payment amount that an intermediary is willing to pay for a given service.
+- Negotiated rate: The agreed-upon payment amount between an intermediary and a physician practice for a given service.
+- Charge master: A physician practice's list of charge amounts for services.
+- Retrospective payment system: A payment system where the amount of payment is set after the services are delivered and responds to the number of services provided.
