@@ -389,3 +389,13 @@ However, dental care or vision care are often not included in capitation agreeme
 ##### Week 3
 
 - There are multiple payment methods that could be mentioned.  Three might be considered the most common.  Hospitals can be paid on a fee-for-service (FFS) basis, via a flat payment rate system (e.g. a DRG system), or via global budgets. Hospital FFS systems are analogous to physician FFS systems in that hospitals are reimbursed for each service they provide a patient; global budgets are most similar to capitation payment mechanisms for physicians. Flat rate or DRG systems are unique in that they are somewhere in between: they specify a payment that will be made for a given type of hospital stay (e.g. a heart failure admission), given adjustments for factors such as patient age, comorbidities, whether or not a hospital is a teaching or non-teaching hospital, etc. 
+
+- Payers are increasingly becoming interested in pay-for-performance (P4P) payment schemes in the US, which usually include metrics for quality of care. Important design features of any P4P scheme include:  
+
+- What measures should be used?,
+
+- What should be the goal or target to reach for?,
+
+- How should adjustments based on variations such as patient illness severity be made?, and
+
+- How much of the payment should be based on whether or not the goal is met?
