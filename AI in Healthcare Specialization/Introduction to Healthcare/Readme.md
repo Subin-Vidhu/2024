@@ -392,10 +392,10 @@ However, dental care or vision care are often not included in capitation agreeme
 
 - Payers are increasingly becoming interested in pay-for-performance (P4P) payment schemes in the US, which usually include metrics for quality of care. Important design features of any P4P scheme include:  
 
-- What measures should be used?,
+    - What measures should be used?,
 
-- What should be the goal or target to reach for?,
+    - What should be the goal or target to reach for?,
 
-- How should adjustments based on variations such as patient illness severity be made?, and
+    - How should adjustments based on variations such as patient illness severity be made?, and
 
-- How much of the payment should be based on whether or not the goal is met?
+    - How much of the payment should be based on whether or not the goal is met?
