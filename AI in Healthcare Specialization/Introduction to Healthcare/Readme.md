@@ -401,3 +401,5 @@ However, dental care or vision care are often not included in capitation agreeme
     - How should adjustments based on variations such as patient illness severity be made?, and
 
     - How much of the payment should be based on whether or not the goal is met?
+
+##### Week 4
