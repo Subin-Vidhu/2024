@@ -384,3 +384,6 @@ However, dental care or vision care are often not included in capitation agreeme
 -
     <!-- ![alt text](image-8.png) -->
     <img src="image-8.png" alt="drawing" width="300"/>
+
+
+##### Week 3
