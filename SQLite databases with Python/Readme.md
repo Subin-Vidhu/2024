@@ -76,3 +76,10 @@ These are just a few examples of SQL queries that you can use to interact with S
 For more information on SQLite and the `sqlite3` module in Python, refer to the official documentation:
 * [SQLite Documentation](https://www.sqlite.org/docs.html)
          
+Additional SQL Resources
+For more advanced SQL operations and examples, you can refer to the following resources:
+
+SQL Cheat Sheet [Link](https://github.com/Refaat-alktifan/sql-cheat-sheet)
+
+SQL Gist [Link](https://gist.github.com/imShakil/478859e7a1aba8e08057535a062e6537)
+
