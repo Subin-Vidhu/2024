@@ -415,3 +415,5 @@ However, dental care or vision care are often not included in capitation agreeme
 ###### Health care products, approvals, and prescription drugs
 
 - Read the pdf file for more information.
+
+- A formulary is the list of drugs a payer will cover for the patients they serve. In a tiered formulary, the payer places drugs in tiers distinguished by the levels of patient cost-sharing. Often, payers will put generic drugs of a given class in a tier with a lower level of patient cost-sharing than a branded drug in the same class, in order to incentivize use of cheaper but equivalent drugs. 
