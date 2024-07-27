@@ -411,3 +411,5 @@ However, dental care or vision care are often not included in capitation agreeme
 - Tools intermediaries use in order to contain healthcare use and costs include gatekeeping, utilization review, pre-authorization (“ prior review”), limitation of services covered (“coverage decisions”), and use of broader versus narrower networks.  They can also vary patient cost sharing and provider payment approaches.
 
 ##### Week 5
+
+###### Health care products, approvals, and prescription drugs
