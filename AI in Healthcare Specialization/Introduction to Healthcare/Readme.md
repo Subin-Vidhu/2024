@@ -407,3 +407,5 @@ However, dental care or vision care are often not included in capitation agreeme
 ###### Intermediaries and their Goals
 
 - Read the pdf file for more information.
+
+##### Week 5
