@@ -413,3 +413,5 @@ However, dental care or vision care are often not included in capitation agreeme
 ##### Week 5
 
 ###### Health care products, approvals, and prescription drugs
+
+- Read the pdf file for more information.
