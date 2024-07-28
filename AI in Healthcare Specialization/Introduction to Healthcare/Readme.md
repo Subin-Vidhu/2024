@@ -419,3 +419,6 @@ However, dental care or vision care are often not included in capitation agreeme
 - A formulary is the list of drugs a payer will cover for the patients they serve. In a tiered formulary, the payer places drugs in tiers distinguished by the levels of patient cost-sharing. Often, payers will put generic drugs of a given class in a tier with a lower level of patient cost-sharing than a branded drug in the same class, in order to incentivize use of cheaper but equivalent drugs. 
 
 - Risk-adjustment refers to statistical approaches that are applied to quality metrics in order to correct for variations in patient characteristics that the metric was not meant to capture. For example, risk-adjustment often corrects mortality metrics to account for patient co-morbidities, as very ill patients usually have higher mortality rates despite the quality of care given to them. Risk-adjustment is important for quality metrics because it helps ensure payers are rewarding or penalizing providers for only factors in their control.
+
+
+##### Week 6
