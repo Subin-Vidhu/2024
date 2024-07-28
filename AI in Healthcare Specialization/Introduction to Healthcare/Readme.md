@@ -426,3 +426,36 @@ However, dental care or vision care are often not included in capitation agreeme
 ###### Overview of AI applications in delivery of health care services and ethical issues        
 
 - Read the pdf file for more information.
+
+- Readings
+
+    - The American Medical Association Code of Medical Ethics Overview
+
+        - https://www.ama-assn.org/delivering-care/ethics/code-medical-ethics-overview
+
+    
+
+    - In particular, please focus your attention on these sections of the AMA Code of Ethics:
+
+        - The American Medical Association Principles of Medical Ethics 
+
+            - https://www.ama-assn.org/about/publications-newsletters/ama-principles-medical-ethics
+
+        - The American Medical Association Code of Medical Ethics: Financing and delivery of health care (Chapter 11) 
+
+            - https://www.ama-assn.org/delivering-care/ethics/code-medical-ethics-financing-and-delivery-health-care
+
+    - And in particular, please take a careful look at Section 11.2.1:
+
+        - Professionalism in Health Care Systems 
+
+            - https://www.ama-assn.org/delivering-care/ethics/professionalism-health-care-systems
+
+        
+
+        - The Association for Computing Machinery Code of Ethics and Professional Conduct 
+
+            - https://www.acm.org/code-of-ethics
+
+        - The American College of Healthcare Executives Code of Ethics 
+            - https://www.ache.org/about-ache/our-story/our-commitments/ethics/ache-code-of-ethics
