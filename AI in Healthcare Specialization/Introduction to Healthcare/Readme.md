@@ -424,3 +424,5 @@ However, dental care or vision care are often not included in capitation agreeme
 ##### Week 6
 
 ###### Overview of AI applications in delivery of health care services and ethical issues        
+
+- Read the pdf file for more information.
