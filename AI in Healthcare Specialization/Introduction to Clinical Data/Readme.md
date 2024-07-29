@@ -42,3 +42,4 @@ The course is designed to focus on understanding healthcare data and transformin
 - The course focuses on steps one through three of the data mining workflow: posing research questions, finding relevant data, and preparing the data for analysis.
 
 ###### Real Life Example
+
