@@ -27,3 +27,4 @@ The course is designed to focus on understanding healthcare data and transformin
     - Patient feature matrix: A tabular view of data that forms the foundation for analysis.
     - Knowledge graphs: Collections of prior biomedical knowledge used to aid in data transformation.
     - Exposures and outcomes: Factors or events that patients experience and are relevant to research questions.
+
