@@ -57,6 +57,3 @@ The course is designed to focus on understanding healthcare data and transformin
     - Proteinuria: The presence of an abnormal amount of protein in the urine, which can be a sign of kidney damage or disease.
     - Pancreatitis: Inflammation of the pancreas, which can cause severe abdominal pain and other symptoms.
     - Antiphospholipid antibodies: Antibodies that mistakenly attack normal proteins in the blood, leading to an increased risk of blood clots.
-
-
-- Read the pdf file for more information.
