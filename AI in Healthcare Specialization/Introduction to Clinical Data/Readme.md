@@ -43,17 +43,17 @@ The course is designed to focus on understanding healthcare data and transformin
 
 ###### Real Life Example
 
-The video starts with an example of a teenager named Laura who has a chronic disease called systemic lupus erythematosus (SLE).
-Laura recently had a flare-up of her condition and developed proteinuria, pancreatitis, and antiphospholipid antibodies in her blood.
-The video introduces the clinical question: Should a teenager with systemic lupus who develops proteinuria and has antiphospholipid antibodies receive an anticoagulant medication?
-The narrator explains that there are no published literature studies or general agreement among experts on how to treat such cases.
-To design a treatment plan for Laura, the video suggests examining what has happened to similar patients in the past.
-The data source for this analysis is the electronic medical record of a large academic medical center.
-The video highlights the importance of using clinical data mining to draw on all the relevant data in the electronic medical record.
-The video concludes by stating that the first two steps in the clinical data mining workflow have been completed: identifying the clinical question and the data source.
-Definitions mentioned in the video:
+- The video starts with an example of a teenager named Laura who has a chronic disease called systemic lupus erythematosus (SLE).
+- Laura recently had a flare-up of her condition and developed proteinuria, pancreatitis, and antiphospholipid antibodies in her blood.
+- The video introduces the clinical question: Should a teenager with systemic lupus who develops proteinuria and has antiphospholipid antibodies receive an anticoagulant medication?
+- The narrator explains that there are no published literature studies or general agreement among experts on how to treat such cases.
+- To design a treatment plan for Laura, the video suggests examining what has happened to similar patients in the past.
+- The data source for this analysis is the electronic medical record of a large academic medical center.
+- The video highlights the importance of using clinical data mining to draw on all the relevant data in the electronic medical record.
+- The video concludes by stating that the first two steps in the clinical data mining workflow have been completed: identifying the clinical question and the data source.
+- Definitions mentioned in the video:
 
-Systemic lupus erythematosus (SLE): A chronic autoimmune disease that can affect various parts of the body, including the skin, joints, kidneys, heart, lungs, brain, blood cells, and liver.
-Proteinuria: The presence of an abnormal amount of protein in the urine, which can be a sign of kidney damage or disease.
-Pancreatitis: Inflammation of the pancreas, which can cause severe abdominal pain and other symptoms.
-Antiphospholipid antibodies: Antibodies that mistakenly attack normal proteins in the blood, leading to an increased risk of blood clots.
+- Systemic lupus erythematosus (SLE): A chronic autoimmune disease that can affect various parts of the body, including the skin, joints, kidneys, heart, lungs, brain, blood cells, and liver.
+- Proteinuria: The presence of an abnormal amount of protein in the urine, which can be a sign of kidney damage or disease.
+- Pancreatitis: Inflammation of the pancreas, which can cause severe abdominal pain and other symptoms.
+- Antiphospholipid antibodies: Antibodies that mistakenly attack normal proteins in the blood, leading to an increased risk of blood clots.
