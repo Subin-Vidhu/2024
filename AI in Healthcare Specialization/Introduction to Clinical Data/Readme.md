@@ -29,3 +29,4 @@ The course is designed to focus on understanding healthcare data and transformin
     - Exposures and outcomes: Factors or events that patients experience and are relevant to research questions.
 
 ###### Introduction to the data mining workflow
+
