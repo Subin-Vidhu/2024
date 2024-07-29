@@ -16,11 +16,12 @@
 The course is designed to focus on understanding healthcare data and transforming it into analysis-ready datasets.
 - The importance of data quality and knowledge is emphasized over specific algorithms.
 - The video concludes by inviting learners to join the course and embark on a journey to explore electronic healthcare data.
+
 - Definitions mentioned in the video:
 
-- Research questions: Questions that need to be answered using data analysis.
-- Data mining workflow: A systematic process of extracting knowledge or patterns from data.
-- Patient timeline view: A representation of patient care records that captures the time dimension.
-- Patient feature matrix: A tabular view of data that forms the foundation for analysis.
-- Knowledge graphs: Collections of prior biomedical knowledge used to aid in data transformation.
-- Exposures and outcomes: Factors or events that patients experience and are relevant to research questions.
+    - Research questions: Questions that need to be answered using data analysis.
+    - Data mining workflow: A systematic process of extracting knowledge or patterns from data.
+    - Patient timeline view: A representation of patient care records that captures the time dimension.
+    - Patient feature matrix: A tabular view of data that forms the foundation for analysis.
+    - Knowledge graphs: Collections of prior biomedical knowledge used to aid in data transformation.
+    - Exposures and outcomes: Factors or events that patients experience and are relevant to research questions.
