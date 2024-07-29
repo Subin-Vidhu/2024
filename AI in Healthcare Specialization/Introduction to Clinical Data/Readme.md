@@ -53,7 +53,7 @@ The course is designed to focus on understanding healthcare data and transformin
 - The video concludes by stating that the first two steps in the clinical data mining workflow have been completed: identifying the clinical question and the data source.
 - Definitions mentioned in the video:
 
-- Systemic lupus erythematosus (SLE): A chronic autoimmune disease that can affect various parts of the body, including the skin, joints, kidneys, heart, lungs, brain, blood cells, and liver.
-- Proteinuria: The presence of an abnormal amount of protein in the urine, which can be a sign of kidney damage or disease.
-- Pancreatitis: Inflammation of the pancreas, which can cause severe abdominal pain and other symptoms.
-- Antiphospholipid antibodies: Antibodies that mistakenly attack normal proteins in the blood, leading to an increased risk of blood clots.
+    - Systemic lupus erythematosus (SLE): A chronic autoimmune disease that can affect various parts of the body, including the skin, joints, kidneys, heart, lungs, brain, blood cells, and liver.
+    - Proteinuria: The presence of an abnormal amount of protein in the urine, which can be a sign of kidney damage or disease.
+    - Pancreatitis: Inflammation of the pancreas, which can cause severe abdominal pain and other symptoms.
+    - Antiphospholipid antibodies: Antibodies that mistakenly attack normal proteins in the blood, leading to an increased risk of blood clots.
