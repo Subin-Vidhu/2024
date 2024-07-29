@@ -2,6 +2,8 @@
 
 ##### Week 1
 
+###### Introduction 
+
 - The video is an introduction to the course "Introduction to Clinical Data" offered by Stanford University.
 - The course covers a broad range of topics related to using data from the healthcare system to improve patient care.
 - The video is presented by Professor Nigam Shah from Stanford University, along with Dr. Steve Bagley and David Magnus.
