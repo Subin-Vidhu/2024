@@ -30,3 +30,13 @@ The course is designed to focus on understanding healthcare data and transformin
 
 ###### Introduction to the data mining workflow
 
+The course aims to explain how clinical data can be used to answer research questions and improve patient and population health.
+The course follows a data mining workflow with four steps: posing a research question, identifying data sources, extracting and transforming the data, and conducting the analysis.
+Two representations of healthcare data are discussed: patient timelines and patient feature matrices.
+Patient timelines provide a chronological view of a patient's healthcare events and can be used to analyze patterns and trends.
+Patient feature matrices represent patients as rows and features as columns, allowing for analysis based on specific patient characteristics.
+The course covers different types of data available from healthcare systems, including structured and unstructured data.
+Processing and analysis methods are explored to extract insights from the data and answer research questions.
+The course also addresses potential problems and biases that can arise in clinical data analysis and ways to manage them.
+Ethical considerations in clinical data mining are discussed.
+The course focuses on steps one through three of the data mining workflow: posing research questions, finding relevant data, and preparing the data for analysis.
