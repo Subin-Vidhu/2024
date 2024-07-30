@@ -69,3 +69,4 @@ The course is designed to focus on understanding healthcare data and transformin
 
 ##### Week 3
 
+###### Healthcare happens over time
