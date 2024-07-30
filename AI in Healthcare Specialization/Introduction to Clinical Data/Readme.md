@@ -66,3 +66,6 @@ The course is designed to focus on understanding healthcare data and transformin
 ###### Review of the healthcare system
 
 - Read the pdf file for more information.
+
+##### Week 3
+
