@@ -101,3 +101,5 @@ The course is designed to focus on understanding healthcare data and transformin
 ###### Ethics - Clinical Data
 
 - Read the pdf file for more information.
+
+##### Week 8
