@@ -79,4 +79,4 @@ The course is designed to focus on understanding healthcare data and transformin
 
 - Read the pdf file for more information.
 
-- Imputation is a process of computing missing values on the basis of other information in the dataset. With column mean imputation, the idea is to use the mean of the non-missing values from the other patients. For this case, it is probably is a bad idea because a given patient’s missing blood sugar level cannot be accurately inferred from the blood sugar levels of other patients. Also, imputation is more likely to work well when a smaller fraction of the data are missing; here one-half are missing.  
+- Imputation is a process of computing missing values on the basis of other information in the dataset. With column mean imputation, the idea is to use the mean of the non-missing values from the other patients. For this case, it is probably is a bad idea because a given patient’s missing blood sugar level cannot be accurately inferred from the blood sugar levels of other patients. Also, imputation is more likely to work well when a smaller fraction of the data are missing.  
