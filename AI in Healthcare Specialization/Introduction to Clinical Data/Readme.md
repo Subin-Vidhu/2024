@@ -95,3 +95,4 @@ The course is designed to focus on understanding healthcare data and transformin
 
 ###### Introduction to electronic phenotyping
 
+- Read the pdf file for more information.
