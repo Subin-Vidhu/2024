@@ -99,3 +99,4 @@ The course is designed to focus on understanding healthcare data and transformin
 ##### Week 7
 
 ###### Ethics - Clinical Data
+
