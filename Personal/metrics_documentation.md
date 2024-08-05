@@ -37,6 +37,11 @@ predicted_class_indices = np.random.randint(0, num_classes, size=(num_test_image
 ground_truth_labels_tensor = tf.cast(tf.convert_to_tensor(ground_truth_labels), tf.int32)
 predicted_class_indices_tensor = tf.cast(tf.convert_to_tensor(predicted_class_indices), tf.int32)
 
+# in real-world scenarios, you would have your own ground truth and predicted values
+# Predict the output of the model
+# y_pred = model.predict(X_test1)
+# y_pred_argmax = np.argmax(y_pred, axis=3)
+
 # Ensure predicted_class_indices has the same shape as ground_truth_labels
 if len(predicted_class_indices_tensor.shape) < len(ground_truth_labels_tensor.shape):
     predicted_class_indices_tensor = tf.expand_dims(predicted_class_indices_tensor, axis=-1) # Add channel dimension if missing
