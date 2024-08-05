@@ -327,91 +327,176 @@ print(f"\nCohen's Kappa: {cohen_kappa_score_value}")
 ### Full Code - Real Data
 ```python
 import tensorflow as tf
+from tensorflow.keras.metrics import MeanIoU, Precision, Recall, Accuracy
 import numpy as np
+from sklearn.metrics import cohen_kappa_score
 
-# Assuming y_test and y_pred_argmax are your ground truth and predicted labels respectively
-n_classes = 3  # Adjust this if you have a different number of classes
+# Parameters
+num_test_images = 10
+image_height = 256
+image_width = 256
+num_classes = 3
 
-# Convert to appropriate tensor format if not already
-y_test = tf.convert_to_tensor(y_test)
-y_pred_argmax = tf.convert_to_tensor(y_pred_argmax)
+# Create random ground truth labels (ground_truth_labels)
+ground_truth_labels = y_test
 
-# Remove the extra dimension from y_test if needed
-y_test = tf.squeeze(y_test)
+# Create random predicted labels (predicted_class_indices)
+predicted_class_indices = y_pred_argmax
+
+# Convert to appropriate tensor format and cast to int32
+ground_truth_labels_tensor = tf.cast(tf.convert_to_tensor(ground_truth_labels), tf.int32)
+predicted_class_indices_tensor = tf.cast(tf.convert_to_tensor(predicted_class_indices), tf.int32)
+
+# Ensure predicted_class_indices has the same shape as ground_truth_labels
+if len(predicted_class_indices_tensor.shape) < len(ground_truth_labels_tensor.shape):
+    predicted_class_indices_tensor = tf.expand_dims(predicted_class_indices_tensor, axis=-1)
 
 # Pixel Accuracy
-accuracy = tf.keras.metrics.Accuracy()
-accuracy.update_state(y_test, y_pred_argmax)
-pixel_accuracy = accuracy.result().numpy()
+pixel_accuracy_metric = Accuracy()
+pixel_accuracy_metric.update_state(ground_truth_labels_tensor, predicted_class_indices_tensor)
+pixel_accuracy = pixel_accuracy_metric.result().numpy()
+print(f"\nPixel Accuracy: {pixel_accuracy}")
 
-# IoU
-iou_metric = tf.keras.metrics.MeanIoU(num_classes=n_classes)
-iou_metric.update_state(y_test, y_pred_argmax)
+# IoU and Dice Coefficient (F1 Score)
+iou_metric = MeanIoU(num_classes=num_classes)
+iou_metric.update_state(ground_truth_labels_tensor, predicted_class_indices_tensor)
 mean_iou = iou_metric.result().numpy()
+print(f"\nMean IoU: {mean_iou}\n")
 
-# Get confusion matrix
+# Class-wise IoU
 iou_values = iou_metric.get_weights()[0]
-
-# Function to calculate metrics for each class
-def calculate_metrics(confusion_matrix, class_id):
-    true_positives = confusion_matrix[class_id, class_id]
-    false_positives = np.sum(confusion_matrix[:, class_id]) - true_positives
-    false_negatives = np.sum(confusion_matrix[class_id, :]) - true_positives
-    
-    iou = true_positives / (true_positives + false_positives + false_negatives + 1e-10)
-    precision = true_positives / (true_positives + false_positives + 1e-10)
-    recall = true_positives / (true_positives + false_negatives + 1e-10)
-    
-    return iou, precision, recall
-
-# Calculate metrics for each class
-class_metrics = [calculate_metrics(iou_values, i) for i in range(n_classes)]
+for class_index in range(num_classes):
+    class_iou = iou_values[class_index, class_index] / (np.sum(iou_values[class_index, :]) + np.sum(iou_values[:, class_index]) - iou_values[class_index, class_index])
+    print(f"IoU for class {class_index}: {class_iou}")
 
 # Dice Coefficient (F1 Score)
-def dice_coefficient(y_true, y_pred, class_index):
-    y_true_f = tf.cast(tf.equal(y_true, class_index), tf.float32)
-    y_pred_f = tf.cast(tf.equal(y_pred, class_index), tf.float32)
-    intersection = tf.reduce_sum(y_true_f * y_pred_f)
-    return (2 * intersection) / (tf.reduce_sum(y_true_f) + tf.reduce_sum(y_pred_f) + 1e-7)
+dice_coefficient = 2 * mean_iou / (1 + mean_iou)
+print(f"\nDice Coefficient (F1 Score): {dice_coefficient}\n")
 
-# Cohen's Kappa
-def cohen_kappa(confusion_matrix):
-    n = np.sum(confusion_matrix)
-    sum_po = np.sum(np.diag(confusion_matrix))
-    sum_pe = np.sum(np.sum(confusion_matrix, axis=0) * np.sum(confusion_matrix, axis=1)) / n
-    po = sum_po / n
-    pe = sum_pe / n
-    kappa = (po - pe) / (1 - pe)
-    return kappa
+# Class-wise Dice Coefficient
+def calculate_dice_coefficient(ground_truth_labels, predicted_class_indices, class_index):
+    ground_truth_labels_binary = tf.cast(tf.equal(ground_truth_labels, class_index), tf.float32)
+    predicted_class_indices_binary = tf.cast(tf.equal(predicted_class_indices, class_index), tf.float32)
+    intersection = tf.reduce_sum(ground_truth_labels_binary * predicted_class_indices_binary)
+    return (2 * intersection) / (tf.reduce_sum(ground_truth_labels_binary) + tf.reduce_sum(predicted_class_indices_binary) + 1e-7)
 
-# Calculate Cohen's Kappa
-kappa = cohen_kappa(iou_values)
+for class_index in range(num_classes):
+    dice_coefficient = calculate_dice_coefficient(ground_truth_labels_tensor, predicted_class_indices_tensor, class_index)
+    print(f"Dice Coefficient for class {class_index}: {dice_coefficient.numpy()}")
 
-# Print results
-print(f"Pixel Accuracy: {pixel_accuracy}")
 
-print(f"\nMean IoU: {mean_iou}")
+# Class-wise Precision and Recall
+class_precision_metrics = [Precision() for _ in range(num_classes)]
+class_recall_metrics = [Recall() for _ in range(num_classes)]
 
-print("\nIoU:")
-for i, (iou, _, _) in enumerate(class_metrics):
-    print(f"  Class {i}: {iou}")
+for class_index in range(num_classes):
+    class_mask = tf.equal(ground_truth_labels_tensor, class_index)
+    class_predictions = tf.equal(predicted_class_indices_tensor, class_index)
+    class_precision_metrics[class_index].update_state(class_mask, class_predictions)
+    class_recall_metrics[class_index].update_state(class_mask, class_predictions)
 
-print("\nPrecision:")
-for i, (_, precision, _) in enumerate(class_metrics):
-    print(f"  Class {i}: {precision}")
+print("\nPrecision values for each class:")
+for class_index in range(num_classes):
+    precision = class_precision_metrics[class_index].result().numpy()
+    print(f"Class {class_index}: {precision}")
 
-print("\nRecall:")
-for i, (_, _, recall) in enumerate(class_metrics):
-    print(f"  Class {i}: {recall}")
+print("\nRecall values for each class:")
+for class_index in range(num_classes):
+    recall = class_recall_metrics[class_index].result().numpy()
+    print(f"Class {class_index}: {recall}")
+    
+# Cohen's Kappa using scikit-learn
+# Flatten the arrays to 1D
+ground_truth_labels_flat = tf.reshape(ground_truth_labels_tensor, [-1]).numpy()
+predicted_class_indices_flat = tf.reshape(predicted_class_indices_tensor, [-1]).numpy()
+cohen_kappa_score_value = cohen_kappa_score(ground_truth_labels_flat, predicted_class_indices_flat)
+print(f"\nCohen's Kappa: {cohen_kappa_score_value}")
+# import tensorflow as tf
+# import numpy as np
 
-print("\nDice Coefficient (F1 Score):")
-dice_scores = []
-for i in range(n_classes):
-    dice = dice_coefficient(y_test, y_pred_argmax, i)
-    dice_scores.append(dice.numpy())
-    print(f"  Class {i}: {dice.numpy()}")
+# # Assuming y_test and y_pred_argmax are your ground truth and predicted labels respectively
+# n_classes = 3  # Adjust this if you have a different number of classes
 
-print(f"\nMean Dice Coefficient (F1 Score): {np.mean(dice_scores)}")
+# # Convert to appropriate tensor format if not already
+# y_test = tf.convert_to_tensor(y_test)
+# y_pred_argmax = tf.convert_to_tensor(y_pred_argmax)
 
-print(f"\nCohen's Kappa: {kappa}")
+# # Remove the extra dimension from y_test if needed
+# y_test = tf.squeeze(y_test)
+
+# # Pixel Accuracy
+# accuracy = tf.keras.metrics.Accuracy()
+# accuracy.update_state(y_test, y_pred_argmax)
+# pixel_accuracy = accuracy.result().numpy()
+
+# # IoU
+# iou_metric = tf.keras.metrics.MeanIoU(num_classes=n_classes)
+# iou_metric.update_state(y_test, y_pred_argmax)
+# mean_iou = iou_metric.result().numpy()
+
+# # Get confusion matrix
+# iou_values = iou_metric.get_weights()[0]
+
+# # Function to calculate metrics for each class
+# def calculate_metrics(confusion_matrix, class_id):
+#     true_positives = confusion_matrix[class_id, class_id]
+#     false_positives = np.sum(confusion_matrix[:, class_id]) - true_positives
+#     false_negatives = np.sum(confusion_matrix[class_id, :]) - true_positives
+    
+#     iou = true_positives / (true_positives + false_positives + false_negatives + 1e-10)
+#     precision = true_positives / (true_positives + false_positives + 1e-10)
+#     recall = true_positives / (true_positives + false_negatives + 1e-10)
+    
+#     return iou, precision, recall
+
+# # Calculate metrics for each class
+# class_metrics = [calculate_metrics(iou_values, i) for i in range(n_classes)]
+
+# # Dice Coefficient (F1 Score)
+# def dice_coefficient(y_true, y_pred, class_index):
+#     y_true_f = tf.cast(tf.equal(y_true, class_index), tf.float32)
+#     y_pred_f = tf.cast(tf.equal(y_pred, class_index), tf.float32)
+#     intersection = tf.reduce_sum(y_true_f * y_pred_f)
+#     return (2 * intersection) / (tf.reduce_sum(y_true_f) + tf.reduce_sum(y_pred_f) + 1e-7)
+
+# # Cohen's Kappa
+# def cohen_kappa(confusion_matrix):
+#     n = np.sum(confusion_matrix)
+#     sum_po = np.sum(np.diag(confusion_matrix))
+#     sum_pe = np.sum(np.sum(confusion_matrix, axis=0) * np.sum(confusion_matrix, axis=1)) / n
+#     po = sum_po / n
+#     pe = sum_pe / n
+#     kappa = (po - pe) / (1 - pe)
+#     return kappa
+
+# # Calculate Cohen's Kappa
+# kappa = cohen_kappa(iou_values)
+
+# # Print results
+# print(f"Pixel Accuracy: {pixel_accuracy}")
+
+# print(f"\nMean IoU: {mean_iou}")
+
+# print("\nIoU:")
+# for i, (iou, _, _) in enumerate(class_metrics):
+#     print(f"  Class {i}: {iou}")
+
+# print("\nPrecision:")
+# for i, (_, precision, _) in enumerate(class_metrics):
+#     print(f"  Class {i}: {precision}")
+
+# print("\nRecall:")
+# for i, (_, _, recall) in enumerate(class_metrics):
+#     print(f"  Class {i}: {recall}")
+
+# print("\nDice Coefficient (F1 Score):")
+# dice_scores = []
+# for i in range(n_classes):
+#     dice = dice_coefficient(y_test, y_pred_argmax, i)
+#     dice_scores.append(dice.numpy())
+#     print(f"  Class {i}: {dice.numpy()}")
+
+# print(f"\nMean Dice Coefficient (F1 Score): {np.mean(dice_scores)}")
+
+# print(f"\nCohen's Kappa: {kappa}")
 ```
