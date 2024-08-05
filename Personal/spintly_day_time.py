@@ -2,7 +2,7 @@ import pandas as pd
 from datetime import datetime, time, timedelta
 
 # Load the data from the Excel file
-file_path = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\chippy.xlsx'
+file_path = r'c:\Users\Subin-PC\Downloads\subin_july.xlsx'
 df = pd.read_excel(file_path, sheet_name='Access History', skiprows=5)
 
 # Function to parse datetime
