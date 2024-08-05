@@ -210,6 +210,7 @@ for class_index in range(num_classes):
 **Definition**: Cohen's Kappa is a statistic that measures inter-annotator agreement for categorical items.
 
 **Formula**: 
+
 $$
 \kappa = \frac{p_o - p_e}{1 - p_e}
 $$
