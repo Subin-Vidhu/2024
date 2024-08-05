@@ -249,6 +249,11 @@ ground_truth_labels = np.random.randint(0, num_classes, size=(num_test_images, i
 # Create random predicted labels (predicted_class_indices)
 predicted_class_indices = np.random.randint(0, num_classes, size=(num_test_images, image_height, image_width, 1))
 
+# in real-world scenarios, you would have your own ground truth and predicted values
+# Predict the output of the model
+# y_pred = model.predict(X_test)
+# y_pred_argmax = np.argmax(y_pred, axis=3)
+
 # Convert to appropriate tensor format and cast to int32
 ground_truth_labels_tensor = tf.cast(tf.convert_to_tensor(ground_truth_labels), tf.int32)
 predicted_class_indices_tensor = tf.cast(tf.convert_to_tensor(predicted_class_indices), tf.int32)
