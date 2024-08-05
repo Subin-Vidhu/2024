@@ -22,24 +22,24 @@ import numpy as np
 from sklearn.metrics import cohen_kappa_score
 
 # Parameters
-num_images = 10
+num_test_images = 10
 image_height = 256
 image_width = 256
-n_classes = 3
+num_classes = 3
 
-# Create random ground truth labels (y_test)
-y_test = np.random.randint(0, n_classes, size=(num_images, image_height, image_width, 1))
+# Create random ground truth labels (ground_truth_labels)
+ground_truth_labels = np.random.randint(0, num_classes, size=(num_test_images, image_height, image_width, 1))
 
-# Create random predicted labels (y_pred_argmax)
-y_pred_argmax = np.random.randint(0, n_classes, size=(num_images, image_height, image_width, 1))
+# Create random predicted labels (predicted_class_indices)
+predicted_class_indices = np.random.randint(0, num_classes, size=(num_test_images, image_height, image_width, 1))
 
 # Convert to appropriate tensor format and cast to int32
-y_test = tf.cast(tf.convert_to_tensor(y_test), tf.int32)
-y_pred_argmax = tf.cast(tf.convert_to_tensor(y_pred_argmax), tf.int32)
+ground_truth_labels_tensor = tf.cast(tf.convert_to_tensor(ground_truth_labels), tf.int32)
+predicted_class_indices_tensor = tf.cast(tf.convert_to_tensor(predicted_class_indices), tf.int32)
 
-# Ensure y_pred_argmax has the same shape as y_test
-if len(y_pred_argmax.shape) < len(y_test.shape):
-    y_pred_argmax = tf.expand_dims(y_pred_argmax, axis=-1) # Add channel dimension if missing
+# Ensure predicted_class_indices has the same shape as ground_truth_labels
+if len(predicted_class_indices_tensor.shape) < len(ground_truth_labels_tensor.shape):
+    predicted_class_indices_tensor = tf.expand_dims(predicted_class_indices_tensor, axis=-1) # Add channel dimension if missing
 ```
 
 ## Pixel Accuracy
