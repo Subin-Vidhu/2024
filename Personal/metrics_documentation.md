@@ -327,90 +327,100 @@ print(f"\nCohen's Kappa: {cohen_kappa_score_value}")
 ### Full Code - Real Data
 ```python
 import tensorflow as tf
-from tensorflow.keras.metrics import MeanIoU, Precision, Recall, Accuracy
 import numpy as np
-from sklearn.metrics import cohen_kappa_score
 
-# Parameters
-num_test_images = 10
-image_height = 256
-image_width = 256
-num_classes = 3
+# Assuming y_test and y_pred_argmax are your ground truth and predicted labels respectively
+n_classes = 3  # Adjust this if you have a different number of classes
 
-# Create random ground truth labels (ground_truth_labels)
-ground_truth_labels = y_test
+# Convert to appropriate tensor format if not already
+y_test = tf.convert_to_tensor(y_test)
+y_pred_argmax = tf.convert_to_tensor(y_pred_argmax)
 
-# Create random predicted labels (predicted_class_indices)
-predicted_class_indices = y_pred_argmax
-
-# Convert to appropriate tensor format and cast to int32
-ground_truth_labels_tensor = tf.cast(tf.convert_to_tensor(ground_truth_labels), tf.int32)
-predicted_class_indices_tensor = tf.cast(tf.convert_to_tensor(predicted_class_indices), tf.int32)
-
-# Ensure predicted_class_indices has the same shape as ground_truth_labels
-if len(predicted_class_indices_tensor.shape) < len(ground_truth_labels_tensor.shape):
-    predicted_class_indices_tensor = tf.expand_dims(predicted_class_indices_tensor, axis=-1)
+# Remove the extra dimension from y_test if needed
+y_test = tf.squeeze(y_test)
 
 # Pixel Accuracy
-pixel_accuracy_metric = Accuracy()
-pixel_accuracy_metric.update_state(ground_truth_labels_tensor, predicted_class_indices_tensor)
-pixel_accuracy = pixel_accuracy_metric.result().numpy()
-print(f"\nPixel Accuracy: {pixel_accuracy}")
+accuracy = tf.keras.metrics.Accuracy()
+accuracy.update_state(y_test, y_pred_argmax)
+pixel_accuracy = accuracy.result().numpy()
 
-# IoU and Dice Coefficient (F1 Score)
-iou_metric = MeanIoU(num_classes=num_classes)
-iou_metric.update_state(ground_truth_labels_tensor, predicted_class_indices_tensor)
-mean_iou = iou_metric.result().numpy()
-print(f"\nMean IoU: {mean_iou}\n")
+# Mean IoU and Confusion Matrix
+miou = tf.keras.metrics.MeanIoU(num_classes=n_classes)
+miou.update_state(y_test, y_pred_argmax)
+mean_iou = miou.result().numpy()
+confusion_matrix = miou.total_cm
 
-# Class-wise IoU
-iou_values = iou_metric.get_weights()[0]
-for class_index in range(num_classes):
-    class_iou = iou_values[class_index, class_index] / (np.sum(iou_values[class_index, :]) + np.sum(iou_values[:, class_index]) - iou_values[class_index, class_index])
-    print(f"IoU for class {class_index}: {class_iou}")
+# Function to calculate IoU
+def calculate_iou(y_true, y_pred, class_index):
+    y_true_class = tf.cast(tf.equal(y_true, class_index), tf.float32)
+    y_pred_class = tf.cast(tf.equal(y_pred, class_index), tf.float32)
+    intersection = tf.reduce_sum(y_true_class * y_pred_class)
+    union = tf.reduce_sum(y_true_class) + tf.reduce_sum(y_pred_class) - intersection
+    return intersection / (union + tf.keras.backend.epsilon())
 
-# Dice Coefficient (F1 Score)
-dice_coefficient = 2 * mean_iou / (1 + mean_iou)
-print(f"\nDice Coefficient (F1 Score): {dice_coefficient}\n")
+# Function to calculate Dice Coefficient
+def calculate_dice_coefficient(y_true, y_pred, class_index):
+    y_true_class = tf.cast(tf.equal(y_true, class_index), tf.float32)
+    y_pred_class = tf.cast(tf.equal(y_pred, class_index), tf.float32)
+    intersection = tf.reduce_sum(y_true_class * y_pred_class)
+    return (2. * intersection) / (tf.reduce_sum(y_true_class) + tf.reduce_sum(y_pred_class) + tf.keras.backend.epsilon())
 
-# Class-wise Dice Coefficient
-def calculate_dice_coefficient(ground_truth_labels, predicted_class_indices, class_index):
-    ground_truth_labels_binary = tf.cast(tf.equal(ground_truth_labels, class_index), tf.float32)
-    predicted_class_indices_binary = tf.cast(tf.equal(predicted_class_indices, class_index), tf.float32)
-    intersection = tf.reduce_sum(ground_truth_labels_binary * predicted_class_indices_binary)
-    return (2 * intersection) / (tf.reduce_sum(ground_truth_labels_binary) + tf.reduce_sum(predicted_class_indices_binary) + 1e-7)
+# Function to calculate Precision
+def calculate_precision(y_true, y_pred, class_index):
+    y_true_class = tf.cast(tf.equal(y_true, class_index), tf.float32)
+    y_pred_class = tf.cast(tf.equal(y_pred, class_index), tf.float32)
+    true_positives = tf.reduce_sum(y_true_class * y_pred_class)
+    predicted_positives = tf.reduce_sum(y_pred_class)
+    return true_positives / (predicted_positives + tf.keras.backend.epsilon())
 
-for class_index in range(num_classes):
-    dice_coefficient = calculate_dice_coefficient(ground_truth_labels_tensor, predicted_class_indices_tensor, class_index)
-    print(f"Dice Coefficient for class {class_index}: {dice_coefficient.numpy()}")
+# Function to calculate Recall
+def calculate_recall(y_true, y_pred, class_index):
+    y_true_class = tf.cast(tf.equal(y_true, class_index), tf.float32)
+    y_pred_class = tf.cast(tf.equal(y_pred, class_index), tf.float32)
+    true_positives = tf.reduce_sum(y_true_class * y_pred_class)
+    actual_positives = tf.reduce_sum(y_true_class)
+    return true_positives / (actual_positives + tf.keras.backend.epsilon())
 
+# Calculate per-class metrics
+per_class_metrics = []
+for i in range(n_classes):
+    iou = calculate_iou(y_test, y_pred_argmax, i)
+    dice = calculate_dice_coefficient(y_test, y_pred_argmax, i)
+    precision = calculate_precision(y_test, y_pred_argmax, i)
+    recall = calculate_recall(y_test, y_pred_argmax, i)
+    per_class_metrics.append((iou.numpy(), dice.numpy(), precision.numpy(), recall.numpy()))
 
-# Class-wise Precision and Recall
-class_precision_metrics = [Precision() for _ in range(num_classes)]
-class_recall_metrics = [Recall() for _ in range(num_classes)]
+# Cohen's Kappa
+n = tf.cast(tf.reduce_sum(confusion_matrix), tf.float32)
+sum_po = tf.cast(tf.linalg.trace(confusion_matrix), tf.float32)
+sum_pe = tf.reduce_sum(tf.cast(tf.reduce_sum(confusion_matrix, axis=0) * tf.reduce_sum(confusion_matrix, axis=1), tf.float32)) / n
+po = sum_po / n
+pe = sum_pe / n
+kappa = (po - pe) / (1 - pe + tf.keras.backend.epsilon())
 
-for class_index in range(num_classes):
-    class_mask = tf.equal(ground_truth_labels_tensor, class_index)
-    class_predictions = tf.equal(predicted_class_indices_tensor, class_index)
-    class_precision_metrics[class_index].update_state(class_mask, class_predictions)
-    class_recall_metrics[class_index].update_state(class_mask, class_predictions)
+# Print results
+print(f"Pixel Accuracy: {pixel_accuracy}")
+print(f"Mean IoU: {mean_iou}")
 
-print("\nPrecision values for each class:")
-for class_index in range(num_classes):
-    precision = class_precision_metrics[class_index].result().numpy()
-    print(f"Class {class_index}: {precision}")
+print("IoU:")
+for i, metrics in enumerate(per_class_metrics):
+    print(f"  Class {i}: {metrics[0]}")
 
-print("\nRecall values for each class:")
-for class_index in range(num_classes):
-    recall = class_recall_metrics[class_index].result().numpy()
-    print(f"Class {class_index}: {recall}")
-    
-# Cohen's Kappa using scikit-learn
-# Flatten the arrays to 1D
-ground_truth_labels_flat = tf.reshape(ground_truth_labels_tensor, [-1]).numpy()
-predicted_class_indices_flat = tf.reshape(predicted_class_indices_tensor, [-1]).numpy()
-cohen_kappa_score_value = cohen_kappa_score(ground_truth_labels_flat, predicted_class_indices_flat)
-print(f"\nCohen's Kappa: {cohen_kappa_score_value}")
+print("Precision:")
+for i, metrics in enumerate(per_class_metrics):
+    print(f"  Class {i}: {metrics[2]}")
+
+print("Recall:")
+for i, metrics in enumerate(per_class_metrics):
+    print(f"  Class {i}: {metrics[3]}")
+
+print("F1 Score (Dice Coefficient):")
+for i, metrics in enumerate(per_class_metrics):
+    print(f"  Class {i}: {metrics[1]}")
+
+print(f"Mean Dice Coefficient (F1 Score): {np.mean([m[1] for m in per_class_metrics])}")
+print(f"Cohen's Kappa: {kappa.numpy()}")
+
 # import tensorflow as tf
 # import numpy as np
 
