@@ -91,9 +91,9 @@ print(f"Mean IoU: {mean_iou}")
 **Code**:
 ```python
 iou_values = iou_metric.get_weights()[0]
-for i in range(n_classes):
-    class_iou = iou_values[i, i] / (np.sum(iou_values[i, :]) + np.sum(iou_values[:, i]) - iou_values[i, i])
-    print(f"IoU for class {i}: {class_iou}")
+for class_index in range(num_classes):
+    class_iou = iou_values[class_index, class_index] / (np.sum(iou_values[class_index, :]) + np.sum(iou_values[:, class_index]) - iou_values[class_index, class_index])
+    print(f"IoU for class {class_index}: {class_iou}")
 ```
 
 ## Dice Coefficient (F1 Score)
