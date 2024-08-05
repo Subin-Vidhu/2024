@@ -108,8 +108,8 @@ for class_index in range(num_classes):
 
 **Code**:
 ```python
-dice = 2 * mean_iou / (1 + mean_iou)
-print(f"Dice Coefficient (F1 Score): {dice}")
+dice_coefficient = 2 * mean_iou / (1 + mean_iou)
+print(f"Dice Coefficient (F1 Score): {dice_coefficient}")
 
 # Class-wise Dice Coefficient
 for i in range(n_classes):
