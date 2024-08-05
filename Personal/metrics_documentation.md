@@ -39,7 +39,7 @@ predicted_class_indices_tensor = tf.cast(tf.convert_to_tensor(predicted_class_in
 
 # in real-world scenarios, you would have your own ground truth and predicted values
 # Predict the output of the model
-# y_pred = model.predict(X_test1)
+# y_pred = model.predict(X_test)
 # y_pred_argmax = np.argmax(y_pred, axis=3)
 
 # Ensure predicted_class_indices has the same shape as ground_truth_labels
