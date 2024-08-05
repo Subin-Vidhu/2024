@@ -10,3 +10,4 @@
 
 ##### Machine Learning Terms, Definitions, and Jargon Part 1
 
+- Read the pdf file for more information.
