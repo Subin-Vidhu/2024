@@ -160,6 +160,7 @@ for class_index in range(num_classes):
 **Definition**: Recall is the ratio of true positive predictions to the total actual positives.
 
 **Formula**: 
+
 $$
 \text{Recall} = \frac{\text{True Positives}}{\text{True Positives} + \text{False Negatives}}
 $$
