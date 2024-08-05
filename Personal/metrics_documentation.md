@@ -230,7 +230,7 @@ print(f"Cohen's Kappa: {cohen_kappa_score_value}")
 ```
 
 
-### Full Code
+### Full Code - Random
 ```python
 import tensorflow as tf
 from tensorflow.keras.metrics import MeanIoU, Precision, Recall, Accuracy
@@ -323,3 +323,4 @@ predicted_class_indices_flat = tf.reshape(predicted_class_indices_tensor, [-1]).
 cohen_kappa_score_value = cohen_kappa_score(ground_truth_labels_flat, predicted_class_indices_flat)
 print(f"\nCohen's Kappa: {cohen_kappa_score_value}")
 ```
+
