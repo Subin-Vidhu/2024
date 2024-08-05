@@ -54,9 +54,6 @@ if len(predicted_class_indices_tensor.shape) < len(ground_truth_labels_tensor.sh
 
 **Code**:
 ```python
-import tensorflow as tf
-from tensorflow.keras.metrics import MeanIoU, Precision, Recall, Accuracy
-
 pixel_accuracy_metric = Accuracy()
 pixel_accuracy_metric.update_state(ground_truth_labels_tensor, predicted_class_indices_tensor)
 pixel_accuracy = pixel_accuracy_metric.result().numpy()
