@@ -108,6 +108,7 @@ for class_index in range(num_classes):
 **Definition**: The Dice coefficient, also known as the F1 score, is a measure of overlap between two samples.
 
 **Formula**: 
+
 $$
 \text{Dice Coefficient} = \frac{2 \cdot |A \cap B|}{|A| + |B|}
 $$
@@ -135,6 +136,7 @@ for class_index in range(num_classes):
 **Definition**: Precision is the ratio of true positive predictions to the total predicted positives.
 
 **Formula**: 
+
 $$
 \text{Precision} = \frac{\text{True Positives}}{\text{True Positives} + \text{False Positives}}
 $$
