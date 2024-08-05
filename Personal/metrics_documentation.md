@@ -112,9 +112,15 @@ dice_coefficient = 2 * mean_iou / (1 + mean_iou)
 print(f"Dice Coefficient (F1 Score): {dice_coefficient}")
 
 # Class-wise Dice Coefficient
-for i in range(n_classes):
-    class_dice = 2 * iou_values[i, i] / (np.sum(iou_values[i, :]) + np.sum(iou_values[:, i]))
-    print(f"Dice Coefficient for class {i}: {class_dice}")
+def calculate_dice_coefficient(ground_truth_labels, predicted_class_indices, class_index):
+    ground_truth_labels_binary = tf.cast(tf.equal(ground_truth_labels, class_index), tf.float32)
+    predicted_class_indices_binary = tf.cast(tf.equal(predicted_class_indices, class_index), tf.float32)
+    intersection = tf.reduce_sum(ground_truth_labels_binary * predicted_class_indices_binary)
+    return (2 * intersection) / (tf.reduce_sum(ground_truth_labels_binary) + tf.reduce_sum(predicted_class_indices_binary) + 1e-7)
+
+for class_index in range(num_classes):
+    dice_coefficient = calculate_dice_coefficient(ground_truth_labels_tensor, predicted_class_indices_tensor, class_index)
+    print(f"Dice Coefficient for class {class_index}: {dice_coefficient.numpy()}")
 ```
 
 ## Precision
