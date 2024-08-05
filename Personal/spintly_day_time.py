@@ -2,7 +2,7 @@ import pandas as pd
 from datetime import datetime, time, timedelta
 
 # Load the data from the Excel file
-file_path = r'c:\Users\Subin-PC\Downloads\Access history report - 25-07-2024 to 28-07-2024.xlsx'
+file_path = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\chippy.xlsx'
 df = pd.read_excel(file_path, sheet_name='Access History', skiprows=5)
 
 # Function to parse datetime
@@ -19,8 +19,8 @@ df['Date'] = pd.to_datetime(df['Date'], format='%b %d, %Y')
 df = df[['Date', 'DateTime', 'Name', 'Direction']].sort_values(by=['Name', 'DateTime'])
 
 # Define office hours
-office_start = time(8, 30)
-office_end = time(18, 45)
+office_start = time(7, 30)
+office_end = time(19, 30)
 
 # Function to calculate time spent inside office during office hours
 def calculate_time_spent(group):
@@ -85,7 +85,7 @@ def get_time_spent_on_date(date_str):
             minutes, seconds = divmod(remainder, 60)
             print(f"  {name}: {int(hours)} hours, {int(minutes)} minutes, {int(seconds)} seconds")
 
-    print(f"\nTime spent in office during office hours (8:30 AM to 6:45 PM) on {date_str}:")
+    print(f"\nTime spent in office during office hours (7:30 AM to 7:30 PM) on {date_str}:")
     for name, dates in time_spent.items():
         for date in dates:
             total_seconds = dates[date]['office_hours_time']
