@@ -89,6 +89,7 @@ print(f"Mean IoU: {mean_iou}")
 **Definition**: IoU for each class is calculated individually using the same formula as Mean IoU.
 
 **Formula**: 
+
 $$
 \text{IoU} = \frac{|A \cap B|}{|A \cup B|}
 $$
