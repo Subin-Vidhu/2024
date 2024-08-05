@@ -214,6 +214,7 @@ for class_index in range(num_classes):
 $$
 \kappa = \frac{p_o - p_e}{1 - p_e}
 $$
+
 where \( p_o \) is the relative observed agreement and \( p_e \) is the hypothetical probability of chance agreement.
 
 **Example**: If observed agreement is 0.8 and expected agreement is 0.5, Cohen's Kappa = 0.6.
