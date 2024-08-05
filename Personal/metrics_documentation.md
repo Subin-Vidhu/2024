@@ -75,11 +75,8 @@ print(f"Pixel Accuracy: {pixel_accuracy}")
 
 **Code**:
 ```python
-from tensorflow.keras.metrics import MeanIoU
-
-n_classes = 3  # Adjust if different number of classes
-iou_metric = MeanIoU(num_classes=n_classes)
-iou_metric.update_state(y_test, y_pred_argmax)
+iou_metric = MeanIoU(num_classes=num_classes)
+iou_metric.update_state(ground_truth_labels_tensor, predicted_class_indices_tensor)
 mean_iou = iou_metric.result().numpy()
 print(f"Mean IoU: {mean_iou}")
 ```
