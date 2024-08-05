@@ -133,9 +133,9 @@ for class_index in range(num_classes):
 **Definition**: Precision is the ratio of true positive predictions to the total predicted positives.
 
 **Formula**: 
-\[
+$$
 \text{Precision} = \frac{\text{True Positives}}{\text{True Positives} + \text{False Positives}}
-\]
+$$
 
 **Example**: If there are 80 true positives and 20 false positives, precision = 0.8.
 
