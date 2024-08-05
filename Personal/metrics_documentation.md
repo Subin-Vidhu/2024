@@ -197,12 +197,12 @@ where \( p_o \) is the relative observed agreement and \( p_e \) is the hypothet
 
 **Code**:
 ```python
-from sklearn.metrics import cohen_kappa_score
-
-y_test_flat = tf.reshape(y_test, [-1])
-y_pred_argmax_flat = tf.reshape(y_pred_argmax, [-1])
-cohen_kappa = cohen_kappa_score(y_test_flat.numpy(), y_pred_argmax_flat.numpy())
-print(f"Cohen's Kappa: {cohen_kappa}")
+# Cohen's Kappa using scikit-learn
+# Flatten the arrays to 1D
+ground_truth_labels_flat = tf.reshape(ground_truth_labels_tensor, [-1]).numpy()
+predicted_class_indices_flat = tf.reshape(predicted_class_indices_tensor, [-1]).numpy()
+cohen_kappa_score_value = cohen_kappa_score(ground_truth_labels_flat, predicted_class_indices_flat)
+print(f"Cohen's Kappa: {cohen_kappa_score_value}")
 ```
 
 
