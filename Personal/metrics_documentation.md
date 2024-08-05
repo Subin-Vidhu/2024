@@ -39,7 +39,7 @@ y_pred_argmax = tf.cast(tf.convert_to_tensor(y_pred_argmax), tf.int32)
 
 # Ensure y_pred_argmax has the same shape as y_test
 if len(y_pred_argmax.shape) < len(y_test.shape):
-    y_pred_argmax = tf.expand_dims(y_pred_argmax, axis=-1)
+    y_pred_argmax = tf.expand_dims(y_pred_argmax, axis=-1) # Add channel dimension if missing
 ```
 
 ## Pixel Accuracy
