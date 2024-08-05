@@ -13,3 +13,5 @@
 - Read the pdf file for more information.
 
 #### Week 3
+
+##### Deep Learning and Neural Networks
