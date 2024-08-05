@@ -135,11 +135,15 @@ for class_index in range(num_classes):
 
 **Code**:
 ```python
-from tensorflow.keras.metrics import Precision
-
-precision = Precision()
-precision.update_state(y_test, y_pred_argmax)
-print(f"Overall Precision: {precision.result().numpy()}")
+# Class-wise Precision and Recall
+for class_index in range(num_classes):
+    class_precision_metric = Precision()
+    class_mask = tf.equal(ground_truth_labels_tensor, class_index)
+    class_predictions = tf.equal(predicted_class_indices_tensor, class_index)
+    class_precision_metric.update_state(class_mask, class_predictions)
+    class_recall_metric.update_state(class_mask, class_predictions)
+    print(f"Class {class_index}:")
+    print(f"  Precision: {class_precision_metric.result().numpy()}")
 ```
 
 ## Recall
