@@ -51,6 +51,7 @@ if len(predicted_class_indices_tensor.shape) < len(ground_truth_labels_tensor.sh
 **Definition**: Pixel accuracy is the proportion of correctly classified pixels to the total number of pixels.
 
 **Formula**: 
+
 $$Pixel Accuracy = \frac{\sum_{i=1}^{n} \mathbf{1}(y_i = \hat{y}_i)}{n} $$
 
 **Example**: If 95 out of 100 pixels are correctly classified, the pixel accuracy is 95%.
