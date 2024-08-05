@@ -106,9 +106,9 @@ for class_index in range(num_classes):
 **Definition**: The Dice coefficient, also known as the F1 score, is a measure of overlap between two samples.
 
 **Formula**: 
-\[
+$$
 \text{Dice Coefficient} = \frac{2 \cdot |A \cap B|}{|A| + |B|}
-\]
+$$
 
 **Example**: If the intersection is 20 pixels, and the sum of all pixels in both sets is 40, Dice coefficient = 1.
 
