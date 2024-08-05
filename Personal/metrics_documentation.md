@@ -1,0 +1,275 @@
+
+# Metrics Documentation
+
+## General Information
+
+#### Explanation of y_test and y_pred_argmax Values
+
+`y_test`: This is the ground truth or actual labels for your data. Each value represents the class of a pixel in the image.
+
+`y_pred_argmax`: This is the predicted label for each pixel from your model. Each value is the class that your model predicts for a given pixel.
+In a multi-class segmentation task:
+
+The values in y_test and y_pred_argmax should be integers representing class labels (e.g., 0, 1, 2 for a 3-class problem).
+
+The dimensions of y_test and y_pred_argmax should match the number of images and the resolution of each image (height, width).
+
+#### Code to Create Random Values
+```python
+import numpy as np
+import tensorflow as tf
+from sklearn.metrics import cohen_kappa_score
+from tensorflow.keras.metrics import MeanIoU, Precision, Recall, Accuracy
+
+# Parameters
+num_images = 10
+image_height = 256
+image_width = 256
+num_classes = 3
+
+# Create random ground truth labels (y_test)
+y_test = np.random.randint(0, num_classes, size=(num_images, image_height, image_width, 1))
+
+# Create random predicted labels (y_pred_argmax)
+y_pred_argmax = np.random.randint(0, num_classes, size=(num_images, image_height, image_width))
+
+# Convert to TensorFlow tensors
+y_test = tf.convert_to_tensor(y_test, dtype=tf.int32)
+y_pred_argmax = tf.convert_to_tensor(y_pred_argmax, dtype=tf.int32)
+```
+
+## Pixel Accuracy
+**Definition**: Pixel accuracy is the proportion of correctly classified pixels to the total number of pixels.
+
+**Formula**: 
+\[
+\text{Pixel Accuracy} = \frac{\sum_{i=1}^{n} \mathbf{1}(y_i = \hat{y}_i)}{n}
+\]
+
+**Example**: If 95 out of 100 pixels are correctly classified, the pixel accuracy is 95%.
+
+**Code**:
+```python
+import tensorflow as tf
+
+accuracy = tf.keras.metrics.Accuracy()
+accuracy.update_state(y_test, y_pred_argmax)
+pixel_accuracy = accuracy.result().numpy()
+print(f"Pixel Accuracy: {pixel_accuracy}")
+```
+
+## Mean Intersection over Union (Mean IoU)
+**Definition**: IoU is the ratio of the intersection of the predicted and ground truth masks to their union. Mean IoU is the average IoU across all classes.
+
+**Formula**: 
+\[
+\text{IoU} = \frac{|A \cap B|}{|A \cup B|}
+\]
+
+**Example**: If the intersection is 30 pixels and the union is 50 pixels, IoU = 0.6. Mean IoU averages this value across all classes.
+
+**Code**:
+```python
+from tensorflow.keras.metrics import MeanIoU
+
+n_classes = 3  # Adjust if different number of classes
+iou_metric = MeanIoU(num_classes=n_classes)
+iou_metric.update_state(y_test, y_pred_argmax)
+mean_iou = iou_metric.result().numpy()
+print(f"Mean IoU: {mean_iou}")
+```
+
+## Class-wise IoU
+**Definition**: IoU for each class is calculated individually using the same formula as Mean IoU.
+
+**Formula**: 
+\[
+\text{IoU} = \frac{|A \cap B|}{|A \cup B|}
+\]
+
+**Example**: Calculated per class using the above formula.
+
+**Code**:
+```python
+iou_values = iou_metric.get_weights()[0]
+for i in range(n_classes):
+    class_iou = iou_values[i, i] / (np.sum(iou_values[i, :]) + np.sum(iou_values[:, i]) - iou_values[i, i])
+    print(f"IoU for class {i}: {class_iou}")
+```
+
+## Dice Coefficient (F1 Score)
+**Definition**: The Dice coefficient, also known as the F1 score, is a measure of overlap between two samples.
+
+**Formula**: 
+\[
+\text{Dice Coefficient} = \frac{2 \cdot |A \cap B|}{|A| + |B|}
+\]
+
+**Example**: If the intersection is 20 pixels, and the sum of all pixels in both sets is 40, Dice coefficient = 1.
+
+**Code**:
+```python
+dice = 2 * mean_iou / (1 + mean_iou)
+print(f"Dice Coefficient (F1 Score): {dice}")
+
+# Class-wise Dice Coefficient
+for i in range(n_classes):
+    class_dice = 2 * iou_values[i, i] / (np.sum(iou_values[i, :]) + np.sum(iou_values[:, i]))
+    print(f"Dice Coefficient for class {i}: {class_dice}")
+```
+
+## Precision
+**Definition**: Precision is the ratio of true positive predictions to the total predicted positives.
+
+**Formula**: 
+\[
+\text{Precision} = \frac{\text{True Positives}}{\text{True Positives} + \text{False Positives}}
+\]
+
+**Example**: If there are 80 true positives and 20 false positives, precision = 0.8.
+
+**Code**:
+```python
+from tensorflow.keras.metrics import Precision
+
+precision = Precision()
+precision.update_state(y_test, y_pred_argmax)
+print(f"Overall Precision: {precision.result().numpy()}")
+```
+
+## Recall
+**Definition**: Recall is the ratio of true positive predictions to the total actual positives.
+
+**Formula**: 
+\[
+\text{Recall} = \frac{\text{True Positives}}{\text{True Positives} + \text{False Negatives}}
+\]
+
+**Example**: If there are 70 true positives and 30 false negatives, recall = 0.7.
+
+**Code**:
+```python
+from tensorflow.keras.metrics import Recall
+
+recall = Recall()
+recall.update_state(y_test, y_pred_argmax)
+print(f"Overall Recall: {recall.result().numpy()}")
+```
+
+## Class-wise Precision and Recall
+**Definition**: Precision and recall calculated for each class separately.
+
+**Code**:
+```python
+for i in range(n_classes):
+    class_precision = Precision()
+    class_recall = Recall()
+    class_mask = tf.equal(y_test, i)
+    class_precision.update_state(y_test[class_mask], y_pred_argmax[class_mask])
+    class_recall.update_state(y_test[class_mask], y_pred_argmax[class_mask])
+    print(f"Class {i}:")
+    print(f"  Precision: {class_precision.result().numpy()}")
+    print(f"  Recall: {class_recall.result().numpy()}")
+```
+
+## Cohen's Kappa
+**Definition**: Cohen's Kappa is a statistic that measures inter-annotator agreement for categorical items.
+
+**Formula**: 
+\[
+\kappa = \frac{p_o - p_e}{1 - p_e}
+\]
+where \( p_o \) is the relative observed agreement and \( p_e \) is the hypothetical probability of chance agreement.
+
+**Example**: If observed agreement is 0.8 and expected agreement is 0.5, Cohen's Kappa = 0.6.
+
+**Code**:
+```python
+from sklearn.metrics import cohen_kappa_score
+
+y_test_flat = tf.reshape(y_test, [-1])
+y_pred_argmax_flat = tf.reshape(y_pred_argmax, [-1])
+cohen_kappa = cohen_kappa_score(y_test_flat.numpy(), y_pred_argmax_flat.numpy())
+print(f"Cohen's Kappa: {cohen_kappa}")
+```
+
+
+### Full Code
+```python
+import tensorflow as tf
+from tensorflow.keras.metrics import MeanIoU, Precision, Recall, Accuracy
+import numpy as np
+from sklearn.metrics import cohen_kappa_score
+
+# Parameters
+num_images = 10
+image_height = 256
+image_width = 256
+n_classes = 3
+
+# Create random ground truth labels (y_test)
+y_test = np.random.randint(0, n_classes, size=(num_images, image_height, image_width, 1))
+
+# Create random predicted labels (y_pred_argmax)
+y_pred_argmax = np.random.randint(0, n_classes, size=(num_images, image_height, image_width, 1))
+
+# Convert to appropriate tensor format and cast to int32
+y_test = tf.cast(tf.convert_to_tensor(y_test), tf.int32)
+y_pred_argmax = tf.cast(tf.convert_to_tensor(y_pred_argmax), tf.int32)
+
+# Ensure y_pred_argmax has the same shape as y_test
+if len(y_pred_argmax.shape) < len(y_test.shape):
+    y_pred_argmax = tf.expand_dims(y_pred_argmax, axis=-1)
+
+# Pixel Accuracy
+accuracy = Accuracy()
+accuracy.update_state(y_test, y_pred_argmax)
+pixel_accuracy = accuracy.result().numpy()
+print(f"Pixel Accuracy: {pixel_accuracy}")
+
+# IoU and Dice Coefficient (F1 Score)
+iou_metric = MeanIoU(num_classes=n_classes)
+iou_metric.update_state(y_test, y_pred_argmax)
+mean_iou = iou_metric.result().numpy()
+print(f"Mean IoU: {mean_iou}")
+
+# Class-wise IoU
+iou_values = iou_metric.get_weights()[0]
+for i in range(n_classes):
+    class_iou = iou_values[i, i] / (np.sum(iou_values[i, :]) + np.sum(iou_values[:, i]) - iou_values[i, i])
+    print(f"IoU for class {i}: {class_iou}")
+
+# Dice Coefficient (F1 Score)
+dice = 2 * mean_iou / (1 + mean_iou)
+print(f"Dice Coefficient (F1 Score): {dice}")
+
+# Class-wise Dice Coefficient
+def dice_coefficient(y_true, y_pred, class_index):
+    y_true_f = tf.cast(tf.equal(y_true, class_index), tf.float32)
+    y_pred_f = tf.cast(tf.equal(y_pred, class_index), tf.float32)
+    intersection = tf.reduce_sum(y_true_f * y_pred_f)
+    return (2 * intersection) / (tf.reduce_sum(y_true_f) + tf.reduce_sum(y_pred_f) + 1e-7)
+
+for i in range(n_classes):
+    dice = dice_coefficient(y_test, y_pred_argmax, i)
+    print(f"Dice Coefficient for class {i}: {dice.numpy()}")
+
+# Class-wise Precision and Recall
+for i in range(n_classes):
+    class_precision = Precision()
+    class_recall = Recall()
+    class_mask = tf.equal(y_test, i)
+    class_predictions = tf.equal(y_pred_argmax, i)
+    class_precision.update_state(class_mask, class_predictions)
+    class_recall.update_state(class_mask, class_predictions)
+    print(f"Class {i}:")
+    print(f"  Precision: {class_precision.result().numpy()}")
+    print(f"  Recall: {class_recall.result().numpy()}")
+
+# Cohen's Kappa using scikit-learn
+# Flatten the arrays to 1D
+y_test_flat = tf.reshape(y_test, [-1]).numpy()
+y_pred_argmax_flat = tf.reshape(y_pred_argmax, [-1]).numpy()
+cohen_kappa = cohen_kappa_score(y_test_flat, y_pred_argmax_flat)
+print(f"Cohen's Kappa: {cohen_kappa}")
+```
