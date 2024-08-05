@@ -173,15 +173,16 @@ for class_index in range(num_classes):
 
 **Code**:
 ```python
-for i in range(n_classes):
-    class_precision = Precision()
-    class_recall = Recall()
-    class_mask = tf.equal(y_test, i)
-    class_precision.update_state(y_test[class_mask], y_pred_argmax[class_mask])
-    class_recall.update_state(y_test[class_mask], y_pred_argmax[class_mask])
-    print(f"Class {i}:")
-    print(f"  Precision: {class_precision.result().numpy()}")
-    print(f"  Recall: {class_recall.result().numpy()}")
+for class_index in range(num_classes):
+    class_precision_metric = Precision()
+    class_recall_metric = Recall()
+    class_mask = tf.equal(ground_truth_labels_tensor, class_index)
+    class_predictions = tf.equal(predicted_class_indices_tensor, class_index)
+    class_precision_metric.update_state(class_mask, class_predictions)
+    class_recall_metric.update_state(class_mask, class_predictions)
+    print(f"Class {class_index}:")
+    print(f"  Precision: {class_precision_metric.result().numpy()}")
+    print(f"  Recall: {class_recall_metric.result().numpy()}")
 ```
 
 ## Cohen's Kappa
