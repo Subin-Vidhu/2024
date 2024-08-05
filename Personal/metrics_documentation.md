@@ -70,6 +70,7 @@ print(f"Pixel Accuracy: {pixel_accuracy}")
 **Definition**: IoU is the ratio of the intersection of the predicted and ground truth masks to their union. Mean IoU is the average IoU across all classes.
 
 **Formula**: 
+
 $$
 \text{IoU} = \frac{|A \cap B|}{|A \cup B|}
 $$
