@@ -16,26 +16,30 @@ The dimensions of y_test and y_pred_argmax should match the number of images and
 
 #### Code to Create Random Values
 ```python
-import numpy as np
 import tensorflow as tf
-from sklearn.metrics import cohen_kappa_score
 from tensorflow.keras.metrics import MeanIoU, Precision, Recall, Accuracy
+import numpy as np
+from sklearn.metrics import cohen_kappa_score
 
 # Parameters
 num_images = 10
 image_height = 256
 image_width = 256
-num_classes = 3
+n_classes = 3
 
 # Create random ground truth labels (y_test)
-y_test = np.random.randint(0, num_classes, size=(num_images, image_height, image_width, 1))
+y_test = np.random.randint(0, n_classes, size=(num_images, image_height, image_width, 1))
 
 # Create random predicted labels (y_pred_argmax)
-y_pred_argmax = np.random.randint(0, num_classes, size=(num_images, image_height, image_width))
+y_pred_argmax = np.random.randint(0, n_classes, size=(num_images, image_height, image_width, 1))
 
-# Convert to TensorFlow tensors
-y_test = tf.convert_to_tensor(y_test, dtype=tf.int32)
-y_pred_argmax = tf.convert_to_tensor(y_pred_argmax, dtype=tf.int32)
+# Convert to appropriate tensor format and cast to int32
+y_test = tf.cast(tf.convert_to_tensor(y_test), tf.int32)
+y_pred_argmax = tf.cast(tf.convert_to_tensor(y_pred_argmax), tf.int32)
+
+# Ensure y_pred_argmax has the same shape as y_test
+if len(y_pred_argmax.shape) < len(y_test.shape):
+    y_pred_argmax = tf.expand_dims(y_pred_argmax, axis=-1)
 ```
 
 ## Pixel Accuracy
