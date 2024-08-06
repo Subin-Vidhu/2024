@@ -17,3 +17,5 @@
 ##### Deep Learning and Neural Networks
 
 - Read the pdf file for more information.
+
+#### Week 4
