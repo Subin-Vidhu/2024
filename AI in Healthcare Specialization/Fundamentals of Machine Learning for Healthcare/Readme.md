@@ -21,3 +21,5 @@
 #### Week 4
 
 ##### Introduction to Model Performance Evaluation
+
+- Read the pdf file for more information.
