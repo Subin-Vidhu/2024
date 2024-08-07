@@ -31,3 +31,5 @@
 - Read the pdf file for more information.
 
 #### Week 6
+
+##### Machine Learning in Healthcare: Case Studies
