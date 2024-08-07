@@ -28,3 +28,4 @@
 
 ##### Strategies and Challenges in Machine Learning in Healthcare
 
+- Read the pdf file for more information.
