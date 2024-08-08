@@ -32,4 +32,4 @@
 
 #### Week 6
 
-##### Machine Learning in Healthcare: Case Studies
+##### Best practices, teams, and launching your machine learning journey
