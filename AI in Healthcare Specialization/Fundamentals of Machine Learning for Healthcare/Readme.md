@@ -35,3 +35,5 @@
 ##### Best practices, teams, and launching your machine learning journey
 
 - Read the pdf file for more information.
+
+#### Week 7
