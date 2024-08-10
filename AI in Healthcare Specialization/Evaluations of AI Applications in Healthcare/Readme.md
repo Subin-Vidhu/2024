@@ -9,3 +9,5 @@
 #### Week 2
 
 ##### Evaluations of AI in Healthcare
+
+- Read the pdf file for more information.
