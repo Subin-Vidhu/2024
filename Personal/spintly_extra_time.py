@@ -19,8 +19,8 @@ df['Date'] = pd.to_datetime(df['Date'], format='%b %d, %Y')
 df = df[['Date', 'DateTime', 'Name', 'Direction']].sort_values(by=['Name', 'DateTime'])
 
 # Define office hours and standard workday duration
-office_start = time(8, 30)
-office_end = time(18, 45)
+office_start = time(7, 30)
+office_end = time(19, 30)
 standard_workday_seconds = (8 * 60 + 30) * 60  # 8 hours and 30 minutes in seconds
 
 # Function to calculate time spent inside office during office hours
