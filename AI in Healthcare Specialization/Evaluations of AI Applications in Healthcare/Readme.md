@@ -5,3 +5,7 @@
 ##### Introduction 
 
 - Read the pdf file for more information.
+
+#### Week 2
+
+##### Evaluations of AI in Healthcare
