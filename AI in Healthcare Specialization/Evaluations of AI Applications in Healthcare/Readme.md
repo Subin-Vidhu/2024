@@ -11,3 +11,9 @@
 ##### Evaluations of AI in Healthcare
 
 - Read the pdf file for more information.
+
+#### Week 3
+
+##### AI DEPLOYMENT IN HEALTHCARE
+
+- Read the pdf file for more information.
