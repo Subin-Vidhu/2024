@@ -7,8 +7,8 @@ from colorama import Fore, Style, init
 init(autoreset=True)  # Initialize colorama
 
 # Constants
-# FILE_PATH = r'c:\Users\Subin-PC\Downloads\subin_july.xlsx'
-FILE_PATH = r'c:\Users\Subin-PC\Downloads\chippy.xlsx'
+FILE_PATH = r'c:\Users\Subin-PC\Downloads\subin_july.xlsx'
+# FILE_PATH = r'c:\Users\Subin-PC\Downloads\chippy.xlsx'
 SHEET_NAME = 'Access History'
 SKIP_ROWS = 5
 OFFICE_START = time(7, 30)
@@ -33,6 +33,10 @@ def load_data():
     except Exception as e:
         print(f"Error loading data: {e}")
         return None
+
+def truncate_seconds(dt):
+    """Truncate seconds from datetime"""
+    return dt.replace(second=0, microsecond=0)
 
 def calculate_time_spent(group, current_time=None):
     """Calculate time spent in office"""
@@ -74,34 +78,45 @@ def calculate_time_spent(group, current_time=None):
 
     return total_time, total_office_hours_time
 
-def get_time_spent_on_date(df, date_str):
-    try:
-        date = datetime.strptime(date_str, "%b %d, %Y")
-    except ValueError:
-        print("Invalid date format. Please use 'MMM DD, YYYY' format.")
-        return
+def calculate_time_spent_no_seconds(group, current_time=None):
+    """Calculate time spent in office without considering seconds"""
+    total_time = 0
+    total_office_hours_time = 0
+    entry_time = None
 
-    time_spent = {}
-    current_time = datetime.now()
+    for _, row in group.iterrows():
+        if row['Direction'] == 'entry':
+            entry_time = truncate_seconds(row['DateTime'])
+        elif row['Direction'] == 'exit' and entry_time:
+            exit_time = truncate_seconds(row['DateTime'])
+            duration = (exit_time - entry_time).total_seconds()
+            total_time += duration
 
-    for name, group in df.groupby('Name'):
-        for group_date, group_by_date in group.groupby('Date'):
-            if group_date.date() == date.date():
-                daily_total_time, daily_office_hours_time = calculate_time_spent(group_by_date)
-                current_total_time, current_office_hours_time = calculate_time_spent(group_by_date, current_time=current_time)
-                
-                time_spent[name] = {
-                    'total': daily_total_time,
-                    'office': daily_office_hours_time,
-                    'current_total': current_total_time,
-                    'current_office': current_office_hours_time
-                }
+            # Calculate time during office hours
+            entry_time_within_office_hours = max(entry_time, entry_time.replace(hour=OFFICE_START.hour, minute=OFFICE_START.minute, second=0))
+            exit_time_within_office_hours = min(exit_time, exit_time.replace(hour=OFFICE_END.hour, minute=OFFICE_END.minute, second=0))
 
-    if not time_spent:
-        print(f"No data available for {date_str}.")
-        return
+            if entry_time_within_office_hours < exit_time_within_office_hours:
+                duration_office_hours = (exit_time_within_office_hours - entry_time_within_office_hours).total_seconds()
+                total_office_hours_time += duration_office_hours
 
-    print_results(time_spent, date_str)
+            entry_time = None
+
+    # If there's an open entry without an exit, calculate the time till the current time
+    if entry_time and current_time:
+        exit_time = truncate_seconds(current_time)
+        duration = (exit_time - entry_time).total_seconds()
+        total_time += duration
+
+        # Calculate time during office hours
+        entry_time_within_office_hours = max(entry_time, entry_time.replace(hour=OFFICE_START.hour, minute=OFFICE_START.minute, second=0))
+        exit_time_within_office_hours = min(exit_time, exit_time.replace(hour=OFFICE_END.hour, minute=OFFICE_END.minute, second=0))
+
+        if entry_time_within_office_hours < exit_time_within_office_hours:
+            duration_office_hours = (exit_time_within_office_hours - entry_time_within_office_hours).total_seconds()
+            total_office_hours_time += duration_office_hours
+
+    return total_time, total_office_hours_time
 
 def format_time(seconds):
     hours, remainder = divmod(seconds, 3600)
@@ -133,6 +148,32 @@ def get_time_spent_on_date(df, date_str):
         return
 
     print_results(time_spent, date_str, current_time)
+
+def get_time_spent_on_date_no_seconds(df, date_str):
+    try:
+        date = datetime.strptime(date_str, "%b %d, %Y")
+    except ValueError:
+        print("Invalid date format. Please use 'MMM DD, YYYY' format.")
+        return
+
+    time_spent = {}
+    current_time = datetime.now()
+
+    for name, group in df.groupby('Name'):
+        for group_date, group_by_date in group.groupby('Date'):
+            if group_date.date() == date.date():
+                total_time, office_hours_time = calculate_time_spent_no_seconds(group_by_date, current_time=current_time)
+                
+                time_spent[name] = {
+                    'total': total_time,
+                    'office': office_hours_time,
+                }
+
+    if not time_spent:
+        print(f"No data available for {date_str}.")
+        return
+
+    print_results_no_seconds(time_spent, date_str, current_time)
 
 def get_status_and_diff(time_value):
     if time_value >= TARGET_TIME:
@@ -170,6 +211,34 @@ def print_results(time_spent, date_str, current_time):
     print("✓ = Target met (extra time shown), ✗ = Target not met (remaining time shown)")
     print("Total Time includes time spent outside office hours")
 
+def print_results_no_seconds(time_spent, date_str, current_time):
+    headers = ["Name", "Total Time (No Seconds)", "Office Hours Time (No Seconds)", "Target", "Difference"]
+    table_data = []
+
+    for name, data in time_spent.items():
+        status, diff = get_status_and_diff(data['office'])
+        row = [
+            name,
+            format_time(data['total']),
+            format_time(data['office']),
+            status,
+            diff
+        ]
+        table_data.append(row)
+
+    print(f"\nTime spent summary without seconds for {date_str}:")
+    print(tabulate(table_data, headers=headers, tablefmt="grid"))
+
+    target_time_str = format_time(TARGET_TIME)
+    office_start_str = OFFICE_START.strftime("%I:%M %p")
+    office_end_str = OFFICE_END.strftime("%I:%M %p")
+    current_time_str = current_time.strftime("%I:%M:%S %p")
+    print(f"\nOffice hours: {office_start_str} to {office_end_str}")
+    print(f"Target time: {target_time_str}")
+    print(f"Calculation made at: {current_time_str}")
+    print("✓ = Target met (extra time shown), ✗ = Target not met (remaining time shown)")
+    print("Total Time includes time spent outside office hours")
+
 def main():
     args = parse_args()
     df = load_data()
@@ -181,7 +250,11 @@ def main():
     else:
         date_str = input("Enter the date (MMM DD, YYYY): ").strip()
 
+    # Original calculation with seconds
     get_time_spent_on_date(df, date_str)
+    
+    # Calculation without considering seconds
+    get_time_spent_on_date_no_seconds(df, date_str)
 
 if __name__ == "__main__":
     main()
