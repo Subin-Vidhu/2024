@@ -7,7 +7,8 @@ from colorama import Fore, Style, init
 init(autoreset=True)  # Initialize colorama
 
 # Constants
-FILE_PATH = r'c:\Users\Subin-PC\Downloads\subin_july.xlsx'
+# FILE_PATH = r'c:\Users\Subin-PC\Downloads\subin_july.xlsx'
+FILE_PATH = r'c:\Users\Subin-PC\Downloads\chippy.xlsx'
 SHEET_NAME = 'Access History'
 SKIP_ROWS = 5
 OFFICE_START = time(7, 30)
