@@ -1,23 +1,38 @@
 import pandas as pd
 from datetime import datetime, time, timedelta
+import argparse
+from tabulate import tabulate
+from colorama import Fore, Style, init
 
-# Load the data from the Excel file
+init(autoreset=True)  # Initialize colorama
+
+# Constants
 FILE_PATH = r'c:\Users\Subin-PC\Downloads\subin_july.xlsx'
-# FILE_PATH = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\chippy.xlsx'
 SHEET_NAME = 'Access History'
 SKIP_ROWS = 5
-
-# Define office hours
 OFFICE_START = time(7, 30)
 OFFICE_END = time(19, 30)
-
-# Define target time
 TARGET_TIME = 8 * 3600 + 30 * 60  # 8 hours 30 minutes in seconds
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Calculate office time from Excel sheet.")
+    parser.add_argument("--date", help="Date to calculate (MMM DD, YYYY)")
+    return parser.parse_args()
 
 def parse_datetime(date, time_str):
     """Parse datetime from date and time strings"""
     return datetime.strptime(f"{date} {time_str.split('(')[0].strip()}", "%b %d, %Y %I:%M:%S %p")
+
+def load_data():
+    try:
+        df = pd.read_excel(FILE_PATH, sheet_name=SHEET_NAME, skiprows=SKIP_ROWS)
+        df['DateTime'] = df.apply(lambda row: parse_datetime(row['Date'], row['Time']), axis=1)
+        df['Date'] = pd.to_datetime(df['Date'], format='%b %d, %Y')
+        return df[['Date', 'DateTime', 'Name', 'Direction']].sort_values(by=['Name', 'DateTime'])
+    except Exception as e:
+        print(f"Error loading data: {e}")
+        return None
+
 def calculate_time_spent(group, current_time=None):
     """Calculate time spent in office"""
     total_time = 0
@@ -58,31 +73,28 @@ def calculate_time_spent(group, current_time=None):
 
     return total_time, total_office_hours_time
 
-def get_time_spent_on_date(date_str):
-    """Get time spent in office on a specific date"""
+def format_time(seconds):
+    hours, remainder = divmod(seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f"{int(hours):02d}:{int(minutes):02d}:{int(seconds):02d}"
+
+def get_time_spent_on_date(df, date_str):
     try:
-        # Normalize the input by adding a space after the comma if not present
-        if ',' in date_str and not date_str[date_str.index(',') + 1].isspace():
-            date_str = date_str[:date_str.index(',') + 1] + ' ' + date_str[date_str.index(',') + 1:].strip()
         date = datetime.strptime(date_str, "%b %d, %Y")
     except ValueError:
         print("Invalid date format. Please use 'MMM DD, YYYY' format.")
         return
 
     time_spent = {}
-    current_time = datetime.now()  # Get current time
+    current_time = datetime.now()
+
     for name, group in df.groupby('Name'):
         for group_date, group_by_date in group.groupby('Date'):
-            if group_date == date:
-                # Calculate time till the last recorded exit
+            if group_date.date() == date.date():
                 daily_total_time, daily_office_hours_time = calculate_time_spent(group_by_date)
-                
-                # Calculate time till the current time
                 current_total_time, current_office_hours_time = calculate_time_spent(group_by_date, current_time=current_time)
                 
-                if name not in time_spent:
-                    time_spent[name] = {}
-                time_spent[name][date] = {
+                time_spent[name] = {
                     'total_time': daily_total_time,
                     'office_hours_time': daily_office_hours_time,
                     'current_total_time': current_total_time,
@@ -94,73 +106,48 @@ def get_time_spent_on_date(date_str):
         return
 
     print(f"\nTime spent in office on {date_str}:")
-    for name, dates in time_spent.items():
-        for date in dates:
-            total_seconds = dates[date]['total_time']
-            hours, remainder = divmod(total_seconds, 3600)
-            minutes, seconds = divmod(remainder, 60)
-            print(f"  {name}: {int(hours)} hours, {int(minutes)} minutes, {int(seconds)} seconds")
+    print_table(time_spent, 'total_time', 'Total Time')
 
     print(f"\nTime spent in office during office hours (7:30 AM to 7:30 PM) on {date_str}:")
-    for name, dates in time_spent.items():
-        for date in dates:
-            total_seconds = dates[date]['office_hours_time']
-            hours, remainder = divmod(total_seconds, 3600)
-            minutes, seconds = divmod(remainder, 60)
-            print(f"  {name}: {int(hours)} hours, {int(minutes)} minutes, {int(seconds)} seconds")
-
-            # Check if target time is met
-            if total_seconds >= TARGET_TIME:
-                extra_time = total_seconds - TARGET_TIME
-                extra_hours, extra_remainder = divmod(extra_time, 3600)
-                extra_minutes, extra_seconds = divmod(extra_remainder, 60)
-                print(f"  {name} has met the target time of {divmod(TARGET_TIME, 3600)[0]} hours and {divmod(TARGET_TIME, 3600)[1]// 60} minutes with {int(extra_hours)} hours, {int(extra_minutes)} minutes, {int(extra_seconds)} seconds extra.")
-            else:
-                remaining_time = TARGET_TIME - total_seconds
-                remaining_hours, remaining_remainder = divmod(remaining_time, 3600)
-                remaining_minutes, remaining_seconds = divmod(remaining_remainder, 60)
-                print(f"  {name} has not met the target time of 8 hours 30 minutes. Remaining time: {int(remaining_hours)} hours, {int(remaining_minutes)} minutes, {int(remaining_seconds)} seconds.")
+    print_table(time_spent, 'office_hours_time', 'Office Hours Time')
 
     print(f"\nTime spent in office till the current time on {date_str}:")
-    for name, dates in time_spent.items():
-        for date in dates:
-            total_seconds = dates[date]['current_total_time']
-            hours, remainder = divmod(total_seconds, 3600)
-            minutes, seconds = divmod(remainder, 60)
-            print(f"  {name}: {int(hours)} hours, {int(minutes)} minutes, {int(seconds)} seconds")
+    print_table(time_spent, 'current_total_time', 'Current Total Time')
 
     print(f"\nTime spent in office during office hours (7:30 AM to 7:30 PM) till the current time on {date_str}:")
-    for name, dates in time_spent.items():
-        for date in dates:
-            total_seconds = dates[date]['current_office_hours_time']
-            hours, remainder = divmod(total_seconds, 3600)
-            minutes, seconds = divmod(remainder, 60)
-            print(f"  {name}: {int(hours)} hours, {int(minutes)} minutes, {int(seconds)} seconds")
+    print_table(time_spent, 'current_office_hours_time', 'Current Office Hours Time')
 
-            # Check if target time is met
-            if total_seconds >= TARGET_TIME:
-                extra_time = total_seconds - TARGET_TIME
-                extra_hours, extra_remainder = divmod(extra_time, 3600)
-                extra_minutes, extra_seconds = divmod(extra_remainder, 60)
-                print(f"  {name} has met the target time of {divmod(TARGET_TIME, 3600)[0]} hours and {divmod(TARGET_TIME, 3600)[1]// 60} minutes with {int(extra_hours)} hours, {int(extra_minutes)} minutes, {int(extra_seconds)} seconds extra.")
-            else:
-                remaining_time = TARGET_TIME - total_seconds
-                remaining_hours, remaining_remainder = divmod(remaining_time, 3600)
-                remaining_minutes, remaining_seconds = divmod(remaining_remainder, 60)
-                print(f"  {name} has not met the target time of 8 hours 30 minutes. Remaining time: {int(remaining_hours)} hours, {int(remaining_minutes)} minutes, {int(remaining_seconds)} seconds.")
+def print_table(time_spent, time_key, time_label):
+    table_data = []
+    for name, data in time_spent.items():
+        time_value = data[time_key]
+        formatted_time = format_time(time_value)
+        status = get_status(time_value)
+        table_data.append([name, formatted_time, status])
+    
+    headers = ["Name", time_label, "Status"]
+    print(tabulate(table_data, headers=headers, tablefmt="grid"))
 
-# Load the data from the Excel file
-df = pd.read_excel(FILE_PATH, sheet_name=SHEET_NAME, skiprows=SKIP_ROWS)
+def get_status(time_value):
+    if time_value >= TARGET_TIME:
+        extra_time = time_value - TARGET_TIME
+        return Fore.GREEN + f"Met target (+{format_time(extra_time)})" + Style.RESET_ALL
+    else:
+        remaining_time = TARGET_TIME - time_value
+        return Fore.RED + f"Need {format_time(remaining_time)} more" + Style.RESET_ALL
 
-# Parse the DateTime column
-df['DateTime'] = df.apply(lambda row: parse_datetime(row['Date'], row['Time']), axis=1)
+def main():
+    args = parse_args()
+    df = load_data()
+    if df is None:
+        return
 
-# Convert Date column to datetime for proper sorting
-df['Date'] = pd.to_datetime(df['Date'], format='%b %d, %Y')
+    if args.date:
+        date_str = args.date
+    else:
+        date_str = input("Enter the date (MMM DD, YYYY): ").strip()
 
-# Filter for relevant columns and sort the data by Name and DateTime
-df = df[['Date', 'DateTime', 'Name', 'Direction']].sort_values(by=['Name', 'DateTime'])
+    get_time_spent_on_date(df, date_str)
 
-# Get user input
-user_date = input("Enter the date (MMM DD, YYYY): ").strip()
-get_time_spent_on_date(user_date)
+if __name__ == "__main__":
+    main()
