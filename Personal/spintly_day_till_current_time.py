@@ -73,6 +73,35 @@ def calculate_time_spent(group, current_time=None):
 
     return total_time, total_office_hours_time
 
+def get_time_spent_on_date(df, date_str):
+    try:
+        date = datetime.strptime(date_str, "%b %d, %Y")
+    except ValueError:
+        print("Invalid date format. Please use 'MMM DD, YYYY' format.")
+        return
+
+    time_spent = {}
+    current_time = datetime.now()
+
+    for name, group in df.groupby('Name'):
+        for group_date, group_by_date in group.groupby('Date'):
+            if group_date.date() == date.date():
+                daily_total_time, daily_office_hours_time = calculate_time_spent(group_by_date)
+                current_total_time, current_office_hours_time = calculate_time_spent(group_by_date, current_time=current_time)
+                
+                time_spent[name] = {
+                    'total': daily_total_time,
+                    'office': daily_office_hours_time,
+                    'current_total': current_total_time,
+                    'current_office': current_office_hours_time
+                }
+
+    if not time_spent:
+        print(f"No data available for {date_str}.")
+        return
+
+    print_results(time_spent, date_str)
+
 def format_time(seconds):
     hours, remainder = divmod(seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
@@ -91,50 +120,54 @@ def get_time_spent_on_date(df, date_str):
     for name, group in df.groupby('Name'):
         for group_date, group_by_date in group.groupby('Date'):
             if group_date.date() == date.date():
-                daily_total_time, daily_office_hours_time = calculate_time_spent(group_by_date)
-                current_total_time, current_office_hours_time = calculate_time_spent(group_by_date, current_time=current_time)
+                total_time, office_hours_time = calculate_time_spent(group_by_date, current_time=current_time)
                 
                 time_spent[name] = {
-                    'total_time': daily_total_time,
-                    'office_hours_time': daily_office_hours_time,
-                    'current_total_time': current_total_time,
-                    'current_office_hours_time': current_office_hours_time
+                    'total': total_time,
+                    'office': office_hours_time,
                 }
 
     if not time_spent:
         print(f"No data available for {date_str}.")
         return
 
-    print(f"\nTime spent in office on {date_str}:")
-    print_table(time_spent, 'total_time', 'Total Time')
+    print_results(time_spent, date_str, current_time)
 
-    print(f"\nTime spent in office during office hours (7:30 AM to 7:30 PM) on {date_str}:")
-    print_table(time_spent, 'office_hours_time', 'Office Hours Time')
-
-    print(f"\nTime spent in office till the current time on {date_str}:")
-    print_table(time_spent, 'current_total_time', 'Current Total Time')
-
-    print(f"\nTime spent in office during office hours (7:30 AM to 7:30 PM) till the current time on {date_str}:")
-    print_table(time_spent, 'current_office_hours_time', 'Current Office Hours Time')
-
-def print_table(time_spent, time_key, time_label):
-    table_data = []
-    for name, data in time_spent.items():
-        time_value = data[time_key]
-        formatted_time = format_time(time_value)
-        status = get_status(time_value)
-        table_data.append([name, formatted_time, status])
-    
-    headers = ["Name", time_label, "Status"]
-    print(tabulate(table_data, headers=headers, tablefmt="grid"))
-
-def get_status(time_value):
+def get_status_and_diff(time_value):
     if time_value >= TARGET_TIME:
         extra_time = time_value - TARGET_TIME
-        return Fore.GREEN + f"Met target (+{format_time(extra_time)})" + Style.RESET_ALL
+        return Fore.GREEN + "✓" + Style.RESET_ALL, f"+{format_time(extra_time)}"
     else:
         remaining_time = TARGET_TIME - time_value
-        return Fore.RED + f"Need {format_time(remaining_time)} more" + Style.RESET_ALL
+        return Fore.RED + "✗" + Style.RESET_ALL, f"-{format_time(remaining_time)}"
+
+def print_results(time_spent, date_str, current_time):
+    headers = ["Name", "Total Time", "Office Hours Time", "Target", "Difference"]
+    table_data = []
+
+    for name, data in time_spent.items():
+        status, diff = get_status_and_diff(data['office'])
+        row = [
+            name,
+            format_time(data['total']),
+            format_time(data['office']),
+            status,
+            diff
+        ]
+        table_data.append(row)
+
+    print(f"\nTime spent summary for {date_str}:")
+    print(tabulate(table_data, headers=headers, tablefmt="grid"))
+    
+    target_time_str = format_time(TARGET_TIME)
+    office_start_str = OFFICE_START.strftime("%I:%M %p")
+    office_end_str = OFFICE_END.strftime("%I:%M %p")
+    current_time_str = current_time.strftime("%I:%M:%S %p")
+    print(f"\nOffice hours: {office_start_str} to {office_end_str}")
+    print(f"Target time: {target_time_str}")
+    print(f"Calculation made at: {current_time_str}")
+    print("✓ = Target met (extra time shown), ✗ = Target not met (remaining time shown)")
+    print("Total Time includes time spent outside office hours")
 
 def main():
     args = parse_args()
