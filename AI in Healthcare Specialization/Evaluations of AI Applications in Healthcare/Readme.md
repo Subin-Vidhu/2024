@@ -17,3 +17,9 @@
 ##### AI DEPLOYMENT IN HEALTHCARE
 
 - Read the pdf file for more information.
+
+#### Week 4
+
+##### Bias and Fairness 
+
+- Read the pdf file for more information.
