@@ -23,3 +23,5 @@
 ##### Bias and Fairness 
 
 - Read the pdf file for more information.
+
+#### Week 5
