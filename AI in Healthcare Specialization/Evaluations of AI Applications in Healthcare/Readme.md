@@ -27,4 +27,3 @@
 #### Week 5
 
 ##### The Regulatory Environment for AI in Healthcare
-
