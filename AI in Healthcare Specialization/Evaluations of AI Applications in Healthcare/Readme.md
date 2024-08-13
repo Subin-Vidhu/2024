@@ -26,4 +26,4 @@
 
 #### Week 5
 
-##### AI in Healthcare: Ethical and Legal Considerations
+##### The Regulatory Environment for AI in Healthcare
