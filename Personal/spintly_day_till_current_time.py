@@ -2,6 +2,7 @@ import pandas as pd
 from datetime import datetime, time, timedelta
 from tabulate import tabulate
 from colorama import Fore, Style, init
+from typing import Dict, Tuple
 
 init(autoreset=True)  # Initialize colorama
 
@@ -14,11 +15,11 @@ OFFICE_START = time(7, 30)
 OFFICE_END = time(19, 30)
 TARGET_TIME = 8 * 3600 + 30 * 60  # 8 hours 30 minutes in seconds
 
-def parse_datetime(date, time_str):
+def parse_datetime(date: str, time_str: str) -> datetime:
     """Parse datetime from date and time strings"""
     return datetime.strptime(f"{date} {time_str.split('(')[0].strip()}", "%b %d, %Y %I:%M:%S %p")
 
-def load_data():
+def load_data() -> pd.DataFrame:
     try:
         df = pd.read_excel(FILE_PATH, sheet_name=SHEET_NAME, skiprows=SKIP_ROWS)
         df['DateTime'] = df.apply(lambda row: parse_datetime(row['Date'], row['Time']), axis=1)
@@ -28,11 +29,11 @@ def load_data():
         print(f"Error loading data: {e}")
         return None
 
-def truncate_seconds(dt):
+def truncate_seconds(dt: datetime) -> datetime:
     """Truncate seconds from datetime"""
     return dt.replace(second=0, microsecond=0)
 
-def calculate_time_spent(group, current_time=None, truncate=False):
+def calculate_time_spent(group: pd.DataFrame, current_time: datetime = None, truncate: bool = False) -> Tuple[float, float, float, datetime]:
     """Calculate time spent in office"""
     total_time = 0
     total_office_hours_time = 0
@@ -42,7 +43,10 @@ def calculate_time_spent(group, current_time=None, truncate=False):
     first_entry_time = None
 
     for _, row in group.iterrows():
-        dt = truncate_seconds(row['DateTime']) if truncate else row['DateTime']
+        if truncate:
+            dt = truncate_seconds(row['DateTime'])
+        else:
+            dt = row['DateTime']
 
         if row['Direction'] == 'entry':
             if first_entry_time is None:
@@ -66,7 +70,10 @@ def calculate_time_spent(group, current_time=None, truncate=False):
 
     # If there's an open entry without an exit, calculate the time till the current time
     if entry_time and current_time:
-        exit_time = truncate_seconds(current_time) if truncate else current_time
+        if truncate:
+            exit_time = truncate_seconds(current_time)
+        else:
+            exit_time = current_time
         last_exit_time = exit_time
         duration = (exit_time - entry_time).total_seconds()
         total_time += duration
@@ -86,26 +93,26 @@ def calculate_time_spent(group, current_time=None, truncate=False):
 
     return total_time, total_office_hours_time, total_break_time, last_exit_time
 
-def format_time(seconds):
+def format_time(seconds: float) -> str:
     hours, remainder = divmod(seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
     return f"{int(hours):02d}:{int(minutes):02d}:{int(seconds):02d}"
 
-def get_time_spent_on_date(df, date_str):
+def get_time_spent_on_date(df: pd.DataFrame, date_str: str) -> None:
     try:
         date = datetime.strptime(date_str, "%b %d, %Y").date()
     except ValueError:
         print("Invalid date format. Please use 'MMM DD, YYYY' format.")
         return
 
-    time_spent_with_seconds = {}
-    time_spent_no_seconds = {}
+    time_spent_with_seconds: Dict[str, Dict[str, float]] = {}
+    time_spent_no_seconds: Dict[str, Dict[str, float]] = {}
     current_time = datetime.now()
 
     for name, group in df.groupby('Name'):
         for group_date, group_by_date in group.groupby('Date'):
             if group_date == date:  # Compare with the date, not datetime
-                total_time, office_hours_time, total_break_time, last_exit_time = calculate_time_spent(group_by_date, current_time=current_time, truncate=False)
+                total_time, office_hours_time, total_break_time, last_exit_time = calculate_time_spent(group_by_date, current_time=current_time)
                 time_spent_with_seconds[name] = {
                     'total': total_time,
                     'office': office_hours_time,
@@ -129,7 +136,7 @@ def get_time_spent_on_date(df, date_str):
     print("\n" + "-"*80 + "\n")
     print_results(time_spent_no_seconds, date_str, current_time, use_seconds=False)
 
-def print_results(time_spent, date_str, current_time, use_seconds):
+def print_results(time_spent: Dict[str, Dict[str, float]], date_str: str, current_time: datetime, use_seconds: bool) -> None:
     """Prints the results in a formatted table"""
     if use_seconds:
         headers = ['Name', 'Total Time', 'Office Hours Time', 'Break Time', 'Target', 'Difference', 'Last Exit']
@@ -166,7 +173,7 @@ def print_results(time_spent, date_str, current_time, use_seconds):
     print("Total Time includes time spent outside office hours")
     print("Break Time is calculated as the total duration minus the actual time spent in office.")
 
-def main():
+def main() -> None:
     date_str = input("Enter the date (MMM DD, YYYY): ")
 
     df = load_data()
