@@ -28,3 +28,4 @@
 
 ##### The Regulatory Environment for AI in Healthcare
 
+- Read the pdf file for more information.
