@@ -7,8 +7,8 @@ from colorama import Fore, Style, init
 init(autoreset=True)  # Initialize colorama
 
 # Constants
-FILE_PATH = r'c:\Users\Subin-PC\Downloads\subin_july.xlsx'
-# FILE_PATH = r'c:\Users\Subin-PC\Downloads\chippy.xlsx'
+# FILE_PATH = r'c:\Users\Subin-PC\Downloads\subin_july.xlsx'
+FILE_PATH = r'c:\Users\Subin-PC\Downloads\chippy.xlsx'
 SHEET_NAME = 'Access History'
 SKIP_ROWS = 5
 OFFICE_START = time(7, 30)
@@ -43,12 +43,14 @@ def calculate_time_spent(group, current_time=None):
     total_time = 0
     total_office_hours_time = 0
     entry_time = None
+    last_exit_time = None
 
     for _, row in group.iterrows():
         if row['Direction'] == 'entry':
             entry_time = row['DateTime']
         elif row['Direction'] == 'exit' and entry_time:
             exit_time = row['DateTime']
+            last_exit_time = exit_time
             duration = (exit_time - entry_time).total_seconds()
             total_time += duration
 
@@ -76,19 +78,21 @@ def calculate_time_spent(group, current_time=None):
             duration_office_hours = (exit_time_within_office_hours - entry_time_within_office_hours).total_seconds()
             total_office_hours_time += duration_office_hours
 
-    return total_time, total_office_hours_time
+    return total_time, total_office_hours_time, last_exit_time
 
 def calculate_time_spent_no_seconds(group, current_time=None):
     """Calculate time spent in office without considering seconds"""
     total_time = 0
     total_office_hours_time = 0
     entry_time = None
+    last_exit_time = None
 
     for _, row in group.iterrows():
         if row['Direction'] == 'entry':
             entry_time = truncate_seconds(row['DateTime'])
         elif row['Direction'] == 'exit' and entry_time:
             exit_time = truncate_seconds(row['DateTime'])
+            last_exit_time = exit_time
             duration = (exit_time - entry_time).total_seconds()
             total_time += duration
 
@@ -116,7 +120,7 @@ def calculate_time_spent_no_seconds(group, current_time=None):
             duration_office_hours = (exit_time_within_office_hours - entry_time_within_office_hours).total_seconds()
             total_office_hours_time += duration_office_hours
 
-    return total_time, total_office_hours_time
+    return total_time, total_office_hours_time, last_exit_time
 
 def format_time(seconds):
     hours, remainder = divmod(seconds, 3600)
@@ -136,11 +140,12 @@ def get_time_spent_on_date(df, date_str):
     for name, group in df.groupby('Name'):
         for group_date, group_by_date in group.groupby('Date'):
             if group_date.date() == date.date():
-                total_time, office_hours_time = calculate_time_spent(group_by_date, current_time=current_time)
+                total_time, office_hours_time, last_exit_time = calculate_time_spent(group_by_date, current_time=current_time)
                 
                 time_spent[name] = {
                     'total': total_time,
                     'office': office_hours_time,
+                    'last_exit': last_exit_time
                 }
 
     if not time_spent:
@@ -162,11 +167,12 @@ def get_time_spent_on_date_no_seconds(df, date_str):
     for name, group in df.groupby('Name'):
         for group_date, group_by_date in group.groupby('Date'):
             if group_date.date() == date.date():
-                total_time, office_hours_time = calculate_time_spent_no_seconds(group_by_date, current_time=current_time)
+                total_time, office_hours_time, last_exit_time = calculate_time_spent_no_seconds(group_by_date, current_time=current_time)
                 
                 time_spent[name] = {
                     'total': total_time,
                     'office': office_hours_time,
+                    'last_exit': last_exit_time
                 }
 
     if not time_spent:
@@ -184,17 +190,19 @@ def get_status_and_diff(time_value):
         return Fore.RED + "✗" + Style.RESET_ALL, f"-{format_time(remaining_time)}"
 
 def print_results(time_spent, date_str, current_time):
-    headers = ["Name", "Total Time", "Office Hours Time", "Target", "Difference"]
+    headers = ["Name", "Total Time", "Office Hours Time", "Target", "Difference", "Last Exit"]
     table_data = []
 
     for name, data in time_spent.items():
         status, diff = get_status_and_diff(data['office'])
+        last_exit = data['last_exit'].strftime("%I:%M:%S %p") if data['last_exit'] else "N/A"
         row = [
             name,
             format_time(data['total']),
             format_time(data['office']),
             status,
-            diff
+            diff,
+            last_exit
         ]
         table_data.append(row)
 
@@ -212,17 +220,19 @@ def print_results(time_spent, date_str, current_time):
     print("Total Time includes time spent outside office hours")
 
 def print_results_no_seconds(time_spent, date_str, current_time):
-    headers = ["Name", "Total Time (No Seconds)", "Office Hours Time (No Seconds)", "Target", "Difference"]
+    headers = ["Name", "Total Time (No Seconds)", "Office Hours Time (No Seconds)", "Target", "Difference", "Last Exit"]
     table_data = []
 
     for name, data in time_spent.items():
         status, diff = get_status_and_diff(data['office'])
+        last_exit = data['last_exit'].strftime("%I:%M %p") if data['last_exit'] else "N/A"
         row = [
             name,
             format_time(data['total']),
             format_time(data['office']),
             status,
-            diff
+            diff,
+            last_exit
         ]
         table_data.append(row)
 
