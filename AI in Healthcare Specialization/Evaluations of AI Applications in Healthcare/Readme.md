@@ -23,3 +23,21 @@
 ##### Bias and Fairness 
 
 - Read the pdf file for more information.
+
+#### Week 5
+
+##### The Regulatory Environment for AI in Healthcare
+
+- Read the pdf file for more information.
+
+#### Week 6
+
+##### Problem Formulation
+
+- Read the pdf file for more information.
+
+#### Week 7
+
+##### Introduction: Navigating the Intersections of AI and Medicine
+
+- Read the pdf file for more information.
