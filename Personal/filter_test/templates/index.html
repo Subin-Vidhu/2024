@@ -47,6 +47,7 @@
                     } else if (data.length > 0) {
                         data.forEach(study => {
                             let patientName = 'N/A';
+                            let patientId = 'N/A';
                             if (study['00100010'] && study['00100010'].Value && study['00100010'].Value[0]) {
                                 const nameComponents = study['00100010'].Value[0];
                                 // Handle Person Name (PN) DICOM type
@@ -56,10 +57,14 @@
                                     patientName = nameComponents;
                                 }
                             }
+                            if (study['00100020'] && study['00100020'].Value && study['00100020'].Value[0]) {
+                                patientId = study['00100020'].Value[0];
+                            }
 
                             resultsDiv.append(`
                                 <h2>Study Information</h2>
                                 <p><strong>Patient Name:</strong> ${patientName}</p>
+                                <p><strong>Patient ID:</strong> ${patientId}</p>
                                 <p><strong>Patient Age:</strong> ${study['00101010']?.Value[0] || 'N/A'}</p>
                                 <p><strong>Patient Sex:</strong> ${study['00100040']?.Value[0] || 'N/A'}</p>
                                 <p><strong>Study ID:</strong> ${study['00200010']?.Value[0] || 'N/A'}</p>
