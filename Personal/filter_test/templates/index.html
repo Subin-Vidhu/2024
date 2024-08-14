@@ -19,53 +19,65 @@
 
     <script>
         $(document).ready(function() {
-            $('#searchForm').on('submit', function(event) {
-                event.preventDefault(); // Prevent form submission
+    $('#searchForm').on('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
 
-                const patientName = $('#patient_name').val();
+        const patientName = $('#patient_name').val();
+        
+        // Send AJAX POST request
+        $.ajax({
+            url: '/',
+            type: 'POST',
+            data: { patient_name: patientName },
+            success: function(data) {
+                let resultsDiv = $('#results');
+                resultsDiv.empty(); // Clear previous results
                 
-                // Send AJAX POST request
-                $.ajax({
-                    url: '/',
-                    type: 'POST',
-                    data: { patient_name: patientName },
-                    success: function(data) {
-                        let resultsDiv = $('#results');
-                        resultsDiv.empty(); // Clear previous results
-                        
-                        if (data.error) {
-                            resultsDiv.append(`<p>${data.error}</p>`);
-                        } else if (data.length > 0) {
-                            data.forEach(study => {
-                                resultsDiv.append(`
-                                    <h2>Study Information</h2>
-                                    <p><strong>Patient Name:</strong> ${study['00100010']?.Value[0] || 'N/A'}</p>
-                                    <p><strong>Patient Age:</strong> ${study['00101010']?.Value[0] || 'N/A'}</p>
-                                    <p><strong>Patient Sex:</strong> ${study['00100040']?.Value[0] || 'N/A'}</p>
-                                    <p><strong>Study ID:</strong> ${study['00200010']?.Value[0] || 'N/A'}</p>
-                                    <p><strong>Study Date:</strong> ${study['00080020']?.Value[0] || 'N/A'}</p>
-                                    <h3>Series Information</h3>
-                                    <p><strong>Number of Series:</strong> ${study['00201206']?.Value[0] || 'N/A'}</p>
-                                `);
-
-                                (study.Series || []).forEach(series => {
-                                    resultsDiv.append(`
-                                        <p><strong>Series ID:</strong> ${series['0020000E']?.Value[0] || 'N/A'}</p>
-                                        <p><strong>Series Description:</strong> ${series['0008103E']?.Value[0] || 'N/A'}</p>
-                                        <p><strong>Number of SOP Instances:</strong> ${series['00201208']?.Value[0] || 'N/A'}</p>
-                                    `);
-                                });
-                            });
-                        } else {
-                            resultsDiv.append('<p>No data found for the provided patient name.</p>');
+                if (data.error) {
+                    resultsDiv.append(`<p>${data.error}</p>`);
+                } else if (data.length > 0) {
+                    data.forEach(study => {
+                        let patientName = 'N/A';
+                        if (study['00100010'] && study['00100010'].Value && study['00100010'].Value[0]) {
+                            const nameComponents = study['00100010'].Value[0];
+                            // Handle Person Name (PN) DICOM type
+                            if (typeof nameComponents === 'object') {
+                                patientName = Object.values(nameComponents).filter(Boolean).join(' ');
+                            } else {
+                                patientName = nameComponents;
+                            }
                         }
-                    },
-                    error: function(xhr) {
-                        $('#results').html(`<p>Error: ${xhr.status} - ${xhr.statusText}</p>`);
-                    }
-                });
-            });
+
+                        resultsDiv.append(`
+                            <h2>Study Information</h2>
+                            <p><strong>Patient Name:</strong> ${patientName}</p>
+                            <p><strong>Patient Age:</strong> ${study['00101010']?.Value[0] || 'N/A'}</p>
+                            <p><strong>Patient Sex:</strong> ${study['00100040']?.Value[0] || 'N/A'}</p>
+                            <p><strong>Study ID:</strong> ${study['00200010']?.Value[0] || 'N/A'}</p>
+                            <p><strong>Study Date:</strong> ${study['00080020']?.Value[0] || 'N/A'}</p>
+                            <h3>Series Information</h3>
+                            <p><strong>Number of Series:</strong> ${study['00201206']?.Value[0] || 'N/A'}</p>
+                        `);
+
+                        (study.Series || []).forEach(series => {
+                            resultsDiv.append(`
+                                <p><strong>Series ID:</strong> ${series['0020000E']?.Value[0] || 'N/A'}</p>
+                                <p><strong>Series Description:</strong> ${series['0008103E']?.Value[0] || 'N/A'}</p>
+                                <p><strong>Number of SOP Instances:</strong> ${series['00201208']?.Value[0] || 'N/A'}</p>
+                            `);
+                        });
+                    });
+                } else {
+                    resultsDiv.append('<p>No data found for the provided patient name.</p>');
+                }
+            },
+            error: function(xhr) {
+                $('#results').html(`<p>Error: ${xhr.status} - ${xhr.statusText}</p>`);
+            }
         });
+    });
+});
+
     </script>
 </body>
 </html>
