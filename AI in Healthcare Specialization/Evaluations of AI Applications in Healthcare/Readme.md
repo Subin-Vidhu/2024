@@ -38,4 +38,4 @@
 
 #### Week 7
 
-##### Evaluation Metrics
+##### Introduction: Navigating the Intersections of AI and Medicine
