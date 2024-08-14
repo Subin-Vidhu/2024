@@ -39,3 +39,5 @@
 #### Week 7
 
 ##### Introduction: Navigating the Intersections of AI and Medicine
+
+- Read the pdf file for more information.
