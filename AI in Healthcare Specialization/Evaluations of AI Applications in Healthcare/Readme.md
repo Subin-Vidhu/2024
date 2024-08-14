@@ -37,3 +37,5 @@
 - Read the pdf file for more information.
 
 #### Week 7
+
+##### Evaluation Metrics
