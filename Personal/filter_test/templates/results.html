@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PACS Results</title>
+</head>
+<body>
+    <h1>PACS Results</h1>
+    {% if data %}
+        {% for study in data %}
+            <h2>Study Information</h2>
+            <p><strong>Patient Name:</strong> {{ study.get('00100010', {}).get('Value', ['N/A'])[0] }}</p>
+            <p><strong>Patient Age:</strong> {{ study.get('00101010', {}).get('Value', ['N/A'])[0] }}</p>
+            <p><strong>Patient Sex:</strong> {{ study.get('00100040', {}).get('Value', ['N/A'])[0] }}</p>
+            <p><strong>Study ID:</strong> {{ study.get('00200010', {}).get('Value', ['N/A'])[0] }}</p>
+            <p><strong>Study Date:</strong> {{ study.get('00080020', {}).get('Value', ['N/A'])[0] }}</p>
+
+            <h3>Series Information</h3>
+            <p><strong>Number of Series:</strong> {{ study.get('00201206', {}).get('Value', ['N/A'])[0] }}</p>
+            {% for series in study.get('Series', []) %}
+                <p><strong>Series ID:</strong> {{ series.get('0020000E', {}).get('Value', ['N/A'])[0] }}</p>
+                <p><strong>Series Description:</strong> {{ series.get('0008103E', {}).get('Value', ['N/A'])[0] }}</p>
+                <p><strong>Number of SOP Instances:</strong> {{ series.get('00201208', {}).get('Value', ['N/A'])[0] }}</p>
+            {% endfor %}
+        {% endfor %}
+    {% else %}
+        <p>No data found for the provided patient name.</p>
+    {% endif %}
+    <a href="/">Back to Search</a>
+</body>
+</html>
