@@ -17,7 +17,6 @@
         <br>
         <label for="searchValue">Search value:</label>
         <input type="text" id="searchValue" name="searchValue" placeholder="Enter search value" required><br><br>
-        <input type="submit" value="Search">
     </form>
     <br>
 
@@ -25,69 +24,71 @@
 
     <script>
         $(document).ready(function() {
-            $('#searchForm').on('submit', function(event) {
-                event.preventDefault(); // Prevent form submission
+    let timeoutId;
+    $('#searchValue').on('keyup', function() {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(function() {
+            const searchType = $('#searchType').val();
+            const searchValue = $('#searchValue').val();
+            console.log('Search type:', searchType);
+            console.log('Search value:', searchValue);
 
-                const searchType = $('#searchType').val();
-                const searchValue = $('#searchValue').val();
-                console.log('Search type:', searchType);
-                console.log('Search value:', searchValue);
+            // Send AJAX POST request
+            $.ajax({
+                url: '/',
+                type: 'POST',
+                data: { searchType: searchType, searchValue: searchValue },
+                success: function(data) {
+                    let resultsDiv = $('#results');
+                    resultsDiv.empty(); // Clear previous results
 
-                // Send AJAX POST request
-                $.ajax({
-                    url: '/',
-                    type: 'POST',
-                    data: { searchType: searchType, searchValue: searchValue },
-                    success: function(data) {
-                        let resultsDiv = $('#results');
-                        resultsDiv.empty(); // Clear previous results
-
-                        if (data.error) {
-                            resultsDiv.append(`<p>${data.error}</p>`);
-                        } else if (data.length > 0) {
-                            data.forEach(study => {
-                                let patientName = 'N/A';
-                                if (study['00100010'] && study['00100010'].Value && study['00100010'].Value[0]) {
-                                    const nameComponents = study['00100010'].Value[0];
-                                    // Handle Person Name (PN) DICOM type
-                                    if (typeof nameComponents === 'object') {
-                                        patientName = Object.values(nameComponents).filter(Boolean).join(' ');
-                                    } else {
-                                        patientName = nameComponents;
-                                    }
+                    if (data.error) {
+                        resultsDiv.append(`<p>${data.error}</p>`);
+                    } else if (data.length > 0) {
+                        data.forEach(study => {
+                            let patientName = 'N/A';
+                            if (study['00100010'] && study['00100010'].Value && study['00100010'].Value[0]) {
+                                const nameComponents = study['00100010'].Value[0];
+                                // Handle Person Name (PN) DICOM type
+                                if (typeof nameComponents === 'object') {
+                                    patientName = Object.values(nameComponents).filter(Boolean).join(' ');
+                                } else {
+                                    patientName = nameComponents;
                                 }
+                            }
 
+                            resultsDiv.append(`
+                                <h2>Study Information</h2>
+                                <p><strong>Patient Name:</strong> ${patientName}</p>
+                                <p><strong>Patient Age:</strong> ${study['00101010']?.Value[0] || 'N/A'}</p>
+                                <p><strong>Patient Sex:</strong> ${study['00100040']?.Value[0] || 'N/A'}</p>
+                                <p><strong>Study ID:</strong> ${study['00200010']?.Value[0] || 'N/A'}</p>
+                                <p><strong>Study Date:</strong> ${study['00080020']?.Value[0] || 'N/A'}</p>
+                                <p><strong>Study Instance UID:</strong> ${study['0020000D']?.Value[0] || 'N/A'}</p>
+                                <p><strong>Series Instance UID:</strong> ${study['0020000E']?.Value[0] || 'N/A'}</p>
+                                <h3>Series Information</h3>
+                                <p><strong>Number of Series:</strong> ${study['00201206']?.Value[0] || 'N/A'}</p>
+                            `);
+
+                            (study.Series || []).forEach(series => {
                                 resultsDiv.append(`
-                                    <h2>Study Information</h2>
-                                    <p><strong>Patient Name:</strong> ${patientName}</p>
-                                    <p><strong>Patient Age:</strong> ${study['00101010']?.Value[0] || 'N/A'}</p>
-                                    <p><strong>Patient Sex:</strong> ${study['00100040']?.Value[0] || 'N/A'}</p>
-                                    <p><strong>Study ID:</strong> ${study['00200010']?.Value[0] || 'N/A'}</p>
-                                    <p><strong>Study Date:</strong> ${study['00080020']?.Value[0] || 'N/A'}</p>
-                                    <p><strong>Study Instance UID:</strong> ${study['0020000D']?.Value[0] || 'N/A'}</p>
-                                    <p><strong>Series Instance UID:</strong> ${study['0020000E']?.Value[0] || 'N/A'}</p>
-                                    <h3>Series Information</h3>
-                                    <p><strong>Number of Series:</strong> ${study['00201206']?.Value[0] || 'N/A'}</p>
+                                    <p><strong>Series ID:</strong> ${series['0020000E']?.Value[0] || 'N/A'}</p>
+                                    <p><strong>Series Description:</strong> ${series['0008103E']?.Value[0] || 'N/A'}</p>
+                                    <p><strong>Number of SOP Instances:</strong> ${series['00201208']?.Value[0] || 'N/A'}</p>
                                 `);
-
-                                (study.Series || []).forEach(series => {
-                                    resultsDiv.append(`
-                                        <p><strong>Series ID:</strong> ${series['0020000E']?.Value[0] || 'N/A'}</p>
-                                        <p><strong>Series Description:</strong> ${series['0008103E']?.Value[0] || 'N/A'}</p>
-                                        <p><strong>Number of SOP Instances:</strong> ${series['00201208']?.Value[0] || 'N/A'}</p>
-                                    `);
-                                });
                             });
-                        } else {
-                            resultsDiv.append('<p>No data found for the provided search value.</p>');
-                        }
-                    },
-                    error: function(xhr) {
-                        $('#results').html(`<p>Error: ${xhr.status} - ${xhr.statusText}</p>`);
+                        });
+                    } else {
+                        resultsDiv.append('<p>No data found for the provided search value.</p>');
                     }
-                });
+                },
+                error: function(xhr) {
+                    $('#results').html(`<p>Error: ${xhr.status} - ${xhr.statusText}</p>`);
+                }
             });
-        });
+        }, 500); // Debounce by 500ms
+    });
+});
     </script>
 </body>
 </html>

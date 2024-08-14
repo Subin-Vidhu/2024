@@ -48,7 +48,7 @@ def index():
                     '00201208',  # Number of SOP Instances
                 ],
                 'limit': '11',
-                '00100020': search_value  # Filter by patient ID
+                '00100020': f'*{search_value}*'  # Filter by patient ID
             }
 
         try:
