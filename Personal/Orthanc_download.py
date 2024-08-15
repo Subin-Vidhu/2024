@@ -3,6 +3,35 @@
 # Downloaded file size: 171.40 MB
 # Download speed: 6.61 MB/s
 
+
+# Step 1: Constructing the URL...
+# URL constructed: https://pacs.protosonline.in/studies/6627b6ac-b846cbe0-a0af01cc-f94a6bd0-990a57c6/media
+# Time taken for Step 1: 0.00 seconds
+# Step 2: Starting the timer...
+# Timer started at: 1723729964.523198
+# Time taken for Step 2: 0.00 seconds
+# Step 3: Sending the GET request...
+# GET request sent.
+# Time taken for Step 3: 23.81 seconds
+# Step 4: Downloading the file...
+# Step 5: Removing the existing directory...
+# Existing directory removed.
+# Time taken for Step 4 and 5: 0.02 seconds
+# Step 6: Creating the new directory...
+# New directory created.
+# Time taken for Step 6: 0.00 seconds
+# Step 7: Writing the file to the directory...
+# File written to the directory.
+# Time taken for Step 7: 29.67 seconds
+# Step 8: Stopping the timer...
+# Timer stopped at: 1723730018.0345268
+# Time taken for Step 8: 0.02 seconds
+# Total download time (time module): 53.51 seconds
+# Total download time (elapsed): 23.80 seconds
+# Downloaded file size: 171.40 MB
+# Download speed (time module): 3.20 MB/s
+# Download speed (elapsed): 7.20 MB/s
+
 import requests
 from requests.auth import HTTPBasicAuth
 import time
@@ -52,7 +81,7 @@ def download_media(study_id, username, password):
 
         start_time = time.time()
         print("Step 6: Creating the new directory...")
-        os.makedirs(target_dir)
+        os.makedirs(target_dir, exist_ok=True)
         print("New directory created.")
         print(f"Time taken for Step 6: {time.time() - start_time:.2f} seconds")
 
@@ -60,8 +89,7 @@ def download_media(study_id, username, password):
         try:
             print("Step 7: Writing the file to the directory...")
             with open(os.path.join(target_dir, "downloaded_media.zip"), "wb") as file:
-                for chunk in response.iter_content(chunk_size=4096):
-                    file.write(chunk)
+                file.write(response.content)
             print("File written to the directory.")
         except IOError as e:
             print(f"Error writing file: {e}")
