@@ -1,8 +1,8 @@
-
 import requests
 from requests.auth import HTTPBasicAuth
 import time
 import os
+import shutil
 
 # Orthanc server URL
 orthanc_url = "https://pacs.protosonline.in/studies/{}/media"
@@ -21,26 +21,33 @@ url = orthanc_url.format(study_id)  # Format the URL with the study ID
 start_time = time.time()
 
 # Send GET request to download the file
-response = requests.get(url, auth=HTTPBasicAuth(username, password))
+response = requests.get(url, auth=HTTPBasicAuth(username, password), stream=True)
 
 # Measure the time after the download is completed
 end_time = time.time()
 
 # Check if the request was successful
 if response.status_code == 200:
-
     dir_path = os.path.dirname(__file__)
-    if not os.path.exists(os.path.join(dir_path, "DICOMDIR")):
-        os.makedirs(os.path.join(dir_path, "DICOMDIR"))
+    target_dir = os.path.join(dir_path, "DICOMDIR")
 
-    with open(os.path.join(dir_path, "DICOMDIR", "downloaded_media.zip"), "wb") as file:
-        file.write(response.content)
-    print("File downloaded successfully.")
-    
+    if os.path.exists(target_dir):
+        shutil.rmtree(target_dir, ignore_errors=True)
+
+    os.makedirs(target_dir)
+
+    try:
+        with open(os.path.join(target_dir, "downloaded_media.zip"), "wb") as file:
+            for chunk in response.iter_content(chunk_size=4096):
+                file.write(chunk)
+        print("File downloaded successfully.")
+    except IOError as e:
+        print(f"Error writing file: {e}")
+
     # Calculate download duration and speed
-    download_time = end_time - start_time  # Total time in seconds
-    file_size_MB = len(response.content) / (1024 * 1024)  # File size in MB
-    download_speed_MBps = file_size_MB / download_time  # Speed in MB/s
+    download_time = response.elapsed.total_seconds()
+    file_size_MB = int(response.headers['Content-Length']) / (1024 * 1024)
+    download_speed_MBps = file_size_MB / download_time
 
     print(f"Total download time: {download_time:.2f} seconds")
     print(f"Downloaded file size: {file_size_MB:.2f} MB")
@@ -50,7 +57,9 @@ else:
     if response.status_code == 401:
         print("Authentication failed. Check your username and password.")
     elif response.status_code == 404:
-        print("Resource not found. Check the study ID.")# import concurrent.futures
+        print("Resource not found. Check the study ID.")
+
+# import concurrent.futures
 # import os
 # import shutil
 # import logging
