@@ -10,59 +10,89 @@ import os
 import shutil
 
 # Orthanc server URL
-orthanc_url = "https://pacs.protosonline.in/studies/{}/media"
+ORTHANC_URL = "https://pacs.protosonline.in/studies/{}/media"
 
 # Username and password for the Orthanc server
-username = "admin"
-password = "password"
+USERNAME = "admin"
+PASSWORD = "password"
 
 # The ID of the study you want to download as a DICOMDIR (media)
-study_id = "6627b6ac-b846cbe0-a0af01cc-f94a6bd0-990a57c6"  # Replace with your actual study ID
+STUDY_ID = "6627b6ac-b846cbe0-a0af01cc-f94a6bd0-990a57c6"  # Replace with your actual study ID
 
-# Construct the full URL for the media file
-url = orthanc_url.format(study_id)  # Format the URL with the study ID
+def download_media(study_id, username, password):
+    start_time = time.time()
+    print("Step 1: Constructing the URL...")
+    url = ORTHANC_URL.format(study_id)
+    print(f"URL constructed: {url}")
+    print(f"Time taken for Step 1: {time.time() - start_time:.2f} seconds")
 
-# Measure the time taken to create the media on the server and download it
-start_time = time.time()
+    start_time1 = time.time()
+    print("Step 2: Starting the timer...")
+    start_time = time.time()
+    print(f"Timer started at: {start_time}")
+    print(f"Time taken for Step 2: {time.time() - start_time:.2f} seconds")
 
-# Send GET request to download the file
-response = requests.get(url, auth=HTTPBasicAuth(username, password), stream=True)
+    start_time = time.time()
+    print("Step 3: Sending the GET request...")
+    response = requests.get(url, auth=HTTPBasicAuth(username, password), stream=True)
+    print("GET request sent.")
+    print(f"Time taken for Step 3: {time.time() - start_time:.2f} seconds")
 
-# Measure the time after the download is completed
-end_time = time.time()
+    if response.status_code == 200:
+        start_time = time.time()
+        print("Step 4: Downloading the file...")
+        dir_path = os.path.dirname(__file__)
+        target_dir = os.path.join(dir_path, "DICOMDIR")
 
-# Check if the request was successful
-if response.status_code == 200:
-    dir_path = os.path.dirname(__file__)
-    target_dir = os.path.join(dir_path, "DICOMDIR")
+        if os.path.exists(target_dir):
+            print("Step 5: Removing the existing directory...")
+            shutil.rmtree(target_dir, ignore_errors=True)
+            print("Existing directory removed.")
+        print(f"Time taken for Step 4 and 5: {time.time() - start_time:.2f} seconds")
 
-    if os.path.exists(target_dir):
-        shutil.rmtree(target_dir, ignore_errors=True)
+        start_time = time.time()
+        print("Step 6: Creating the new directory...")
+        os.makedirs(target_dir)
+        print("New directory created.")
+        print(f"Time taken for Step 6: {time.time() - start_time:.2f} seconds")
 
-    os.makedirs(target_dir)
+        start_time = time.time()
+        try:
+            print("Step 7: Writing the file to the directory...")
+            with open(os.path.join(target_dir, "downloaded_media.zip"), "wb") as file:
+                for chunk in response.iter_content(chunk_size=4096):
+                    file.write(chunk)
+            print("File written to the directory.")
+        except IOError as e:
+            print(f"Error writing file: {e}")
+        print(f"Time taken for Step 7: {time.time() - start_time:.2f} seconds")
 
-    try:
-        with open(os.path.join(target_dir, "downloaded_media.zip"), "wb") as file:
-            for chunk in response.iter_content(chunk_size=4096):
-                file.write(chunk)
-        print("File downloaded successfully.")
-    except IOError as e:
-        print(f"Error writing file: {e}")
+        start_time = time.time()
+        print("Step 8: Stopping the timer...")
+        end_time = time.time()
+        print(f"Timer stopped at: {end_time}")
+        print(f"Time taken for Step 8: {time.time() - start_time:.2f} seconds")
 
-    # Calculate download duration and speed
-    download_time = response.elapsed.total_seconds()
-    file_size_MB = int(response.headers['Content-Length']) / (1024 * 1024)
-    download_speed_MBps = file_size_MB / download_time
+        download_time_time_module = end_time - start_time1
+        download_time_elapsed = response.elapsed.total_seconds()
+        file_size_MB = int(response.headers['Content-Length']) / (1024 * 1024)
+        download_speed_MBps_time_module = file_size_MB / download_time_time_module
+        download_speed_MBps_elapsed = file_size_MB / download_time_elapsed
 
-    print(f"Total download time: {download_time:.2f} seconds")
-    print(f"Downloaded file size: {file_size_MB:.2f} MB")
-    print(f"Download speed: {download_speed_MBps:.2f} MB/s")
-else:
-    print(f"Failed to download file. Status code: {response.status_code}")
-    if response.status_code == 401:
-        print("Authentication failed. Check your username and password.")
-    elif response.status_code == 404:
-        print("Resource not found. Check the study ID.")
+        print(f"Total download time (time module): {download_time_time_module:.2f} seconds")
+        print(f"Total download time (elapsed): {download_time_elapsed:.2f} seconds")
+        print(f"Downloaded file size: {file_size_MB:.2f} MB")
+        print(f"Download speed (time module): {download_speed_MBps_time_module:.2f} MB/s")
+        print(f"Download speed (elapsed): {download_speed_MBps_elapsed:.2f} MB/s")
+    else:
+        print(f"Failed to download file. Status code: {response.status_code}")
+        if response.status_code == 401:
+            print("Authentication failed. Check your username and password.")
+        elif response.status_code == 404:
+            print("Resource not found. Check the study ID.")
+
+if __name__ == "__main__":
+    download_media(STUDY_ID, USERNAME, PASSWORD)
 
 #httpx
 
