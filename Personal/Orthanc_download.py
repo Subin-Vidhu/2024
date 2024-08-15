@@ -1,3 +1,8 @@
+# File downloaded successfully.
+# Total download time: 25.92 seconds
+# Downloaded file size: 171.40 MB
+# Download speed: 6.61 MB/s
+
 import requests
 from requests.auth import HTTPBasicAuth
 import time
@@ -59,6 +64,191 @@ else:
     elif response.status_code == 404:
         print("Resource not found. Check the study ID.")
 
+#httpx
+
+# Total download time: 54.83 seconds
+# Downloaded file size: 171.38 MB
+# Download speed: 3.13 MB/s
+
+# import httpx
+# import time
+# import os
+# import shutil
+
+# # Orthanc server URL
+# orthanc_url = "https://pacs.protosonline.in/studies/{}/media"
+
+# # Username and password for the Orthanc server
+# username = "admin"
+# password = "password"
+
+# # The ID of the study you want to download as a DICOMDIR (media)
+# study_id = "6627b6ac-b846cbe0-a0af01cc-f94a6bd0-990a57c6"  # Replace with your actual study ID
+
+# # Construct the full URL for the media file
+# url = orthanc_url.format(study_id)  # Format the URL with the study ID
+
+# start_time = time.time()
+# auth = httpx.BasicAuth(username, password)
+# with httpx.stream("GET", url, auth=auth, timeout=300) as response:
+#     dir_path = os.path.dirname(__file__)
+#     target_dir = os.path.join(dir_path, "DICOMDIR")
+#     if os.path.exists(target_dir):
+#         shutil.rmtree(target_dir, ignore_errors=True)
+#     os.makedirs(target_dir)
+#     with open(os.path.join(target_dir, "downloaded_media.zip"), "wb") as file:
+#         for chunk in response.iter_bytes():
+#             file.write(chunk)
+# end_time = time.time()
+# download_time = end_time - start_time
+# file_size_MB = os.path.getsize(os.path.join(target_dir, "downloaded_media.zip")) / (1024 * 1024)
+# download_speed_MBps = file_size_MB / download_time
+# print(f"Total download time: {download_time:.2f} seconds")
+# print(f"Downloaded file size: {file_size_MB:.2f} MB")
+# print(f"Download speed: {download_speed_MBps:.2f} MB/s")
+
+#urlib3
+
+# no output even after 2 minutes
+
+# import urllib3
+# import time
+# import os
+# import shutil
+# import base64
+
+# # Orthanc server URL
+# orthanc_url = "https://pacs.protosonline.in/studies/{}/media"
+
+# # Username and password for the Orthanc server
+# username = "admin"
+# password = "password"
+
+# # The ID of the study you want to download as a DICOMDIR (media)
+# study_id = "6627b6ac-b846cbe0-a0af01cc-f94a6bd0-990a57c6"  # Replace with your actual study ID
+
+# # Construct the full URL for the media file
+# url = orthanc_url.format(study_id)  # Format the URL with the study ID
+
+# start_time = time.time()
+# http = urllib3.PoolManager()
+# auth_header = "Basic " + base64.b64encode(f"{username}:{password}".encode()).decode()
+# response = http.request('GET', url, headers={"Authorization": auth_header})
+# dir_path = os.path.dirname(__file__)
+# target_dir = os.path.join(dir_path, "DICOMDIR")
+# if os.path.exists(target_dir):
+#     shutil.rmtree(target_dir, ignore_errors=True)
+# os.makedirs(target_dir)
+# with open(os.path.join(target_dir, "downloaded_media.zip"), "wb") as file:
+#     file.write(response.data)
+# end_time = time.time()
+# download_time = end_time - start_time
+# file_size_MB = len(response.data) / (1024 * 1024)
+# download_speed_MBps = file_size_MB / download_time
+# print(f"Total download time: {download_time:.2f} seconds")
+# print(f"Downloaded file size: {file_size_MB:.2f} MB")
+# print(f"Download speed: {download_speed_MBps:.2f} MB/s")
+
+#pycurl
+
+
+# Total download time: 54.52 seconds
+# Downloaded file size: 171.38 MB
+# Download speed: 3.14 MB/s
+
+# import pycurl
+# import time
+# import os
+# import shutil
+
+# # Orthanc server URL
+# orthanc_url = "https://pacs.protosonline.in/studies/{}/media"
+
+# # Username and password for the Orthanc server
+# username = "admin"
+# password = "password"
+
+# # The ID of the study you want to download as a DICOMDIR (media)
+# study_id = "6627b6ac-b846cbe0-a0af01cc-f94a6bd0-990a57c6"  # Replace with your actual study ID
+
+# # Construct the full URL for the media file
+# url = orthanc_url.format(study_id)  # Format the URL with the study ID
+
+# start_time = time.time()
+# curl = pycurl.Curl()
+# curl.setopt(pycurl.URL, url)
+# curl.setopt(pycurl.HTTPAUTH, pycurl.HTTPAUTH_BASIC)
+# curl.setopt(pycurl.USERPWD, "{}:{}".format(username, password))
+# dir_path = os.path.dirname(__file__)
+# target_dir = os.path.join(dir_path, "DICOMDIR")
+# if os.path.exists(target_dir):
+#     shutil.rmtree(target_dir, ignore_errors=True)
+# os.makedirs(target_dir)
+# with open(os.path.join(target_dir, "downloaded_media.zip"), "wb") as file:
+#     curl.setopt(pycurl.WRITEDATA, file)
+#     curl.perform()
+# end_time = time.time()
+# download_time = end_time - start_time
+# file_size_MB = os.path.getsize(os.path.join(target_dir, "downloaded_media.zip")) / (1024 * 1024)
+# download_speed_MBps = file_size_MB / download_time
+# print(f"Total download time: {download_time:.2f} seconds")
+# print(f"Downloaded file size: {file_size_MB:.2f} MB")
+# print(f"Download speed: {download_speed_MBps:.2f} MB/s")
+#aiohttp
+
+# Total download time: 53.23 seconds
+# Downloaded file size: 171.38 MB
+# Download speed: 3.22 MB/s
+
+# import aiohttp
+# import asyncio
+# import time
+# import os
+# import shutil
+
+# # Orthanc server URL
+# orthanc_url = "https://pacs.protosonline.in/studies/{}/media"
+
+# # Username and password for the Orthanc server
+# username = "admin"
+# password = "password"
+
+# # The ID of the study you want to download as a DICOMDIR (media)
+# study_id = "6627b6ac-b846cbe0-a0af01cc-f94a6bd0-990a57c6"  # Replace with your actual study ID
+
+# # Construct the full URL for the media file
+# url = orthanc_url.format(study_id)  # Format the URL with the study ID
+
+# async def fetch_page(session, url):
+#     async with session.get(url) as response:
+#         return await response.read()
+
+# async def main():
+#     start_time = time.time()
+#     auth = aiohttp.BasicAuth(username, password)
+#     session = aiohttp.ClientSession(auth=auth)
+#     page = await fetch_page(session, url)
+#     dir_path = os.path.dirname(__file__)
+#     target_dir = os.path.join(dir_path, "DICOMDIR")
+#     if os.path.exists(target_dir):
+#         shutil.rmtree(target_dir, ignore_errors=True)
+#     os.makedirs(target_dir)
+#     with open(os.path.join(target_dir, "downloaded_media.zip"), "wb") as file:
+#         file.write(page)
+#     await session.close()
+#     end_time = time.time()
+#     download_time = end_time - start_time
+#     file_size_MB = len(page) / (1024 * 1024)
+#     download_speed_MBps = file_size_MB / download_time
+#     print(f"Total download time: {download_time:.2f} seconds")
+#     print(f"Downloaded file size: {file_size_MB:.2f} MB")
+#     print(f"Download speed: {download_speed_MBps:.2f} MB/s")
+
+# asyncio.run(main())
+
+
+
+#########################################################################################
 # import concurrent.futures
 # import os
 # import shutil
