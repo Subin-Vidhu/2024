@@ -136,6 +136,8 @@ def main(file_path: str, date_str: str) -> None:
     df = load_data(file_path, sheet_name, skip_rows)
     if df is not None:
         time_spent = analyze_time_spent(df, date, current_time=current_time)
+        # Print date as heading using date variable
+        print("\n" + f"{('Time Spent on ' + date.strftime('%b %d, %Y')).center(80)}" + "\n")
         print(generate_summary_table(time_spent, use_seconds=True))
         print("\n" + "-"*80 + "\n")
         print(generate_summary_table(time_spent, use_seconds=False))
