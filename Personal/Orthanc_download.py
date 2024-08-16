@@ -1,3 +1,83 @@
+# pydicom
+
+import asyncio
+import aiohttp
+import aiofiles
+import zipfile
+import os
+import pydicom
+import nibabel as nib
+import numpy as np
+from concurrent.futures import ThreadPoolExecutor
+
+ORTHANC_URL = "https://pacs.protosonline.in/studies/{}/media"
+USERNAME = "admin"
+PASSWORD = "password"
+STUDY_ID = "6627b6ac-b846cbe0-a0af01cc-f94a6bd0-990a57c6"
+
+async def download_file(url, auth, filename):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url, auth=auth) as response:
+            if response.status == 200:
+                async with aiofiles.open(filename, 'wb') as f:
+                    await f.write(await response.read())
+                return True
+    return False
+
+def extract_zip(zip_file, extract_to):
+    with zipfile.ZipFile(zip_file, 'r') as zip_ref:
+        zip_ref.extractall(extract_to)
+
+def dicom_to_nifti(dicom_folder, output_file):
+    dicom_files = [os.path.join(dicom_folder, f) for f in os.listdir(dicom_folder) if f.endswith('.dcm')]
+    dicom_files.sort()
+    
+    slices = [pydicom.dcmread(dcm) for dcm in dicom_files]
+    slices.sort(key=lambda x: float(x.ImagePositionPatient[2]))
+    
+    pixel_spacing = slices[0].PixelSpacing
+    slice_thickness = slices[0].SliceThickness
+    
+    axial_aspect_ratio = pixel_spacing[1] / pixel_spacing[0]
+    sagittal_aspect_ratio = slice_thickness / pixel_spacing[1]
+    coronal_aspect_ratio = slice_thickness / pixel_spacing[0]
+    
+    img_shape = list(slices[0].pixel_array.shape)
+    img_shape.append(len(slices))
+    img3d = np.zeros(img_shape)
+    
+    for i, s in enumerate(slices):
+        img3d[:, :, i] = s.pixel_array
+    
+    nifti_img = nib.Nifti1Image(img3d, np.eye(4))
+    nib.save(nifti_img, output_file)
+
+async def process_study(study_id, username, password):
+    auth = aiohttp.BasicAuth(username, password)
+    url = ORTHANC_URL.format(study_id)
+    zip_file = f"{study_id}.zip"
+    extract_folder = f"{study_id}_extracted"
+    nifti_file = f"{study_id}.nii"
+
+    if await download_file(url, auth, zip_file):
+        with ThreadPoolExecutor() as executor:
+            executor.submit(extract_zip, zip_file, extract_folder)
+            executor.submit(dicom_to_nifti, extract_folder, nifti_file)
+        
+        print(f"Process completed. NIfTI file saved as {nifti_file}")
+    else:
+        print("Failed to download the file")
+
+async def main():
+    await process_study(STUDY_ID, USERNAME, PASSWORD)
+
+if __name__ == "__main__":
+    import time
+    start_time = time.time()
+    asyncio.run(main())
+    print(f"Total time taken: {time.time() - start_time:.2f} seconds")
+
+
 # File downloaded successfully.
 # Total download time: 25.92 seconds
 # Downloaded file size: 171.40 MB
@@ -32,95 +112,95 @@
 # Download speed (time module): 3.20 MB/s
 # Download speed (elapsed): 7.20 MB/s
 
-import requests
-from requests.auth import HTTPBasicAuth
-import time
-import os
-import shutil
+# import requests
+# from requests.auth import HTTPBasicAuth
+# import time
+# import os
+# import shutil
 
-# Orthanc server URL
-ORTHANC_URL = "https://pacs.protosonline.in/studies/{}/media"
+# # Orthanc server URL
+# ORTHANC_URL = "https://pacs.protosonline.in/studies/{}/media"
 
-# Username and password for the Orthanc server
-USERNAME = "admin"
-PASSWORD = "password"
+# # Username and password for the Orthanc server
+# USERNAME = "admin"
+# PASSWORD = "password"
 
-# The ID of the study you want to download as a DICOMDIR (media)
-STUDY_ID = "6627b6ac-b846cbe0-a0af01cc-f94a6bd0-990a57c6"  # Replace with your actual study ID
+# # The ID of the study you want to download as a DICOMDIR (media)
+# STUDY_ID = "6627b6ac-b846cbe0-a0af01cc-f94a6bd0-990a57c6"  # Replace with your actual study ID
 
-def download_media(study_id, username, password):
-    start_time = time.time()
-    print("Step 1: Constructing the URL...")
-    url = ORTHANC_URL.format(study_id)
-    print(f"URL constructed: {url}")
-    print(f"Time taken for Step 1: {time.time() - start_time:.2f} seconds")
+# def download_media(study_id, username, password):
+#     start_time = time.time()
+#     print("Step 1: Constructing the URL...")
+#     url = ORTHANC_URL.format(study_id)
+#     print(f"URL constructed: {url}")
+#     print(f"Time taken for Step 1: {time.time() - start_time:.2f} seconds")
 
-    start_time1 = time.time()
-    print("Step 2: Starting the timer...")
-    start_time = time.time()
-    print(f"Timer started at: {start_time}")
-    print(f"Time taken for Step 2: {time.time() - start_time:.2f} seconds")
+#     start_time1 = time.time()
+#     print("Step 2: Starting the timer...")
+#     start_time = time.time()
+#     print(f"Timer started at: {start_time}")
+#     print(f"Time taken for Step 2: {time.time() - start_time:.2f} seconds")
 
-    start_time = time.time()
-    print("Step 3: Sending the GET request...")
-    response = requests.get(url, auth=HTTPBasicAuth(username, password), stream=True)
-    print("GET request sent.")
-    print(f"Time taken for Step 3: {time.time() - start_time:.2f} seconds")
+#     start_time = time.time()
+#     print("Step 3: Sending the GET request...")
+#     response = requests.get(url, auth=HTTPBasicAuth(username, password), stream=True)
+#     print("GET request sent.")
+#     print(f"Time taken for Step 3: {time.time() - start_time:.2f} seconds")
 
-    if response.status_code == 200:
-        start_time = time.time()
-        print("Step 4: Downloading the file...")
-        dir_path = os.path.dirname(__file__)
-        target_dir = os.path.join(dir_path, "DICOMDIR")
+#     if response.status_code == 200:
+#         start_time = time.time()
+#         print("Step 4: Downloading the file...")
+#         dir_path = os.path.dirname(__file__)
+#         target_dir = os.path.join(dir_path, "DICOMDIR")
 
-        if os.path.exists(target_dir):
-            print("Step 5: Removing the existing directory...")
-            shutil.rmtree(target_dir, ignore_errors=True)
-            print("Existing directory removed.")
-        print(f"Time taken for Step 4 and 5: {time.time() - start_time:.2f} seconds")
+#         if os.path.exists(target_dir):
+#             print("Step 5: Removing the existing directory...")
+#             shutil.rmtree(target_dir, ignore_errors=True)
+#             print("Existing directory removed.")
+#         print(f"Time taken for Step 4 and 5: {time.time() - start_time:.2f} seconds")
 
-        start_time = time.time()
-        print("Step 6: Creating the new directory...")
-        os.makedirs(target_dir, exist_ok=True)
-        print("New directory created.")
-        print(f"Time taken for Step 6: {time.time() - start_time:.2f} seconds")
+#         start_time = time.time()
+#         print("Step 6: Creating the new directory...")
+#         os.makedirs(target_dir, exist_ok=True)
+#         print("New directory created.")
+#         print(f"Time taken for Step 6: {time.time() - start_time:.2f} seconds")
 
-        start_time = time.time()
-        try:
-            print("Step 7: Writing the file to the directory...")
-            with open(os.path.join(target_dir, "downloaded_media.zip"), "wb") as file:
-                file.write(response.content)
-            print("File written to the directory.")
-        except IOError as e:
-            print(f"Error writing file: {e}")
-        print(f"Time taken for Step 7: {time.time() - start_time:.2f} seconds")
+#         start_time = time.time()
+#         try:
+#             print("Step 7: Writing the file to the directory...")
+#             with open(os.path.join(target_dir, "downloaded_media.zip"), "wb") as file:
+#                 file.write(response.content)
+#             print("File written to the directory.")
+#         except IOError as e:
+#             print(f"Error writing file: {e}")
+#         print(f"Time taken for Step 7: {time.time() - start_time:.2f} seconds")
 
-        start_time = time.time()
-        print("Step 8: Stopping the timer...")
-        end_time = time.time()
-        print(f"Timer stopped at: {end_time}")
-        print(f"Time taken for Step 8: {time.time() - start_time:.2f} seconds")
+#         start_time = time.time()
+#         print("Step 8: Stopping the timer...")
+#         end_time = time.time()
+#         print(f"Timer stopped at: {end_time}")
+#         print(f"Time taken for Step 8: {time.time() - start_time:.2f} seconds")
 
-        download_time_time_module = end_time - start_time1
-        download_time_elapsed = response.elapsed.total_seconds()
-        file_size_MB = int(response.headers['Content-Length']) / (1024 * 1024)
-        download_speed_MBps_time_module = file_size_MB / download_time_time_module
-        download_speed_MBps_elapsed = file_size_MB / download_time_elapsed
+#         download_time_time_module = end_time - start_time1
+#         download_time_elapsed = response.elapsed.total_seconds()
+#         file_size_MB = int(response.headers['Content-Length']) / (1024 * 1024)
+#         download_speed_MBps_time_module = file_size_MB / download_time_time_module
+#         download_speed_MBps_elapsed = file_size_MB / download_time_elapsed
 
-        print(f"Total download time (time module): {download_time_time_module:.2f} seconds")
-        print(f"Total download time (elapsed): {download_time_elapsed:.2f} seconds")
-        print(f"Downloaded file size: {file_size_MB:.2f} MB")
-        print(f"Download speed (time module): {download_speed_MBps_time_module:.2f} MB/s")
-        print(f"Download speed (elapsed): {download_speed_MBps_elapsed:.2f} MB/s")
-    else:
-        print(f"Failed to download file. Status code: {response.status_code}")
-        if response.status_code == 401:
-            print("Authentication failed. Check your username and password.")
-        elif response.status_code == 404:
-            print("Resource not found. Check the study ID.")
+#         print(f"Total download time (time module): {download_time_time_module:.2f} seconds")
+#         print(f"Total download time (elapsed): {download_time_elapsed:.2f} seconds")
+#         print(f"Downloaded file size: {file_size_MB:.2f} MB")
+#         print(f"Download speed (time module): {download_speed_MBps_time_module:.2f} MB/s")
+#         print(f"Download speed (elapsed): {download_speed_MBps_elapsed:.2f} MB/s")
+#     else:
+#         print(f"Failed to download file. Status code: {response.status_code}")
+#         if response.status_code == 401:
+#             print("Authentication failed. Check your username and password.")
+#         elif response.status_code == 404:
+#             print("Resource not found. Check the study ID.")
 
-if __name__ == "__main__":
-    download_media(STUDY_ID, USERNAME, PASSWORD)
+# if __name__ == "__main__":
+#     download_media(STUDY_ID, USERNAME, PASSWORD)
 
 #httpx
 
