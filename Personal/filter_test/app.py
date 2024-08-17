@@ -29,6 +29,7 @@ SEARCH_OPTIONS = {
     'modality': '00080060',  # Modality
     'series_description': '0008103E',  # Series Description
     'series_instance_uid': '0020000E',  # Series Instance UID
+    'study_instance_uid': '0020000D',  # Study Instance UID
 }
 
 @app.route('/', methods=['GET', 'POST'])
@@ -57,6 +58,7 @@ def index():
                     '00081050',  # Performing Physician's Name
                     '00080080',  # Institution Name
                     '00081040',  # Department Name
+                    '0020000D',  # Study Instance UID
                 ],
                 'limit': '50',
             }
@@ -68,6 +70,8 @@ def index():
             elif search_type == 'study_time':
                 params[SEARCH_OPTIONS[search_type]] = search_value
             elif search_type == 'series_instance_uid':
+                params[SEARCH_OPTIONS[search_type]] = search_value
+            elif search_type == 'study_instance_uid':
                 params[SEARCH_OPTIONS[search_type]] = search_value
             else:
                 params[SEARCH_OPTIONS[search_type]] = f'*{search_value}*'
@@ -105,6 +109,7 @@ def index():
                 'series_description': study.get('0008103E', {}).get('Value', [])[0] if study.get('0008103E', {}).get('Value', []) else 'N/A',
                 'number_of_series': study.get('00201206', {}).get('Value', [])[0] if study.get('00201206', {}).get('Value', []) else 'N/A',
                 'number_of_sop_instances': study.get('00201208', {}).get('Value', [])[0] if study.get('00201208', {}).get('Value', []) else 'N/A',
+                'study_instance_uid': study.get('0020000D', {}).get('Value', [])[0] if study.get('0020000D', {}).get('Value', []) else 'N/A',
             }
             output.append(patient_info)
         return jsonify(output)

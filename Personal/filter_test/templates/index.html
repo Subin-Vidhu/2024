@@ -26,6 +26,7 @@
             <option value="institution_name">Institution Name</option>
             <option value="department_name">Department Name</option>
             <option value="modality">Modality</option>
+            <option value="study_instance_uid">Study Instance UID</option>
             <option value="series_description">Series Description</option>
             <option value="series_instance_uid">Series Instance UID</option>
         </select>
@@ -75,6 +76,7 @@
                                         <p><strong>Institution Name:</strong> ${patient.institution_name}</p>
                                         <p><strong>Department Name:</strong> ${patient.department_name}</p>
                                         <p><strong>Modality:</strong> ${patient.modality}</p>
+                                        <p><strong>Study Instance UID:</strong> ${patient.study_instance_uid}</p>
                                         <p><strong>Series Instance UID:</strong> ${patient.series_instance_uid}</p>
                                         <p><strong>Series Description:</strong> ${patient.series_description}</p>
                                         <p><strong>Number of Series:</strong> ${patient.number_of_series}</p>
@@ -89,7 +91,7 @@
                             $('#results').html(`<p>Error: ${xhr.status} - ${xhr.statusText}</p>`);
                         }
                     });
-                }, 100); // Debounce by 500ms
+                }, 100); // Debounce by 100ms
             });
         });
     </script>
