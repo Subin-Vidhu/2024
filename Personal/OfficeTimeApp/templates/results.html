@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .green {
+            color: green;
+        }
+        .red {
+            color: red;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+        }
+        a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Analysis Results</h1>
+    <h2>Date: {{ date }}</h2>
+    
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% else %}
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Total Time</th>
+                <th>Office Hours Time</th>
+                <th>Break Time</th>
+                <th>Target</th>
+                <th>Difference</th>
+                <th>Last Exit</th>
+            </tr>
+            {% for row in results %}
+            <tr>
+                <td>{{ row.name }}</td>
+                <td>{{ row.total_time }}</td>
+                <td>{{ row.office_time }}</td>
+                <td>{{ row.break_time }}</td>
+                <td>{{ row.target }}</td>
+                <td class="{{ 'green' if row.target_met else 'red' }}">{{ row.difference }}</td>
+                <td>{{ row.last_exit }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    
+    <a href="/">Back to Home</a>
+</body>
+</html>
