@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +14,20 @@
         <select id="searchType" name="searchType">
             <option value="name">Patient Name</option>
             <option value="id">Patient ID</option>
+            <option value="birthdate">Patient Birth Date</option>
+            <option value="sex">Patient Sex</option>
+            <option value="study_date">Study Date</option>
+            <option value="study_time">Study Time</option>
+            <option value="study_id">Study ID</option>
+            <option value="study_description">Study Description</option>
+            <option value="accession_number">Accession Number</option>
+            <option value="referring_physician">Referring Physician's Name</option>
+            <option value="performing_physician">Performing Physician's Name</option>
+            <option value="institution_name">Institution Name</option>
+            <option value="department_name">Department Name</option>
+            <option value="modality">Modality</option>
+            <option value="series_description">Series Description</option>
+            <option value="series_instance_uid">Series Instance UID</option>
         </select>
         <br>
         <label for="searchValue">Search value:</label>
@@ -24,76 +39,59 @@
 
     <script>
         $(document).ready(function() {
-    let timeoutId;
-    $('#searchValue').on('keyup', function() {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(function() {
-            const searchType = $('#searchType').val();
-            const searchValue = $('#searchValue').val();
-            console.log('Search type:', searchType);
-            console.log('Search value:', searchValue);
+            let timeoutId;
+            $('#searchValue').on('keyup', function() {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(function() {
+                    const searchType = $('#searchType').val();
+                    const searchValue = $('#searchValue').val();
+                    console.log('Search type:', searchType);
+                    console.log('Search value:', searchValue);
 
-            // Send AJAX POST request
-            $.ajax({
-                url: '/',
-                type: 'POST',
-                data: { searchType: searchType, searchValue: searchValue },
-                success: function(data) {
-                    let resultsDiv = $('#results');
-                    resultsDiv.empty(); // Clear previous results
+                    // Send AJAX POST request
+                    $.ajax({
+                        url: '/',
+                        type: 'POST',
+                        data: { searchType: searchType, searchValue: searchValue },
+                        success: function(data) {
+                            let resultsDiv = $('#results');
+                            resultsDiv.empty(); // Clear previous results
 
-                    if (data.error) {
-                        resultsDiv.append(`<p>${data.error}</p>`);
-                    } else if (data.length > 0) {
-                        data.forEach(study => {
-                            let patientName = 'N/A';
-                            let patientId = 'N/A';
-                            if (study['00100010'] && study['00100010'].Value && study['00100010'].Value[0]) {
-                                const nameComponents = study['00100010'].Value[0];
-                                // Handle Person Name (PN) DICOM type
-                                if (typeof nameComponents === 'object') {
-                                    patientName = Object.values(nameComponents).filter(Boolean).join(' ');
-                                } else {
-                                    patientName = nameComponents;
-                                }
+                            if (data.length > 0) {
+                                data.forEach(patient => {
+                                    resultsDiv.append(`
+                                        <h2>Patient Information</h2>
+                                        <p><strong>Patient Name:</strong> ${patient.patient_name.Alphabetic}</p>
+                                        <p><strong>Patient ID:</strong> ${patient.patient_id}</p>
+                                        <p><strong>Patient Birth Date:</strong> ${patient.patient_birth_date}</p>
+                                        <p><strong>Patient Sex:</strong> ${patient.patient_sex}</p>
+                                        <p><strong>Study ID:</strong> ${patient.study_id}</p>
+                                        <p><strong>Study Date:</strong> ${patient.study_date}</p>
+                                        <p><strong>Study Time:</strong> ${patient.study_time}</p>
+                                        <p><strong>Study Description:</strong> ${patient.study_description}</p>
+                                        <p><strong>Accession Number:</strong> ${patient.accession_number}</p>
+                                        <p><strong>Referring Physician's Name:</strong> ${patient.referring_physician}</p>
+                                        <p><strong>Performing Physician's Name:</strong> ${patient.performing_physician}</p>
+                                        <p><strong>Institution Name:</strong> ${patient.institution_name}</p>
+                                        <p><strong>Department Name:</strong> ${patient.department_name}</p>
+                                        <p><strong>Modality:</strong> ${patient.modality}</p>
+                                        <p><strong>Series Instance UID:</strong> ${patient.series_instance_uid}</p>
+                                        <p><strong>Series Description:</strong> ${patient.series_description}</p>
+                                        <p><strong>Number of Series:</strong> ${patient.number_of_series}</p>
+                                        <p><strong>Number of SOP Instances:</strong> ${patient.number_of_sop_instances}</p>
+                                    `);
+                                });
+                            } else {
+                                resultsDiv.append('<p>No data found for the provided search value.</p>');
                             }
-                            if (study['00100020'] && study['00100020'].Value && study['00100020'].Value[0]) {
-                                patientId = study['00100020'].Value[0];
-                            }
-
-                            resultsDiv.append(`
-                                <h2>Study Information</h2>
-                                <p><strong>Patient Name:</strong> ${patientName}</p>
-                                <p><strong>Patient ID:</strong> ${patientId}</p>
-                                <p><strong>Patient Age:</strong> ${study['00101010']?.Value[0] || 'N/A'}</p>
-                                <p><strong>Patient Sex:</strong> ${study['00100040']?.Value[0] || 'N/A'}</p>
-                                <p><strong>Study ID:</strong> ${study['00200010']?.Value[0] || 'N/A'}</p>
-                                <p><strong>Study Date:</strong> ${study['00080020']?.Value[0] || 'N/A'}</p>
-                                <p><strong>Study Instance UID:</strong> ${study['0020000D']?.Value[0] || 'N/A'}</p>
-                                <p><strong>Series Instance UID:</strong> ${study['0020000E']?.Value[0] || 'N/A'}</p>
-                                <h3>Series Information</h3>
-                                <p><strong>Number of Series:</strong> ${study['00201206']?.Value[0] || 'N/A'}</p>
-                            `);
-
-                            (study.Series || []).forEach(series => {
-                                resultsDiv.append(`
-                                    <p><strong>Series ID:</strong> ${series['0020000E']?.Value[0] || 'N/A'}</p>
-                                    <p><strong>Series Description:</strong> ${series['0008103E']?.Value[0] || 'N/A'}</p>
-                                    <p><strong>Number of SOP Instances:</strong> ${series['00201208']?.Value[0] || 'N/A'}</p>
-                                `);
-                            });
-                        });
-                    } else {
-                        resultsDiv.append('<p>No data found for the provided search value.</p>');
-                    }
-                },
-                error: function(xhr) {
-                    $('#results').html(`<p>Error: ${xhr.status} - ${xhr.statusText}</p>`);
-                }
+                        },
+                        error: function(xhr) {
+                            $('#results').html(`<p>Error: ${xhr.status} - ${xhr.statusText}</p>`);
+                        }
+                    });
+                }, 100); // Debounce by 500ms
             });
-        }, 500); // Debounce by 500ms
-    });
-});
+        });
     </script>
 </body>
 </html>
