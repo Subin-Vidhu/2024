@@ -1,0 +1,125 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office Time Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input, select, button {
+            margin: 10px 0;
+            padding: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .green {
+            color: green;
+        }
+        .red {
+            color: red;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+        }
+        a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Office Time Tracker</h1>
+    <form action="/analyze" method="post" enctype="multipart/form-data">
+        <input type="file" name="excel_file" accept=".xlsx" required>
+        <br>
+        <label for="date_select">Select Date:</label>
+        <select name="date_select" id="date_select">
+            <option value="today">Today</option>
+            <option value="yesterday">Yesterday</option>
+            <option value="custom">Custom Date</option>
+        </select>
+        <br>
+        <input type="date" name="custom_date" id="custom_date" style="display: none;">
+        <br>
+        <button type="submit">Analyze</button>
+    </form>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% elif results %}
+        <h2>Date: {{ date }}</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Total Time</th>
+                <th>Office Hours Time</th>
+                <th>Break Time</th>
+                <th>Target</th>
+                <th>Difference</th>
+                <th>Last Exit</th>
+            </tr>
+            {% for row in results %}
+            <tr>
+                <td>{{ row.name }}</td>
+                <td>{{ row.total_time }}</td>
+                <td>{{ row.office_time }}</td>
+                <td>{{ row.break_time }}</td>
+                <td>{{ row.target }}</td>
+                <td class="{{ 'green' if row.target_met else 'red' }}">{{ row.difference }}</td>
+                <td>{{ row.last_exit }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    <script>
+        document.getElementById('date_select').addEventListener('change', function() {
+            var customDateInput = document.getElementById('custom_date');
+            if (this.value === 'custom') {
+                customDateInput.style.display = 'block';
+                customDateInput.required = true;
+            } else {
+                customDateInput.style.display = 'none';
+                customDateInput.required = false;
+            }
+        });
+    </script>
+</body>
+</html>
