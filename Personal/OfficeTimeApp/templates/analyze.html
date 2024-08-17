@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Analysis Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Time Analysis Results</h1>
+        <form method="POST">
+            <label for="date">Choose Date:</label>
+            <input type="date" name="date" value="{{ date_str }}" required>
+            <button type="submit">Analyze</button>
+        </form>
+
+        {% if error_message %}
+            <div class="error">{{ error_message }}</div>
+        {% endif %}
+        
+        {% if results %}
+            <h2>Results for {{ date_str }}</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Total Time</th>
+                        <th>Office Hours Time</th>
+                        <th>Break Time</th>
+                        <th>Target</th>
+                        <th>Difference</th>
+                        <th>Last Exit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for name, times in results.items() %}
+                    <tr>
+                        <td>{{ name }}</td>
+                        <td>{{ times['total'] }}</td>
+                        <td>{{ times['office'] }}</td>
+                        <td>{{ times['break'] }}</td>
+                        <td>{{ '✓' if times['office'] >= TARGET_TIME else '✗' }}</td>
+                        <td>{{ times['difference'] }}</td>
+                        <td>{{ times['last_exit'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        
+        <a href="{{ url_for('index') }}">Upload another file</a>
+    </div>
+</body>
+</html>
