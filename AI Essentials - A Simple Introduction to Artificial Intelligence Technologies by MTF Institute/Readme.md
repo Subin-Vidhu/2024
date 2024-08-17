@@ -1,0 +1,1 @@
+# AI Essentials - A Simple Introduction to Artificial Intelligence Technologies by MTF Institute
