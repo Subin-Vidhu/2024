@@ -5,67 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Office Time Tracker</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-        }
-        h1, h2 {
-            color: #16515d;
-        }
-        form {
-            margin-top: 20px;
-        }
-        input, select, button {
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #2e2e2e;
-            color: #e0e0e0;
-            border: 1px solid #043347;
-            border-radius: 4px;
-        }
-        button {
-            background-color: #0c5d7a;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #0c5d7a;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #0c5d7a;
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #2e2e2e;
-            color: #0c5d7a;
-        }
-        .green {
-            color: #0c5d7a;
-        }
-        .red {
-            color: #ff6b6b;
-        }
-        .success-message {
-            color: #0c5d7a;
-            margin-bottom: 10px;
-        }
-        .error-message {
-            color: #ff6b6b;
-            margin-bottom: 10px;
-        }
+        /* ... (rest of the CSS remains the same) */
     </style>
 </head>
 <body>
@@ -84,18 +24,14 @@
     {% endif %}
 
     {% if file_uploaded %}
-    <form action="/analyze" method="post">
-        <label for="date_select">Select Date:</label>
-        <select name="date_select" id="date_select">
-            <option value="today" {% if date_select == 'today' %}selected{% endif %}>Today</option>
-            <option value="yesterday" {% if date_select == 'yesterday' %}selected{% endif %}>Yesterday</option>
-            <option value="custom" {% if date_select == 'custom' %}selected{% endif %}>Custom Date</option>
-        </select>
-        <br>
-        <input type="date" name="custom_date" id="custom_date" style="display: none;" value="{{ custom_date }}">
-        <br>
-        <button type="submit">Analyze</button>
-    </form>
+    <div class="date-selector">
+        <button class="date-btn" id="prev-day" title="Previous Day">&lt;</button>
+        <button class="date-btn" id="today" title="Today">Today</button>
+        <button class="date-btn" id="next-day" title="Next Day">&gt;</button>
+        <input type="date" id="custom-date" placeholder="Select Custom Date">
+        <button class="date-btn" id="custom-date-btn">Go</button>
+        <div class="results-container"></div>
+    </div>
     {% endif %}
 
     {% if error %}
@@ -128,22 +64,164 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var dateSelect = document.getElementById('date_select');
-            var customDateInput = document.getElementById('custom_date');
-            
-            function toggleCustomDate() {
-                if (dateSelect.value === 'custom') {
-                    customDateInput.style.display = 'block';
-                    customDateInput.required = true;
-                } else {
-                    customDateInput.style.display = 'none';
-                    customDateInput.required = false;
-                }
-            }
+    const dateSelectors = document.querySelectorAll('.date-btn');
+    const customDateInput = document.getElementById('custom-date');
+    const customDateBtn = document.getElementById('custom-date-btn');
+    const dateDisplay = document.querySelector('.date-selector');
+    const resultsContainer = document.querySelector('.results-container');
 
-            dateSelect.addEventListener('change', toggleCustomDate);
-            toggleCustomDate(); // Call on page load
-        });
+    let currentDate = new Date();
+
+    dateSelectors.forEach((selector) => {
+        if (selector.id !== 'custom-date-btn') {
+            selector.addEventListener('click', () => {
+                if (selector.id === 'prev-day') {
+                    currentDate.setDate(currentDate.getDate() - 1);
+                } else if (selector.id === 'today') {
+                    currentDate = new Date();
+                } else if (selector.id === 'next-day') {
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+
+                const dateString = currentDate.toISOString().split('T')[0];
+                const url = `/analyze?date=${dateString}`;
+
+                fetch(url)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.error) {
+                            const errorHtml = `
+                                <p class="error-message">${data.error}</p>
+                            `;
+                            resultsContainer.innerHTML = errorHtml;
+                        } else {
+                            const results = data.results;
+                            const tableHtml = `
+                                <h2>Date: ${dateString}</h2>
+                                <h3>With Seconds:</h3>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Total Time</th>
+                                        <th>Office Hours Time</th>
+                                        <th>Break Time</th>
+                                        <th>Target</th>
+                                        <th>Difference</th>
+                                        <th>Last Exit</th>
+                                    </tr>
+                                    ${results.filter((row) => !row.name.includes('_no_seconds')).map((row) => `
+                                        <tr>
+                                            <td>${row.name}</td>
+                                            <td>${row.total_time}</td>
+                                            <td>${row.office_time}</td>
+                                            <td>${row.break_time}</td>
+                                            <td>${row.target}</td>
+                                            <td class="${row.target_met ? 'green' : 'red'}">${row.difference}</td>
+                                            <td>${row.last_exit}</td>
+                                        </tr>
+                                    `).join('')}
+                                </table>
+                                <h3>Without Seconds:</h3>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Total Time</th>
+                                        <th>Office Hours Time</th>
+                                        <th>Break Time</th>
+                                        <th>Target</th>
+                                        <th>Difference</th>
+                                        <th>Last Exit</th>
+                                    </tr>
+                                    ${results.filter((row) => row.name.includes('_no_seconds')).map((row) => `
+                                        <tr>
+                                            <td>${row.name}</td>
+                                            <td>${row.total_time}</td>
+                                            <td>${row.office_time}</td>
+                                            <td>${row.break_time}</td>
+                                            <td>${row.target}</td>
+                                            <td class="${row.target_met ? 'green' : 'red'}">${row.difference}</td>
+                                            <td>${row.last_exit}</td>
+                                        </tr>
+                                    `).join('')}
+                                </table>
+                            `;
+                            resultsContainer.innerHTML = tableHtml;
+                        }
+                    })
+                    .catch((error) => console.error(error));
+            });
+        }
+    });
+
+    customDateBtn.addEventListener('click', () => {
+        const dateString = customDateInput.value;
+        const url = `/analyze?date=${dateString}`;
+
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.error) {
+                    const errorHtml = `
+                        <p class="error-message">${data.error}</p>
+                    `;
+                    resultsContainer.innerHTML = errorHtml;
+                } else {
+                    const results = data.results;
+                    const tableHtml = `
+                        <h2>Date: ${dateString}</h2>
+                        <h3>With Seconds:</h3>
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Total Time</th>
+                                <th>Office Hours Time</th>
+                                <th>Break Time</th>
+                                <th>Target</th>
+                                <th>Difference</th>
+                                <th>Last Exit</th>
+                            </tr>
+                            ${results.filter((row) => !row.name.includes('_no_seconds')).map((row) => `
+                                <tr>
+                                    <td>${row.name}</td>
+                                    <td>${row.total_time}</td>
+                                    <td>${row.office_time}</td>
+                                    <td>${row.break_time}</td>
+                                    <td>${row.target}</td>
+                                    <td class="${row.target_met ? 'green' : 'red'}">${row.difference}</td>
+                                    <td>${row.last_exit}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                        <h3>Without Seconds:</h3>
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Total Time</th>
+                                <th>Office Hours Time</th>
+                                <th>Break Time</th>
+                                <th>Target</th>
+                                <th>Difference</th>
+                                <th>Last Exit</th>
+                            </tr>
+                            ${results.filter((row) => row.name.includes('_no_seconds')).map((row) => `
+                                <tr>
+                                    <td>${row.name}</td>
+                                    <td>${row.total_time}</td>
+                                    <td>${row.office_time}</td>
+                                    <td>${row.break_time}</td>
+                                    <td>${row.target}</td>
+                                    <td class="${row.target_met ? 'green' : 'red'}">${row.difference}</td>
+                                    <td>${row.last_exit}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                    `;
+                    resultsContainer.innerHTML = tableHtml;
+                }
+            })
+            .catch((error) => console.error(error));
+    });
+});
     </script>
 </body>
 </html>

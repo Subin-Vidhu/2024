@@ -38,20 +38,13 @@ def upload_file():
         session['file_uploaded'] = True
         return redirect(url_for('index'))
 
-@app.route('/analyze', methods=['POST'])
+@app.route('/analyze', methods=['GET'])
 def analyze():
     if 'file_path' not in session:
-        return render_template('index.html', error="Please upload a file first.")
+        return {'error': 'Please upload a file first.'}, 400
     
-    date_select = request.form['date_select']
-    custom_date = request.form.get('custom_date', '')
-    
-    if date_select == 'today':
-        date = datetime.now().date()
-    elif date_select == 'yesterday':
-        date = datetime.now().date() - timedelta(days=1)
-    else:
-        date = datetime.strptime(custom_date, '%Y-%m-%d').date()
+    date_string = request.args.get('date')
+    date = datetime.strptime(date_string, '%Y-%m-%d').date()
     
     try:
         df = pd.read_excel(session['file_path'], sheet_name='Access History', skiprows=5)
@@ -62,7 +55,7 @@ def analyze():
         time_spent = analyze_time_spent(df, date)
         
         if not time_spent:
-            return render_template('index.html', error="No data found for the selected date.", file_uploaded=True)
+            return {'error': 'No data found for the selected date.'}, 400
         
         results = []
         for name, times in time_spent.items():
@@ -83,20 +76,28 @@ def analyze():
                 'last_exit': times['last_exit'].strftime("%I:%M:%S %p")
             })
         
-        return render_template('index.html', 
-                               date=date.strftime('%b %d, %Y'), 
-                               results=results, 
-                               file_uploaded=True, 
-                               date_select=date_select, 
-                               custom_date=custom_date)
+        for name, times in time_spent.items():
+            if '_no_seconds' not in name:
+                continue
+            
+            target_met = times['office'] >= TARGET_TIME
+            difference = abs(TARGET_TIME - times['office'])
+            
+            results.append({
+                'name': name,
+                'total_time': format_time(times['total']),
+                'office_time': format_time(times['office']),
+                'break_time': format_time(times['break']),
+                'target': '✓' if target_met else '✗',
+                'target_met': target_met,
+                'difference': f"{'+' if target_met else '-'}{format_time(difference)}",
+                'last_exit': times['last_exit'].strftime("%I:%M %p")
+            })
+        
+        return {'results': results}
     
     except Exception as e:
-        return render_template('index.html', 
-                               date=date.strftime('%b %d, %Y'), 
-                               error=f"Error processing file: {str(e)}", 
-                               file_uploaded=True, 
-                               date_select=date_select, 
-                               custom_date=custom_date)
+        return {'error': f"Error processing file: {str(e)}"}, 500
 
 @app.route('/clear', methods=['POST'])
 def clear_file():
