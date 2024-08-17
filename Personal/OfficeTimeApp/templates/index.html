@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,26 +10,33 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
         }
-        h1 {
-            color: #333;
+        h1, h2 {
+            color: #16515d;
         }
         form {
             margin-top: 20px;
         }
         input, select, button {
             margin: 10px 0;
-            padding: 5px;
+            padding: 10px;
+            background-color: #2e2e2e;
+            color: #e0e0e0;
+            border: 1px solid #043347;
+            border-radius: 4px;
         }
         button {
-            background-color: #4CAF50;
+            background-color: #0c5d7a;
             color: white;
             border: none;
             padding: 10px 20px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #0c5d7a;
         }
         table {
             width: 100%;
@@ -38,51 +44,62 @@
             margin-top: 20px;
         }
         th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
+            border: 1px solid #0c5d7a;
+            padding: 12px;
             text-align: left;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #2e2e2e;
+            color: #0c5d7a;
         }
         .green {
-            color: green;
+            color: #0c5d7a;
         }
         .red {
-            color: red;
+            color: #ff6b6b;
         }
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
+        .success-message {
+            color: #0c5d7a;
+            margin-bottom: 10px;
         }
-        a:hover {
-            background-color: #45a049;
+        .error-message {
+            color: #ff6b6b;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
     <h1>Office Time Tracker</h1>
-    <form action="/analyze" method="post" enctype="multipart/form-data">
+    
+    {% if not file_uploaded %}
+    <form action="/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="excel_file" accept=".xlsx" required>
-        <br>
+        <button type="submit">Upload File</button>
+    </form>
+    {% else %}
+    <p class="success-message">File uploaded successfully. You can now analyze multiple dates.</p>
+    <form action="/clear" method="post">
+        <button type="submit">Clear File</button>
+    </form>
+    {% endif %}
+
+    {% if file_uploaded %}
+    <form action="/analyze" method="post">
         <label for="date_select">Select Date:</label>
         <select name="date_select" id="date_select">
-            <option value="today">Today</option>
-            <option value="yesterday">Yesterday</option>
-            <option value="custom">Custom Date</option>
+            <option value="today" {% if date_select == 'today' %}selected{% endif %}>Today</option>
+            <option value="yesterday" {% if date_select == 'yesterday' %}selected{% endif %}>Yesterday</option>
+            <option value="custom" {% if date_select == 'custom' %}selected{% endif %}>Custom Date</option>
         </select>
         <br>
-        <input type="date" name="custom_date" id="custom_date" style="display: none;">
+        <input type="date" name="custom_date" id="custom_date" style="display: none;" value="{{ custom_date }}">
         <br>
         <button type="submit">Analyze</button>
     </form>
+    {% endif %}
 
     {% if error %}
-        <p style="color: red;">{{ error }}</p>
+        <p class="error-message">{{ error }}</p>
     {% elif results %}
         <h2>Date: {{ date }}</h2>
         <table>
@@ -110,15 +127,22 @@
     {% endif %}
 
     <script>
-        document.getElementById('date_select').addEventListener('change', function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            var dateSelect = document.getElementById('date_select');
             var customDateInput = document.getElementById('custom_date');
-            if (this.value === 'custom') {
-                customDateInput.style.display = 'block';
-                customDateInput.required = true;
-            } else {
-                customDateInput.style.display = 'none';
-                customDateInput.required = false;
+            
+            function toggleCustomDate() {
+                if (dateSelect.value === 'custom') {
+                    customDateInput.style.display = 'block';
+                    customDateInput.required = true;
+                } else {
+                    customDateInput.style.display = 'none';
+                    customDateInput.required = false;
+                }
             }
+
+            dateSelect.addEventListener('change', toggleCustomDate);
+            toggleCustomDate(); // Call on page load
         });
     </script>
 </body>

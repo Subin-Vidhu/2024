@@ -1,26 +1,26 @@
-# app.py
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import pandas as pd
 from datetime import datetime, time, timedelta
 import io
+import os
+from werkzeug.utils import secure_filename
 from spintly_day_till_current_time import parse_datetime, calculate_time_spent, format_time, analyze_time_spent
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key_here'  # Set a secret key for session management
+app.config['UPLOAD_FOLDER'] = os.path.join("static", 'temp_uploads')  # Folder to store temporary uploads
 
 # Constants
 OFFICE_START = time(7, 30)
 OFFICE_END = time(19, 30)
 TARGET_TIME = 8 * 3600 + 30 * 60  # 8 hours 30 minutes in seconds
 
-# Helper functions (parse_datetime, calculate_time_spent, format_time) go here
-# You can copy these from your original script
-
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', file_uploaded=session.get('file_uploaded', False))
 
-@app.route('/analyze', methods=['POST'])
-def analyze():
+@app.route('/upload', methods=['POST'])
+def upload_file():
     if 'excel_file' not in request.files:
         return redirect(url_for('index'))
     
@@ -28,16 +28,33 @@ def analyze():
     if file.filename == '':
         return redirect(url_for('index'))
     
-    date_str = request.form['date_select']
-    if date_str == 'today':
+    if file:
+        filename = secure_filename(file.filename)
+        if not os.path.exists(app.config['UPLOAD_FOLDER']):
+            os.makedirs(app.config['UPLOAD_FOLDER'])
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(file_path)
+        session['file_path'] = file_path
+        session['file_uploaded'] = True
+        return redirect(url_for('index'))
+
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    if 'file_path' not in session:
+        return render_template('index.html', error="Please upload a file first.")
+    
+    date_select = request.form['date_select']
+    custom_date = request.form.get('custom_date', '')
+    
+    if date_select == 'today':
         date = datetime.now().date()
-    elif date_str == 'yesterday':
+    elif date_select == 'yesterday':
         date = datetime.now().date() - timedelta(days=1)
     else:
-        date = datetime.strptime(request.form['custom_date'], '%Y-%m-%d').date()
+        date = datetime.strptime(custom_date, '%Y-%m-%d').date()
     
     try:
-        df = pd.read_excel(file, sheet_name='Access History', skiprows=5)
+        df = pd.read_excel(session['file_path'], sheet_name='Access History', skiprows=5)
         df['DateTime'] = df.apply(lambda row: parse_datetime(row['Date'], row['Time']), axis=1)
         df['Date'] = pd.to_datetime(df['Date'], format='%b %d, %Y').dt.date
         df = df[['Date', 'DateTime', 'Name', 'Direction']].sort_values(by=['Name', 'DateTime'])
@@ -45,7 +62,7 @@ def analyze():
         time_spent = analyze_time_spent(df, date)
         
         if not time_spent:
-            return render_template('index.html', error="No data found for the selected date.")
+            return render_template('index.html', error="No data found for the selected date.", file_uploaded=True)
         
         results = []
         for name, times in time_spent.items():
@@ -66,10 +83,28 @@ def analyze():
                 'last_exit': times['last_exit'].strftime("%I:%M:%S %p")
             })
         
-        return render_template('index.html', date=date.strftime('%b %d, %Y'), results=results)
+        return render_template('index.html', 
+                               date=date.strftime('%b %d, %Y'), 
+                               results=results, 
+                               file_uploaded=True, 
+                               date_select=date_select, 
+                               custom_date=custom_date)
     
     except Exception as e:
-        return render_template('index.html', date=date.strftime('%b %d, %Y'), error=f"Error processing file: {str(e)}")
+        return render_template('index.html', 
+                               date=date.strftime('%b %d, %Y'), 
+                               error=f"Error processing file: {str(e)}", 
+                               file_uploaded=True, 
+                               date_select=date_select, 
+                               custom_date=custom_date)
+
+@app.route('/clear', methods=['POST'])
+def clear_file():
+    if 'file_path' in session:
+        os.remove(session['file_path'])
+        session.pop('file_path', None)
+    session['file_uploaded'] = False
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
