@@ -143,7 +143,7 @@ def main(file_path: str, date_str: str) -> None:
         print(generate_summary_table(time_spent, use_seconds=False))
 
 if __name__ == "__main__":
-    file_path = r'c:\Users\Subin-PC\Downloads\subin_july.xlsx'
+    file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
     # file_path = r'c:\Users\Subin-PC\Downloads\chippy.xlsx'
-    date_str = "Aug 14, 2024"
+    date_str = "Aug 17, 2024"
     main(file_path, date_str)
