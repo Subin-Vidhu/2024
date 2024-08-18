@@ -2,6 +2,7 @@ import os
 
 from openai import OpenAI
 from dotenv import load_dotenv
+from IPython.core.display import display, HTML
 import csv
 
 # Get the OpenAI API key from the .env file
@@ -10,6 +11,16 @@ openai_api_key = os.getenv('OPENAI_API_KEY')
 
 # Set up the OpenAI client
 client = OpenAI(api_key=openai_api_key)
+
+def display_html(html):
+    display(HTML(html))
+
+def read_journal(file_path):
+    f = open(file_path, "r")
+    journal = f.read()
+    f.close()
+    
+    return journal
 
 
 def print_llm_response(prompt):
@@ -75,3 +86,4 @@ def get_chat_completion(prompt, history):
     )
     response = completion.choices[0].message.content
     return response
+
