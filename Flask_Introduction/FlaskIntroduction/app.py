@@ -1,14 +1,17 @@
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-db = SQLAlchemy(app)
 
-# Create DB using python shell
-# from app import db
-# db.create_all()
+# Get the absolute path to the current directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Set the database URI to use the absolute path
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(current_dir, 'test.db')
+
+db = SQLAlchemy(app)
 
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,6 +21,10 @@ class Todo(db.Model):
     def __repr__(self):
         return '<Task %r>' % self.id
 
+# Create the tables manually
+if not os.path.exists(os.path.join(current_dir, 'test.db')):
+    with app.app_context():
+        db.create_all()
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -40,9 +47,11 @@ def index():
             return 'There was an issue adding your task'
 
     else:
-        tasks = Todo.query.order_by(Todo.date_created).all()
-        return render_template('index.html', tasks=tasks)
-
+        try:
+            tasks = Todo.query.order_by(Todo.date_created).all()
+            return render_template('index.html', tasks=tasks)
+        except:
+            return 'No tasks found'
 
 @app.route('/delete/<int:id>')
 def delete(id):
