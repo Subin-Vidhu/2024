@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 # PACS server credentials
 PACS_URL = 'https://pacs.protosonline.in/dicom-web/studies'
+# PACS_URL = 'https://rpacs.radiumonline.in/dicom-web/studies'
 # PACS_URL = 'http://localhost:8042/dicom-web/studies'
 PACS_USERNAME = 'admin'
 PACS_PASSWORD = 'password'
@@ -116,4 +117,4 @@ def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host = '0.0.0.0', port = 5111)
