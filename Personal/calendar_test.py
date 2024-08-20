@@ -1,6 +1,6 @@
 import calendar
+import datetime
 
-month = 8
-year = 2024
-print(f"Calendar for {calendar.month_name[month]} {year}")
-print(calendar.month(year, month))
+now = datetime.datetime.now()
+print(f"Calendar for {calendar.month_name[now.month]} {now.year}")
+print(calendar.month(now.year, now.month))
