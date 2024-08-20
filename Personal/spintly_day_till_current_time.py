@@ -145,5 +145,5 @@ def main(file_path: str, date_str: str) -> None:
 if __name__ == "__main__":
     file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
     # file_path = r'c:\Users\Subin-PC\Downloads\chippy.xlsx'
-    date_str = "Aug 19, 2024"
+    date_str = "Aug 20, 2024"
     main(file_path, date_str)
