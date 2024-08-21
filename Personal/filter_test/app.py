@@ -27,7 +27,7 @@ SEARCH_OPTIONS = {
     'performing_physician': '00081050',  # Performing Physician's Name
     'institution_name': '00080080',  # Institution Name
     'department_name': '00081040',  # Department Name
-    'modality': '00080060',  # Modality
+    'modality': '00080061',  # Modality
     'series_description': '0008103E',  # Series Description
     'series_instance_uid': '0020000E',  # Series Instance UID
     'study_instance_uid': '0020000D',  # Study Instance UID
@@ -53,7 +53,7 @@ def index():
                     '00201206',  # Number of Series
                     '00201208',  # Number of SOP Instances
                     '00100030',  # Patient Birth Date
-                    '00080060',  # Modality
+                    '00080061',  # Modality
                     '00080050',  # Accession Number
                     '00080090',  # Referring Physician's Name
                     '00081050',  # Performing Physician's Name
@@ -64,18 +64,12 @@ def index():
                 'limit': '50',
             }
 
-            if search_type == 'birthdate':
-                params[SEARCH_OPTIONS[search_type]] = search_value
-            elif search_type == 'study_date':
-                params[SEARCH_OPTIONS[search_type]] = search_value
-            elif search_type == 'study_time':
-                params[SEARCH_OPTIONS[search_type]] = search_value
-            elif search_type == 'series_instance_uid':
-                params[SEARCH_OPTIONS[search_type]] = search_value
-            elif search_type == 'study_instance_uid':
+            if search_type in ['birthdate', 'study_date', 'study_time', 'series_instance_uid', 'study_instance_uid']:
                 params[SEARCH_OPTIONS[search_type]] = search_value
             else:
                 params[SEARCH_OPTIONS[search_type]] = f'*{search_value}*'
+
+            print(f"Sending request to PACS server with params: {params}")
 
         else:
             return jsonify({'error': 'Invalid search type'}), 400
@@ -83,6 +77,9 @@ def index():
         try:
             # Send a request to the PACS server
             response = requests.get(PACS_URL, params=params, auth=HTTPBasicAuth(PACS_USERNAME, PACS_PASSWORD))
+            # print(f"Response status code: {response.status_code}")
+            # print(f"Response headers: {response.headers}")
+            print(f"Response content: {response.text}")
             response.raise_for_status()  # Raise an exception for 4xx or 5xx status codes
         except requests.RequestException as e:
             return jsonify({'error': f"Error: {e}"}), 500
@@ -105,7 +102,7 @@ def index():
                 'performing_physician': study.get('00081050', {}).get('Value', [])[0] if study.get('00081050', {}).get('Value', []) else 'N/A',
                 'institution_name': study.get('00080080', {}).get('Value', [])[0] if study.get('00080080', {}).get('Value', []) else 'N/A',
                 'department_name': study.get('00081040', {}).get('Value', [])[0] if study.get('00081040', {}).get('Value', []) else 'N/A',
-                'modality': study.get('00080060', {}).get('Value', [])[0] if study.get('00080060', {}).get('Value', []) else 'N/A',
+                'modality': study.get('00080061', {}).get('Value', [])[0] if study.get('00080061', {}).get('Value', []) else 'N/A',
                 'series_instance_uid': study.get('0020000E', {}).get('Value', [])[0] if study.get('0020000E', {}).get('Value', []) else 'N/A',
                 'series_description': study.get('0008103E', {}).get('Value', [])[0] if study.get('0008103E', {}).get('Value', []) else 'N/A',
                 'number_of_series': study.get('00201206', {}).get('Value', [])[0] if study.get('00201206', {}).get('Value', []) else 'N/A',
