@@ -60,6 +60,7 @@ def index():
                     '00080080',  # Institution Name
                     '00081040',  # Department Name
                     '0020000D',  # Study Instance UID
+                    '00081030',  # Study Description
                 ],
                 'limit': '50',
             }
