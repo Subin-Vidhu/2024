@@ -54,4 +54,8 @@
 
 - [Trick 3](#trick-3)
 
+        - To use emojis in markdown files, use the following syntax:
+
+            - `:smile:` -> 😄
+
     
