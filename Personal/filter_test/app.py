@@ -69,7 +69,7 @@ def index():
             else:
                 params[SEARCH_OPTIONS[search_type]] = f'*{search_value}*'
 
-            print(f"Sending request to PACS server with params: {params}")
+            # print(f"Sending request to PACS server with params: {params}")
 
         else:
             return jsonify({'error': 'Invalid search type'}), 400
