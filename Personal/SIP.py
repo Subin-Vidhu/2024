@@ -1,16 +1,14 @@
 def calculate_sip(investment, rate, months):
     total_amount = 0
+    print(f"{'Month':^5}|{'Investment':^15}|{'Interest':^15}|{'Total Amount':^15}")
+    print("-" * 55)
+
     for month in range(1, months + 1):
-        if month > 1:
-            total_amount += investment
+        total_amount += investment
         interest = total_amount * (rate / 12 / 100)
         total_amount += interest
         
-        print(f"Month {month}:")
-        print(f"Investment: ${investment:,.2f}")
-        print(f"Interest: ${interest:,.2f}")
-        print(f"Total Amount: ${total_amount:,.2f}")
-        print()
+        print(f"{month:^5}|${investment:^14,.2f}|${interest:^14,.2f}|${total_amount:^14,.2f}")
     
     return total_amount
 
@@ -30,4 +28,5 @@ else:
 
 # Calculate and display results
 final_amount = calculate_sip(investment_amount, annual_rate, time_period)
-print(f"Final Total Amount after {time_period} months: ${final_amount:,.2f}")
+print("-" * 55)
+print(f"\nFinal Total Amount after {time_period} months: ${final_amount:,.2f}")
