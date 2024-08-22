@@ -41,83 +41,87 @@
 
     <script>
         $(document).ready(function() {
-            let timeoutId;
-            $('#searchValue').on('keyup', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                }
-                clearTimeout(timeoutId);
-                timeoutId = setTimeout(function() {
-                    const searchType = $('#searchType').val();
-                    const searchValue = $('#searchValue').val();
-                    console.log('Search type:', searchType);
-                    console.log('Search value:', searchValue);
+    let timeoutId;
+    $('#searchForm').on('submit', function(e) {
+        e.preventDefault(); // Prevent the default form submission behavior
+    });
 
-                    // Send AJAX POST request
-                    $.ajax({
-                        url: '/',
-                        type: 'POST',
-                        data: { searchType: searchType, searchValue: searchValue },
-                        success: function(data) {
-                            let resultsDiv = $('#results');
-                            resultsDiv.empty(); // Clear previous results
+    $('#searchValue').on('keyup', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Prevent the default form submission behavior
+        }
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(function() {
+            const searchType = $('#searchType').val();
+            const searchValue = $('#searchValue').val();
+            console.log('Search type:', searchType);
+            console.log('Search value:', searchValue);
 
-                            if (data.length > 0) {
-                                data.forEach(patient => {
-                                    resultsDiv.append(`
-                                        <h2>Patient Information</h2>
-                                        <p><strong>Patient Name:</strong> ${patient.patient_name.Alphabetic}</p>
-                                        <p><strong>Patient ID:</strong> ${patient.patient_id}</p>
-                                        <p><strong>Patient Birth Date:</strong> ${patient.patient_birth_date}</p>
-                                        <p><strong>Patient Sex:</strong> ${patient.patient_sex}</p>
-                                        <p><strong>Study ID:</strong> ${patient.study_id}</p>
-                                        <p><strong>Study Date:</strong> ${patient.study_date}</p>
-                                        <p><strong>Study Time:</strong> ${patient.study_time}</p>
-                                        <p><strong>Study Description:</strong> ${patient.study_description}</p>
-                                        <p><strong>Accession Number:</strong> ${patient.accession_number}</p>
-                                        <p><strong>Referring Physician's Name:</strong> ${patient.referring_physician}</p>
-                                        <p><strong>Performing Physician's Name:</strong> ${patient.performing_physician}</p>
-                                        <p><strong>Institution Name:</strong> ${patient.institution_name}</p>
-                                        <p><strong>Department Name:</strong> ${patient.department_name}</p>
-                                        <p><strong>Modality:</strong> ${patient.modality}</p>
-                                        <p><strong>Study Instance UID:</strong> ${patient.study_instance_uid}</p>
-                                        <p><strong>Series Instance UID:</strong> ${patient.series_instance_uid}</p>
-                                        <p><strong>Series Description:</strong> ${patient.series_description}</p>
-                                        <p><strong>Number of Series:</strong> ${patient.number_of_series}</p>
-                                        <p><strong>Number of SOP Instances:</strong> ${patient.number_of_sop_instances}</p>
-                                    `);
-                                });
-                            } else {
-                                resultsDiv.append('<p>No data found for the provided search value.</p>');
-                            }
-                        },
-                        error: function(xhr) {
-                            $('#results').html(`<p>Error: ${xhr.status} - ${xhr.statusText}</p>`);
-                        }
-                    });
-                }, 100); // Debounce by 100ms
-            });
+            // Send AJAX POST request
+            $.ajax({
+                url: '/',
+                type: 'POST',
+                data: { searchType: searchType, searchValue: searchValue },
+                success: function(data) {
+                    let resultsDiv = $('#results');
+                    resultsDiv.empty(); // Clear previous results
 
-            $('#searchType').on('change', function() {
-                const searchType = $(this).val();
-                const searchHint = $('#searchHint');
-                switch (searchType) {
-                    case 'birthdate':
-                    case 'study_date':
-                        searchHint.text('Please enter the date in YYYYMMDD format.');
-                        break;
-                    case 'study_time':
-                        searchHint.text('Please enter the time in HHMMSS format.');
-                        break;
-                    case 'study_instance_uid':
-                    case 'series_instance_uid':
-                        searchHint.text('Please enter the full UID.');
-                        break;
-                    default:
-                        searchHint.text('');
+                    if (data.length > 0) {
+                        data.forEach(patient => {
+                            resultsDiv.append(`
+                                <h2>Patient Information</h2>
+                                <p><strong>Patient Name:</strong> ${patient.patient_name.Alphabetic}</p>
+                                <p><strong>Patient ID:</strong> ${patient.patient_id}</p>
+                                <p><strong>Patient Birth Date:</strong> ${patient.patient_birth_date}</p>
+                                <p><strong>Patient Sex:</strong> ${patient.patient_sex}</p>
+                                <p><strong>Study ID:</strong> ${patient.study_id}</p>
+                                <p><strong>Study Date:</strong> ${patient.study_date}</p>
+                                <p><strong>Study Time:</strong> ${patient.study_time}</p>
+                                <p><strong>Study Description:</strong> ${patient.study_description}</p>
+                                <p><strong>Accession Number:</strong> ${patient.accession_number}</p>
+                                <p><strong>Referring Physician's Name:</strong> ${patient.referring_physician}</p>
+                                <p><strong>Performing Physician's Name:</strong> ${patient.performing_physician}</p>
+                                <p><strong>Institution Name:</strong> ${patient.institution_name}</p>
+                                <p><strong>Department Name:</strong> ${patient.department_name}</p>
+                                <p><strong>Modality:</strong> ${patient.modality}</p>
+                                <p><strong>Study Instance UID:</strong> ${patient.study_instance_uid}</p>
+                                <p><strong>Series Instance UID:</strong> ${patient.series_instance_uid}</p>
+                                <p><strong>Series Description:</strong> ${patient.series_description}</p>
+                                <p><strong>Number of Series:</strong> ${patient.number_of_series}</p>
+                                <p><strong>Number of SOP Instances:</strong> ${patient.number_of_sop_instances}</p>
+                            `);
+                        });
+                    } else {
+                        resultsDiv.append('<p>No data found for the provided search value.</p>');
+                    }
+                },
+                error: function(xhr) {
+                    $('#results').html(`<p>Error: ${xhr.status} - ${xhr.statusText}</p>`);
                 }
             });
-        });
+        }, 100); // Debounce by 100ms
+    });
+
+    $('#searchType').on('change', function() {
+        const searchType = $(this).val();
+        const searchHint = $('#searchHint');
+        switch (searchType) {
+            case 'birthdate':
+            case 'study_date':
+                searchHint.text('Please enter the date in YYYYMMDD format.');
+                break;
+            case 'study_time':
+                searchHint.text('Please enter the time in HHMMSS format.');
+                break;
+            case 'study_instance_uid':
+            case 'series_instance_uid':
+                searchHint.text('Please enter the full UID.');
+                break;
+            default:
+                searchHint.text('');
+        }
+    });
+});
     </script>
 </body>
 </html>
