@@ -14,10 +14,10 @@
         <select id="searchType" name="searchType">
             <option value="name">Patient Name</option>
             <option value="id">Patient ID</option>
-            <option value="birthdate">Patient Birth Date</option>
+            <option value="birthdate">Patient Birth Date (YYYYMMDD)</option>
             <option value="sex">Patient Sex</option>
-            <option value="study_date">Study Date</option>
-            <option value="study_time">Study Time</option>
+            <option value="study_date">Study Date (YYYYMMDD)</option>
+            <option value="study_time">Study Time (HHMMSS)</option>
             <option value="study_id">Study ID</option>
             <option value="study_description">Study Description</option>
             <option value="accession_number">Accession Number</option>
@@ -26,13 +26,14 @@
             <option value="institution_name">Institution Name</option>
             <option value="department_name">Department Name</option>
             <option value="modality">Modality</option>
-            <option value="study_instance_uid">Study Instance UID</option>
+            <option value="study_instance_uid">Study Instance UID (full)</option>
             <option value="series_description">Series Description</option>
-            <option value="series_instance_uid">Series Instance UID</option>
+            <option value="series_instance_uid">Series Instance UID (full)</option>
         </select>
         <br>
         <label for="searchValue">Search value:</label>
         <input type="text" id="searchValue" name="searchValue" placeholder="Enter search value" required><br><br>
+        <span id="searchHint"></span>
     </form>
     <br>
 
@@ -41,7 +42,10 @@
     <script>
         $(document).ready(function() {
             let timeoutId;
-            $('#searchValue').on('keyup', function() {
+            $('#searchValue').on('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                }
                 clearTimeout(timeoutId);
                 timeoutId = setTimeout(function() {
                     const searchType = $('#searchType').val();
@@ -92,6 +96,26 @@
                         }
                     });
                 }, 100); // Debounce by 100ms
+            });
+
+            $('#searchType').on('change', function() {
+                const searchType = $(this).val();
+                const searchHint = $('#searchHint');
+                switch (searchType) {
+                    case 'birthdate':
+                    case 'study_date':
+                        searchHint.text('Please enter the date in YYYYMMDD format.');
+                        break;
+                    case 'study_time':
+                        searchHint.text('Please enter the time in HHMMSS format.');
+                        break;
+                    case 'study_instance_uid':
+                    case 'series_instance_uid':
+                        searchHint.text('Please enter the full UID.');
+                        break;
+                    default:
+                        searchHint.text('');
+                }
             });
         });
     </script>

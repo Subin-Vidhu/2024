@@ -79,7 +79,7 @@ def index():
             response = requests.get(PACS_URL, params=params, auth=HTTPBasicAuth(PACS_USERNAME, PACS_PASSWORD))
             # print(f"Response status code: {response.status_code}")
             # print(f"Response headers: {response.headers}")
-            print(f"Response content: {response.text}")
+            # print(f"Response content: {response.text}")
             response.raise_for_status()  # Raise an exception for 4xx or 5xx status codes
         except requests.RequestException as e:
             return jsonify({'error': f"Error: {e}"}), 500
