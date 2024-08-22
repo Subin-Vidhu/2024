@@ -49,7 +49,9 @@
         - `alt + 0218` -> `Ú`
         - `alt + 0219` -> `Û`
         - `alt + 0220` -> `Ü`
-        
+
         - For more: [Windows Alt Codes](https://usefulshortcuts.com/alt-codes/accents-alt-codes.php)
+
+- [Trick 3](#trick-3)
 
     
