@@ -8,12 +8,12 @@ def calculate_sip(investment, rate, months):
         interest = total_amount * (rate / 12 / 100)
         total_amount += interest
         
-        print(f"{month:^5}|${investment:^14,.2f}|${interest:^14,.2f}|${total_amount:^14,.2f}")
+        print(f"{month:^5}|Rs.{investment:^14,.2f}|Rs.{interest:^14,.2f}|Rs.{total_amount:^14,.2f}")
     
     return total_amount
 
 # Get user input
-investment_amount = float(input("Enter the monthly investment amount: $"))
+investment_amount = float(input("Enter the monthly investment amount: Rs."))
 annual_rate = float(input("Enter the annual interest rate (%): "))
 time_input = input("Enter the time period (format: number followed by 'm' for months or 'y' for years, e.g., '3m' or '2y'): ")
 
@@ -29,4 +29,4 @@ else:
 # Calculate and display results
 final_amount = calculate_sip(investment_amount, annual_rate, time_period)
 print("-" * 55)
-print(f"\nFinal Total Amount after {time_period} months: ${final_amount:,.2f}")
+print(f"\nFinal Total Amount after {time_period} months: Rs.{final_amount:,.2f}")
