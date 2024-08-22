@@ -1,31 +1,33 @@
-def compound_interest(principal, rate, time, n=1):
+def compound_interest_monthly(principal, rate, time, n, monthly_investment):
     """
-    Calculate compound interest.
+    Calculate compound interest on monthly investments.
 
     Args:
-        principal (float): Initial investment amount.
-        rate (float): Interest rate (in decimal form, e.g., 4% = 0.04).
+        principal (float): Initial investment amount (not used in this case).
+        rate (float): Interest rate (in decimal form, e.g., 12% = 0.12).
         time (int): Time period (in years).
-        n (int, optional): Number of times interest is compounded per year. Defaults to 1.
+        n (int): Number of times interest is compounded per year.
+        monthly_investment (float): Monthly investment amount.
 
     Returns:
-        float: Compound interest amount.
+        float: Total amount after compound interest.
     """
-    return principal * (1 + rate / n) ** (n * time)
+    total_amount = 0
+    for month in range(time * 12):
+        total_amount = (total_amount + monthly_investment) * (1 + rate / n) ** (1 / n)
+    return total_amount
 
 def main():
     print("Compound Interest Calculator")
     print("---------------------------")
 
-    principal = float(input("Enter the principal amount: "))
+    monthly_investment = float(input("Enter the monthly investment amount: "))
     rate = float(input("Enter the interest rate (in %): ")) / 100
     time = int(input("Enter the time period (in years): "))
     n = int(input("Enter the number of times interest is compounded per year (default=1): ") or 1)
 
-    interest = compound_interest(principal, rate, time, n)
-    total_amount = principal + interest
+    total_amount = compound_interest_monthly(0, rate, time, n, monthly_investment)
 
-    print(f"Compound Interest: ${interest:.2f}")
     print(f"Total Amount: ${total_amount:.2f}")
 
 if __name__ == "__main__":
