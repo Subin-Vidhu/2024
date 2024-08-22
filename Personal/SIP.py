@@ -1,49 +1,33 @@
-def calculate_sip(investment_amount, rate, time):
-    """
-    Calculate the total amount based on SIP details.
-
-    Args:
-    investment_amount (float): The monthly investment amount.
-    rate (float): The annual interest rate (in decimal form, e.g., 12% = 0.12).
-    time (int): The number of months.
-
-    Returns:
-    list: A list of dictionaries containing the month, investment, interest, and total amount.
-    """
+def calculate_sip(investment, rate, months):
     total_amount = 0
-    results = []
+    for month in range(1, months + 1):
+        if month > 1:
+            total_amount += investment
+        interest = total_amount * (rate / 12 / 100)
+        total_amount += interest
+        
+        print(f"Month {month}:")
+        print(f"Investment: ${investment:,.2f}")
+        print(f"Interest: ${interest:,.2f}")
+        print(f"Total Amount: ${total_amount:,.2f}")
+        print()
+    
+    return total_amount
 
-    for month in range(1, time + 1):
-        investment = investment_amount
-        interest = (investment_amount + total_amount) * (rate / 12)
-        total_amount = total_amount + investment + interest
-        results.append({
-            'Month': month,
-            'Investment': investment,
-            'Interest': interest,
-            'Total Amount': total_amount
-        })
+# Get user input
+investment_amount = float(input("Enter the monthly investment amount: $"))
+annual_rate = float(input("Enter the annual interest rate (%): "))
+time_input = input("Enter the time period (format: number followed by 'm' for months or 'y' for years, e.g., '3m' or '2y'): ")
 
-    return results
+# Parse time input
+if time_input.endswith('m'):
+    time_period = int(time_input[:-1])
+elif time_input.endswith('y'):
+    time_period = int(time_input[:-1]) * 12
+else:
+    print("Invalid time format. Please use 'm' for months or 'y' for years.")
+    exit()
 
-
-def print_sip_results(results):
-    """
-    Print the SIP results in a tabular format.
-
-    Args:
-    results (list): A list of dictionaries containing the SIP results.
-    """
-    print(f"{'Month':^10} | {'Investment':^15} | {'Interest':^10} | {'Total Amount':^15}")
-    print("-" * 50)
-    for result in results:
-        print(f"{result['Month']:^10} | {result['Investment']:^15.2f} | {result['Interest']:^10.2f} | {result['Total Amount']:^15.2f}")
-
-
-# Example usage:
-investment_amount = 10000
-rate = 0.12  # 12% annual interest rate
-time = 12  # 12 months
-
-results = calculate_sip(investment_amount, rate, time)
-print_sip_results(results)
+# Calculate and display results
+final_amount = calculate_sip(investment_amount, annual_rate, time_period)
+print(f"Final Total Amount after {time_period} months: ${final_amount:,.2f}")
