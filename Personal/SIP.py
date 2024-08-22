@@ -1,5 +1,6 @@
 def calculate_sip(investment, rate, months):
     total_amount = 0
+    total_interest = 0
     print(f"{'Month':^5}|{'Investment':^15}|{'Interest':^15}|{'Total Amount':^15}")
     print("-" * 55)
 
@@ -7,10 +8,11 @@ def calculate_sip(investment, rate, months):
         total_amount += investment
         interest = total_amount * (rate / 12 / 100)
         total_amount += interest
+        total_interest += interest
         
         print(f"{month:^5}|Rs.{investment:^14,.2f}|Rs.{interest:^14,.2f}|Rs.{total_amount:^14,.2f}")
     
-    return total_amount
+    return total_amount, total_interest
 
 # Get user input
 investment_amount = float(input("Enter the monthly investment amount: Rs."))
@@ -27,6 +29,16 @@ else:
     exit()
 
 # Calculate and display results
-final_amount = calculate_sip(investment_amount, annual_rate, time_period)
+final_amount, total_interest = calculate_sip(investment_amount, annual_rate, time_period)
 print("-" * 55)
-print(f"\nFinal Total Amount after {time_period} months: Rs.{final_amount:,.2f}")
+
+# Calculate and display summary
+total_invested = investment_amount * time_period
+returns = final_amount - total_invested
+
+print("\nSummary:")
+print(f"Total Amount Invested: Rs.{total_invested:,.2f}")
+print(f"Total Returns: Rs.{returns:,.2f}")
+print(f"Total Interest Earned: Rs.{total_interest:,.2f}")
+print(f"Final Total Amount: Rs.{final_amount:,.2f}")
+print(f"Absolute Return: {(returns/total_invested)*100:.2f}%")
