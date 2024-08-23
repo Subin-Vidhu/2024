@@ -6,7 +6,7 @@ def calculate_download_time():
     print(Fore.CYAN + "-------------------------" + Style.RESET_ALL)
 
     while True:
-        print()
+        print("\n")
         print(Fore.GREEN + "Choose an option:" + Style.RESET_ALL)
         print("1. Calculate download time")
         print("2. Calculate file size")
@@ -45,5 +45,11 @@ def calculate_download_time():
 
         else:
             print(Fore.RED + "Invalid choice. Please try again." + Style.RESET_ALL)
+
+        cont = input(Fore.YELLOW + "Do you want to continue? (Y/N): " + Style.RESET_ALL).lower()
+
+        if cont.lower() != "y":
+            print(Fore.RED + "Goodbye!" + Style.RESET_ALL)
+            break
 
 calculate_download_time()
