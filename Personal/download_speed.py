@@ -1,41 +1,49 @@
+import colorama
+from colorama import Fore, Style
+
 def calculate_download_time():
-    print("Download Time Calculator")
-    print("-------------------------")
+    print(Fore.CYAN + "Download Time Calculator" + Style.RESET_ALL)
+    print(Fore.CYAN + "-------------------------" + Style.RESET_ALL)
 
     while True:
-        print("Choose an option:")
+        print()
+        print(Fore.GREEN + "Choose an option:" + Style.RESET_ALL)
         print("1. Calculate download time")
         print("2. Calculate file size")
         print("3. Calculate internet speed")
         print("4. Quit")
-        print()
-        option = input("Enter your choice (1-4): ")
+
+        option = input(Fore.YELLOW + "Enter your choice (1-4): " + Style.RESET_ALL)
 
         if option == "1":
-            size_mb = float(input("Enter file size in MB: "))
-            speed_mbps = float(input("Enter internet speed in Mbps: "))
+            print(Fore.MAGENTA + "Calculate Download Time" + Style.RESET_ALL)
+            print("---------------------------------")
+            size_mb = float(input(Fore.YELLOW + "Enter file size in MB: " + Style.RESET_ALL))
+            speed_mbps = float(input(Fore.YELLOW + "Enter internet speed in Mbps: " + Style.RESET_ALL))
             time_seconds = (size_mb * 8) / speed_mbps
-            print(f"Download time: {time_seconds:.2f} seconds")
+            print(Fore.CYAN + f"Download time: {time_seconds:.2f} seconds" + Style.RESET_ALL)
 
         elif option == "2":
-            time_seconds = float(input("Enter download time in seconds: "))
-            speed_mbps = float(input("Enter internet speed in Mbps: "))
+            print(Fore.MAGENTA + "Calculate File Size" + Style.RESET_ALL)
+            print("------------------------")
+            time_seconds = float(input(Fore.YELLOW + "Enter download time in seconds: " + Style.RESET_ALL))
+            speed_mbps = float(input(Fore.YELLOW + "Enter internet speed in Mbps: " + Style.RESET_ALL))
             size_mb = (time_seconds * speed_mbps) / 8
-            print(f"File size: {size_mb:.2f} MB")
+            print(Fore.CYAN + f"File size: {size_mb:.2f} MB" + Style.RESET_ALL)
 
         elif option == "3":
-            size_mb = float(input("Enter file size in MB: "))
-            time_seconds = float(input("Enter download time in seconds: "))
+            print(Fore.MAGENTA + "Calculate Internet Speed" + Style.RESET_ALL)
+            print("-------------------------")
+            size_mb = float(input(Fore.YELLOW + "Enter file size in MB: " + Style.RESET_ALL))
+            time_seconds = float(input(Fore.YELLOW + "Enter download time in seconds: " + Style.RESET_ALL))
             speed_mbps = (size_mb * 8) / time_seconds
-            print(f"Internet speed: {speed_mbps:.2f} Mbps")
+            print(Fore.CYAN + f"Internet speed: {speed_mbps:.2f} Mbps" + Style.RESET_ALL)
 
         elif option == "4":
-            print("Goodbye!")
+            print(Fore.RED + "Goodbye!" + Style.RESET_ALL)
             break
 
         else:
-            print("Invalid choice. Please try again.")
-
-        print()
+            print(Fore.RED + "Invalid choice. Please try again." + Style.RESET_ALL)
 
 calculate_download_time()
