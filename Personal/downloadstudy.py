@@ -50,8 +50,8 @@ def download_study_as_zip(orthanc_url, basic_auth, study_id):
         total_size = int(response.headers.get('content-length', 0))
         block_size = 1024  # 1 Kibibyte
 
-        # Initialize the tqdm progress bar
-        tqdm_bar = tqdm(total=total_size, unit='iB', unit_scale=True, desc='Downloading', ncols=100, ascii=True, leave=True)
+        # Initialize the tqdm progress bar with percentage
+        tqdm_bar = tqdm(total=total_size, unit='iB', unit_scale=True, desc='Downloading', ncols=100, ascii=True, leave=True, bar_format="{l_bar}{bar} | {n_fmt}/{total_fmt} bytes | {percentage:.0f}%")
 
         zip_file_content = io.BytesIO()
 
