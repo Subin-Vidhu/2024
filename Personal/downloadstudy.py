@@ -48,10 +48,10 @@ def download_study_as_zip(orthanc_url, basic_auth, study_id):
         
         # Total size in bytes
         total_size = int(response.headers.get('content-length', 0))
-        block_size = 1024  # 1 Kibibyte
+        block_size = 1024  # 1 KiB blocks
 
         # Initialize the tqdm progress bar with percentage
-        tqdm_bar = tqdm(total=total_size, unit='iB', unit_scale=True, desc='Downloading', ncols=100, ascii=True, leave=True, bar_format="{l_bar}{bar} | {n_fmt}/{total_fmt} bytes | {percentage:.0f}%")
+        tqdm_bar = tqdm(total=total_size, unit='B', unit_scale=True, desc='Downloading', ncols=100, ascii=True, leave=True, bar_format='{l_bar}{bar} | {percentage:3.0f}%')
 
         zip_file_content = io.BytesIO()
 
@@ -96,10 +96,12 @@ def download_study(orthanc_url, basic_auth, study_instance_uid):
 # Test the function
 if __name__ == "__main__":
     # Set your parameters
-    orthanc_url = "http://192.168.1.188:8042"
+    # orthanc_url = "http://192.168.1.188:8042"
+    # basic_auth = "Basic YWRtaW46cGFzc3dvcmQ="
+    # study_instance_uid = "1.3.12.2.1107.5.1.7.107889.30000024081417115758500000006"
+    orthanc_url = "https://pacs.protosonline.in"
     basic_auth = "Basic YWRtaW46cGFzc3dvcmQ="
-    study_instance_uid = "1.3.12.2.1107.5.1.7.107889.30000024081417115758500000006"
-
+    study_instance_uid = "1.3.12.2.1107.5.1.4.45508.30000020020801502359300000004"
     try:
         # Call the function
         zip_file, study_id = download_study(orthanc_url, basic_auth, study_instance_uid)
