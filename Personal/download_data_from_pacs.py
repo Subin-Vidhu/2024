@@ -46,24 +46,40 @@ def download_file_from_orthanc(oid, olink, ouser, opassword, userid):
     """
 
     # Create the output directory if it doesn't exist
+    start_time = time.perf_counter()
     output_dir = os.path.join(app.config['Zip_zip'], userid)
     os.makedirs(output_dir, exist_ok=True)
+    end_time = time.perf_counter()
+    print(f"Created output directory in {end_time - start_time} seconds")
 
     # Create the output file path
+    start_time = time.perf_counter()
     output_file_path = os.path.join(output_dir, f"{oid}.zip")
+    end_time = time.perf_counter()
+    print(f"Created output file path in {end_time - start_time} seconds")
 
     # Create the log file path
+    start_time = time.perf_counter()
     log_file_path = os.path.join(output_dir, "download_progress.txt")
+    end_time = time.perf_counter()
+    print(f"Created log file path in {end_time - start_time} seconds")
 
     try:
         # Get the file size
+        start_time = time.perf_counter()
         content = requests.get(olink+'/studies/' + oid + '/statistics', auth=(ouser, opassword)).json()
         total_size_in_bytes = int(content["DicomDiskSize"])
+        end_time = time.perf_counter()
+        print(f"Got file size in {end_time - start_time} seconds")
 
         # Start the timer
+        start_time = time.perf_counter()
         initial_finding = time.perf_counter()
+        end_time = time.perf_counter()
+        print(f"Started timer in {end_time - start_time} seconds")
 
         # Download the file
+        start_time = time.perf_counter()
         with open(log_file_path, 'w') as log_file, open(output_file_path, 'wb') as f:
             orthpatients = requests.get(olink+'/studies/' + oid + '/media', auth=(ouser, opassword), stream=True)
             block_size = 1024  # 1 Kibibyte
@@ -79,6 +95,8 @@ def download_file_from_orthanc(oid, olink, ouser, opassword, userid):
 
                 f.write(data)
             progress_bar.close()
+        end_time = time.perf_counter()
+        print(f"Downloaded file in {end_time - start_time} seconds")
 
         # Print the download time
         print(f"Downloaded {oid} in {time.perf_counter() - initial_finding} seconds")
