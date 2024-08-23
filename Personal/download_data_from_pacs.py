@@ -80,10 +80,18 @@ def download_file_from_orthanc(oid, olink, ouser, opassword, userid):
 
         # Download the file
         start_time = time.perf_counter()
+        orthpatients = requests.get(olink+'/studies/' + oid + '/media', auth=(ouser, opassword), stream=True)
+        end_time = time.perf_counter()
+        print(f"Established connection in {end_time - start_time} seconds")
+
+        start_time = time.perf_counter()
+        block_size = 1024  # 1 Kibibyte
+        progress_bar = tqdm.tqdm(total=total_size_in_bytes, unit='iB', unit_scale=True, file=sys.stdout)
+        end_time = time.perf_counter()
+        print(f"Initialized progress bar in {end_time - start_time} seconds")
+
+        start_time = time.perf_counter()
         with open(log_file_path, 'w') as log_file, open(output_file_path, 'wb') as f:
-            orthpatients = requests.get(olink+'/studies/' + oid + '/media', auth=(ouser, opassword), stream=True)
-            block_size = 1024  # 1 Kibibyte
-            progress_bar = tqdm.tqdm(total=total_size_in_bytes, unit='iB', unit_scale=True, file=sys.stdout)
             for data in orthpatients.iter_content(block_size):
                 progress_bar.update(len(data))
                 percent_downloaded = round(progress_bar.n / (total_size_in_bytes/2.16) * 100)
@@ -96,7 +104,7 @@ def download_file_from_orthanc(oid, olink, ouser, opassword, userid):
                 f.write(data)
             progress_bar.close()
         end_time = time.perf_counter()
-        print(f"Downloaded file in {end_time - start_time} seconds")
+        print(f"Downloaded and wrote file in {end_time - start_time} seconds")
 
         # Print the download time
         print(f"Downloaded {oid} in {time.perf_counter() - initial_finding} seconds")
