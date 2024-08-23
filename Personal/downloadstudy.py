@@ -1,6 +1,7 @@
 import requests
 import io
 import time
+from tqdm import tqdm
 
 def get_study_ids(orthanc_url, basic_auth, study_instance_uid):
     start_time = time.time()
@@ -39,18 +40,34 @@ def download_study_as_zip(orthanc_url, basic_auth, study_id):
     start_time = time.time()
     
     # Construct the URL to download the study archive
-    archive_url = f"{orthanc_url}/studies/{study_id}/media"
+    archive_url = f"{orthanc_url}/studies/{study_id}/archive"
 
     # Send GET request to download the archive
-    response = requests.get(archive_url, auth=("admin", "password"))
-    response.raise_for_status()
+    with requests.get(archive_url, auth=("admin", "password"), stream=True) as response:
+        response.raise_for_status()
+        
+        # Total size in bytes
+        total_size = int(response.headers.get('content-length', 0))
+        block_size = 1024  # 1 Kibibyte
 
+        # Initialize the tqdm progress bar
+        tqdm_bar = tqdm(total=total_size, unit='iB', unit_scale=True)
+        
+        zip_file_content = io.BytesIO()
+
+        # Stream and write content in chunks
+        for data in response.iter_content(block_size):
+            tqdm_bar.update(len(data))
+            zip_file_content.write(data)
+        
+        tqdm_bar.close()
+    
     # Calculate time taken
     elapsed_time = time.time() - start_time
     print(f"Time taken to download study as ZIP: {elapsed_time:.2f} seconds")
 
     # Return the content of the ZIP file
-    return response.content
+    return zip_file_content.getvalue()
 
 
 def download_study(orthanc_url, basic_auth, study_instance_uid):
