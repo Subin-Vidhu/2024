@@ -40,7 +40,7 @@ def download_study_as_zip(orthanc_url, basic_auth, study_id):
     start_time = time.time()
     
     # Construct the URL to download the study archive
-    archive_url = f"{orthanc_url}/studies/{study_id}/archive"
+    archive_url = f"{orthanc_url}/studies/{study_id}/media"
 
     # Send GET request to download the archive
     with requests.get(archive_url, auth=("admin", "password"), stream=True) as response:
