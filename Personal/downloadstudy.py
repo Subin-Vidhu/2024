@@ -51,8 +51,8 @@ def download_study_as_zip(orthanc_url, basic_auth, study_id):
         block_size = 1024  # 1 Kibibyte
 
         # Initialize the tqdm progress bar
-        tqdm_bar = tqdm(total=total_size, unit='iB', unit_scale=True)
-        
+        tqdm_bar = tqdm(total=total_size, unit='iB', unit_scale=True, desc='Downloading', ncols=100, ascii=True, leave=True)
+
         zip_file_content = io.BytesIO()
 
         # Stream and write content in chunks
