@@ -19,6 +19,24 @@ parsed_time = time.strptime(time_string, "%Y-%m-%d %H:%M:%S")
 print(f"Parsed time: {parsed_time}")
 
 
+# sleep and performance measurement
+import time
+
+# Introducing Delays with sleep()
+print("Start")
+time.sleep(2)  # Pause for 2 seconds
+print("End")
+
+# Measuring Execution Time
+start_time = time.time()
+
+# Your code here
+for i in range(1000000):
+    pass
+
+end_time = time.time()
+execution_time = end_time - start_time
+print(f"Execution time: {execution_time} seconds")
 
 
 # Time Module in Python
