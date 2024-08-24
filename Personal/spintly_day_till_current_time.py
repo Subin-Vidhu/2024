@@ -100,19 +100,27 @@ def analyze_time_spent(df: pd.DataFrame, date: datetime, current_time: datetime 
     
     return time_spent
 
-def generate_summary_table(time_spent: Dict[str, Dict[str, float]], use_seconds: bool = True) -> str:
+def calculate_leave_time(office_time: float, current_time: datetime) -> Tuple[datetime, bool]:
+    time_left = max(TARGET_TIME - office_time, 0)
+    if time_left == 0:
+        return current_time, True
+    else:
+        leave_time = current_time + timedelta(seconds=time_left)
+        return leave_time, False
+
+def generate_summary_table(time_spent: Dict[str, Dict[str, float]], current_time: datetime, use_seconds: bool = True) -> str:
     """Generate a summary table from time spent data"""
-    headers = ['Name', 'Total Time', 'Office Hours Time', 'Break Time', 'Target', 'Difference', 'Last Exit']
+    headers = ['Name', 'Total Time', 'Office Hours Time', 'Break Time', 'Target', 'Difference', 'Last Exit', 'Leave By']
     table = []
 
     for name, times in time_spent.items():
         if (use_seconds and '_no_seconds' in name) or (not use_seconds and '_no_seconds' not in name):
             continue
 
-        time_left = max(TARGET_TIME - times['office'], 0)
-        target_met = time_left == 0
+        leave_time, target_met = calculate_leave_time(times['office'], current_time)
         difference_str = format_time(abs(TARGET_TIME - times['office']))
         last_exit_time_str = times['last_exit'].strftime("%I:%M:%S %p") if use_seconds else times['last_exit'].strftime("%I:%M %p")
+        leave_time_str = leave_time.strftime("%I:%M:%S %p") if use_seconds else leave_time.strftime("%I:%M %p")
         time_left_str = f"{'+' if target_met else '-'}{difference_str}"
 
         table.append([
@@ -122,7 +130,8 @@ def generate_summary_table(time_spent: Dict[str, Dict[str, float]], use_seconds:
             format_time(times['break']),
             '✓' if target_met else '✗',
             f"{Fore.GREEN}{time_left_str}{Style.RESET_ALL}" if target_met else f"{Fore.RED}{time_left_str}{Style.RESET_ALL}",
-            last_exit_time_str
+            last_exit_time_str,
+            f"{Fore.GREEN}Could have left at {leave_time_str}{Style.RESET_ALL}" if target_met else f"{Fore.YELLOW}Leave by {leave_time_str}{Style.RESET_ALL}"
         ])
 
     return tabulate(table, headers, tablefmt="pretty")
@@ -136,14 +145,13 @@ def main(file_path: str, date_str: str) -> None:
     df = load_data(file_path, sheet_name, skip_rows)
     if df is not None:
         time_spent = analyze_time_spent(df, date, current_time=current_time)
-        # Print date as heading using date variable
         print("\n" + f"{('Time Spent on ' + date.strftime('%b %d, %Y')).center(80)}" + "\n")
-        print(generate_summary_table(time_spent, use_seconds=True))
+        print(generate_summary_table(time_spent, current_time, use_seconds=True))
         print("\n" + "-"*80 + "\n")
-        print(generate_summary_table(time_spent, use_seconds=False))
+        print(generate_summary_table(time_spent, current_time, use_seconds=False))
 
 if __name__ == "__main__":
     file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
     # file_path = r'c:\Users\Subin-PC\Downloads\chippy.xlsx'
-    date_str = "Aug 24, 2024"
+    date_str = "Aug 23, 2024"
     main(file_path, date_str)
