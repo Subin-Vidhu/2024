@@ -2,22 +2,18 @@ import threading
 import multiprocessing
 import time
 
-def print_numbers():
-    for i in range(1, 11):
-        time.sleep(1)
-        print(i)
-
-def print_letters():
-    for letter in 'abcdefghij':
-        time.sleep(1)
-        print(letter)
+def cpu_intensive_task(n):
+    result = 0
+    for i in range(n):
+        result += i
+    return result
 
 def multithreading_example():
     start_time = time.time()
 
     # Create threads
-    thread1 = threading.Thread(target=print_numbers)
-    thread2 = threading.Thread(target=print_letters)
+    thread1 = threading.Thread(target=cpu_intensive_task, args=(10**8,))
+    thread2 = threading.Thread(target=cpu_intensive_task, args=(10**8,))
 
     # Start threads
     thread1.start()
@@ -34,8 +30,8 @@ def multiprocessing_example():
     start_time = time.time()
 
     # Create processes
-    process1 = multiprocessing.Process(target=print_numbers)
-    process2 = multiprocessing.Process(target=print_letters)
+    process1 = multiprocessing.Process(target=cpu_intensive_task, args=(10**8,))
+    process2 = multiprocessing.Process(target=cpu_intensive_task, args=(10**8,))
 
     # Start processes
     process1.start()
