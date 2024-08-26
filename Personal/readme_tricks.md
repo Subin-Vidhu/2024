@@ -49,6 +49,7 @@
         - `alt + 0218` -> `Ú`
         - `alt + 0219` -> `Û`
         - `alt + 0220` -> `Ü`
+        - `alt + 0178` -> `²`
 
         - For more: [Windows Alt Codes](https://usefulshortcuts.com/alt-codes/accents-alt-codes.php)
 
@@ -57,3 +58,4 @@
     - Shortcut for emoji: 
             
         - `Windows + .` or `Windows + ;`
+        
