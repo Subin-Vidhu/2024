@@ -112,9 +112,16 @@ def download_study(orthanc_url, basic_auth, study_instance_uid):
 if __name__ == "__main__":
     # Set your parameters
     
-    # orthanc_url = "https://airapacs.protosonline.in"
+    # orthanc_url = "https://pacsingest.protosonline.in"
+    # orthanc_url = "https://pacs.protosonline.in"
     # basic_auth = "Basic YWRtaW46cGFzc3dvcmQ="
     # study_instance_uid = "1.3.12.2.1107.5.1.4.45508.30000020020801502359300000004"
+    # orthanc_url = "https://pacs.radiumonline.in"
+    # basic_auth = "Basic YWRtaW46cGFzc3dvcmQ="
+    # study_instance_uid = "1.3.12.2.1107.5.1.4.45508.30000020020801502359300000004"
+    # orthanc_url = "https://rpacs.radiumonline.in"
+    # basic_auth = "Basic YWRtaW46cGFzc3dvcmQ="
+    # study_instance_uid = "1.3.12.2.1107.5.1.7.107889.30000024061110375611000000003"
     orthanc_url = "https://protospacs.radiumonline.in"
     basic_auth = "Basic YWRtaW46cGFzc3dvcmQ="
     study_instance_uid = "1.3.12.2.1107.5.1.4.45508.30000020020801502359300000004"
