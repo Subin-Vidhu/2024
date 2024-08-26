@@ -6,8 +6,8 @@ from requests.auth import HTTPBasicAuth
 app = Flask(__name__)
 
 # PACS server credentials
-# PACS_URL = 'https://pacs.protosonline.in/dicom-web/studies'
-PACS_URL = 'https://rpacs.radiumonline.in/dicom-web/studies'
+PACS_URL = 'https://pacs.protosonline.in/dicom-web/studies'
+# PACS_URL = 'https://rpacs.radiumonline.in/dicom-web/studies'
 # PACS_URL = 'http://localhost:8042/dicom-web/studies'
 PACS_USERNAME = 'admin'
 PACS_PASSWORD = 'password'
