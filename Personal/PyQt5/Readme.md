@@ -11,3 +11,9 @@
 - PyQt5 is developed by Riverbank Computing.
 
 - Qt is set of cross-platform C++ libraries that implement high-level APIs for accessing many aspects of modern desktop and mobile systems. These include location and positioning services, multimedia, NFC and Bluetooth connectivity, a Chromium based web browser, as well as traditional UI development.
+
+- To use PyQt5, we need to install the package pyqt5. We can install this package by running the following command:
+
+```python
+pip install pyqt5
+```
