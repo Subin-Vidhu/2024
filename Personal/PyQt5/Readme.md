@@ -14,6 +14,6 @@
 
 - To use PyQt5, we need to install the package pyqt5. We can install this package by running the following command:
 
-```python
-pip install pyqt5
-```
+    ```python
+    pip install pyqt5
+    ```
