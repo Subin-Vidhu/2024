@@ -1,4 +1,4 @@
-import sys, os
+import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QVBoxLayout
 from PyQt5.QtGui import QIcon
 class MainWindow(QMainWindow):
@@ -6,12 +6,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Hello World")
         self.setGeometry(100, 100, 800, 600)
-        # Get the absolute path of the icon file
-        icon_path = os.path.join(os.path.dirname(__file__), "icon.jpg")
-        
-        # Set the icon
-        self.setWindowIcon(QIcon(icon_path))
-
+        self.setWindowIcon(QIcon("icon.jpg"))
 
 def main():
     app = QApplication(sys.argv)
