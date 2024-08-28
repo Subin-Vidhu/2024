@@ -6,3 +6,5 @@
  - In this project, you will build and train a Bidirectional LSTM model on a large Twitter dataset. The model will be able to recognize the emotion (happy, sad, etc.) of the tweets. In this notebook, we will preprocess the data, build the model, train the model, and then evaluate the model.
 
  - The dataset used in this project is the [Emotion Dataset](https://huggingface.co/datasets/dair-ai/emotion) from the `datasets` library by Hugging Face. 
+
+ - Colab used this for reference while correcting errors: [Link](https://github.com/NacrunoB/emotions-from-tweets-with-TF/blob/main/emotions-from-tweets-with-TF.py)
