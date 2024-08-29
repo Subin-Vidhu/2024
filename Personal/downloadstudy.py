@@ -2,6 +2,7 @@ import requests
 import io
 import time
 from tqdm import tqdm
+from dotenv import load_dotenv
 
 def get_study_ids(orthanc_url, basic_auth, study_instance_uid):
     start_time = time.time()
@@ -107,24 +108,14 @@ def download_study(orthanc_url, basic_auth, study_instance_uid):
 
     # Return the BytesIO object and the study ID (for naming the file)
     return zip_file, study_id
+load_dotenv()
+
+orthanc_url = os.getenv('ORTHANC_LINK')
+basic_auth = os.getenv('BASIC_AUTH')
+study_instance_uid = os.getenv('STUDY_INSTANCE_UID')
 
 # Test the function
 if __name__ == "__main__":
-    # Set your parameters
-    
-    # orthanc_url = "https://pacsingest.protosonline.in"
-    # orthanc_url = "https://pacs.protosonline.in"
-    # basic_auth = "Basic YWRtaW46cGFzc3dvcmQ="
-    # study_instance_uid = "1.3.12.2.1107.5.1.4.45508.30000020020801502359300000004"
-    # orthanc_url = "https://pacs.radiumonline.in"
-    # basic_auth = "Basic YWRtaW46cGFzc3dvcmQ="
-    # study_instance_uid = "1.3.12.2.1107.5.1.4.45508.30000020020801502359300000004"
-    # orthanc_url = "https://rpacs.radiumonline.in"
-    # basic_auth = "Basic YWRtaW46cGFzc3dvcmQ="
-    # study_instance_uid = "1.3.12.2.1107.5.1.7.107889.30000024061110375611000000003"
-    orthanc_url = "https://protospacs.radiumonline.in"
-    basic_auth = "Basic YWRtaW46cGFzc3dvcmQ="
-    study_instance_uid = "1.3.12.2.1107.5.1.4.45508.30000020020801502359300000004"
     try:
         # Call the function
         zip_file, study_id = download_study(orthanc_url, basic_auth, study_instance_uid)
