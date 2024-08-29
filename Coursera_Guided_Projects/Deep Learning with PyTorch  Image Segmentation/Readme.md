@@ -4,3 +4,5 @@ Dataset for Image Segmentation
 This repo contains csv file, Training Images, Ground Truth Images (Mask) and helper.py (for visualization)
 
 Dataset Credit : [Link](https://github.com/VikramShenoy97/Human-Segmentation-Dataset)
+
+For tables in google colab, refer the following file : [Link](https://colab.research.google.com/notebooks/data_table.ipynb)
