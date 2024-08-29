@@ -1,4 +1,4 @@
-import requests
+import requests, os
 import io
 import time
 from tqdm import tqdm
