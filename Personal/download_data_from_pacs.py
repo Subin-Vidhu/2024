@@ -4,7 +4,15 @@ import time
 import sys
 import tqdm
 from flask import Flask, request
+from dotenv import load_dotenv
 
+load_dotenv()
+
+oid = os.getenv('ORTHANC_OID')
+olink = os.getenv('ORTHANC_LINK')
+ouser = os.getenv('ORTHANC_USER')
+opassword = os.getenv('ORTHANC_PASSWORD')
+userid = os.getenv('ORTHANC_USERID')
 base_dir= os.getcwd()
     
 static_folder = os.path.join(base_dir, 'static')
