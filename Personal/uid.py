@@ -94,6 +94,15 @@
 import requests
 import json
 import time
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+ORTHANC_URL = os.getenv("ORTHANC_URL")
+STUDY_INSTANCE_UID = os.getenv("STUDY_INSTANCE_UID")
+USERNAME = os.getenv("USERNAME")
+PASSWORD = os.getenv("PASSWORD")
 
 def get_study_ids(orthanc_url, study_instance_uid, username, password):
     try:
