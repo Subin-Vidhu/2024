@@ -195,10 +195,6 @@ if __name__ == "__main__":
 #         return None
 
 # def main():
-#     ORTHANC_URL = 'http://localhost:8042'
-#     STUDY_INSTANCE_UID = '1.3.12.2.1107.5.1.4.45508.30000019041701442478100000055'
-#     USERNAME = 'admin'
-#     PASSWORD = 'password'
 
 #     study_id = get_study_id(ORTHANC_URL, STUDY_INSTANCE_UID, USERNAME, PASSWORD)
 #     print(f"Study ID: {study_id}")
