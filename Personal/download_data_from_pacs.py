@@ -125,12 +125,6 @@ def download_file_from_orthanc(oid, olink, ouser, opassword, userid):
 
 
 def download_file():
-    oid = "6627b6ac-b846cbe0-a0af01cc-f94a6bd0-990a57c6"
-    # olink = "https://pacs.protosonline.in"
-    olink = "https://protospacs.radiumonline.in"
-    ouser = "admin"
-    opassword = "password"
-    userid = "Tester"
     output_file_path = download_file_from_orthanc(oid, olink, ouser, opassword, userid)
     return f"Downloaded file to {output_file_path}"
 
