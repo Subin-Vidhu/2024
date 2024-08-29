@@ -10,6 +10,15 @@ import httpx
 import aiohttp
 import asyncio
 import time
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+ORTHANC_URL = os.getenv("ORTHANC_URL")
+USERNAME = os.getenv("ORTHANC_USERNAME")
+PASSWORD = os.getenv("ORTHANC_PASSWORD")
+STUDY_INSTANCE_UID = os.getenv("STUDY_INSTANCE_UID")
 
 def get_study_ids_requests(orthanc_url, study_instance_uid, username, password):
     query_url = f"{orthanc_url}/tools/find"
