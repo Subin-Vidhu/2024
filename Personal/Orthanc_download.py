@@ -9,11 +9,16 @@ import pydicom
 import nibabel as nib
 import numpy as np
 from concurrent.futures import ThreadPoolExecutor
+from dotenv import load_dotenv
 
-ORTHANC_URL = "https://pacs.protosonline.in/studies/{}/media"
-USERNAME = "admin"
-PASSWORD = "password"
-STUDY_ID = "6627b6ac-b846cbe0-a0af01cc-f94a6bd0-990a57c6"
+load_dotenv()
+
+ORTHANC_URL = os.getenv('ORTHANC_URL')
+USERNAME = os.getenv('ORTHANC_USER')
+PASSWORD = os.getenv('ORTHANC_PASSWORD')
+STUDY_ID = os.getenv('STUDY_ID')
+
+ORTHANC_MEDIA_URL = f"{ORTHANC_URL}/studies/{STUDY_ID}/media"
 
 async def download_file(url, auth, filename):
     async with aiohttp.ClientSession() as session:
