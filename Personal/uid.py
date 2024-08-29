@@ -124,11 +124,6 @@ def get_study_ids(orthanc_url, study_instance_uid, username, password):
         return None
 
 def main():
-    ORTHANC_URL = 'http://localhost:8042'
-    STUDY_INSTANCE_UID = '1.3.12.2.1107.5.1.4.45508.30000019041701442478100000055'
-    USERNAME = 'admin'
-    PASSWORD = 'password'
-
     study_ids = get_study_ids(ORTHANC_URL, STUDY_INSTANCE_UID, USERNAME, PASSWORD)
     print(study_ids)
 
