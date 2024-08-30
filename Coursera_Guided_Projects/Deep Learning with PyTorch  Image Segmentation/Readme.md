@@ -10,3 +10,5 @@ For tables in google colab, refer the following file : [Link](https://colab.rese
 For more details on Image Segmentation using Unet, refer the following file : [Link](https://github.com/lurenhaothu/U-Net-Endothelium-segmentation)
 
 Person Image Segmentation Reference : [Link](https://github.com/bekhzod-olimov/PersonSemanticSegmentation)
+
+More on Image Segmentation : [Link](https://github.com/4uiiurz1/pytorch-nested-unet/tree/master/pytorch_nested_unet)
