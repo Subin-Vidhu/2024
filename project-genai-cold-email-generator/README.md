@@ -30,3 +30,6 @@ Copyright (C) Codebasics Inc. All rights reserved.
 
 **Additional Terms:**
 This software is licensed under the MIT License. However, commercial use of this software is strictly prohibited without prior written permission from the author. Attribution must be given in all copies or substantial portions of the software.
+
+
+- For reference, please check the video tutorial: [Link](https://youtu.be/CO4E_9V6li0?t=2091)
