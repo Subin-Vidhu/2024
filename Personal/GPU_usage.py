@@ -22,15 +22,39 @@
 
 import tensorflow as tf
 from tensorflow.python.framework.errors_impl import ResourceExhaustedError
+from numba import cuda
+
+def print_gpu_memory_info():
+    # Retrieve memory info for each GPU
+    gpus = tf.config.experimental.list_physical_devices('GPU')
+    if gpus:
+        for gpu in gpus:
+            device_name = gpu.name.replace('/physical_device:', '')  # Extract "GPU:0"
+            try:
+                # Retrieve and print memory info
+                gpu_details = tf.config.experimental.get_memory_info(device_name)
+                total_memory = gpu_details['current']  # Current allocated memory
+                available_memory = gpu_details['peak']  # Peak allocated memory
+                print(f"GPU: {device_name}")
+                print(f"  Total Memory: {total_memory / (1024 ** 2)} MB")  # Convert to MB
+                print(f"  Available Memory: {available_memory / (1024 ** 2)} MB")
+            except Exception as e:
+                print(f"Failed to get memory info for {device_name}: {str(e)}")
+    else:
+        print("No GPU found.")
 
 def allocate_gpu_memory():
     try:
+        print("Allocating memory...")
+        # Print initial memory info
+        print_gpu_memory_info()
+        
         # Manually allocate memory until resource is exhausted
-        # You can modify the size or create a larger model
         for _ in range(1000):  # Adjust the loop to control memory consumption
             tensor = tf.random.normal([1024, 1024, 1024])
             result = tf.math.add(tensor, tensor)
             print(f"Allocated tensor of shape {tensor.shape}")
+            print_gpu_memory_info()  # Check memory after allocation
     
     except ResourceExhaustedError as e:
         # Handle the GPU memory error
@@ -40,10 +64,11 @@ def allocate_gpu_memory():
         # Manually clear the GPU memory and reset the session
         tf.keras.backend.clear_session()  # Clear session
         print("Cleared the GPU memory.")
+        print_gpu_memory_info()  # Check memory after clearing
     
     finally:
-        # Optionally perform any final cleanup here
-        pass
+        print("Memory allocation completed.")
+        print_gpu_memory_info()  # Final check
 
 # Configure TensorFlow to use only as much GPU memory as needed (optional)
 gpus = tf.config.experimental.list_physical_devices('GPU')
@@ -55,8 +80,8 @@ if gpus:
     except RuntimeError as e:
         print(e)
 
-# Call the function
+# Call the function to allocate memory
 allocate_gpu_memory()
-from numba import cuda
 
+# Release GPU resources using Numba (optional)
 cuda.close()
