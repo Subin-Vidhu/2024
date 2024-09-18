@@ -15,3 +15,5 @@
     - Run:
 
         - `(test_venv) D:\2024>fastapi dev "d:\2024\Python API Development - Comprehensive Course for Beginners\fastapi_main.py"`
+
+        - `(test_venv) D:\2024>fastapi dev "d:\2024\Python API Development - Comprehensive Course for Beginners\fastapi_main.py" --reload` # To reload the server on changes, mostly for development
