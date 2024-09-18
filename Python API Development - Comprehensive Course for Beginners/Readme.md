@@ -1,1 +1,1 @@
-### Python API Development - Comprehensive Course for Beginners*
+### Python API Development - Comprehensive Course for Beginners
