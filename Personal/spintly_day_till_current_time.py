@@ -9,7 +9,7 @@ init(autoreset=True)  # Initialize colorama
 # Constants
 OFFICE_START = time(7, 30)
 OFFICE_END = time(19, 30)
-TARGET_TIME = 4 * 3600 + 15 * 60  # 8 hours 30 minutes in seconds
+TARGET_TIME = 8 * 3600 + 30 * 60  # 8 hours 30 minutes in seconds
 
 def parse_datetime(date: str, time_str: str) -> datetime:
     """Parse datetime from date and time strings"""
@@ -165,5 +165,5 @@ def main(file_path: str, date_str: str) -> None:
 if __name__ == "__main__":
     file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
     # file_path = r'c:\Users\Subin-PC\Downloads\chippy.xlsx'
-    date_str = "Sep 13, 2024"
+    date_str = "Sep 20, 2024"
     main(file_path, date_str)
