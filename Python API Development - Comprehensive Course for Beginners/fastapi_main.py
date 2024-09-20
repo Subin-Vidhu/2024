@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-
+from fastapi.params import Body
 app = FastAPI()
 
 # Path Operation decorator/ Route / Endpoint
@@ -13,5 +13,5 @@ async def read_items():
     return [{"item": "item1"}, {"item": "item2"}]
 
 @app.post("/createposts")
-async def create_post():
+async def create_post(payload: dict = Body(...)):
     return {"message": "Post has been created successfully"}
