@@ -10,7 +10,7 @@
         
         - `test_venv\Scripts\activate` # Activate the virtual environment
         
-        - `pip install "fastapi[standard]"`
+        - `pip install "fastapi[standard]"` # Refer to [FastAPI](https://fastapi.tiangolo.com/tutorial/#run-the-code:~:text=checks%2C%20autocompletion%2C%20etc.-,Install%20FastAPI,-%C2%B6) for more details
 
     - Run:
 
