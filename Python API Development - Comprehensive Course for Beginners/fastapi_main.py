@@ -11,3 +11,7 @@ async def root():
 async def read_items():
     #return a list of items
     return [{"item": "item1"}, {"item": "item2"}]
+
+@app.post("/createposts")
+async def create_post():
+    return {"message": "Post has been created successfully"}
