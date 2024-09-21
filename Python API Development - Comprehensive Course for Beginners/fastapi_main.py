@@ -23,4 +23,7 @@ async def read_items():
 @app.post("/createposts")
 async def create_post(payload: Post):
     print(payload.rating)
+    # To convert the payload to dictionary
+    payload_dict = payload.dict()
+    print(f" Pydanctic Model converted to dictionary: {payload_dict}")
     return f"Post created successfully"
