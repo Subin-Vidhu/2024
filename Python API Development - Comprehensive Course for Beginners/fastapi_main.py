@@ -60,3 +60,16 @@ async def delete_post(id, response: Response):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
     except:
         return {"data" : "Something went wrong"}
+
+# Update a post
+@app.put("/posts/{id}")
+async def update_post(id, payload: Post, response: Response):
+    try:
+        id = int(id)
+        my_post[id-1] = payload.dict()
+        return {"data" : my_post[id-1]}
+    except IndexError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+    except:
+        return {"data" : "Something went wrong"}
+        
