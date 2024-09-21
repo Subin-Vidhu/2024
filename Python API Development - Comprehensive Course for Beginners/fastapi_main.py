@@ -29,3 +29,9 @@ async def create_post(payload: Post):
     my_post.append(payload_dict)
     print(f" Pydanctic Model converted to dictionary: {payload_dict}")
     return f"Post created successfully with `Data`: `{payload_dict}`"
+
+# Get only one post
+@app.get("/posts/{id}")
+async def read_post(id: int):
+    post = my_post[id-1]
+    return {"data" : post}
