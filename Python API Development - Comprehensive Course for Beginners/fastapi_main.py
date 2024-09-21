@@ -23,8 +23,9 @@ async def read_items():
 
 @app.post("/posts")
 async def create_post(payload: Post):
-    print(payload.rating)
     # To convert the payload to dictionary
     payload_dict = payload.dict()
+    payload_dict["id"] = len(my_post) + 1 # Auto Increment ID
+    my_post.append(payload_dict)
     print(f" Pydanctic Model converted to dictionary: {payload_dict}")
     return f"Post created successfully with `Data`: `{payload_dict}`"
