@@ -14,4 +14,5 @@ async def read_items():
 
 @app.post("/createposts")
 async def create_post(payload: dict = Body(...)):
+    print(payload)
     return {"message": "Post has been created successfully"}
