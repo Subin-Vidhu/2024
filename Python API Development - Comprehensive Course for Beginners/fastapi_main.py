@@ -32,8 +32,12 @@ async def create_post(payload: Post):
 
 # Get only one post
 @app.get("/posts/{id}")
-async def read_post(id: int):
+async def read_post(id):
     try:
+        id = int(id)
         return {"data" : my_post[id-1]}
+    # To handle the error of list index out of range
+    except IndexError:
+        return {"data" : f"Post with ID {id} not found"}
     except:
-        return {"data" : "Post not found"}
+        return {"data" : "Something went wrong"}
