@@ -1,7 +1,13 @@
 from fastapi import FastAPI
 from fastapi.params import Body
+from pydantic import BaseModel
 app = FastAPI()
 
+# Pydantic Model
+class Post(BaseModel):
+    title: str
+    content: str
+    
 # Path Operation decorator/ Route / Endpoint
 @app.get("/")
 async def root():
