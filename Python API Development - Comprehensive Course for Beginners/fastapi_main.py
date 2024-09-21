@@ -48,3 +48,15 @@ async def read_post(id, response: Response):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
     except:
         return {"data" : "Something went wrong"}
+
+# Delete a post
+@app.delete("/posts/{id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_post(id, response: Response):
+    try:
+        id = int(id)
+        deleted_post = my_post.pop(id-1)
+        return {"data" : f"Post with id {id} is deleted"}
+    except IndexError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+    except:
+        return {"data" : "Something went wrong"}
