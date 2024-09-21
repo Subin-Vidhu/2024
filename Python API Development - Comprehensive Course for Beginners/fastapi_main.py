@@ -8,6 +8,7 @@ class Post(BaseModel):
     title: str
     content: str
     published: bool = True
+    rating : int = None
 
 # Path Operation decorator/ Route / Endpoint
 @app.get("/")
@@ -21,5 +22,5 @@ async def read_items():
 
 @app.post("/createposts")
 async def create_post(payload: Post):
-    print(payload.published)
+    print(payload.rating)
     return f"Post created successfully"
