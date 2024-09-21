@@ -26,4 +26,4 @@ async def create_post(payload: Post):
     # To convert the payload to dictionary
     payload_dict = payload.dict()
     print(f" Pydanctic Model converted to dictionary: {payload_dict}")
-    return f"Post created successfully"
+    return f"Post created successfully with `Data`: `{payload_dict}`"
