@@ -21,14 +21,14 @@ async def read_items():
     #return a list of items
     return {"data" : my_post }
 
-@app.post("/posts")
+@app.post("/posts", status_code=status.HTTP_201_CREATED)
 async def create_post(payload: Post):
     # To convert the payload to dictionary
     payload_dict = payload.dict()
     payload_dict["id"] = len(my_post) + 1 # Auto Increment ID
     my_post.append(payload_dict)
     print(f" Pydanctic Model converted to dictionary: {payload_dict}")
-    return f"Post created successfully with `Data`: `{payload_dict}`"
+    return {"data": payload_dict}
 
 # Get the latest post - here order matters so it should be above the /posts/{id}, meaning it should be above the get post by id, an example of a bug is if you try to get the latest post by id, it will not work because it will be treated as an id, eg. /posts/latest will be treated as an id and not as a path to get the latest post 
 
