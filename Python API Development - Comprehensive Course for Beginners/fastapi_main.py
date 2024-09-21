@@ -33,5 +33,7 @@ async def create_post(payload: Post):
 # Get only one post
 @app.get("/posts/{id}")
 async def read_post(id: int):
-    post = my_post[id-1]
-    return {"data" : post}
+    try:
+        return {"data" : my_post[id-1]}
+    except:
+        return {"data" : "Post not found"}
