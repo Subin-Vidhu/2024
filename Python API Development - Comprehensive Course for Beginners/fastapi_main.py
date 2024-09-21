@@ -15,12 +15,12 @@ class Post(BaseModel):
 async def root():
     return {"message": "Hello Subin"}
 
-@app.get("/items")
+@app.get("/posts")
 async def read_items():
     #return a list of items
     return [{"item": "item1"}, {"item": "item2"}]
 
-@app.post("/createposts")
+@app.post("/posts")
 async def create_post(payload: Post):
     print(payload.rating)
     # To convert the payload to dictionary
