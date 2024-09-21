@@ -7,7 +7,7 @@ app = FastAPI()
 class Post(BaseModel):
     title: str
     content: str
-    
+
 # Path Operation decorator/ Route / Endpoint
 @app.get("/")
 async def root():
@@ -19,6 +19,6 @@ async def read_items():
     return [{"item": "item1"}, {"item": "item2"}]
 
 @app.post("/createposts")
-async def create_post(payload: dict = Body(...)):
-    print(payload)
-    return f"Post created successfully with title as '{payload['title']}' and content as '{payload['content']}'"
+async def create_post(payload: Post):
+    print(payload.title)
+    return f"Post created successfully"
