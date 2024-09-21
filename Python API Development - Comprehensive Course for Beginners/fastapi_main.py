@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Response, status
+from fastapi import FastAPI, Response, status, HTTPException
 from fastapi.params import Body
 from pydantic import BaseModel
 app = FastAPI()
@@ -45,7 +45,6 @@ async def read_post(id, response: Response):
         return {"data" : my_post[id-1]}
     # To handle the error of list index out of range
     except IndexError:
-        response.status_code = status.HTTP_404_NOT_FOUND
-        return {"data" : f"Post with ID {id} not found"}
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
     except:
         return {"data" : "Something went wrong"}
