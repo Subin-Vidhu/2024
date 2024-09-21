@@ -7,6 +7,7 @@ app = FastAPI()
 class Post(BaseModel):
     title: str
     content: str
+    published: bool = True
 
 # Path Operation decorator/ Route / Endpoint
 @app.get("/")
@@ -20,5 +21,5 @@ async def read_items():
 
 @app.post("/createposts")
 async def create_post(payload: Post):
-    print(payload.title)
+    print(payload.published)
     return f"Post created successfully"
