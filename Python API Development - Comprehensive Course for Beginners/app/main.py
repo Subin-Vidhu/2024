@@ -1,7 +1,34 @@
 from fastapi import FastAPI, Response, status, HTTPException
 from fastapi.params import Body
 from pydantic import BaseModel
+import psycopg2
+import time
 app = FastAPI()
+
+
+# Database Connection
+def get_connection():
+    try:
+        connection = psycopg2.connect(
+            host="localhost",
+            database="FASTAPI",
+            user="postgres",
+            password="password"
+        )
+        print("Connection to PostgreSQL is successful")
+        return True
+    except (Exception, psycopg2.Error) as error:
+        print("Error while connecting to PostgreSQL", error)
+
+# check if the connection is successful
+while True:
+    connection = get_connection()
+    if connection:
+        break
+    else:
+        print("Connection failed, retrying...")
+        time.sleep(5)
+        continue
 
 # Pydantic Model
 class Post(BaseModel):
