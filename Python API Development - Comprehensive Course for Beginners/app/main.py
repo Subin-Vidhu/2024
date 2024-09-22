@@ -3,6 +3,7 @@ from fastapi.params import Body
 from pydantic import BaseModel
 import psycopg2
 import time
+from psycopg2.extras import RealDictCursor
 app = FastAPI()
 
 
@@ -13,7 +14,8 @@ def get_connection():
             host="localhost",
             database="FASTAPI",
             user="postgres",
-            password="password"
+            password="password",
+            cursor_factory=RealDictCursor
         )
         print("Connection to PostgreSQL is successful")
         return connection
@@ -50,13 +52,7 @@ async def read_items():
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM posts")
     posts = cursor.fetchall()
-    columns = [desc[0] for desc in cursor.description]
-    
-    # Create a list of dictionaries with column names as keys
-    data = [dict(zip(columns, post)) for post in posts]
-    
-    return {"data" : data}
-    # return {"data" : posts}
+    return {"data" : posts}
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 async def create_post(payload: Post):
