@@ -31,3 +31,9 @@
         - `uvicorn fastapi_main:app --reload` # fastapi_main.py is the file name and app is the FastAPI instance
 
         - `uvicorn app.main:app --reload` # app is the folder name and main is the file name
+
+- To connect postgre db:
+    
+        - Install:
+    
+            - `pip install psycopg2` # For PostgreSQL
