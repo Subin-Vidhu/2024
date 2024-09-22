@@ -62,7 +62,7 @@ async def create_post(payload: Post):
     # my_post.append(payload_dict)
     # print(f" Pydanctic Model converted to dictionary: {payload_dict}")
     cursor = connection.cursor()
-    cursor.execute("INSERT INTO posts (title, content, published, rating) VALUES (%s, %s, %s, %s) RETURNING *", (payload.title, payload.content, payload.published, payload.rating))
+    cursor.execute("INSERT INTO posts (title, content, published, rating) VALUES (%s, %s, %s, %s) RETURNING *", (payload.title, payload.content, payload.published, payload.rating)) # RETURNING * is used to return the inserted data, use %s as a placeholder to avoid SQL injection
     connection.commit() # to save the changes to the database
     payload_dict = cursor.fetchone()
     return {"data": payload_dict}
