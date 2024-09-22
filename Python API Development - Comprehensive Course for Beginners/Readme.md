@@ -34,6 +34,6 @@
 
 - To connect postgre db:
     
-        - Install:
-    
-            - `pip install psycopg2` # For PostgreSQL
+    - Install:
+
+        - `pip install psycopg2` # For PostgreSQL
