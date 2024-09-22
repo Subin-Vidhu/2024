@@ -81,14 +81,25 @@ async def read_latest_post():
 # Get only one post
 @app.get("/posts/{id}")
 async def read_post(id, response: Response):
+    # try:
+    #     id = int(id)
+    #     return {"data" : my_post[id-1]}
+    # # To handle the error of list index out of range
+    # except IndexError:
+    #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+    # except:
+    #     return {"data" : "Something went wrong"}
     try:
-        id = int(id)
-        return {"data" : my_post[id-1]}
-    # To handle the error of list index out of range
-    except IndexError:
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM posts WHERE id = %s", (id,))
+        post = cursor.fetchone()
+        if post:
+            return {"data" : post}
+        else:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+    except (Exception, psycopg2.Error) as error:
+        print("Error while fetching data from PostgreSQL", error)
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
-    except:
-        return {"data" : "Something went wrong"}
 
 # Delete a post
 @app.delete("/posts/{id}", status_code=status.HTTP_204_NO_CONTENT)
