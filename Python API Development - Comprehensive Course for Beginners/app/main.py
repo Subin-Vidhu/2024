@@ -16,7 +16,7 @@ def get_connection():
             password="password"
         )
         print("Connection to PostgreSQL is successful")
-        return True
+        return connection
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
 
@@ -46,7 +46,11 @@ async def root():
 @app.get("/posts")
 async def read_items():
     #return a list of items
-    return {"data" : my_post }
+    # return {"data" : my_post }
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM posts")
+    posts = cursor.fetchall()
+    return {"data" : posts}
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 async def create_post(payload: Post):
