@@ -50,7 +50,13 @@ async def read_items():
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM posts")
     posts = cursor.fetchall()
-    return {"data" : posts}
+    columns = [desc[0] for desc in cursor.description]
+    
+    # Create a list of dictionaries with column names as keys
+    data = [dict(zip(columns, post)) for post in posts]
+    
+    return {"data" : data}
+    # return {"data" : posts}
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 async def create_post(payload: Post):
