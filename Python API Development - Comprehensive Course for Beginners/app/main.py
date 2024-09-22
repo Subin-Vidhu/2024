@@ -71,7 +71,11 @@ async def create_post(payload: Post):
 
 @app.get("/posts/latest")
 async def read_latest_post():
-    return {"data" : my_post[-1]}
+    # return {"data" : my_post[-1]}
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM posts ORDER BY id DESC LIMIT 1")
+    latest_post = cursor.fetchone()
+    return {"data" : latest_post}
 
 
 # Get only one post
