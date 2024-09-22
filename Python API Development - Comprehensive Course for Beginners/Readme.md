@@ -23,4 +23,11 @@
             - `http://localhost:8000/docs` # Swagger UI
             - `http://localhost:8000/redoc` # ReDoc UI
 
-            
+
+    - To run using uvicorn:
+
+        - `pip install uvicorn`
+
+        - `uvicorn fastapi_main:app --reload` # fastapi_main.py is the file name and app is the FastAPI instance
+
+        - `uvicorn app.main:app --reload` # app is the folder name and main is the file name
