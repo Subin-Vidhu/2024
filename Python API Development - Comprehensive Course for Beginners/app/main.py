@@ -104,14 +104,26 @@ async def read_post(id, response: Response):
 # Delete a post
 @app.delete("/posts/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_post(id, response: Response):
+    # try:
+    #     id = int(id)
+    #     deleted_post = my_post.pop(id-1)
+    #     return {"data" : f"Post with id {id} is deleted"}
+    # except IndexError:
+    #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+    # except:
+    #     return {"data" : "Something went wrong"}
     try:
-        id = int(id)
-        deleted_post = my_post.pop(id-1)
-        return {"data" : f"Post with id {id} is deleted"}
-    except IndexError:
+        cursor = connection.cursor()
+        cursor.execute("DELETE FROM posts WHERE id = %s returning *", (id,))
+        deleted_post = cursor.fetchone()
+        connection.commit()
+        if deleted_post:
+            return {"data" : f"Post with id {id} is deleted"}
+        else:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+    except (Exception, psycopg2.Error) as error:
+        print("Error while deleting data from PostgreSQL", error)
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
-    except:
-        return {"data" : "Something went wrong"}
 
 # Update a post
 @app.put("/posts/{id}")
