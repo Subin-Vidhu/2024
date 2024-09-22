@@ -128,12 +128,24 @@ async def delete_post(id, response: Response):
 # Update a post
 @app.put("/posts/{id}")
 async def update_post(id, payload: Post, response: Response):
+    # try:
+    #     id = int(id)
+    #     my_post[id-1] = payload.dict()
+    #     return {"data" : my_post[id-1]}
+    # except IndexError:
+    #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+    # except:
+    #     return {"data" : "Something went wrong"}
     try:
-        id = int(id)
-        my_post[id-1] = payload.dict()
-        return {"data" : my_post[id-1]}
-    except IndexError:
+        cursor = connection.cursor()
+        cursor.execute("UPDATE posts SET title = %s, content = %s, published = %s, rating = %s WHERE id = %s returning *", (payload.title, payload.content, payload.published, payload.rating, id))
+        updated_post = cursor.fetchone()
+        connection.commit()
+        if updated_post:
+            return {"data" : updated_post}
+        else:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+    except (Exception, psycopg2.Error) as error:
+        print("Error while updating data from PostgreSQL", error)
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
-    except:
-        return {"data" : "Something went wrong"}
         
