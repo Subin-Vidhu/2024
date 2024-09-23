@@ -60,12 +60,15 @@ async def root():
     return {"message": "Hello Subin"}
 
 @app.get("/posts")
-async def read_items():
+async def read_items(db: Session = Depends(get_db)):
     #return a list of items
     # return {"data" : my_post }
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM posts")
-    posts = cursor.fetchall()
+
+    # cursor = connection.cursor()
+    # cursor.execute("SELECT * FROM posts")
+    # posts = cursor.fetchall()
+
+    posts = db.query(models.Post).all()
     return {"data" : posts}
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
