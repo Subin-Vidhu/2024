@@ -6,6 +6,18 @@ import time
 from psycopg2.extras import RealDictCursor
 app = FastAPI()
 
+from . import models
+from .database import engine, SessionLocal
+
+models.Base.metadata.create_all(bind=engine)
+
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 # Database Connection
 def get_connection():
