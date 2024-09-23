@@ -44,7 +44,8 @@ class Post(BaseModel):
     published: bool = True
     rating : int = None
 
-@app.get("/sqlalchemy")
+# Dependency Injection, testing ORM
+@app.get("/sqlalchemy") 
 def read_sqlalchemy_posts(db: Session = Depends(get_db)):
     # posts = db.query(models.Post)
     # print(f"SQLAlchemy Posts: {posts}")
