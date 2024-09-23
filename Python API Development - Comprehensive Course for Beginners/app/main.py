@@ -1,23 +1,16 @@
-from fastapi import FastAPI, Response, status, HTTPException
+from fastapi import FastAPI, Response, status, HTTPException, Depends
 from fastapi.params import Body
 from pydantic import BaseModel
 import psycopg2
 import time
 from psycopg2.extras import RealDictCursor
 app = FastAPI()
-
+from sqlalchemy.orm import Session
 from . import models
-from .database import engine, SessionLocal
+from .database import engine, get_db
 
 models.Base.metadata.create_all(bind=engine)
 
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 # Database Connection
 def get_connection():
@@ -50,6 +43,10 @@ class Post(BaseModel):
     content: str
     published: bool = True
     rating : int = None
+
+@app.get("/sqlalchemy")
+def read_sqlalchemy_posts(db: Session = Depends(get_db)):
+    return {"status": "SQLAlchemy is working"}
 
 # my_post = [{"title": "Post 1", "content": "This is the content of Post 1", "published": True, "rating": 5, "id" : 1},{"title": "Post 2", "content": "This is the content of Post 2", "published": False, "rating": 4, "id" : 2}, {"title": "Post 3", "content": "This is the content of Post 3", "published": True, "rating": 3, "id" : 3}]
 # Path Operation decorator/ Route / Endpoint
