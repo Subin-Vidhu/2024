@@ -46,10 +46,11 @@ class Post(BaseModel):
 
 @app.get("/sqlalchemy")
 def read_sqlalchemy_posts(db: Session = Depends(get_db)):
-    posts = db.query(models.Post)
-    print(f"SQLAlchemy Posts: {posts}")
-    # return {"data": posts}
-    return {"data": "successfully fetched SQLAlchemy posts"}
+    # posts = db.query(models.Post)
+    # print(f"SQLAlchemy Posts: {posts}")
+    # return {"data": "successfully fetched SQLAlchemy posts"}
+    posts = db.query(models.Post).all()
+    return {"data": posts}
 
 # my_post = [{"title": "Post 1", "content": "This is the content of Post 1", "published": True, "rating": 5, "id" : 1},{"title": "Post 2", "content": "This is the content of Post 2", "published": False, "rating": 4, "id" : 2}, {"title": "Post 3", "content": "This is the content of Post 3", "published": True, "rating": 3, "id" : 3}]
 # Path Operation decorator/ Route / Endpoint
