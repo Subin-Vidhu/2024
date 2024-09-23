@@ -140,7 +140,7 @@ async def read_post(id, response: Response, db: Session = Depends(get_db)):
 
 # Delete a post
 @app.delete("/posts/{id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_post(id, response: Response):
+async def delete_post(id, response: Response, db: Session = Depends(get_db)):
     # try:
     #     id = int(id)
     #     deleted_post = my_post.pop(id-1)
@@ -149,13 +149,23 @@ async def delete_post(id, response: Response):
     #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
     # except:
     #     return {"data" : "Something went wrong"}
+
+    # try:
+    #     cursor = connection.cursor()
+    #     cursor.execute("DELETE FROM posts WHERE id = %s returning *", (id,))
+    #     deleted_post = cursor.fetchone()
+    #     connection.commit()
+    #     if deleted_post:
+    #         return {"data" : f"Post with id {id} is deleted"}
+    #     else:
+    #         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+
     try:
-        cursor = connection.cursor()
-        cursor.execute("DELETE FROM posts WHERE id = %s returning *", (id,))
-        deleted_post = cursor.fetchone()
-        connection.commit()
-        if deleted_post:
-            return {"data" : f"Post with id {id} is deleted"}
+        posts = db.query(models.Post).filter(models.Post.id == id)
+        if posts.first():
+            posts.delete(synchronize_session=False)
+            db.commit()
+            return Response(status_code=status.HTTP_204_NO_CONTENT)
         else:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
     except (Exception, psycopg2.Error) as error:
