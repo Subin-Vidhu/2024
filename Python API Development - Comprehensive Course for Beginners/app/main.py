@@ -93,11 +93,14 @@ async def create_post(payload: Post, db: Session = Depends(get_db)):
 # Get the latest post - here order matters so it should be above the /posts/{id}, meaning it should be above the get post by id, an example of a bug is if you try to get the latest post by id, it will not work because it will be treated as an id, eg. /posts/latest will be treated as an id and not as a path to get the latest post 
 
 @app.get("/posts/latest")
-async def read_latest_post():
+async def read_latest_post(db: Session = Depends(get_db)):
     # return {"data" : my_post[-1]}
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM posts ORDER BY id DESC LIMIT 1")
-    latest_post = cursor.fetchone()
+
+    # cursor = connection.cursor()
+    # cursor.execute("SELECT * FROM posts ORDER BY id DESC LIMIT 1")
+    # latest_post = cursor.fetchone()
+
+    latest_post = db.query(models.Post).order_by(models.Post.id.desc()).first()
     return {"data" : latest_post}
 
 
