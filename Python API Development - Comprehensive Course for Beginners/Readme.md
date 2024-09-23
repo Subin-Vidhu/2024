@@ -37,3 +37,13 @@
     - Install:
 
         - `pip install psycopg2` # For PostgreSQL
+
+- To connect and use ORM:
+
+    - Install:
+
+        - `pip install sqlalchemy`
+
+    - Run:
+
+        - `uvicorn app.main:app --reload`
