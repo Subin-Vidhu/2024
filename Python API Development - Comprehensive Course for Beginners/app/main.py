@@ -84,7 +84,7 @@ async def create_post(payload: Post, db: Session = Depends(get_db)):
     # connection.commit() # to save the changes to the database
     # payload_dict = cursor.fetchone()
 
-    payload_dict = models.Post(title=payload.title, content=payload.content, published=payload.published, rating=payload.rating)
+    payload_dict = models.Post(**payload.dict())
     db.add(payload_dict)
     db.commit()
     db.refresh(payload_dict)
