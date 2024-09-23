@@ -106,7 +106,7 @@ async def read_latest_post(db: Session = Depends(get_db)):
 
 # Get only one post
 @app.get("/posts/{id}")
-async def read_post(id, response: Response):
+async def read_post(id, response: Response, db: Session = Depends(get_db)):
     # try:
     #     id = int(id)
     #     return {"data" : my_post[id-1]}
@@ -115,10 +115,21 @@ async def read_post(id, response: Response):
     #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
     # except:
     #     return {"data" : "Something went wrong"}
+
+    # try:
+    #     cursor = connection.cursor()
+    #     cursor.execute("SELECT * FROM posts WHERE id = %s", (id,))
+    #     post = cursor.fetchone()
+    #     if post:
+    #         return {"data" : post}
+    #     else:
+    #         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+    # except (Exception, psycopg2.Error) as error:
+    #     print("Error while fetching data from PostgreSQL", error)
+    #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+
     try:
-        cursor = connection.cursor()
-        cursor.execute("SELECT * FROM posts WHERE id = %s", (id,))
-        post = cursor.fetchone()
+        post = db.query(models.Post).filter(models.Post.id == id).first()
         if post:
             return {"data" : post}
         else:
