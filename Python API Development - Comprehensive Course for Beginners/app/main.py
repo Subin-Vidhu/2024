@@ -72,16 +72,22 @@ async def read_items(db: Session = Depends(get_db)):
     return {"data" : posts}
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
-async def create_post(payload: Post):
+async def create_post(payload: Post, db: Session = Depends(get_db)):
     # To convert the payload to dictionary
     # payload_dict = payload.dict()
     # payload_dict["id"] = len(my_post) + 1 # Auto Increment ID
     # my_post.append(payload_dict)
     # print(f" Pydanctic Model converted to dictionary: {payload_dict}")
-    cursor = connection.cursor()
-    cursor.execute("INSERT INTO posts (title, content, published, rating) VALUES (%s, %s, %s, %s) RETURNING *", (payload.title, payload.content, payload.published, payload.rating)) # RETURNING * is used to return the inserted data, use %s as a placeholder to avoid SQL injection
-    connection.commit() # to save the changes to the database
-    payload_dict = cursor.fetchone()
+
+    # cursor = connection.cursor()
+    # cursor.execute("INSERT INTO posts (title, content, published, rating) VALUES (%s, %s, %s, %s) RETURNING *", (payload.title, payload.content, payload.published, payload.rating)) # RETURNING * is used to return the inserted data, use %s as a placeholder to avoid SQL injection
+    # connection.commit() # to save the changes to the database
+    # payload_dict = cursor.fetchone()
+
+    payload_dict = models.Post(title=payload.title, content=payload.content, published=payload.published, rating=payload.rating)
+    db.add(payload_dict)
+    db.commit()
+    db.refresh(payload_dict)
     return {"data": payload_dict}
 
 # Get the latest post - here order matters so it should be above the /posts/{id}, meaning it should be above the get post by id, an example of a bug is if you try to get the latest post by id, it will not work because it will be treated as an id, eg. /posts/latest will be treated as an id and not as a path to get the latest post 
