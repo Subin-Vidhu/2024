@@ -11,3 +11,8 @@ if __name__ == '__main__':
 
 
 # To run: (test_venv) D:\2024> python d:\2024\Personal\CLI\argparse_test.py subin
+# Output: Hello, subin!
+
+# To find args: (test_venv) D:\2024> python d:\2024\Personal\CLI\argparse_test.py -h
+# or 
+# (test_venv) D:\2024>python d:\2024\Personal\CLI\argparse_test.py --help
