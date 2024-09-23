@@ -174,7 +174,7 @@ async def delete_post(id, response: Response, db: Session = Depends(get_db)):
 
 # Update a post
 @app.put("/posts/{id}")
-async def update_post(id, payload: Post, response: Response):
+async def update_post(id, payload: Post, response: Response, db: Session = Depends(get_db)):
     # try:
     #     id = int(id)
     #     my_post[id-1] = payload.dict()
@@ -183,13 +183,23 @@ async def update_post(id, payload: Post, response: Response):
     #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
     # except:
     #     return {"data" : "Something went wrong"}
+
+    # try:
+    #     cursor = connection.cursor()
+    #     cursor.execute("UPDATE posts SET title = %s, content = %s, published = %s, rating = %s WHERE id = %s returning *", (payload.title, payload.content, payload.published, payload.rating, id))
+    #     updated_post = cursor.fetchone()
+    #     connection.commit()
+    #     if updated_post:
+    #         return {"data" : updated_post}
+    #     else:
+    #         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+
     try:
-        cursor = connection.cursor()
-        cursor.execute("UPDATE posts SET title = %s, content = %s, published = %s, rating = %s WHERE id = %s returning *", (payload.title, payload.content, payload.published, payload.rating, id))
-        updated_post = cursor.fetchone()
-        connection.commit()
-        if updated_post:
-            return {"data" : updated_post}
+        posts = db.query(models.Post).filter(models.Post.id == id)
+        if posts.first():
+            posts.update(payload.dict())
+            db.commit()
+            return {"data" : payload}
         else:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
     except (Exception, psycopg2.Error) as error:
