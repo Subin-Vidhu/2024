@@ -1,12 +1,11 @@
 from fastapi import FastAPI, Response, status, HTTPException, Depends
 from fastapi.params import Body
-from pydantic import BaseModel
 import psycopg2
 import time
 from psycopg2.extras import RealDictCursor
 app = FastAPI()
 from sqlalchemy.orm import Session
-from . import models
+from . import models, schemas
 from .database import engine, get_db
 
 models.Base.metadata.create_all(bind=engine)
@@ -37,13 +36,6 @@ while True:
         time.sleep(5)
         continue
 
-# Pydantic Model
-class Post(BaseModel):
-    title: str
-    content: str
-    published: bool = True
-    rating : int = None
-
 # Dependency Injection, testing ORM
 @app.get("/sqlalchemy") 
 def read_sqlalchemy_posts(db: Session = Depends(get_db)):
@@ -72,7 +64,7 @@ async def read_items(db: Session = Depends(get_db)):
     return {"data" : posts}
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
-async def create_post(payload: Post, db: Session = Depends(get_db)):
+async def create_post(payload: schemas.Post, db: Session = Depends(get_db)):
     # To convert the payload to dictionary
     # payload_dict = payload.dict()
     # payload_dict["id"] = len(my_post) + 1 # Auto Increment ID
@@ -174,7 +166,7 @@ async def delete_post(id, response: Response, db: Session = Depends(get_db)):
 
 # Update a post
 @app.put("/posts/{id}")
-async def update_post(id, payload: Post, response: Response, db: Session = Depends(get_db)):
+async def update_post(id, payload: schemas.Post, response: Response, db: Session = Depends(get_db)):
     # try:
     #     id = int(id)
     #     my_post[id-1] = payload.dict()
