@@ -208,3 +208,16 @@ async def create_user(payload: schemas.createUser, db: Session = Depends(get_db)
     db.commit()
     db.refresh(payload_dict)
     return payload_dict
+
+# Get only one user
+@app.get("/users/{id}", response_model = schemas.UserOut)
+async def read_user(id, response: Response, db: Session = Depends(get_db)):
+    try:
+        user = db.query(models.User).filter(models.User.id == id).first()
+        if user:
+            return user
+        else:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with id {id} not found")
+    except (Exception, psycopg2.Error) as error:
+        print("Error while fetching data from PostgreSQL", error)
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with id {id} not found")
