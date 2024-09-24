@@ -17,4 +17,5 @@ class Post(BaseModel):
 
 
     class Config:
-        orm_mode = True # Pydantic model to work with ORM
+        # orm_mode = True # Pydantic model to work with ORM
+        from_attributes = True # Pydantic model to work with ORM
