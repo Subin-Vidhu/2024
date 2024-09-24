@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from datetime import datetime
 # Pydantic Model
 class PostBase(BaseModel):
@@ -23,4 +23,18 @@ class Post(PostBase):
 
     class Config:
         # orm_mode = True # Pydantic model to work with ORM
+        from_attributes = True # Pydantic model to work with ORM
+
+class createUser(BaseModel):
+    username: str
+    email: EmailStr
+    password: str
+
+class UserOut(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
+    created_at: datetime
+
+    class Config:
         from_attributes = True # Pydantic model to work with ORM

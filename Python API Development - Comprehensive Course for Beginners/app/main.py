@@ -198,3 +198,12 @@ async def update_post(id, payload: schemas.PostUpdate, response: Response, db: S
         print("Error while updating data from PostgreSQL", error)
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
         
+
+# Create a user
+@app.post("/users", response_model = schemas.UserOut)
+async def create_user(payload: schemas.createUser, db: Session = Depends(get_db)):
+    payload_dict = models.User(**payload.dict())
+    db.add(payload_dict)
+    db.commit()
+    db.refresh(payload_dict)
+    return payload_dict
