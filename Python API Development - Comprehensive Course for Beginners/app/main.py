@@ -43,7 +43,7 @@ def read_sqlalchemy_posts(db: Session = Depends(get_db)):
     # print(f"SQLAlchemy Posts: {posts}")
     # return {"data": "successfully fetched SQLAlchemy posts"}
     posts = db.query(models.Post).all()
-    return {"data": posts}
+    return posts
 
 # my_post = [{"title": "Post 1", "content": "This is the content of Post 1", "published": True, "rating": 5, "id" : 1},{"title": "Post 2", "content": "This is the content of Post 2", "published": False, "rating": 4, "id" : 2}, {"title": "Post 3", "content": "This is the content of Post 3", "published": True, "rating": 3, "id" : 3}]
 # Path Operation decorator/ Route / Endpoint
@@ -61,7 +61,7 @@ async def read_items(db: Session = Depends(get_db)):
     # posts = cursor.fetchall()
 
     posts = db.query(models.Post).all()
-    return {"data" : posts}
+    return posts
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 async def create_post(payload: schemas.PostCreate, db: Session = Depends(get_db)):
@@ -80,7 +80,7 @@ async def create_post(payload: schemas.PostCreate, db: Session = Depends(get_db)
     db.add(payload_dict)
     db.commit()
     db.refresh(payload_dict)
-    return {"data": payload_dict}
+    return payload_dict
 
 # Get the latest post - here order matters so it should be above the /posts/{id}, meaning it should be above the get post by id, an example of a bug is if you try to get the latest post by id, it will not work because it will be treated as an id, eg. /posts/latest will be treated as an id and not as a path to get the latest post 
 
@@ -93,7 +93,7 @@ async def read_latest_post(db: Session = Depends(get_db)):
     # latest_post = cursor.fetchone()
 
     latest_post = db.query(models.Post).order_by(models.Post.id.desc()).first()
-    return {"data" : latest_post}
+    return latest_post
 
 
 # Get only one post
@@ -123,7 +123,7 @@ async def read_post(id, response: Response, db: Session = Depends(get_db)):
     try:
         post = db.query(models.Post).filter(models.Post.id == id).first()
         if post:
-            return {"data" : post}
+            return post
         else:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
     except (Exception, psycopg2.Error) as error:
@@ -191,7 +191,7 @@ async def update_post(id, payload: schemas.PostCreate, response: Response, db: S
         if posts.first():
             posts.update(payload.dict())
             db.commit()
-            return {"data" : payload}
+            return payload
         else:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
     except (Exception, psycopg2.Error) as error:
