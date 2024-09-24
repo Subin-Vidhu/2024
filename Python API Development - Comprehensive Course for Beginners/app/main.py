@@ -20,7 +20,7 @@ def get_connection():
             database="FASTAPI",
             user="postgres",
             password="password",
-            cursor_factory=RealDictCursor
+            cursor_factory=RealDictCursor # to return the data as a dictionary, by default it returns as a list of tuples, ie to return the data in key value pairs, ie to have the column name as the key and the value as the value
         )
         print("Connection to PostgreSQL is successful")
         return connection
