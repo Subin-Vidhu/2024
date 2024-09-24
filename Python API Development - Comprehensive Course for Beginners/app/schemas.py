@@ -5,16 +5,20 @@ class PostBase(BaseModel):
     title: str
     content: str
     published: bool = True
-    rating : int = None
+    rating : int = 0
 
-class PostCreate(PostBase):
+class PostCreate(BaseModel):
     pass
 
-class Post(BaseModel):
-    id: int
+class PostUpdate(BaseModel):
     title: str
-    published: bool
-    rating : int
+    content: str
+
+    class Config:
+        from_attributes = True
+
+class Post(PostBase):
+    id: int
     created_at: datetime
 
     class Config:

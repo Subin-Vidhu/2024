@@ -51,7 +51,7 @@ def read_sqlalchemy_posts(db: Session = Depends(get_db)):
 async def root():
     return {"message": "Hello Subin"}
 
-@app.get("/posts")
+@app.get("/posts", response_model=list[schemas.Post])
 async def read_items(db: Session = Depends(get_db)):
     #return a list of items
     # return {"data" : my_post }
@@ -97,7 +97,7 @@ async def read_latest_post(db: Session = Depends(get_db)):
 
 
 # Get only one post
-@app.get("/posts/{id}")
+@app.get("/posts/{id}", response_model = schemas.Post)
 async def read_post(id, response: Response, db: Session = Depends(get_db)):
     # try:
     #     id = int(id)
@@ -165,8 +165,8 @@ async def delete_post(id, response: Response, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
 
 # Update a post
-@app.put("/posts/{id}")
-async def update_post(id, payload: schemas.PostCreate, response: Response, db: Session = Depends(get_db)):
+@app.put("/posts/{id}", response_model=schemas.PostBase)
+async def update_post(id, payload: schemas.PostUpdate, response: Response, db: Session = Depends(get_db)):
     # try:
     #     id = int(id)
     #     my_post[id-1] = payload.dict()
