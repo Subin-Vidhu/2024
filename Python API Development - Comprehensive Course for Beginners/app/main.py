@@ -7,9 +7,10 @@ app = FastAPI()
 from sqlalchemy.orm import Session
 from . import models, schemas
 from .database import engine, get_db
-
+from passlib.context import CryptContext
 models.Base.metadata.create_all(bind=engine)
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # Database Connection
 def get_connection():
@@ -202,6 +203,9 @@ async def update_post(id, payload: schemas.PostUpdate, response: Response, db: S
 # Create a user
 @app.post("/users", response_model = schemas.UserOut)
 async def create_user(payload: schemas.createUser, db: Session = Depends(get_db)):
+    # Hash the password
+    hashed_password = pwd_context.hash(payload.password)
+    payload.password = hashed_password
     payload_dict = models.User(**payload.dict())
     db.add(payload_dict)
     db.commit()
