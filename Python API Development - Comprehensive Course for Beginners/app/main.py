@@ -63,7 +63,7 @@ async def read_items(db: Session = Depends(get_db)):
     posts = db.query(models.Post).all()
     return posts
 
-@app.post("/posts", status_code=status.HTTP_201_CREATED)
+@app.post("/posts", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
 async def create_post(payload: schemas.PostCreate, db: Session = Depends(get_db)):
     # To convert the payload to dictionary
     # payload_dict = payload.dict()

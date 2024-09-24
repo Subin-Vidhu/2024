@@ -9,3 +9,12 @@ class PostBase(BaseModel):
 
 class PostCreate(PostBase):
     pass
+
+class Post(BaseModel):
+    title: str
+    published: bool
+    rating : int
+
+
+    class Config:
+        orm_mode = True # Pydantic model to work with ORM
