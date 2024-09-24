@@ -125,8 +125,10 @@ def main():
             table_name = "users"
             if not check_database_exists(cursor, database_name):
                 create_database(cursor, database_name)
+                cnx.commit()
             if not check_table_exists(cursor, database_name, table_name):
                 create_table(cursor, database_name, table_name)
+                cnx.commit()
             while True:
                 print("1. Create user")
                 print("2. Login")
@@ -136,6 +138,7 @@ def main():
                     username = input("Enter your username: ")
                     password = getpass.getpass("Enter your password: ")
                     create_user(cursor, database_name, username, password)
+                    cnx.commit()
                 elif choice == "2":
                     username = input("Enter your username: ")
                     password = getpass.getpass("Enter your password: ")
