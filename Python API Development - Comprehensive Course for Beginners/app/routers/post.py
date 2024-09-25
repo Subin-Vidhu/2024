@@ -5,19 +5,21 @@ from ..database import get_db
 import psycopg2
 from typing import List
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/posts",
+)
 
-# Dependency Injection, testing ORM
-@router.get("/sqlalchemy") 
-def read_sqlalchemy_posts(db: Session = Depends(get_db)):
-    # posts = db.query(models.Post)
-    # print(f"SQLAlchemy Posts: {posts}")
-    # return {"data": "successfully fetched SQLAlchemy posts"}
-    posts = db.query(models.Post).all()
-    return posts
+# # Dependency Injection, testing ORM
+# @router.get("/sqlalchemy") 
+# def read_sqlalchemy_posts(db: Session = Depends(get_db)):
+#     # posts = db.query(models.Post)
+#     # print(f"SQLAlchemy Posts: {posts}")
+#     # return {"data": "successfully fetched SQLAlchemy posts"}
+#     posts = db.query(models.Post).all()
+#     return posts
 
 
-@router.get("/posts", response_model=list[schemas.Post])
+@router.get("/", response_model=list[schemas.Post])
 async def read_items(db: Session = Depends(get_db)):
     #return a list of items
     # return {"data" : my_post }
@@ -29,7 +31,7 @@ async def read_items(db: Session = Depends(get_db)):
     posts = db.query(models.Post).all()
     return posts
 
-@router.post("/posts", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
 async def create_post(payload: schemas.PostCreate, db: Session = Depends(get_db)):
     # To convert the payload to dictionary
     # payload_dict = payload.dict()
@@ -48,9 +50,9 @@ async def create_post(payload: schemas.PostCreate, db: Session = Depends(get_db)
     db.refresh(payload_dict)
     return payload_dict
 
-# Get the latest post - here order matters so it should be above the /posts/{id}, meaning it should be above the get post by id, an example of a bug is if you try to get the latest post by id, it will not work because it will be treated as an id, eg. /posts/latest will be treated as an id and not as a path to get the latest post 
+# Get the latest post - here order matters so it should be above the //{id}, meaning it should be above the get post by id, an example of a bug is if you try to get the latest post by id, it will not work because it will be treated as an id, eg. //latest will be treated as an id and not as a path to get the latest post 
 
-@router.get("/posts/latest")
+@router.get("/latest")
 async def read_latest_post(db: Session = Depends(get_db)):
     # return {"data" : my_post[-1]}
 
@@ -63,7 +65,7 @@ async def read_latest_post(db: Session = Depends(get_db)):
 
 
 # Get only one post
-@router.get("/posts/{id}", response_model = schemas.Post)
+@router.get("/{id}", response_model = schemas.Post)
 async def read_post(id, response: Response, db: Session = Depends(get_db)):
     # try:
     #     id = int(id)
@@ -97,7 +99,7 @@ async def read_post(id, response: Response, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
 
 # Delete a post
-@router.delete("/posts/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_post(id, response: Response, db: Session = Depends(get_db)):
     # try:
     #     id = int(id)
@@ -131,7 +133,7 @@ async def delete_post(id, response: Response, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
 
 # Update a post
-@router.put("/posts/{id}", response_model=schemas.PostBase)
+@router.put("/{id}", response_model=schemas.PostBase)
 async def update_post(id, payload: schemas.PostUpdate, response: Response, db: Session = Depends(get_db)):
     # try:
     #     id = int(id)

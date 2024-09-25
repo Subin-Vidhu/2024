@@ -3,10 +3,12 @@ from ..database import get_db
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException, status, Response
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/users",
+)
 
 # Create a user
-@router.post("/users", response_model = schemas.UserOut)
+@router.post("/", response_model = schemas.UserOut)
 async def create_user(payload: schemas.createUser, db: Session = Depends(get_db)):
     # Hash the password
     hashed_password = utils.hash(payload.password)
@@ -18,7 +20,7 @@ async def create_user(payload: schemas.createUser, db: Session = Depends(get_db)
     return payload_dict
 
 # Get only one user
-@router.get("/users/{id}", response_model = schemas.UserOut)
+@router.get("/{id}", response_model = schemas.UserOut)
 async def read_user(id, response: Response, db: Session = Depends(get_db)):
     try:
         user = db.query(models.User).filter(models.User.id == id).first()
