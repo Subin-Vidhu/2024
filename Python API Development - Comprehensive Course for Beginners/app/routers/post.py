@@ -21,7 +21,7 @@ router = APIRouter(
 
 
 @router.get("/", response_model=list[schemas.Post])
-async def read_items(db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
+async def read_items(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     #return a list of items
     # return {"data" : my_post }
 
@@ -33,7 +33,7 @@ async def read_items(db: Session = Depends(get_db), user_id: int = Depends(oauth
     return posts
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
-async def create_post(payload: schemas.PostCreate, db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
+async def create_post(payload: schemas.PostCreate, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     # To convert the payload to dictionary
     # payload_dict = payload.dict()
     # payload_dict["id"] = len(my_post) + 1 # Auto Increment ID
@@ -44,7 +44,8 @@ async def create_post(payload: schemas.PostCreate, db: Session = Depends(get_db)
     # cursor.execute("INSERT INTO posts (title, content, published, rating) VALUES (%s, %s, %s, %s) RETURNING *", (payload.title, payload.content, payload.published, payload.rating)) # RETURNING * is used to return the inserted data, use %s as a placeholder to avoid SQL injection
     # connection.commit() # to save the changes to the database
     # payload_dict = cursor.fetchone()
-    print(f" Pydanctic Model converted to dictionary: {payload}")
+    # print(f" Pydanctic Model converted to dictionary: {payload}")
+    print(f"Current User: {current_user.email}")
     payload_dict = models.Post(**payload.dict())
     db.add(payload_dict)
     db.commit()
@@ -54,7 +55,7 @@ async def create_post(payload: schemas.PostCreate, db: Session = Depends(get_db)
 # Get the latest post - here order matters so it should be above the //{id}, meaning it should be above the get post by id, an example of a bug is if you try to get the latest post by id, it will not work because it will be treated as an id, eg. //latest will be treated as an id and not as a path to get the latest post 
 
 @router.get("/latest")
-async def read_latest_post(db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
+async def read_latest_post(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     # return {"data" : my_post[-1]}
 
     # cursor = connection.cursor()
@@ -67,7 +68,7 @@ async def read_latest_post(db: Session = Depends(get_db), user_id: int = Depends
 
 # Get only one post
 @router.get("/{id}", response_model = schemas.Post)
-async def read_post(id, response: Response, db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
+async def read_post(id, response: Response, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     # try:
     #     id = int(id)
     #     return {"data" : my_post[id-1]}
@@ -101,7 +102,7 @@ async def read_post(id, response: Response, db: Session = Depends(get_db), user_
 
 # Delete a post
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_post(id, response: Response, db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
+async def delete_post(id, response: Response, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     # try:
     #     id = int(id)
     #     deleted_post = my_post.pop(id-1)
@@ -135,7 +136,7 @@ async def delete_post(id, response: Response, db: Session = Depends(get_db), use
 
 # Update a post
 @router.put("/{id}", response_model=schemas.PostBase)
-async def update_post(id, payload: schemas.PostUpdate, response: Response, db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
+async def update_post(id, payload: schemas.PostUpdate, response: Response, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     # try:
     #     id = int(id)
     #     my_post[id-1] = payload.dict()
