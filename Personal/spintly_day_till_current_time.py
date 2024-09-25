@@ -1,8 +1,10 @@
+import os
 import pandas as pd
-from datetime import datetime, time, timedelta
 from tabulate import tabulate
 from colorama import Fore, Style, init
 from typing import Dict, Tuple
+from datetime import datetime, time, timedelta
+
 
 init(autoreset=True)  # Initialize colorama
 
@@ -10,6 +12,7 @@ init(autoreset=True)  # Initialize colorama
 OFFICE_START = time(7, 30)
 OFFICE_END = time(19, 30)
 TARGET_TIME = 8 * 3600 + 30 * 60  # 8 hours 30 minutes in seconds
+CSV_FILE_NAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'time_differences.csv')  # Name of the CSV file to store differences
 
 def parse_datetime(date: str, time_str: str) -> datetime:
     """Parse datetime from date and time strings"""
@@ -108,6 +111,61 @@ def calculate_leave_time(office_time: float, current_time: datetime) -> Tuple[da
         leave_time = current_time + timedelta(seconds=time_left)
         return leave_time, False
 
+def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_date: datetime.date, current_time: datetime) -> None:
+    """Save the differences in office time with and without seconds to a CSV file, formatted correctly."""
+    csv_file = CSV_FILE_NAME
+    data = []
+
+    for name in time_spent:
+        # Ignore "_no_seconds" names for the main names
+        if "_no_seconds" in name:
+            continue
+
+        # Get office times for with and without seconds
+        time_with_seconds = time_spent[name]['office']
+        time_without_seconds = time_spent[f"{name}_no_seconds"]['office']
+
+        # Calculate the difference between target time and actual office time (with and without seconds)
+        difference_with_seconds = (time_with_seconds - TARGET_TIME) / 60  # Difference in minutes (can be negative)
+        difference_without_seconds = (time_without_seconds - TARGET_TIME) / 60  # Difference in minutes (can be negative)
+
+        # Append the data
+        data.append({
+            'Date': analyzed_date,
+            'Name': name,
+            'Office Time With Seconds': format_time(time_with_seconds),
+            'Office Time Without Seconds': format_time(time_without_seconds),
+            'Difference With Seconds (minutes)': round(difference_with_seconds, 2),  # Preserve negative values
+            'Difference Without Seconds (minutes)': round(difference_without_seconds, 2)  # Preserve negative values
+        })
+
+    # Load the existing CSV file if it exists
+    try:
+        existing_df = pd.read_csv(csv_file)
+        existing_df['Date'] = pd.to_datetime(existing_df['Date']).dt.date  # Ensure date formatting
+    except FileNotFoundError:
+        existing_df = pd.DataFrame()
+
+    # Create a DataFrame with new data
+    new_df = pd.DataFrame(data)
+
+    # If the CSV already contains the analyzed date, update rows for that date
+    if not existing_df.empty and analyzed_date in existing_df['Date'].values:
+        existing_df = existing_df[existing_df['Date'] != analyzed_date]
+
+    # Append new data and save the CSV
+    updated_df = pd.concat([existing_df, new_df])
+    
+    # Save only the relevant columns in the correct order
+    updated_df = updated_df[['Date', 'Name', 'Office Time With Seconds', 'Office Time Without Seconds',
+                             'Difference With Seconds (minutes)', 'Difference Without Seconds (minutes)']]
+    
+    updated_df.to_csv(csv_file, index=False)
+
+    print(f"\nTime differences saved to {csv_file}\n")
+
+
+
 def generate_summary_table(time_spent: Dict[str, Dict[str, float]], current_time: datetime, analyzed_date: datetime.date, use_seconds: bool = True) -> str:
     """Generate a summary table from time spent data"""
     headers = ['Name', 'Total Time', 'Office Hours Time', 'Break Time', 'Target', 'Difference', 'Last Exit', 'Leave By']
@@ -161,6 +219,9 @@ def main(file_path: str, date_str: str) -> None:
         print(generate_summary_table(time_spent, current_time, analyzed_date, use_seconds=True))
         print("\n" + "-"*80 + "\n")
         print(generate_summary_table(time_spent, current_time, analyzed_date, use_seconds=False))
+        
+        # Save the differences to CSV
+        save_differences_to_csv(time_spent, analyzed_date, current_time)
 
 if __name__ == "__main__":
     file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
