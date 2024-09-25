@@ -7,7 +7,7 @@ class PostBase(BaseModel):
     published: bool = True
     rating : int = 0
 
-class PostCreate(BaseModel):
+class PostCreate(PostBase):
     pass
 
 class PostUpdate(BaseModel):
