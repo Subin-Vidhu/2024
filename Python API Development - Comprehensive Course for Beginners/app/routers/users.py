@@ -2,7 +2,7 @@ from .. import schemas, models, utils
 from ..database import get_db
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException, status, Response
-
+import psycopg2
 router = APIRouter(
     prefix="/users",
     tags=["users"]
