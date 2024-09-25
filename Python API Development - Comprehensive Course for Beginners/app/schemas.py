@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
+from typing import Optional
 # Pydantic Model
 class PostBase(BaseModel):
     title: str
@@ -7,7 +8,7 @@ class PostBase(BaseModel):
     published: bool = True
     rating : int = 0
 
-class PostCreate(BaseModel):
+class PostCreate(PostBase):
     pass
 
 class PostUpdate(BaseModel):
@@ -38,3 +39,16 @@ class UserOut(BaseModel):
 
     class Config:
         from_attributes = True # Pydantic model to work with ORM
+
+class UserLogin(BaseModel):
+    username: str
+    email: EmailStr
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    id: Optional[int] = None
+    email: Optional[str] = None
