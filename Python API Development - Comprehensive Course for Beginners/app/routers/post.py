@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, status, Response, HTTPException
 from sqlalchemy.orm import Session
-from .. import models, schemas
+from .. import models, schemas, oauth2
 from ..database import get_db
 import psycopg2
 from typing import List
@@ -33,7 +33,7 @@ async def read_items(db: Session = Depends(get_db)):
     return posts
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
-async def create_post(payload: schemas.PostCreate, db: Session = Depends(get_db)):
+async def create_post(payload: schemas.PostCreate, db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
     # To convert the payload to dictionary
     # payload_dict = payload.dict()
     # payload_dict["id"] = len(my_post) + 1 # Auto Increment ID
