@@ -7,6 +7,7 @@ from typing import List
 
 router = APIRouter(
     prefix="/posts",
+    tags=["posts"]
 )
 
 # # Dependency Injection, testing ORM

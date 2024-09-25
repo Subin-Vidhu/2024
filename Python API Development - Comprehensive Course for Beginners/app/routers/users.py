@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Response
 
 router = APIRouter(
     prefix="/users",
+    tags=["users"]
 )
 
 # Create a user
