@@ -1,4 +1,4 @@
-Date,Name,Office Time With Seconds,Office Time Without Seconds,Difference With Seconds (minutes),Difference Without Seconds (minutes)
-2024-09-23,Subin,09:23:17,09:24:00,53.28,54.0
-2024-09-24,Subin,09:39:18,09:40:00,69.3,70.0
-2024-09-25,Subin,07:45:57,07:47:00,-44.03,-43.0
+Date,Name,Office Time With Seconds,Office Time Without Seconds,Difference With Seconds (minutes),Difference Without Seconds (minutes),Extra Time Message
+2024-09-23,Subin,09:23:17,09:24:00,53.28,54.0,
+2024-09-24,Subin,09:39:18,09:40:00,60.0,60.0,Only 1 hour can be counted as extra for a day
+2024-09-25,Subin,07:50:27,07:52:00,-39.54,-38.0,

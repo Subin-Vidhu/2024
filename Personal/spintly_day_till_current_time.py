@@ -112,7 +112,7 @@ def calculate_leave_time(office_time: float, current_time: datetime) -> Tuple[da
         return leave_time, False
 
 def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_date: datetime.date, current_time: datetime) -> None:
-    """Save the differences in office time with and without seconds to a CSV file, formatted correctly."""
+    """Save the differences in office time with and without seconds to a CSV file, applying a cap on extra time."""
     csv_file = CSV_FILE_NAME
     data = []
 
@@ -129,14 +129,26 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
         difference_with_seconds = (time_with_seconds - TARGET_TIME) / 60  # Difference in minutes (can be negative)
         difference_without_seconds = (time_without_seconds - TARGET_TIME) / 60  # Difference in minutes (can be negative)
 
+        # Initialize the extra time message
+        extra_time_message = ''
+
+        # Cap positive differences at 60 minutes
+        if difference_with_seconds > 60:
+            difference_with_seconds = 60
+            extra_time_message = "Only 1 hour can be counted as extra for a day"
+        if difference_without_seconds > 60:
+            difference_without_seconds = 60
+            extra_time_message = "Only 1 hour can be counted as extra for a day"
+
         # Append the data
         data.append({
             'Date': analyzed_date,
             'Name': name,
             'Office Time With Seconds': format_time(time_with_seconds),
             'Office Time Without Seconds': format_time(time_without_seconds),
-            'Difference With Seconds (minutes)': round(difference_with_seconds, 2),  # Preserve negative values
-            'Difference Without Seconds (minutes)': round(difference_without_seconds, 2)  # Preserve negative values
+            'Difference With Seconds (minutes)': round(difference_with_seconds, 2),  # Capped at 60 if necessary
+            'Difference Without Seconds (minutes)': round(difference_without_seconds, 2),  # Capped at 60 if necessary
+            'Extra Time Message': extra_time_message  # Add the message to the row
         })
 
     # Load the existing CSV file if it exists
@@ -158,11 +170,13 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
     
     # Save only the relevant columns in the correct order
     updated_df = updated_df[['Date', 'Name', 'Office Time With Seconds', 'Office Time Without Seconds',
-                             'Difference With Seconds (minutes)', 'Difference Without Seconds (minutes)']]
-    
+                             'Difference With Seconds (minutes)', 'Difference Without Seconds (minutes)',
+                             'Extra Time Message']]  # Include the new column
+                             
     updated_df.to_csv(csv_file, index=False)
 
     print(f"\nTime differences saved to {csv_file}\n")
+
 
 
 
