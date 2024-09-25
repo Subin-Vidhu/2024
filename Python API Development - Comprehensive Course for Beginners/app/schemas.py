@@ -38,3 +38,8 @@ class UserOut(BaseModel):
 
     class Config:
         from_attributes = True # Pydantic model to work with ORM
+
+class UserLogin(BaseModel):
+    username: str
+    email: EmailStr
+    password: str

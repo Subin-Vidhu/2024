@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from . import models, schemas, utils
 from .database import engine, get_db
 models.Base.metadata.create_all(bind=engine)
-from .routers import post, users
+from .routers import post, users, auth
 
 app = FastAPI()
 
@@ -44,3 +44,4 @@ async def root():
 
 app.include_router(post.router)
 app.include_router(users.router)
+app.include_router(auth.router)
