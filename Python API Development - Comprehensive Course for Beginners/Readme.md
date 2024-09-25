@@ -47,3 +47,9 @@
     - Run:
 
         - `uvicorn app.main:app --reload`
+
+- Router Tags:
+
+    - `tags=["items"]` # To group the endpoints in Swagger UI ie http://localhost:8000/docs
+
+    - ![alt text](image.png)
