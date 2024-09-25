@@ -1,5 +1,8 @@
-# get dunder name 
-print(__name__) # __main__
+# help() # to get help
+print(help("modules")) # to get help on modules
+
+# # get dunder name 
+# print(__name__) # __main__
 
 # # getpass module
 # import getpass
