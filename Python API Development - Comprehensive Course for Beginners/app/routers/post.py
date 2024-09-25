@@ -21,7 +21,7 @@ router = APIRouter(
 
 
 @router.get("/", response_model=list[schemas.Post])
-async def read_items(db: Session = Depends(get_db)):
+async def read_items(db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
     #return a list of items
     # return {"data" : my_post }
 
@@ -54,7 +54,7 @@ async def create_post(payload: schemas.PostCreate, db: Session = Depends(get_db)
 # Get the latest post - here order matters so it should be above the //{id}, meaning it should be above the get post by id, an example of a bug is if you try to get the latest post by id, it will not work because it will be treated as an id, eg. //latest will be treated as an id and not as a path to get the latest post 
 
 @router.get("/latest")
-async def read_latest_post(db: Session = Depends(get_db)):
+async def read_latest_post(db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
     # return {"data" : my_post[-1]}
 
     # cursor = connection.cursor()
@@ -67,7 +67,7 @@ async def read_latest_post(db: Session = Depends(get_db)):
 
 # Get only one post
 @router.get("/{id}", response_model = schemas.Post)
-async def read_post(id, response: Response, db: Session = Depends(get_db)):
+async def read_post(id, response: Response, db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
     # try:
     #     id = int(id)
     #     return {"data" : my_post[id-1]}
@@ -101,7 +101,7 @@ async def read_post(id, response: Response, db: Session = Depends(get_db)):
 
 # Delete a post
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_post(id, response: Response, db: Session = Depends(get_db)):
+async def delete_post(id, response: Response, db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
     # try:
     #     id = int(id)
     #     deleted_post = my_post.pop(id-1)
@@ -135,7 +135,7 @@ async def delete_post(id, response: Response, db: Session = Depends(get_db)):
 
 # Update a post
 @router.put("/{id}", response_model=schemas.PostBase)
-async def update_post(id, payload: schemas.PostUpdate, response: Response, db: Session = Depends(get_db)):
+async def update_post(id, payload: schemas.PostUpdate, response: Response, db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
     # try:
     #     id = int(id)
     #     my_post[id-1] = payload.dict()
