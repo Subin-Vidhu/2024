@@ -273,7 +273,38 @@ def main(file_path: str, year: int, month: int, start_day: int, end_day: int) ->
         print(generate_summary_tables(results, current_time))
         
         save_multiple_dates_to_csv(results, current_time)
-
+def calculate_total_difference_from_csv(csv_file: str):
+    try:
+        # Read the CSV file
+        df = pd.read_csv(csv_file)
+        
+        # Parse the 'Difference With Seconds' and 'Difference Without Seconds' columns to timedelta
+        def parse_time_difference(time_str):
+            h, m, s = map(int, time_str.split(':'))
+            return timedelta(hours=h, minutes=m, seconds=s)
+        
+        df['Difference With Seconds'] = df['Difference With Seconds'].apply(parse_time_difference)
+        df['Difference Without Seconds'] = df['Difference Without Seconds'].apply(parse_time_difference)
+        
+        # Initialize cumulative total
+        total_diff_with_seconds = timedelta()
+        total_diff_without_seconds = timedelta()
+        
+        # Loop through each row and add the positive differences only
+        for index, row in df.iterrows():
+            if row['Sign With Seconds'] == '+':
+                total_diff_with_seconds += row['Difference With Seconds']
+            if row['Sign Without Seconds'] == '+':
+                total_diff_without_seconds += row['Difference Without Seconds']
+        
+        # Print the total difference (cumulative for all days)
+        print(f"Total Cumulative Difference With Seconds: {total_diff_with_seconds}")
+        print(f"Total Cumulative Difference Without Seconds: {total_diff_without_seconds}")
+        
+    except FileNotFoundError:
+        print(f"Error: The file {csv_file} was not found.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 if __name__ == "__main__":
     file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
     year = 2024
@@ -281,3 +312,4 @@ if __name__ == "__main__":
     start_day = 23
     end_day = 26
     main(file_path, year, month, start_day, end_day)
+    calculate_total_difference_from_csv(CSV_FILE_NAME)
