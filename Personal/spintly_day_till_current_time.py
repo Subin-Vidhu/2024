@@ -111,45 +111,58 @@ def calculate_leave_time(office_time: float, current_time: datetime) -> Tuple[da
         leave_time = current_time + timedelta(seconds=time_left)
         return leave_time, False
 
+import os
+import pandas as pd
+from datetime import datetime, timedelta
+
+CSV_FILE_NAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'time_differences.csv')
+TARGET_TIME = 8 * 3600 + 30 * 60  # 8 hours 30 minutes in seconds
+
+def format_time(seconds: float) -> str:
+    """Format time from seconds to HH:MM:SS"""
+    return str(timedelta(seconds=int(seconds)))
+
 def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_date: datetime.date, current_time: datetime) -> None:
     """Save the differences in office time with and without seconds to a CSV file, applying a cap on extra time."""
     csv_file = CSV_FILE_NAME
     data = []
 
     for name in time_spent:
-        # Ignore "_no_seconds" names for the main names
         if "_no_seconds" in name:
             continue
 
-        # Get office times for with and without seconds
         time_with_seconds = time_spent[name]['office']
         time_without_seconds = time_spent[f"{name}_no_seconds"]['office']
 
-        # Calculate the difference between target time and actual office time (with and without seconds)
-        difference_with_seconds = (time_with_seconds - TARGET_TIME) / 60  # Difference in minutes (can be negative)
-        difference_without_seconds = (time_without_seconds - TARGET_TIME) / 60  # Difference in minutes (can be negative)
+        # Calculate the difference in seconds
+        difference_with_seconds = time_with_seconds - TARGET_TIME
+        difference_without_seconds = time_without_seconds - TARGET_TIME
 
-        # Initialize the extra time message
+        # Cap positive differences at 60 minutes (3600 seconds)
         extra_time_message = ''
-
-        # Cap positive differences at 60 minutes
-        if difference_with_seconds > 60:
-            difference_with_seconds = 60
+        if difference_with_seconds > 3600:
+            difference_with_seconds = 3600
             extra_time_message = "Only 1 hour can be counted as extra for a day"
-        if difference_without_seconds > 60:
-            difference_without_seconds = 60
+        if difference_without_seconds > 3600:
+            difference_without_seconds = 3600
             extra_time_message = "Only 1 hour can be counted as extra for a day"
 
-        # Append the data
+        # Convert seconds to HH:MM:SS format
+        difference_with_seconds_str = format_time(difference_with_seconds)
+        difference_without_seconds_str = format_time(difference_without_seconds)
+
         data.append({
             'Date': analyzed_date,
             'Name': name,
             'Office Time With Seconds': format_time(time_with_seconds),
             'Office Time Without Seconds': format_time(time_without_seconds),
-            'Difference With Seconds (minutes)': round(difference_with_seconds, 2),  # Capped at 60 if necessary
-            'Difference Without Seconds (minutes)': round(difference_without_seconds, 2),  # Capped at 60 if necessary
-            'Extra Time Message': extra_time_message  # Add the message to the row
+            'Difference With Seconds': difference_with_seconds_str,
+            'Difference Without Seconds': difference_without_seconds_str,
+            'Extra Time Message': extra_time_message
         })
+
+    # Create a DataFrame with new data
+    new_df = pd.DataFrame(data)
 
     # Load the existing CSV file if it exists
     try:
@@ -158,28 +171,22 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
     except FileNotFoundError:
         existing_df = pd.DataFrame()
 
-    # Create a DataFrame with new data
-    new_df = pd.DataFrame(data)
-
     # If the CSV already contains the analyzed date, update rows for that date
     if not existing_df.empty and analyzed_date in existing_df['Date'].values:
         existing_df = existing_df[existing_df['Date'] != analyzed_date]
 
-    # Append new data and save the CSV
-    updated_df = pd.concat([existing_df, new_df])
+    # Concatenate existing and new data
+    updated_df = pd.concat([existing_df, new_df], ignore_index=True)
     
-    # Save only the relevant columns in the correct order
+    # Ensure the columns are in the correct order
     updated_df = updated_df[['Date', 'Name', 'Office Time With Seconds', 'Office Time Without Seconds',
-                             'Difference With Seconds (minutes)', 'Difference Without Seconds (minutes)',
-                             'Extra Time Message']]  # Include the new column
-                             
+                             'Difference With Seconds', 'Difference Without Seconds',
+                             'Extra Time Message']]
+    
+    # Save the DataFrame to CSV
     updated_df.to_csv(csv_file, index=False)
 
     print(f"\nTime differences saved to {csv_file}\n")
-
-
-
-
 def generate_summary_table(time_spent: Dict[str, Dict[str, float]], current_time: datetime, analyzed_date: datetime.date, use_seconds: bool = True) -> str:
     """Generate a summary table from time spent data"""
     headers = ['Name', 'Total Time', 'Office Hours Time', 'Break Time', 'Target', 'Difference', 'Last Exit', 'Leave By']
