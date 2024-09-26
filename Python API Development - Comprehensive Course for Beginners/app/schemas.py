@@ -21,6 +21,7 @@ class PostUpdate(BaseModel):
 class Post(PostBase):
     id: int
     created_at: datetime
+    owner_id: int
 
     class Config:
         # orm_mode = True # Pydantic model to work with ORM
