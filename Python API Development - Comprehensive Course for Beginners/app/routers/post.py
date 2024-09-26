@@ -29,7 +29,8 @@ async def read_items(db: Session = Depends(get_db), current_user: int = Depends(
     # cursor.execute("SELECT * FROM posts")
     # posts = cursor.fetchall()
 
-    posts = db.query(models.Post).all()
+    posts = db.query(models.Post).all() # to get all the posts
+    # posts = db.query(models.Post).filter(models.Post.owner_id == current_user.id).all() # to get all the posts of the current user
     return posts
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
@@ -93,12 +94,15 @@ async def read_post(id, response: Response, db: Session = Depends(get_db), curre
     try:
         post = db.query(models.Post).filter(models.Post.id == id).first()
         if post:
-            return post
+            if post.owner_id != current_user.id:
+                raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="You are not authorized to view this post")
+            else:
+                return post
         else:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
-    except (Exception, psycopg2.Error) as error:
-        print("Error while fetching data from PostgreSQL", error)
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+    except psycopg2.Error as error:
+        print("Error while deleting data from PostgreSQL", error)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal Server Error")
 
 # Delete a post
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
