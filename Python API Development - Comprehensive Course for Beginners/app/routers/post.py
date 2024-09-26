@@ -125,14 +125,18 @@ async def delete_post(id, response: Response, db: Session = Depends(get_db), cur
     try:
         posts = db.query(models.Post).filter(models.Post.id == id)
         if posts.first():
-            posts.delete(synchronize_session=False)
-            db.commit()
-            return Response(status_code=status.HTTP_204_NO_CONTENT)
+            # print(f"Post Owner ID: {posts.first().owner_id}")
+            if posts.first().owner_id != current_user.id:
+                raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="You are not authorized to delete this post")
+            else:
+                posts.delete(synchronize_session=False)
+                db.commit()
+                return Response(status_code=status.HTTP_204_NO_CONTENT)
         else:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
-    except (Exception, psycopg2.Error) as error:
+    except psycopg2.Error as error:
         print("Error while deleting data from PostgreSQL", error)
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal Server Error")
 
 # Update a post
 @router.put("/{id}", response_model=schemas.PostBase)
@@ -159,13 +163,15 @@ async def update_post(id, payload: schemas.PostUpdate, response: Response, db: S
     try:
         posts = db.query(models.Post).filter(models.Post.id == id)
         if posts.first():
+            if posts.first().owner_id != current_user.id:
+                raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="You are not authorized to update this post")
             posts.update(payload.dict())
             db.commit()
             return payload
         else:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
-    except (Exception, psycopg2.Error) as error:
-        print("Error while updating data from PostgreSQL", error)
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+    except psycopg2.Error as error:
+        print("Error while deleting data from PostgreSQL", error)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal Server Error")
         
 
