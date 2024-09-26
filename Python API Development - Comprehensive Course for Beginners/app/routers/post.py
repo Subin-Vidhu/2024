@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from .. import models, schemas, oauth2
 from ..database import get_db
 import psycopg2
-from typing import List
+from typing import List, Optional
 
 router = APIRouter(
     prefix="/posts",
@@ -21,7 +21,7 @@ router = APIRouter(
 
 
 @router.get("/", response_model=list[schemas.Post])
-async def read_items(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
+async def read_items(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user), limit: int = 2, skip: int = 0, search: Optional[str] = ""):
     #return a list of items
     # return {"data" : my_post }
 
@@ -29,7 +29,7 @@ async def read_items(db: Session = Depends(get_db), current_user: int = Depends(
     # cursor.execute("SELECT * FROM posts")
     # posts = cursor.fetchall()
 
-    posts = db.query(models.Post).all() # to get all the posts
+    posts = db.query(models.Post).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all() # to get all the posts
     # posts = db.query(models.Post).filter(models.Post.owner_id == current_user.id).all() # to get all the posts of the current user
     return posts
 
