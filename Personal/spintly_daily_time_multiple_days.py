@@ -202,6 +202,16 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
         sign_with_seconds = '+' if difference_with_seconds.total_seconds() >= 0 else '-'
         sign_without_seconds = '+' if difference_without_seconds.total_seconds() >= 0 else '-'
 
+        # Cap the difference at 1 hour if it's greater than that
+        def cap_difference(difference: timedelta, sign: str) -> Tuple[str, str, str]:
+            if sign == '+' and difference > timedelta(hours=1):
+                return '+', '01:00:00', 'Only 1 hour/day can be considered extra'
+            else:
+                return sign, format_time(abs(difference.total_seconds())), ''
+
+        sign_with_seconds, diff_with_seconds, msg_with_seconds = cap_difference(difference_with_seconds, sign_with_seconds)
+        sign_without_seconds, diff_without_seconds, msg_without_seconds = cap_difference(difference_without_seconds, sign_without_seconds)
+
         # Add data for CSV output
         data.append({
             'Date': analyzed_date,
@@ -209,10 +219,12 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
             'Office Time With Seconds': format_time(time_with_seconds),
             'Office Time Without Seconds': format_time(time_without_seconds),
             'Sign With Seconds': sign_with_seconds,
-            'Difference With Seconds': format_time(abs(difference_with_seconds.total_seconds())),
+            'Difference With Seconds': diff_with_seconds,
             'Sign Without Seconds': sign_without_seconds,
-            'Difference Without Seconds': format_time(abs(difference_without_seconds.total_seconds())),
-            'Status': status_with_seconds
+            'Difference Without Seconds': diff_without_seconds,
+            'Status': status_with_seconds,
+            'Message With Seconds': msg_with_seconds,
+            'Message Without Seconds': msg_without_seconds
         })
 
     # Load existing CSV if it exists, otherwise create a new DataFrame
@@ -232,14 +244,12 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
 
     # Ensure the columns are in the correct order
     df = df[['Date', 'Name', 'Office Time With Seconds', 'Office Time Without Seconds',
-             'Sign With Seconds', 'Difference With Seconds',
+             'Sign With Seconds', 'Difference With Seconds', 
              'Sign Without Seconds', 'Difference Without Seconds',
-             'Status']]
+             'Status', 'Message With Seconds', 'Message Without Seconds']]
 
     # Save the DataFrame to CSV
     df.to_csv(csv_file, index=False)
-
-    
 
 def save_multiple_dates_to_csv(results: Dict[datetime.date, Dict[str, Dict[str, float]]], current_time: datetime) -> None:
     """Save time differences for multiple dates to CSV."""
