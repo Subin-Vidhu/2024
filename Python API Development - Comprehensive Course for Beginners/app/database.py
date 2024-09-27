@@ -4,9 +4,10 @@ from sqlalchemy.orm import sessionmaker # to create a session
 import psycopg2 # to connect to PostgreSQL
 import time # to sleep the program for a few seconds
 from psycopg2.extras import RealDictCursor # to return the data as a dictionary, by default it returns as a list of tuples, ie to return the data in key value pairs, ie to have the column name as the key and the value as the value
+from .config import settings # import the settings from the config file
 
-
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:password@localhost/FASTAPI" # Database URL
+# SQLALCHEMY_DATABASE_URL = "postgresql://postgres:password@localhost/FASTAPI" # Database URL
+SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}/{settings.database_name}" # Database URL
  
 engine = create_engine(SQLALCHEMY_DATABASE_URL) # create a database engine
 
