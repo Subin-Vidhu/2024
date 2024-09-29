@@ -72,7 +72,7 @@ async def read_latest_post(db: Session = Depends(get_db), current_user: int = De
 
 
 # Get only one post
-@router.get("/{id}", response_model = schemas.Post)
+@router.get("/{id}", response_model = schemas.PostOut)
 async def read_post(id, response: Response, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     # try:
     #     id = int(id)
@@ -96,14 +96,19 @@ async def read_post(id, response: Response, db: Session = Depends(get_db), curre
     #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
 
     try:
-        post = db.query(models.Post).filter(models.Post.id == id).first()
-        if post:
-            if post.owner_id != current_user.id:
-                raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="You are not authorized to view this post")
-            else:
-                return post
+        post_result = db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(
+        models.Vote, models.Vote.post_id == models.Post.id, isouter=True).group_by(models.Post.id).filter(models.Post.id == id).first()
+
+        if not post_result:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail=f"post with id: {id} was not found")
+
+        post, votes = post_result
+
+        if post.owner_id != current_user.id:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="You are not authorized to view this post")
         else:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")
+            return post_result
     except psycopg2.Error as error:
         print("Error while deleting data from PostgreSQL", error)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal Server Error")
