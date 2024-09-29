@@ -39,6 +39,13 @@ class Post(PostBase):
         # orm_mode = True # Pydantic model to work with ORM
         from_attributes = True # Pydantic model to work with ORM
 
+class PostOut(BaseModel):
+    Post: Post
+    votes: int
+
+    class Config:
+        from_attributes = True
+
 class createUser(BaseModel):
     username: str
     email: EmailStr
