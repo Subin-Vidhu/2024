@@ -37,7 +37,6 @@ def upgrade() -> None:
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('post_id', 'user_id')
     )
-    op.drop_table('products')
     op.add_column('posts', sa.Column('content', sa.String(), nullable=False))
     op.add_column('posts', sa.Column('published', sa.Boolean(), server_default='true', nullable=True))
     op.add_column('posts', sa.Column('rating', sa.Integer(), nullable=True))
