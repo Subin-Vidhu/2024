@@ -319,7 +319,7 @@ if __name__ == "__main__":
     file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
     year = 2024
     month = 9
-    start_day = 23
-    end_day = 27
+    start_day = 30
+    end_day = 30
     main(file_path, year, month, start_day, end_day)
     calculate_total_difference_from_csv(CSV_FILE_NAME)
