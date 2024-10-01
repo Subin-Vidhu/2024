@@ -318,8 +318,8 @@ def calculate_total_difference_from_csv(csv_file: str):
 if __name__ == "__main__":
     file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
     year = 2024
-    month = 9
-    start_day = 30
-    end_day = 30
+    month = 10
+    start_day = 1
+    end_day = 1
     main(file_path, year, month, start_day, end_day)
     calculate_total_difference_from_csv(CSV_FILE_NAME)
