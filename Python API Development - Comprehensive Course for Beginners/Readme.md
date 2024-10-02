@@ -53,3 +53,9 @@
     - `tags=["items"]` # To group the endpoints in Swagger UI ie http://localhost:8000/docs
 
     - ![alt text](image.png)
+
+- On Linux
+
+    - `uvicorn app.main:app --host 0.0.0.0 --port 8765`
+
+    - `gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:8765`

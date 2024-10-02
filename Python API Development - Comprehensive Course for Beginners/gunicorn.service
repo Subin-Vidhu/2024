@@ -1,0 +1,15 @@
+[Unit]
+Description=demo fastapi application
+After=network.target
+
+[Service]
+User=subin
+Group=subin
+WorkingDirectory=/home/subin/app/src/2024/Python API Development - Comprehensive Course for Beginners
+Environment="PATH=/home/subin/app/venv/bin"
+Environment="PYTHONPATH=/home/subin/app/src/2024/Python API Development - Comprehensive Course for Beginners"
+EnvironmentFile="/home/subin/app/src/2024/Python API Development - Comprehensive Course for Beginners/.env"
+ExecStart=/home/subin/app/venv/bin/gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:8765
+
+[Install]
+WantedBy=multi-user.target
