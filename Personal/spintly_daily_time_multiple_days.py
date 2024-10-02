@@ -320,6 +320,6 @@ if __name__ == "__main__":
     year = 2024
     month = 10
     start_day = 1
-    end_day = 1
+    end_day = 2
     main(file_path, year, month, start_day, end_day)
     calculate_total_difference_from_csv(CSV_FILE_NAME)
