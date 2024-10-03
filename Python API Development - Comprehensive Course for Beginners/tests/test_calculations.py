@@ -1,14 +1,12 @@
+import pytest
 from app.calculations import add
-def test_add():
-    print("Test add")
-    assert add(1, 2) == 3
-    assert add(1, 1) == 2
-    # false case
-    assert add(1, 1) == 2
-def test_add2():
-    print("Test add2")
-    assert add(1, 2) == 3
-    assert add(1, 1) == 2
-    # false case
-    assert add(1, 1) == 2
+@pytest.mark.parametrize("a, b, expected", [
+    (1, 2, 3),
+    (2, 2, 4),
+    (5, 1, 6),
+    (-1, 1, 0),
+    (-1, -1, -2)
+])
+def test_add(a, b, expected):
+    assert add(a, b) == expected
 # test_add()
