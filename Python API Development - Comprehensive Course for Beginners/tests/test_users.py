@@ -30,9 +30,9 @@ app.dependency_overrides[get_db] = overrirde_get_db
 
 @pytest.fixture
 def client():
+    Base.metadata.drop_all(bind=engine) # drop the database if it exists
     Base.metadata.create_all(bind=engine) # create the database before the test
     yield TestClient(app) # testing, yield helps in teardown
-    Base.metadata.drop_all(bind=engine) # drop the database after the test
 
 # def test_root(client):
 #     res = client.get("/")
