@@ -16,7 +16,7 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 
 # Base = declarative_base() # create a base class
 
-Base.metadata.create_all(bind=engine)
+
 
 # Dependency
 def overrirde_get_db():
@@ -30,7 +30,9 @@ app.dependency_overrides[get_db] = overrirde_get_db
 
 @pytest.fixture
 def client():
-    return TestClient(app)
+    Base.metadata.create_all(bind=engine) # create the database before the test
+    yield TestClient(app) # testing, yield helps in teardown
+    Base.metadata.drop_all(bind=engine) # drop the database after the test
 
 # def test_root(client):
 #     res = client.get("/")
