@@ -16,3 +16,11 @@ def test_create_user(client):
     new_user = schemas.UserOut(**res.json())
     assert new_user.email == "hel123@gmail.com"
     assert res.status_code == 200
+
+def test_login_user(client):
+    res = client.post(
+        "/login", data={"username": "hel123@gmail.com", "password": "passrd123"})
+    print(f"Response: {res.json()}")
+    assert res.status_code == 200
+    assert res.json().get('access_token') is not None
+    print(f"Access Token: {res.json().get('access_token')}")
