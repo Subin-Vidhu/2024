@@ -2,6 +2,32 @@ import pytest
 from fastapi.testclient import TestClient
 from app.main import app
 from app import schemas
+from app.config import settings
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from app.database import get_db, Base
+# SQLALCHEMY_DATABASE_URL = "postgresql://postgres:password@localhost/FASTAPI" # Database URL
+SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}/{settings.database_name}_test" # Database URL for testing
+ 
+engine = create_engine(SQLALCHEMY_DATABASE_URL) # create a database engine
+
+TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine) # create a session
+
+# Base = declarative_base() # create a base class
+
+Base.metadata.create_all(bind=engine)
+
+# Dependency
+def overrirde_get_db():
+    db = TestingSessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+app.dependency_overrides[get_db] = overrirde_get_db
+
 @pytest.fixture
 def client():
     return TestClient(app)
