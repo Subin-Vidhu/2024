@@ -12,7 +12,10 @@ jobs:
   job1:
     runs-on: ubuntu-20.04
     steps:
-      - name: Pulling the code
+      - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          sparse-checkout: true
+          sparse-checkout-pattern: 'Python API Development - Comprehensive Course for Beginners'
       - name: Say Hi Subin
         run: echo "Hi Subin"
