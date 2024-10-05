@@ -42,7 +42,7 @@ pycodestyle==2.7.0
 pycparser==2.20
 pydantic==1.9.1
 pydantic-settings
-pydantic_core
+pydantic-core
 pytest==8.3.3
 python-dateutil==2.8.2
 python-dotenv==1.0.1
