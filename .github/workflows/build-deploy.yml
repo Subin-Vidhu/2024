@@ -24,3 +24,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r "Python API Development - Comprehensive Course for Beginners/requirements.txt"
+      - name: Run tests
+        run: |
+          cd "Python API Development - Comprehensive Course for Beginners"
+          pip install pytest
+          pytest --version
+          pytest
