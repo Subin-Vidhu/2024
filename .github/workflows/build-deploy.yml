@@ -1,0 +1,18 @@
+name: Python API Development
+
+on:
+  push:
+    paths:
+      - 'Python API Development - Comprehensive Course for Beginners/**'
+  pull_request:
+    paths:
+      - 'Python API Development - Comprehensive Course for Beginners/**'
+
+jobs:
+  job1:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Pulling the code
+        uses: actions/checkout@v2
+      - name: Say Hi Subin
+        run: echo "Hi Subin"
