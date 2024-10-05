@@ -1,12 +1,6 @@
 name: Python API Development
 
-on:
-  push:
-    paths:
-      - 'Python API Development - Comprehensive Course for Beginners/**'
-  pull_request:
-    paths:
-      - 'Python API Development - Comprehensive Course for Beginners/**'
+on:[push, pull_request]
 
 jobs:
   job1:
