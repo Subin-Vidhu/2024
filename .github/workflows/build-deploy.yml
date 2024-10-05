@@ -19,3 +19,14 @@ jobs:
           sparse-checkout-pattern: 'Python API Development - Comprehensive Course for Beginners'
       - name: Say Hi Subin
         run: echo "Hi Subin"
+      - name: Setup Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r "Python API Development - Comprehensive Course for Beginners/requirements.txt"
