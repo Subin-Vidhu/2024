@@ -22,7 +22,7 @@ app.add_middleware(
 # Path Operation decorator/ Route / Endpoint
 @app.get("/")
 async def root():
-    return {"message": "Hello Aramis"}
+    return {"message": "Hello Aramis from github actions"}
 
 app.include_router(post.router)
 app.include_router(users.router)
