@@ -14,8 +14,7 @@ from alembic import command
 
 
 # SQLALCHEMY_DATABASE_URL = 'postgresql://postgres:password123@localhost:5432/fastapi_test'
-SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}_test'
-
+SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}/{settings.database_name}_test" # Database URL
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
@@ -60,16 +59,21 @@ def test_user2(client):
     return new_user
 
 
-@pytest.fixture
+@pytest.fixture()
 def test_user(client):
-    user_data = {"email": "subin@gmail.com",
-                 "password": "password123"}
+    user_data = {
+  "username": "subin_test_user",
+  "email":"subin_test_user@gmail.com",
+  "password":"password"
+  
+}
     res = client.post("/users/", json=user_data)
 
     assert res.status_code == 201
 
     new_user = res.json()
     new_user['password'] = user_data['password']
+    print(f"new_user: {new_user}")
     return new_user
 
 
