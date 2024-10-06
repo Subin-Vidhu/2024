@@ -17,3 +17,5 @@
 ## Section 8: Trees
 
 ## Section 9: Binary Search Trees
+
+## Section 10: Graphs
