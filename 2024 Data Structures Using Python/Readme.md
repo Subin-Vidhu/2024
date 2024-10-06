@@ -13,3 +13,5 @@
 ## Section 6: Stacks
 
 ## Section 7: Queues
+
+## Section 8: Trees
