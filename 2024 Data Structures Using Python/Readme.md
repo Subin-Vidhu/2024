@@ -4,4 +4,4 @@
 
 ## Section 2: Arrays
 
-## Section 3: Lists, Tuples, Dictionaries, and Sets
+## Section 3: Lists, Tuples,Sets, and Dictionaries
