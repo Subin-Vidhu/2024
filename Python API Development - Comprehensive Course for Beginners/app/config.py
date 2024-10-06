@@ -1,4 +1,5 @@
-from pydantic_settings import BaseSettings
+# from pydantic_settings import BaseSettings # for windows
+from pydantic import BaseSettings # for ubuntu and github actions
 
 
 class Settings(BaseSettings):
