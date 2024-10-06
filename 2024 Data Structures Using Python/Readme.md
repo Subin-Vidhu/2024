@@ -11,3 +11,5 @@
 ## Section 5: Linked Lists
 
 ## Section 6: Stacks
+
+## Section 7: Queues
