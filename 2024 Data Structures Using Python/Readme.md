@@ -15,3 +15,5 @@
 ## Section 7: Queues
 
 ## Section 8: Trees
+
+## Section 9: Binary Search Trees
