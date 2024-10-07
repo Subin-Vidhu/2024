@@ -63,7 +63,7 @@ Python Crash Course
  list[1] = "a", updates the value in the first position in the list
  list.append("c") - appends a value to the end of the list
  list.extend([1,2,3]) - adds element to the list
- list.insert(0, "z") - inserts an element at a given position
+ list.insert(0, "z") - inserts an element at a given position, so there will be a shift of the existing elements to the right of this entry
  list.pop() - last element gets removed
  list.count(1) - counts the number of times an item occurs in a list
  list.index(13) - returns the index of the first occurence
