@@ -86,7 +86,7 @@ jobs:
           username: ${{secrets.PROD_USERNAME}}
           password: ${{secrets.PROD_PASSWORD}}
           script: |
-            cd app/src
+            cd /app/src/2024/Python API Development - Comprehensive Course for Beginners
             git pull
             echo "Running sudo command..."
             echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart fastapi
