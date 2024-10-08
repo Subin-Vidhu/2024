@@ -92,6 +92,7 @@ jobs:
             echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart fastapi
             echo "Sudo command executed successfully."
             echo "Checking systemctl status..."
+            ls
             systemctl status fastapi
       # login to our ubuntu
       # cd /app/src
