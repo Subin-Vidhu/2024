@@ -67,11 +67,11 @@ jobs:
     environment:
       name: testing
     steps:
-      - name: pulling git repo
-        uses: actions/checkout@v2
-        with:
-          sparse-checkout: true
-          sparse-checkout-pattern: 'Python API Development - Comprehensive Course for Beginners'
+      # - name: pulling git repo
+      #   uses: actions/checkout@v2
+      #   with:
+      #     sparse-checkout: true
+      #     sparse-checkout-pattern: 'Python API Development - Comprehensive Course for Beginners'
       # - name: deploying to Heroku
       #   uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       #   with:
