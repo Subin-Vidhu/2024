@@ -86,14 +86,16 @@ jobs:
           username: ${{secrets.PROD_USERNAME}}
           password: ${{secrets.PROD_PASSWORD}}
           script: |
-            cd /app/src/2024/Python API Development - Comprehensive Course for Beginners
+            cd ~/app/src/2024/"Python API Development - Comprehensive Course for Beginners"
+            ls
+            cat Readme.md
             git pull
             echo "Running sudo command..."
-            echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart fastapi
+            echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart fastapi.service
             echo "Sudo command executed successfully."
             echo "Checking systemctl status..."
-            ls
-            systemctl status fastapi
+            
+            
       # login to our ubuntu
       # cd /app/src
       # git pull
