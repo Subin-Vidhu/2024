@@ -34,6 +34,10 @@
 
         ![alt text](image-6.png)
 
+        ![alt text](image-13.png)
+
+        ![alt text](image-14.png)
+
 - Activation functions
 
     - Sigmoid, tanh, ReLU, Leaky ReLU, ELU, softmax
