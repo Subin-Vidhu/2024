@@ -100,6 +100,10 @@
 
                     ![alt text](image-10.png)
 
+                    - Forward and backward for a 3 layer neural network
+
+                        ![alt text](image-14.png)
+
     - Parameters and Hyperparameters
 
         - Parameters
