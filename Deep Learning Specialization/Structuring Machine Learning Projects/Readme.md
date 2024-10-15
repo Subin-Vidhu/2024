@@ -62,3 +62,22 @@ Conclusion:
 - It improves efficiency and effectiveness in decision- making processes.
 - The F1 score is a commonly used metric that combines precision and recall.
 - Having a well- defined development set and a single evaluation metric accelerates the iterative process of improving machine learning algorithms.
+
+**Structuring Machine Learning Projects**:
+
+Introduction:
+
+Combining multiple evaluation metrics can be challenging.
+Satisficing metrics can be used alongside optimizing metrics.
+Example 1: Classification Accuracy and Running Time:
+
+Combining accuracy and running time into an overall evaluation metric.
+Introducing the concept of satisficing metrics.
+Choosing a classifier that maximizes accuracy while keeping running time below a certain threshold.
+Example 2: Wake Word Detection System:
+
+Maximizing accuracy of trigger word detection.
+Limiting the number of false positives per day as a satisficing metric.
+Guidelines for Setting up Training, Development, and Test Sets:
+The need to evaluate metrics on different sets.
+Introduction to training, development, and test sets.
