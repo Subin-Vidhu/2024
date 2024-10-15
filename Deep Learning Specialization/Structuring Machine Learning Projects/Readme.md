@@ -330,3 +330,28 @@ Acknowledges that surpassing human-level performance is not easy but can be achi
 
 **Improving your Model Performance**:
 
+ Introduction:
+
+The goal is to improve the performance of a learning algorithm.
+Two key assumptions: fitting the training set well and generalizing to the dev/test set.
+Orthogonalization:
+
+Separate knobs to fix avoidable bias and variance issues.
+Avoidable bias: the difference between training error and proxy for Bayes error.
+Variance: the difference between dev error and training error.
+Reducing Avoidable Bias:
+
+Tactics to reduce avoidable bias: train a bigger model, train longer, use better optimization algorithms, or find a better neural network architecture/hyperparameters.
+Consider changing activation function, number of layers/hidden units, or trying out other model architectures like recurrent neural networks and convolutional neural networks.
+Addressing Variance Problems:
+
+Techniques to address variance problems: get more data, use regularization techniques like L2 regularization or dropout, or try different neural network architectures/hyperparameters.
+Mastering Bias and Variance:
+
+Bias and variance are important concepts to improve machine learning systems.
+Systematically apply the concepts to be more efficient and strategic in improving performance.
+Homework:
+Practice and exercise understanding of bias and variance concepts.
+Conclusion:
+
+Understanding and applying the concepts of bias and variance can significantly improve the performance of machine learning systems.
