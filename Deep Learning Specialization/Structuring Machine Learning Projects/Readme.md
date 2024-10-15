@@ -63,7 +63,7 @@ Conclusion:
 - The F1 score is a commonly used metric that combines precision and recall.
 - Having a well- defined development set and a single evaluation metric accelerates the iterative process of improving machine learning algorithms.
 
-**Structuring Machine Learning Projects**:
+**Satisficing and Optimizing Metrics**:
 
 Introduction:
 
@@ -83,7 +83,7 @@ The need to evaluate metrics on different sets.
 Introduction to training, development, and test sets.
 
 
-Video Summary: Structuring Machine Learning Projects
+**Train/Dev/Test Distribution**:
 
 Introduction
 
