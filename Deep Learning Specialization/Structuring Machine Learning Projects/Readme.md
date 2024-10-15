@@ -81,3 +81,47 @@ Limiting the number of false positives per day as a satisficing metric.
 Guidelines for Setting up Training, Development, and Test Sets:
 The need to evaluate metrics on different sets.
 Introduction to training, development, and test sets.
+
+
+Video Summary: Structuring Machine Learning Projects
+
+Introduction
+
+The way you set up your training, development, and test sets can impact the progress of your machine learning team.
+Setting up the development (dev) and test sets is crucial for evaluating different ideas and selecting the best model.
+Setting up Dev and Test Sets
+
+Dev Set:
+
+Also known as the development set or hold out cross-validation set.
+Used to evaluate different ideas and select the best model.
+Innovate to improve dev set performance until you have a satisfactory result.
+Test Set:
+
+Used to evaluate the final model's performance.
+Should come from the same distribution as the dev set.
+Example:
+
+Building a cat classifier for different regions (U.S, U.K, Europe, South America, India, China, Asia, Australia).
+Bad idea: Dev set from four regions, test set from the other four regions (different distributions).
+Recommended: Randomly shuffle data from all regions into both dev and test sets (same distribution).
+Real-life Example:
+A team optimized a model on loan approvals for medium-income zip codes.
+Later, tested on low-income zip codes (different distribution).
+Resulted in wasted time and effort.
+Recommendations for Dev and Test Sets
+
+Choose dev and test sets that reflect the data you expect to get in the future and consider important to perform well on.
+Dev and test sets should come from the same distribution.
+Put the target where you want to hit and have the team innovate efficiently to hit that target.
+Conclusion
+
+Setting up the dev set and evaluation metric defines the target you want to aim at.
+Choosing the right training set will affect how well you can hit that target.
+Revision Notes
+
+The video explains the importance of setting up dev and test sets in machine learning projects.
+It provides an example of setting up dev and test sets for a cat classifier in different regions.
+The video highlights the problems that can arise when dev and test sets come from different distributions.
+It recommends choosing dev and test sets that reflect future data and have the same distribution.
+The video emphasizes the importance of setting the target correctly and efficiently innovating to hit that target.
