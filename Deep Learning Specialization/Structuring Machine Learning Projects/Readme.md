@@ -127,7 +127,7 @@ It recommends choosing dev and test sets that reflect future data and have the s
 The video emphasizes the importance of setting the target correctly and efficiently innovating to hit that target.
 
 
-** Size of the Dev and Test Sets**:
+**Size of the Dev and Test Sets**:
 
 Introduction
 
@@ -157,3 +157,34 @@ Changing Evaluation Metrics and Sets
 Sometimes, during a machine learning problem, you may want to change the evaluation metric or dev and test sets.
 This can be done partway through the problem to improve the system's performance.
 
+**When to Change Dev/Test Sets and Metrics?**:
+
+Introduction:
+
+Placing a target for your team to aim at in a machine learning project.
+Importance of evaluating and choosing the right evaluation metric.
+Example of Evaluation Metric:
+
+Building a cat classifier with classification error as the evaluation metric.
+Algorithm A has 3% error, while Algorithm B has 5% error.
+Algorithm A lets through pornographic images, making it unacceptable.
+Algorithm B has higher error but does not have pornographic images.
+Evaluation metric mispredicts the better algorithm in this case.
+Changing the Evaluation Metric:
+
+Need to change the evaluation metric or development set when it no longer correctly ranks algorithm preferences.
+Introducing a weight term to give higher weight to pornographic images in the evaluation metric.
+Modifying the cost function to incorporate the weights.
+Evaluating on Real-World Data:
+
+Evaluating classifiers on high-quality images may not correspond to real-world performance.
+Need to consider the type of data the algorithm will encounter in the application.
+Changing the evaluation metric or development/test set to better reflect real-world conditions.
+Orthogonalization:
+
+Breaking down the machine learning task into distinct steps.
+Placing the target (defining the metric) and aiming at the target (optimizing the algorithm) as separate steps.
+Importance of Evaluation Metric and Development Set:
+Having an evaluation metric and development set allows for quicker decision-making and iteration.
+Set up an initial evaluation metric and development set, even if not perfect, to drive team efficiency.
+Can change the evaluation metric or development set later if needed.
