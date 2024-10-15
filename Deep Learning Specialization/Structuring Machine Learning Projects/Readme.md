@@ -188,3 +188,90 @@ Importance of Evaluation Metric and Development Set:
 Having an evaluation metric and development set allows for quicker decision-making and iteration.
 Set up an initial evaluation metric and development set, even if not perfect, to drive team efficiency.
 Can change the evaluation metric or development set later if needed.
+
+**Why Human-Level Performance?**:
+
+
+Introduction:
+Comparing machine learning systems to human-level performance.
+Reasons for the increased focus on human-level performance.
+
+Progress Towards Human-Level Performance:
+Progress tends to be rapid as you approach human-level performance.
+After surpassing human-level performance, progress and accuracy slow down.
+The performance approaches but never surpasses the Bayes optimal error.
+
+Reasons for Slower Progress After Surpassing Human-Level Performance:
+Human-level performance is often close to the Bayes optimal error.
+Tools for improving performance are harder to apply once surpassing human-level performance.
+
+Importance of Comparing to Human-Level Performance:
+Humans are good at tasks like image recognition and language understanding.
+Comparing to human-level performance helps understand bias and variance.
+
+Module 2: ML Strategy
+
+Introduction:
+The importance of having a well-structured machine learning project.
+
+Orthogonalization:
+The concept of orthogonalization in machine learning projects.
+Dividing the project into separate components to focus on specific tasks.
+
+Setting Up Metrics:
+Choosing the right evaluation metric for the project.
+Metrics should align with the project's goals and objectives.
+
+Comparing to Human-Level Performance:
+The benefits of comparing machine learning systems to human-level performance.
+Understanding the limitations and potential improvements.
+
+Error Analysis:
+Conducting manual error analysis to identify areas for improvement.
+Analyzing bias and variance in the system.
+
+Mismatched Training and Dev/Test Set:
+Identifying and addressing issues related to mismatched training and dev/test sets.
+Strategies for handling different data distributions.
+
+Learning from Multiple Tasks:
+Leveraging knowledge from multiple tasks to improve performance.
+Transfer learning and multi-task learning approaches.
+
+End-to-End Deep Learning:
+The advantages and challenges of end-to-end deep learning.
+When to use end-to-end deep learning and when to use traditional approaches.
+
+**Avoidable Bias**:
+
+Introduction:
+
+Discusses the importance of knowing human level performance in machine learning algorithms.
+Explains how the gap between algorithm performance and human performance indicates the fitting of the training set.
+
+Bias and Variance:
+
+Describes the tools to reduce bias or variance in machine learning algorithms.
+Focuses on reducing bias when there is a large gap between algorithm performance and human performance.
+Focuses on reducing variance when algorithm performance is close to human performance.
+
+Human Level Error:
+
+Considers human level error as a proxy for Bayes error or Bayes optimal error.
+Explains that human level error is worse than Bayes error but not too far from it.
+Shows how different human level errors affect the focus on bias or variance reduction tactics.
+
+Avoidable Bias and Variance:
+
+Introduces the concept of avoidable bias as the difference between Bayes error and training error.
+Defines variance as the difference between training error and dev error.
+Emphasizes that there is more potential for improvement in reducing variance than avoidable bias.
+
+Decision Making:
+
+Highlights the importance of understanding human level performance in decision making.
+Explains how different scenarios require different tactics based on bias or variance avoidance.
+
+Conclusion:
+Mentions that there is more nuance in factoring human level performance into decision making.
+Teases the next video, which goes deeper into understanding human level performance.
