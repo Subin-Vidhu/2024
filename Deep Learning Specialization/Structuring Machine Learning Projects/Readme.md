@@ -125,3 +125,35 @@ It provides an example of setting up dev and test sets for a cat classifier in d
 The video highlights the problems that can arise when dev and test sets come from different distributions.
 It recommends choosing dev and test sets that reflect future data and have the same distribution.
 The video emphasizes the importance of setting the target correctly and efficiently innovating to hit that target.
+
+
+** Size of the Dev and Test Sets**:
+
+Introduction
+
+The guidelines for setting up dev and test sets are changing in the Deep Learning era.
+In earlier eras, a 70/30 or 60/20/20 split for train and test sets was reasonable.
+With larger data sets in the modern era, it's reasonable to use a smaller percentage for dev and test sets.
+Setting up Dev and Test Sets
+
+For large data sets, consider using a smaller percentage for dev and test sets.
+Example: If you have a million training examples, you can use 98% for training, 1% for dev, and 1% for test.
+The purpose of the test set is to evaluate the overall performance of your system.
+Set your test set to be big enough to give high confidence in the system's performance.
+Train Dev Set vs. Test Set
+
+Depending on your application, you may not need a high confidence measure of the overall performance.
+If you only need data to train on and tune your system, a train dev set without a test set may be sufficient.
+Having a separate test set is recommended to get an unbiased estimate of the system's performance.
+Summary and Recommendations
+
+In the era of big data, the old rule of thumb of a 70/30 split no longer applies.
+Use more data for training and less for dev and test sets, especially with large data sets.
+Set the dev set to be big enough for evaluation and idea comparison.
+Set the test set to be big enough for evaluating the final system's performance.
+Having a separate test set is reassuring, but a large dev set may suffice in some cases.
+Changing Evaluation Metrics and Sets
+
+Sometimes, during a machine learning problem, you may want to change the evaluation metric or dev and test sets.
+This can be done partway through the problem to improve the system's performance.
+
