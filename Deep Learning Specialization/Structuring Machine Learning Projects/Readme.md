@@ -275,3 +275,23 @@ Explains how different scenarios require different tactics based on bias or vari
 Conclusion:
 Mentions that there is more nuance in factoring human level performance into decision making.
 Teases the next video, which goes deeper into understanding human level performance.
+
+**Understanding Human-level Performance**:
+
+Introduction to defining human-level performance: The video starts by discussing the concept of human-level performance in machine learning projects. It emphasizes the importance of defining human-level error as a benchmark for evaluating the performance of machine learning models.
+
+Defining human-level error as a proxy for Bayes error: The video explains that human-level error can be used as an estimate for Bayes error, which represents the best possible error any function could achieve. It provides a medical image classification example to illustrate different levels of human performance and the need to define human-level error accurately.
+
+Example of a medical image classification task: The video presents a scenario where a radiology image needs to be classified for diagnosis. It mentions that a typical untrained human achieves 3% error, while a typical radiologist achieves 1% error. An experienced doctor performs even better with 0.7% error, and a team of experienced doctors achieves a consensus opinion with 0.5% error.
+
+Defining human-level error as 0.5%: The video discusses how to define human-level error based on the performance of a team of experienced doctors. It suggests using 0.5% as the estimate for Bayes error, as it represents the optimal error that cannot be higher than this value.
+
+Understanding the relationship between human-level error, training error, and dev error: The video explains that the difference between human-level error and training error is a measure of avoidable bias, while the difference between training error and dev error indicates the variance problem in the learning algorithm.
+
+Analyzing the measure of avoidable bias and variance: The video provides examples to demonstrate how the measure of avoidable bias and variance can help determine the focus of improvement. It discusses scenarios where bias reduction techniques, such as training a bigger network, are needed, and situations where variance reduction techniques, such as regularization or getting a bigger training set, should be prioritized.
+
+Challenges in estimating bias and variance near human-level performance: The video highlights the difficulty in estimating bias and variance when the model's performance approaches human-level. It explains that as the performance gets closer to human-level, it becomes harder to determine the bias and variance effects accurately.
+
+Importance of accurate estimation of Bayes error: The video emphasizes the significance of having an accurate estimate of Bayes error to make informed decisions about bias and variance reduction. It suggests that a better estimate of Bayes error can help identify the focus areas for improvement in machine learning projects.
+
+Recap of the key points discussed in the video: The video concludes by summarizing the main takeaways, including the use of human-level error as a proxy for Bayes error, the relationship between human-level error, training error, and dev error, and the challenges in estimating bias and variance near human-level performance.
