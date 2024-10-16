@@ -99,3 +99,31 @@
 - By comparing the error on the training set, training-dev set, and dev set, you can identify whether you have a variance or data mismatch problem.
 - The general principles for error analysis involve looking at human level error, training set error, training-dev set error, and dev set error.
 - The differences between these errors can help identify the presence of avoidable bias, variance, and data mismatch problems.
+
+**Addressing Data Mismatch**
+
+- Data Mismatch Problem:
+
+    - When the training set comes from a different distribution than the dev and test set.
+    - Error analysis helps identify the differences between the training set and the dev/test sets.
+
+- Manual Error Analysis:
+
+    - Analyzing the differences between the training set and the dev/test sets.
+    Looking at the dev set to understand how it differs from the training set.
+    - Example: Speech-activated rear-view mirror application, analyzing car noise and mis-recognition of street numbers.
+
+- Making Training Data More Similar:
+
+    - Find ways to make the training data more similar to the dev/test sets.
+    - Simulate noisy in-car data to address car noise problems.
+    - Collect more data of people speaking out numbers to improve street number recognition.
+
+- Artificial Data Synthesis:
+
+    - Technique to make the training data more similar to the dev/test sets.
+    - Example: Synthesizing car noise by combining clean audio with recorded car noise.
+    - Caution: Overfitting risk when synthesizing data from a small subset of the space.
+
+- Learning from Multiple Types of Data:
+    - Techniques to learn from multiple types of data simultaneously.
