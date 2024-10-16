@@ -70,7 +70,7 @@
 
 - Option 2: Using different datasets for training, dev, and test sets:
     - Advantages: The dev and test sets represent the desired distribution, allowing the team to optimize for it.
-    
+
     - Disadvantages: The training distribution differs from the dev and test distributions, which can pose challenges.
 - The video concludes that using different datasets for training, dev, and test sets can lead to better performance in the long term, despite the challenges it presents.
 - The video also mentions that using all available data is not always the best approach and that there are cases where it is better to be selective.
@@ -85,3 +85,17 @@
     - Utterances: Spoken words or phrases.
     - Speech recognition: The technology that converts spoken language into written text.
 
+**Bias and Variance with Mismatched Data Distributions**
+
+- Estimating the bias and variance of your learning algorithm helps prioritize what to work on next.
+- Analyzing bias and variance changes when your training set comes from a different distribution than your dev and test sets.
+- Error analysis involves looking at the training error and the error on the dev set.
+- If the dev data comes from the same distribution as the training set, a large variance problem is identified.
+- However, if the training and dev data come from different distributions, it is difficult to draw conclusions about variance.
+- To tease out the effects of data mismatch and variance, a new subset of data called the training-dev set is defined.
+- The training-dev set is a measure of variance, while the gap between the training-dev error and the dev error is a measure of data mismatch.
+- Addressing data mismatch is challenging, but there are some things you can try to mitigate the problem.
+- One approach is to randomly shuffle the training set and carve out a portion as the training-dev set.
+- By comparing the error on the training set, training-dev set, and dev set, you can identify whether you have a variance or data mismatch problem.
+- The general principles for error analysis involve looking at human level error, training set error, training-dev set error, and dev set error.
+- The differences between these errors can help identify the presence of avoidable bias, variance, and data mismatch problems.
