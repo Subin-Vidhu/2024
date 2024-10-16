@@ -192,3 +192,41 @@
 - Conclusion:
     - End-to-end deep learning simplifies systems but doesn't always work.
     - The decision to use end-to-end deep learning depends on the availability of data.
+
+
+**Whether to use End-to-end Deep Learning**
+
+- Introduction:
+
+    - The video discusses the pros and cons of using an end-to-end approach in machine learning projects.
+    - It provides guidelines for determining whether an end-to-end approach is suitable for a specific application.
+- Benefits of End-to-End Learning:
+    1. Letting the data speak:
+
+        - End-to-end learning allows the neural network to learn the most appropriate function mapping from input (X) to output (Y) by analyzing a large amount of X,Y data.
+        - It enables the neural network to capture the statistics present in the data without being influenced by human preconceptions.
+    2. Less hand designing of components:
+        - End-to-end learning reduces the need for manually designing features and intermediate representations.
+        - This simplifies the design workflow and saves time.
+
+- Disadvantages of End-to-End Learning:
+    1. Large amount of data requirement:
+
+        - End-to-end learning requires a substantial amount of X,Y data to train the system effectively.
+        - Subtasks may have more data available compared to the entire end-to-end task.
+    2. Exclusion of potentially useful hand-designed components:
+        - Hand-designed components can inject manual knowledge into the algorithm, which is beneficial when the training set is small.
+        - End-to-end learning may exclude these components, limiting the algorithm's performance.
+- Considerations for Using End-to-End Deep Learning:
+
+    - The key question is whether there is sufficient data to learn the complexity needed to map from X to Y.
+    - The complexity needed depends on the specific task and the availability of data.
+    - End-to-end deep learning may not be the most promising approach in many cases.
+- Example: Autonomous Driving
+
+    - An example is provided to illustrate the use of machine learning components in autonomous driving.
+    - Deep learning can be used to detect cars and pedestrians, while motion planning and control algorithms handle route selection and execution.
+- Conclusion:
+
+    - End-to-end deep learning can be effective but should be applied judiciously.
+    - The availability of data and the complexity of the task should be considered when deciding whether to use an end-to-end approach.
