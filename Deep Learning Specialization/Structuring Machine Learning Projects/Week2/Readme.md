@@ -148,6 +148,19 @@
         - The low-level features learned from image recognition, such as detecting edges and curves, can be useful for radiology diagnosis.
 
     - Speech Recognition and Wake Word Detection:
-    
+
         - Training a neural network on a large speech recognition dataset can aid in building a wake word detection system, even with limited wake word data.
         - Knowledge about human speech learned from speech recognition can be applied to improve wake word detection.
+
+**Multi-task Learning**
+
+- Transfer learning is a sequential process where you learn from task A and then transfer that knowledge to task B.
+- Multi-task learning is when you simultaneously train a neural network to perform multiple tasks at the same time.
+- In multi-task learning, each task helps improve the performance of all the other tasks.
+- An example of multi-task learning is building a self-driving car that needs to detect pedestrians, cars, stop signs, and traffic lights.
+- In multi-task learning, the labels for each task are represented as a vector. For example, instead of having one label for a stop sign, you would have four labels: pedestrians, cars, stop signs, and traffic lights.
+- To train a neural network for multi-task learning, you need to define the loss function, which is the average loss over the entire training set.
+- Multi-task learning is beneficial when there is a large amount of data available for each task and when you can train a big enough neural network to perform well on all the tasks.
+- Multi-task learning can provide a big boost in performance when there is a large amount of data available for all the tasks combined.
+- Multi-task learning is more effective when the neural network is large enough to handle all the tasks simultaneously.
+- If the neural network is not big enough, multi-task learning may not improve performance compared to training separate neural networks for each task.
