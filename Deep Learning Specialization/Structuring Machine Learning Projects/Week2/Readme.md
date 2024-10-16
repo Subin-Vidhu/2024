@@ -127,3 +127,27 @@
 
 - Learning from Multiple Types of Data:
     - Techniques to learn from multiple types of data simultaneously.
+
+**Transfer Learning**
+
+- Transfer learning is the idea of taking knowledge learned by a neural network from one task and applying it to a separate task.
+- It involves training a neural network on an initial task, such as image recognition, and then adapting or transferring that knowledge to a different task, such as radiology diagnosis or wake word detection.
+- In transfer learning, the last output layer of the neural network is removed, along with its weights, and a new set of randomly initialized weights is created for the last layer to output the desired predictions for the new task.
+- The neural network is then retrained on a new dataset specific to the new task. Depending on the amount of data available, either only the last layer's weights or all the parameters in the network can be retrained.
+- The initial phase of training on the initial task is called pre-training, and the subsequent training on the new task is called fine-tuning.
+- Transfer learning is most useful when there is a lot of data available for the initial task and relatively less data for the new task.
+- It makes sense when both tasks have the same input type and when low-level features learned from the initial task can be helpful for the new task.
+- Transfer learning can significantly improve the performance of the new task, especially when there is limited data available for the new task.
+- However, transfer learning may not be beneficial if there is already more data available for the new task compared to the initial task.
+
+- Examples mentioned in the video:
+
+    - Image Recognition and Radiology Diagnosis:
+
+        - Training a neural network on a large image recognition dataset can help improve the performance of a radiology diagnosis system, even with limited radiology data.
+        - The low-level features learned from image recognition, such as detecting edges and curves, can be useful for radiology diagnosis.
+
+    - Speech Recognition and Wake Word Detection:
+    
+        - Training a neural network on a large speech recognition dataset can aid in building a wake word detection system, even with limited wake word data.
+        - Knowledge about human speech learned from speech recognition can be applied to improve wake word detection.
