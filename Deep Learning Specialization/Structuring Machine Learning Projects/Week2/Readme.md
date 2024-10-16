@@ -57,3 +57,31 @@
 
 **Training and Testing on Different Distributions**
 
+- Deep learning algorithms require a large amount of training data, and teams often include any available data in the training set, even if it comes from a different distribution than the dev and test data.
+- The video provides two examples to illustrate this concept:
+    - Building a mobile app to recognize cat pictures: The team has 10,000 pictures from the mobile app and 200,000 professionally taken cat pictures from the web. They can either combine both datasets or use only the mobile app pictures for the dev and test sets.
+
+    - Building a speech-activated rearview mirror: The team has 500,000 utterances from various speech recognition applications and a smaller dataset from the rearview mirror. They can either use all the data for training or split it between the training and dev/test sets.
+- The video discusses the advantages and disadvantages of each approach:
+- Option 1: Combining datasets for training, dev, and test sets:
+    - Advantages: All sets come from the same distribution, making it easier to manage.
+
+    - Disadvantages: The dev set may be dominated by data from a different distribution, leading to suboptimal performance on the desired distribution.
+
+- Option 2: Using different datasets for training, dev, and test sets:
+    - Advantages: The dev and test sets represent the desired distribution, allowing the team to optimize for it.
+    
+    - Disadvantages: The training distribution differs from the dev and test distributions, which can pose challenges.
+- The video concludes that using different datasets for training, dev, and test sets can lead to better performance in the long term, despite the challenges it presents.
+- The video also mentions that using all available data is not always the best approach and that there are cases where it is better to be selective.
+- Definitions mentioned in the video:
+
+    - Deep learning algorithms: Algorithms that use artificial neural networks with multiple layers to learn and make predictions.
+    - Training data: Data used to train a machine learning model.
+    - Dev and test data: Data used to evaluate the performance of a machine learning model.
+    - Distribution: The pattern or spread of data points in a dataset.
+    - Mobile app distribution: The distribution of images uploaded from a mobile app.
+    - Web page distribution: The distribution of images downloaded from the web.
+    - Utterances: Spoken words or phrases.
+    - Speech recognition: The technology that converts spoken language into written text.
+
