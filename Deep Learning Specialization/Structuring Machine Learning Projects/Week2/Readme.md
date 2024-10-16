@@ -1,3 +1,4 @@
+## Error Analysis
 **Carrying Out Error Analysis**
 
 - Error analysis involves manually examining mistakes made by a learning algorithm to gain insights into improving its performance.
@@ -51,3 +52,8 @@
 - The video highlights the common tendency to overthink and build something too complicated, and suggests using a quick and dirty implementation to guide further improvements.
 - It mentions that the advice applies less strongly if the application area has prior experience or a significant body of academic literature to draw upon.
 - The video concludes by encouraging the viewer to build something quick and dirty, use analysis to prioritize improvements, and focus on building a system that works well.
+
+## Mismatched Training and Dev/Test Set
+
+**Training and Testing on Different Distributions**
+
