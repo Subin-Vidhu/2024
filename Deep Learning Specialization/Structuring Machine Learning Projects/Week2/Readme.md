@@ -164,3 +164,31 @@
 - Multi-task learning can provide a big boost in performance when there is a large amount of data available for all the tasks combined.
 - Multi-task learning is more effective when the neural network is large enough to handle all the tasks simultaneously.
 - If the neural network is not big enough, multi-task learning may not improve performance compared to training separate neural networks for each task.
+
+**What is End-to-end Deep Learning?**
+
+- Introduction to End-to-End Deep Learning:
+
+    - End-to-end deep learning replaces multiple stages of processing with a single neural network.
+    - Traditional systems required feature extraction and machine learning algorithms.
+    - End-to-end deep learning directly inputs the audio clip and outputs the transcript.
+- Challenges and Sociological Effects:
+
+    - End-to-end deep learning challenged researchers who had spent years designing individual pipeline steps.
+    - Large datasets are required for end-to-end deep learning to work well.
+- Two-Step Approach for Face Recognition:
+
+    - A two-step approach is used for face recognition turnstiles.
+    - The first step detects the person's face, and the second step identifies the person's identity.
+    - Breaking down the problem into two steps results in better performance.
+- End-to-End Deep Learning for Machine Translation:
+
+    - Machine translation systems traditionally had a complex pipeline.
+    - End-to-end deep learning works well for machine translation with large datasets.
+- Estimating Age from X-ray Images:
+
+    - Estimating a child's age from an X-ray image is done in two steps.
+    - The first step segments the bones, and the second step estimates the age using statistics.
+- Conclusion:
+    - End-to-end deep learning simplifies systems but doesn't always work.
+    - The decision to use end-to-end deep learning depends on the availability of data.
