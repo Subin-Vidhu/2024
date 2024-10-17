@@ -30,3 +30,4 @@ if __name__ == "__main__":
     # Iterating over the custom iterator using a for loop
     for number in my_range:
         print(number)  # Output: 1, 2, 3, 4
+
