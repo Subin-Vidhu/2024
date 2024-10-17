@@ -1,4 +1,4 @@
-import itertools
+import itertools # itertools module provides a collection of functions to work with iterators, which are objects that can be iterated over (e.g., using a for loop).
 
 # Infinite iterators
 counter = itertools.count(
@@ -17,3 +17,7 @@ print(next(cycler))  # Output: A (repeats)
 # Creating combinations of elements
 combinations = itertools.combinations("ABC", 2)
 print(list(combinations))  # Output: [('A', 'B'), ('A', 'C'), ('B', 'C')]
+
+# Creating permutations of elements
+permutations = itertools.permutations("ABC", 2)
+print(list(permutations))  # Output: [('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'C'), ('C', 'A'), ('C', 'B')]
