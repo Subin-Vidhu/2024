@@ -30,3 +30,4 @@ if __name__ == "__main__":
     with FileManager("example.txt", "r") as file:
         content = file.read()
         print(f"File content: {content}")
+
