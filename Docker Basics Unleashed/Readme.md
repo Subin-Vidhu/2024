@@ -36,3 +36,40 @@
   - [Docker Hub](https://hub.docker.com/)
   - [Docker Compose Documentation](https://docs.docker.com/compose/)
   - [Docker Compose File Reference](https://docs.docker.com/compose/compose-file/)
+
+---
+
+- Dockerfile:
+
+    - A Dockerfile is a text document that contains all the commands a user could call on the command line to assemble an image.
+    - Docker can build images automatically by reading the instructions from a Dockerfile.
+    - A Dockerfile adheres to a specific format and set of instructions which you can find at the [Dockerfile reference](https://docs.docker.com/engine/reference/builder/).
+
+        ```Docker
+        # Use an official Python runtime as a parent image
+        FROM python:2.7-slim
+
+        # Set the working directory to /app
+        WORKDIR /app
+
+        # Copy the current directory contents into the container at /app
+        ADD . /app
+
+        # Install any needed packages specified in requirements.txt
+        RUN pip install --trusted-host pypi.python.org -r requirements.txt
+
+        # Make port 80 available to the world outside this container
+        EXPOSE 80
+
+        # Define environment variable
+        ENV NAME World
+
+        # Run app.py when the container launches
+        CMD ["python", "app.py"]
+        ```
+
+    - To build an image from a Dockerfile, use the `docker build` command:
+
+        ```bash
+        docker build -t friendlyhello . # Replace friendlyhello with your desired image name
+        ```
