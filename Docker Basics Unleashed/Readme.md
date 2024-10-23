@@ -73,3 +73,9 @@
         ```bash
         docker build -t friendlyhello . # Replace friendlyhello with your desired image name
         ```
+
+    - To run a container from the image you just built, use the `docker run` command:
+
+        ```bash
+        docker run -p 4000:80 friendlyhello # Replace friendlyhello with the image name you used, here 4000 and 80 are the host and container ports respectively, meaning you can access the app at http://localhost:4000
+        ```
