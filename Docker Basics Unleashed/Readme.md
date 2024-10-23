@@ -11,3 +11,20 @@
 - 🚀 Ready, Set, Deploy! With Docker, sending your software to a big server or sharing it with the world is as easy as handing over your container. It's like sharing a recipe where you provide every single ingredient in a perfect little box.
 
 - Time to dive in and play with these magic boxes. By the end of this, Docker won't just be a tool; it'll be your favorite sidekick on every tech adventure! 🌟🛠
+
+---
+
+- Some common Docker commands:
+  - `docker run <image>`: Run a container from an image.
+  - `docker ps`: List all running containers.
+  - `docker ps -a`: List all containers.
+  - `docker stop <container>`: Stop a running container.
+  - `docker rm <container>`: Remove a container.
+  - `docker images`: List all images.
+  - `docker rmi <image>`: Remove an image.
+  - `docker pull <image>`: Pull an image from Docker Hub.
+  - `docker push <image>`: Push an image to Docker Hub.
+  - `docker exec -it <container> <command>`: Run a command in a running container.
+  - `docker build -t <image> .`: Build an image from a Dockerfile.
+  - `docker-compose up`: Start services defined in a `docker-compose.yml` file.
+  - `docker-compose down`: Stop services defined in a `docker-compose.yml` file.
