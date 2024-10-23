@@ -21,7 +21,7 @@
   - `docker stop <container>`: Stop a running container.
   - `docker rm <container>`: Remove a container.
   - `docker images`: List all images.
-  - `docker rmi <image>`: Remove an image.
+  - `docker rmi <image>`|`docker image rm <image>`: Remove an image.
   - `docker pull <image>`: Pull an image from Docker Hub.
   - `docker push <image>`: Push an image to Docker Hub.
   - `docker exec -it <container> <command>`: Run a command in a running container.
