@@ -28,3 +28,11 @@
   - `docker build -t <image> .`: Build an image from a Dockerfile.
   - `docker-compose up`: Start services defined in a `docker-compose.yml` file.
   - `docker-compose down`: Stop services defined in a `docker-compose.yml` file.
+
+---
+
+- 📚 **Resources**:
+  - [Docker Documentation](https://docs.docker.com/)
+  - [Docker Hub](https://hub.docker.com/)
+  - [Docker Compose Documentation](https://docs.docker.com/compose/)
+  - [Docker Compose File Reference](https://docs.docker.com/compose/compose-file/)
