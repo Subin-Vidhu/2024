@@ -79,3 +79,25 @@
         ```bash
         docker run -p 4000:80 friendlyhello # Replace friendlyhello with the image name you used, here 4000 and 80 are the host and container ports respectively, meaning you can access the app at http://localhost:4000
         ```
+
+---
+
+- WebServer Container:
+
+    - To run a simple web server in a container, use the following command:
+
+        ```bash
+        docker run -d -p 80:80 --name webserver nginx # This command runs the nginx web server in a container, -d flag runs the container in detached mode, -p flag maps port 80 of the host to port 80 of the container, --name flag assigns a name to the container, you can access the web server at http://localhost or http://localhost:80, where you'll see the default nginx welcome page
+        ```
+
+    - To stop the container, use the following command:
+
+        ```bash
+        docker stop webserver # Replace webserver with the name of your container
+        ```
+
+    - To remove the container, use the following command:
+
+        ```bash
+        docker rm webserver # Replace webserver with the name of your container
+        ```
