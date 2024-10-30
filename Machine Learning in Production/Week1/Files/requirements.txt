@@ -1,0 +1,8 @@
+cvlib==0.2.7
+opencv-python-headless==4.9.0.80
+Pillow==10.2.0.
+tensorflow==2.15.0
+uvicorn==0.29.0
+python-multipart==0.0.9
+fastapi==0.110.1
+nest-asyncio==1.6.0
