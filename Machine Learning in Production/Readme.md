@@ -1,1 +1,7 @@
 # Machine Learning in Production Specialization (MLOps)
+
+- Some images for the readme are taken from the course slides and videos.(for educational purposes only) 
+
+    - ![alt text](image.png)
+
+    
