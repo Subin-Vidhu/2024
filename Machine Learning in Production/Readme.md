@@ -27,3 +27,9 @@
     - ![alt text](image-11.png)
 
     - ![alt text](image-12.png)
+
+    - Some links to clear the concepts
+
+        - [link](https://towardsdatascience.com/machine-learning-in-production-why-you-should-care-about-data-and-concept-drift-d96d0bc907fb)
+
+        - [link](https://youtu.be/06-AZXmwHjo)
