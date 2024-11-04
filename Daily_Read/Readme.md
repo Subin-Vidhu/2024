@@ -138,3 +138,19 @@
 8. Flask Hacking Mastery | [Link](https://github.com/Subin-Vidhu/2024/tree/main/Flask%20Hacking%20Mastery)
 
 9. Nginx for sys and web admins FREE | [Link](https://github.com/Subin-Vidhu/2024/tree/main/Nginx%20for%20sys%20and%20web%20admins%20FREE)
+
+10. Windows Command Mastery for Ethical Hackers | [Link](https://github.com/Subin-Vidhu/2024/tree/main/Windows%20Command%20Mastery%20for%20Ethical%20Hackers)
+
+    ```
+    nslookup domain_name : to check the ip address
+
+    hostname : display the hostname of the current computer
+
+    attrib +h +s Hidden_Test : to hide a folder
+
+    attrib -h -s Hidden_Test : to unhide a folder
+
+    netsh wlan show profiles : displays all the wireless networks
+
+    netsh wlan show profile "name" key=clear : to get the details of the network
+    ```
