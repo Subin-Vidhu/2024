@@ -180,3 +180,33 @@
 16. General
 
 17. Complete SQL + Databases Bootcamp | [Link](https://github.com/Subin-Vidhu/2024/tree/main/Complete%20SQL%20%2B%20Databases%20Bootcamp)
+
+18. Linux vs Ubuntu
+
+    
+    Linux and Ubuntu are two related but distinct concepts in the world of operating systems:
+
+    **Linux**:
+
+    * Linux is an open-source operating system kernel, created by Linus Torvalds in 1991.
+    * It's a free and open-source software that provides a foundation for building an operating system.
+    * Linux is the core component that manages hardware resources, provides a command-line interface, and enables users to run applications.
+    * Linux is not a complete operating system, but rather a kernel that can be used to build a complete OS.
+
+    **Ubuntu**:
+
+    * Ubuntu is a complete, open-source operating system based on the Linux kernel.
+    * It was created in 2004 by Canonical Ltd. and is one of the most popular Linux distributions.
+    * Ubuntu is a user-friendly, free, and open-source OS that provides a graphical user interface (GUI), a wide range of software packages, and a large community of users and developers.
+    * Ubuntu is built on top of the Linux kernel and adds many additional features, tools, and software packages to create a fully functional operating system.
+
+    In summary:
+
+    * Linux is the kernel, the core component of an operating system.
+    * Ubuntu is a complete operating system that uses the Linux kernel and adds many additional features and software packages.
+
+    Think of it like a car:
+
+    * Linux is the engine (kernel).
+    * Ubuntu is the complete car (operating system) that uses the Linux engine, with a body, wheels, and all the necessary features to make it run smoothly
+    
