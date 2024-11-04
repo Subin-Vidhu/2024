@@ -106,3 +106,31 @@
     Out: array([1, 2, 3, 4, 5, 6])
 
     ```
+
+7. Python And Flask Demonstrations Practice Course | [Link](https://github.com/Subin-Vidhu/2024/tree/main/Python%20And%20Flask%20Demonstrations%20Practice%20Course)
+
+    ```
+    <script type = "text/javascript" src = "{{url_for('static', filename = 'js/hello.js')}}"></script>
+
+    <input type = "button" onclick = "sayHello()" value = "Say Hello" />
+
+    #hello.js
+    function sayHello() {
+    alert("Hello world")
+    }
+
+    #Cookies - refer github
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    ...
+    {% endif %}
+
+    <form action = "http://localhost:5000/uploader" method = "POST" enctype = "multipart/form-data">
+    <input type = "file" name = "file" />
+    <input type = "submit"/>
+    </form>
+
+
+    # Mail Extension, WTF forms, SQLite - refer github
+    ```
