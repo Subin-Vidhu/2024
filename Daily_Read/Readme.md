@@ -210,3 +210,17 @@
     * Linux is the engine (kernel).
     * Ubuntu is the complete car (operating system) that uses the Linux engine, with a body, wheels, and all the necessary features to make it run smoothly
     
+19. Images and Path file path using index
+
+    ```py
+    import pathlib
+
+    path = "D:\AI\AI-in-Medicine\Atrium-Segmentation\Dataset\Task02_Heart\labelsTr\la_003.nii"
+    parts = list(pathlib.Path(path).parts)
+    print(parts)
+    print(pathlib.Path(*parts))
+
+    # o/p:
+    ['D:\\', 'AI', 'AI-in-Medicine', 'Atrium-Segmentation', 'Dataset', 'Task02_Heart', 'labelsTr', 'la_003.nii']
+    D:\AI\AI-in-Medicine\Atrium-Segmentation\Dataset\Task02_Heart\labelsTr\la_003.nii
+    ```
