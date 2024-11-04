@@ -60,3 +60,14 @@ a = np.array([[1, 2, 3],
     
 a.flatten()
 # Out[21]: array([1, 2, 3, 4, 5, 6])
+
+############## **kwargs ###############
+
+def hello(**kwargs):
+    #print("Hello " + kwargs['first'] + " " + kwargs['last']) # Hello Bro Code
+    print("Hello",end=" ")
+    for key,value in kwargs.items():
+        print(value,end=" ")
+
+
+hello(title="Mr.",first="Bro",middle="Dude",last="Code")
