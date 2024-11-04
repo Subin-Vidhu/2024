@@ -164,3 +164,16 @@
 14. Python Full Course for free | Link (https://youtu.be/XKHEtdqhLK8?si=qaipuIrZQksSdLUF)
 
     - Refer the youtube link for more details or use telegram saved msgs for the same.
+
+15. API
+
+    ```
+    # Getting started with apis
+    https://rapidapi.com/
+    rapidapi.py - python projects
+    Rate limiting - restricts the number of requests a client can make within a specified time window, such as 100 request per minute.
+                Once the limit is reached, the client must wait or receive an error response.
+    Throttling - controls the rate at which requests are processed on the server side.
+                excess requests are queued or delayed.
+    ```
+
