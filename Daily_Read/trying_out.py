@@ -103,3 +103,74 @@ print(f"The number is {number:E}")
 # The number is 1750
 # The number is 3E8
 # The number is 1.000000E+03
+
+
+################# Threading #############
+
+import threading
+import time
+
+
+def eat_breakfast():
+    time.sleep(3)
+    print("You eat breakfast")
+
+
+def drink_coffee():
+    time.sleep(4)
+    print("You drank coffee")
+
+
+def study():
+    time.sleep(5)
+    print("You finish studying")
+
+
+x = threading.Thread(target=eat_breakfast, args=())
+x.start()
+
+y = threading.Thread(target=drink_coffee, args=())
+y.start()
+
+z = threading.Thread(target=study, args=())
+z.start()
+
+x.join()
+y.join()
+z.join()
+
+print(threading.active_count())
+print(threading.enumerate())
+print(time.perf_counter())
+
+######
+import threading
+import time
+
+def eat_breakfast():
+    time.sleep(3)
+    print("You eat breakfast")
+
+def drink_coffee():
+    time.sleep(4)
+    print("You drank coffee")
+
+def study():
+    time.sleep(5)
+    print("You finish studying")
+
+x = threading.Thread(target=eat_breakfast, args=())
+y = threading.Thread(target=drink_coffee, args=())
+z = threading.Thread(target=study, args=())
+
+x.start()
+y.start()
+z.start()
+
+# Without join(), the main thread will terminate immediately
+print("Main thread terminated")
+
+# With join(), the main thread will wait for all threads to finish
+# x.join()
+# y.join()
+# z.join()
