@@ -71,3 +71,35 @@ def hello(**kwargs):
 
 
 hello(title="Mr.",first="Bro",middle="Dude",last="Code")
+
+
+####################### f-strings ###############
+name = "Bro"
+
+print(f"My name is {name}")
+print(f"My name is {name:10}")  # amount of padding
+print(f"My name is {name:<10}")  # < = left align
+print(f"My name is {name:>10}")  # > = right align
+print(f"My name is {name:^10}")  # ^ = center align
+
+# My name is Bro
+# My name is Bro       
+# My name is Bro       
+# My name is        Bro
+# My name is    Bro
+
+
+# Using f-string with format specifiers
+number = 1000
+print(f"The number pi is {number:.3f}")
+print(f"The number is {number:,}")
+print(f"The number is {number:b}")
+print(f"The number is {number:o}")
+print(f"The number is {number:X}")
+print(f"The number is {number:E}")
+# The number pi is 1000.000
+# The number is 1,000
+# The number is 1111101000
+# The number is 1750
+# The number is 3E8
+# The number is 1.000000E+03
