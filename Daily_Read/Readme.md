@@ -154,3 +154,5 @@
 
     netsh wlan show profile "name" key=clear : to get the details of the network
     ```
+
+11. SSH | [Link](https://github.com/Subin-Vidhu/2024/tree/main/SSH)
