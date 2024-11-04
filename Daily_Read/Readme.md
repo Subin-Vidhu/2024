@@ -136,3 +136,5 @@
     ```
 
 8. Flask Hacking Mastery | [Link](https://github.com/Subin-Vidhu/2024/tree/main/Flask%20Hacking%20Mastery)
+
+9. Nginx for sys and web admins FREE | [Link](https://github.com/Subin-Vidhu/2024/tree/main/Nginx%20for%20sys%20and%20web%20admins%20FREE)
