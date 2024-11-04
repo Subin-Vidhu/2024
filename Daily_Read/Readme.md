@@ -179,3 +179,4 @@
 
 16. General
 
+17. Complete SQL + Databases Bootcamp | [Link](https://github.com/Subin-Vidhu/2024/tree/main/Complete%20SQL%20%2B%20Databases%20Bootcamp)
