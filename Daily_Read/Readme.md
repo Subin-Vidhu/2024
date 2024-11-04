@@ -158,3 +158,5 @@
 11. SSH | [Link](https://github.com/Subin-Vidhu/2024/tree/main/SSH)
 
 12. Ubuntu Network Server | [Link](https://github.com/Subin-Vidhu/2024/tree/main/Ubuntu%20Network%20Server)
+
+13. Learning How to Learn: Powerful mental tools to help you master tough subjects | [Link](https://github.com/Subin-Vidhu/2024/tree/main/Learning%20How%20to%20Learn)
