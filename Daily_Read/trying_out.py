@@ -61,6 +61,42 @@ a = np.array([[1, 2, 3],
 a.flatten()
 # Out[21]: array([1, 2, 3, 4, 5, 6])
 
+################ .ravel() vs .flatten() ############
+
+import numpy as np
+
+# Create a 2D array
+arr = np.array([[1, 2, 3], [4, 5, 6]])
+
+# Use .ravel() to flatten the array
+flattened_arr_ravel = arr.ravel()
+
+# Use .flatten() to flatten the array
+flattened_arr_flatten = arr.flatten()
+
+# Modify the returned arrays
+flattened_arr_flatten[0] = 20
+flattened_arr_ravel[0] = 10
+
+
+print("Original array:")
+print(arr)
+
+print("\nReturned array from .ravel():")
+print(flattened_arr_ravel)
+
+print("\nReturned array from .flatten():")
+print(flattened_arr_flatten)
+
+# Original array:
+# [[10  2  3]
+#  [ 4  5  6]]
+
+# Returned array from .ravel():
+# [10  2  3  4  5  6]
+
+# Returned array from .flatten():
+# [20  2  3  4  5  6]
 ############## **kwargs ###############
 
 def hello(**kwargs):
