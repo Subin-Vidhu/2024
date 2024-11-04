@@ -134,3 +134,5 @@
 
     # Mail Extension, WTF forms, SQLite - refer github
     ```
+
+8. Flask Hacking Mastery | [Link](https://github.com/Subin-Vidhu/2024/tree/main/Flask%20Hacking%20Mastery)
