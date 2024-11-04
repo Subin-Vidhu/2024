@@ -82,3 +82,27 @@
     root (home of the root user)
     tmp (temporary files, gets deleted when computer restarts)```
 
+6. 2024 Master class on Data Science using Python A-Z for ML | [Link](https://github.com/Subin-Vidhu/2024/tree/main/2024%20Master%20class%20on%20Data%20Science%20using%20Python%20A-Z%20for%20ML)
+
+    ```
+    list.sort() - sorts the list and modifies it as well
+
+    list2 = list1 (both the content and id same)
+    list2 = list1.copy() (only the content remains the same, id differs) [to find id = id(list)]
+
+    tuple1 = 1,2,3 [Any comma-separated sequence of values defines a tuple]
+
+    dict.get(key) - returns none if no value exists
+
+    function exists as soon as the return statement is called. (define - parameters [DP], function_call - arguments [CA])
+
+    Flatten matrix [transform a matrix to a one dimensional numpy array]
+    a
+    Out: 
+    array([[1, 2, 3],
+            [4, 5, 6]])
+    
+    a.flatten()
+    Out: array([1, 2, 3, 4, 5, 6])
+
+    ```
