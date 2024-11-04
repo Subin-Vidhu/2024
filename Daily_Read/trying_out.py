@@ -4,6 +4,7 @@ Created on Mon Nov  4 08:54:29 2024
 
 @author: Aus
 """
+####### 1. LE vs OHE #######
 
 # Label Encoder
 from sklearn.preprocessing import LabelEncoder
