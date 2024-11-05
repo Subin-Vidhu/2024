@@ -54,3 +54,31 @@ fig, axes = plt.subplots(2,1)
 axes[0].imshow(im_bone)
 axes[1].plot(hist)
 format_and_render_plot()
+
+# Tune a Mask
+# Create and tune bone mask
+mask_bone = im >= 145
+mask_dilate = ndi.binary_dilation(mask_bone, iterations=5)
+mask_closed = ndi.binary_closing(mask_bone, iterations=5)
+
+# Plot masked images
+fig, axes = plt.subplots(1,3)
+axes[0].imshow(mask_bone)
+axes[1].imshow(mask_dilate)
+axes[2].imshow(mask_closed)
+format_and_render_plot()
+
+# Filter Convolutions
+# Set filter weights
+weights = [[0.11, 0.11, 0.11],
+           [0.11, 0.11, 0.11], 
+           [0.11, 0.11, 0.11]]
+
+# Convolve the image with the filter
+im_filt = ndi.convolve(im, weights)
+
+# Plot the images
+fig, axes = plt.subplots(1,2)
+axes[0].imshow(im, cmap='gray')
+axes[1].imshow(im_filt, cmap='gray')
+format_and_render_plot()
