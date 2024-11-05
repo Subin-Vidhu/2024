@@ -50,3 +50,20 @@ print("With a min_distance set to 60, we detect a total", len(coords_w_min_60), 
 # Show original and resulting image with corners detected
 show_image_with_corners(building_image, coords_w_min_10, "Corners detected with 10 px of min_distance")
 show_image_with_corners(building_image, coords_w_min_60, "Corners detected with 60 px of min_distance")
+
+# Face Detection
+# Load the trained file from data
+trained_file = data.lbp_frontal_face_cascade_filename()
+
+# Initialize the detector cascade
+detector = Cascade(trained_file)
+
+# Detect faces with min and max size of searching window
+detected = detector.detect_multi_scale(img = night_image,
+                                       scale_factor=1.2,
+                                       step_ratio=1,
+                                       min_size=(10,10),
+                                       max_size=(200,200))
+
+# Show the detected faces
+show_detected_face(night_image, detected)
