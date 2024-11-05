@@ -1,3 +1,12 @@
+#common functions used
+# To show the image
+import matplotlib.pyplot as plt
+def show_image(image, title='Image', cmap_type='gray'):
+    plt.imshow(image, cmap=cmap_type)
+    plt.title(title)
+    plt.axis('off')
+    plt.show()
+
 #1. Sobel filter
 # Import the color module
 from skimage import color
