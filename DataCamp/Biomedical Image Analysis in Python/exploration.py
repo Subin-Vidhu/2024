@@ -32,3 +32,27 @@ plt.imshow(im, cmap='gray', vmin=40, vmax=80)
 plt.axis('off')
 plt.show()
 
+#5 - Stack Images
+# Import ImageIO and NumPy
+import imageio
+import numpy as np
+
+# Read in each 2D image
+im1 = imageio.imread('chest-220.dcm')
+im2 = imageio.imread('chest-221.dcm')
+im3 = imageio.imread('chest-222.dcm')
+
+# Stack images into a volume
+vol = np.stack([im1,im2,im3])
+print('Volume dimensions:', vol.shape)
+
+#6 - Load Volumes
+# Import ImageIO
+import imageio
+
+# Load the "tcia-chest-ct" directory
+vol = imageio.volread('tcia-chest-ct')
+
+# Print image attributes
+print('Available metadata:', vol.meta.keys())
+print('Shape of image array:', vol.shape)
