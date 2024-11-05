@@ -126,3 +126,21 @@ print('Label 2 center:', coms[1])
 for c0, c1, c2 in coms:
     plt.scatter(c2, c1, s=100, marker='o')
 plt.show()
+
+
+# Summarize the time series
+# Create an empty time series
+ts = np.zeros(20)
+
+# Calculate volume at each voxel
+d0, d1, d2, d3 = vol_ts.meta['sampling']
+dvoxel = d1 * d2 * d3
+
+# Loop over the labeled arrays
+for t in range(20):
+    nvoxels = ndi.sum(1, labels[t], index=1)
+    ts[t] = nvoxels * dvoxel
+
+# Plot the data
+plt.plot(ts)
+format_and_render_plot()
