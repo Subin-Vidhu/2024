@@ -9,3 +9,10 @@ mask = ndi.binary_closing(mask_start)
 # Label the objects in "mask"
 labels, nlabels = ndi.label(mask)
 print('Num. Labels:', nlabels)
+
+# Create a `labels` overlay
+overlay = np.where(labels == 0, np.nan, labels)
+
+# Use imshow to plot the overlay
+plt.imshow(overlay, cmap='rainbow', alpha=0.75)
+format_and_render_plot()
