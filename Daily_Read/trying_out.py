@@ -233,3 +233,19 @@ def show_image(image, title='Image', cmap_type='gray'):
     plt.title(title)
     plt.axis('off')
     plt.show()
+    
+################### Creating a Zero Array with np.zeros #################
+import numpy as np
+
+# Create a sample image array
+image = np.random.rand(512, 512, 3)
+
+# Get the shape of the image
+print(image.shape)  # Output: (512, 512, 3)
+test_image = image[:,:,1]
+print(test_image.shape) # Output: (512, 512)
+# Create a zero array with the same shape as the image, but with one less dimension
+zero_array = np.zeros(image.shape[:-1])
+
+# Print the shape of the zero array
+print(zero_array.shape)  # Output: (512, 512)
