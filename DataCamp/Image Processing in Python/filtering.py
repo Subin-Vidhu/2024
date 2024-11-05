@@ -42,3 +42,28 @@ xray_image_eq =  exposure.equalize_hist(chest_xray_image)
 
 # Show the resulting image
 show_image(xray_image_eq, 'Resulting image')
+
+#
+# Import the required module
+from skimage import exposure
+
+# Use histogram equalization to improve the contrast
+image_eq =  exposure.equalize_hist(image_aerial)
+
+# Show the original and resulting image
+show_image(image_aerial, 'Original')
+show_image(image_eq, 'Resulting image')
+
+#4. CLAHE - Contrast Limited Adaptive Histogram Equalization
+# Import the necessary modules
+from skimage import data, exposure
+
+# Load the image
+original_image = data.coffee()
+
+# Apply the adaptive equalization on the original image
+adapthist_eq_image = exposure.equalize_adapthist(original_image, clip_limit=0.03)
+
+# Compare the original image to the equalized
+show_image(original_image)
+show_image(adapthist_eq_image, '#ImageProcessingDatacamp')
