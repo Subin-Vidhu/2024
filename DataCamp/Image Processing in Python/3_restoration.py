@@ -22,3 +22,31 @@ image_logo_removed = inpaint.inpaint_biharmonic(image_with_logo,mask,multichanne
 # Show the original and logo removed images
 show_image(image_with_logo, 'Image with logo')
 show_image(image_logo_removed, 'Image with logo removed')
+
+# random noise
+# Import the module and function
+from skimage.util import random_noise
+
+# Add noise to the image
+noisy_image = random_noise(fruit_image)
+
+# Show original and resulting image
+show_image(fruit_image, 'Original')
+show_image(noisy_image, 'Noisy image')
+
+
+# Superpixel segmentation
+# Import the slic function from segmentation module
+from skimage.segmentation import slic
+
+# Import the label2rgb function from color module
+from skimage.color import label2rgb
+
+# Obtain the segmentation with 400 regions
+segments = slic(face_image, n_segments= 400)
+
+# Put segments on top of original image to compare
+segmented_image = label2rgb(segments, face_image, kind='avg')
+
+# Show the segmented image
+show_image(segmented_image, "Segmented image, 400 superpixels")
