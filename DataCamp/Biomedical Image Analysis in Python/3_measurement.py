@@ -88,3 +88,15 @@ plt.plot(hist1 / hist1.sum(), label='All pixels')
 plt.plot(hist2 / hist2.sum(), label='All labeled pixels')
 plt.plot(hist3 / hist3.sum(), label='Left ventricle')
 format_and_render_plot()
+
+# Volume
+# Count the number of voxels in the left ventricle
+num_voxels = np.sum(labels == 1)
+
+# Get the size of each voxel in mm^3
+voxel_size_mm3 = vol.meta['sampling'][0] * vol.meta['sampling'][1] * vol.meta['sampling'][2]
+
+# Calculate the volume of the left ventricle in mm^3
+volume_mm3 = num_voxels * voxel_size_mm3
+
+print(f"The volume of the left ventricle is {volume_mm3} mm^3")
