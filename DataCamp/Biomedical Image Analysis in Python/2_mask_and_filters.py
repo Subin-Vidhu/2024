@@ -110,3 +110,15 @@ edges = ndi.convolve(im, weights)
 plt.imshow(edges, cmap="seismic", vmin=-150, vmax=150)
 plt.colorbar()
 format_and_render_plot()
+
+#
+# Apply Sobel filter along both axes
+sobel_ax0 = ndi.sobel(im, axis=0)
+sobel_ax1 = ndi.sobel(im, axis=1)
+
+# Calculate edge magnitude 
+edges = np.sqrt(np.square(sobel_ax0) +np.square(sobel_ax1))
+
+# Plot edge magnitude
+plt.imshow(edges, vmax=75, cmap='gray')
+format_and_render_plot()
