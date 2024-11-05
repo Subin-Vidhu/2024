@@ -56,3 +56,20 @@ vol = imageio.volread('tcia-chest-ct')
 # Print image attributes
 print('Available metadata:', vol.meta.keys())
 print('Shape of image array:', vol.shape)
+
+#7 - SubPlot
+# Import PyPlot
+import matplotlib.pyplot as plt
+
+# Initialize figure and axes grid
+fig, axes = plt.subplots(nrows=2, ncols=1)
+
+# Draw an image on each subplot
+axes[0].imshow(im1, cmap='gray')  # Replace image1 with your actual image
+axes[0].axis('off')  # Remove ticks and labels
+
+axes[1].imshow(im2, cmap='gray')  # Replace image2 with your actual image
+axes[1].axis('off')  # Remove ticks and labels
+
+# Render the plot
+plt.show()
