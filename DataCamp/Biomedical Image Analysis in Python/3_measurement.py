@@ -63,3 +63,28 @@ im_lv = im[bboxes[0]]
 # Plot the cropped image
 plt.imshow(im_lv, cmap='gray')
 format_and_render_plot()
+
+# Measure variance
+# Variance for all pixels
+var_all = ndi.variance(vol)
+print('All pixels:', var_all)
+
+# Variance for labeled pixels
+var_labels = ndi.variance(vol, labels)
+print('Labeled pixels:', var_labels)
+
+# Variance for each object
+var_objects = ndi.variance(vol, labels, index=[1,2])
+print('Left ventricle:', var_objects[0])
+print('Other tissue:', var_objects[1])
+
+# Create histograms for selected pixels
+hist1 = ndi.histogram(vol, min=0, max=255, bins=256)
+hist2 = ndi.histogram(vol, 0, 255, 256, labels=labels)
+hist3 = ndi.histogram(vol, 0, 255, 256, labels=labels, index=1)
+
+# Plot the histogram density
+plt.plot(hist1 / hist1.sum(), label='All pixels')
+plt.plot(hist2 / hist2.sum(), label='All labeled pixels')
+plt.plot(hist3 / hist3.sum(), label='Left ventricle')
+format_and_render_plot()
