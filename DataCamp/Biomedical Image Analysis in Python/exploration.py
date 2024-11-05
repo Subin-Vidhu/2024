@@ -73,3 +73,15 @@ axes[1].axis('off')  # Remove ticks and labels
 
 # Render the plot
 plt.show()
+
+# - Slice 3D images
+# Initialize figure and axes grid
+fig, axes = plt.subplots(nrows=1, ncols=4)
+
+# Plot every 40th slice of vol in grayscale
+for ii in range(4):
+    axes[ii].imshow(vol[ii*40, :, :], cmap='gray')
+    axes[ii].axis('off')  # Turn off ticks, labels, and frame
+
+# Render the figure
+plt.show()
