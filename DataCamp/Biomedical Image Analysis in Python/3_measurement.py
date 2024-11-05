@@ -25,3 +25,11 @@ lv_mask = np.where(labels == lv_val, 1, np.nan)
 # Overlay selected label
 plt.imshow(lv_mask, cmap='rainbow', alpha=0.75)
 plt.show()
+
+# Extract objects
+# Create the labels array from mask
+labels, nlabels = ndi.label(mask)
+
+# Create a mask for left ventricle pixels
+lv_val = labels[128, 128]
+lv_mask = np.where(labels == lv_val, 1, 0)
