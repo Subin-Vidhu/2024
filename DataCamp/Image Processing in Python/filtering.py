@@ -110,3 +110,18 @@ enlarged_rocket_image = resize(rocket_image, (rocket_image.shape[0]*3, rocket_im
 # Show original and resulting image
 show_image(rocket_image)
 show_image(enlarged_rocket_image, "3 times enlarged image")
+
+# - resizing proportionally
+# Import the module and function
+from skimage.transform import resize
+
+# Set proportional height so its half its size
+height = int(dogs_banner.shape[0] / 2)
+width = int(dogs_banner.shape[1] / 2)
+
+# Resize using the calculated proportional height and width
+image_resized = resize(dogs_banner, (height, width),anti_aliasing=True)
+
+# Show the original and resized image
+show_image(dogs_banner, 'Original')
+show_image(image_resized, 'Resized image')
