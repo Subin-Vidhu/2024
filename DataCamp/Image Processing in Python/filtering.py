@@ -1,4 +1,4 @@
-#1
+#1. Sobel filter
 # Import the color module
 from skimage import color
 
@@ -14,3 +14,14 @@ edge_sobel = sobel(soaps_image_gray)
 # Show original and resulting image to compare
 show_image(soaps_image, "Original")
 show_image(edge_sobel, "Edges with Sobel")
+
+#2. Gaussian filter
+# Import Gaussian filter 
+from skimage.filters import gaussian
+
+# Apply filter
+gaussian_image = gaussian(building_image)
+
+# Show original and resulting image to compare
+show_image(building_image, "Original")
+show_image(gaussian_image, "Reduced sharpness Gaussian")
