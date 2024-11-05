@@ -115,3 +115,14 @@ print('Max location:', ndi.maximum_position(dists))
 overlay = np.where(dists[5] > 0, dists[5], np.nan) 
 plt.imshow(overlay, cmap='hot')
 format_and_render_plot()
+
+# Pinpoint center of mass
+# Extract centers of mass for objects 1 and 2
+coms = ndi.center_of_mass(vol, labels, index=[1,2])
+print('Label 1 center:', coms[0])
+print('Label 2 center:', coms[1])
+
+# Add marks to plot
+for c0, c1, c2 in coms:
+    plt.scatter(c2, c1, s=100, marker='o')
+plt.show()
