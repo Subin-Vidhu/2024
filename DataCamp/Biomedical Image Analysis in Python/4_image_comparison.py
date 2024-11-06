@@ -119,3 +119,17 @@ print('p = ', results.pvalue)
 # Show boxplot of brain_vol differences
 df.boxplot(column='brain_vol', by='alzheimers')
 plt.show()
+
+# Normalizing metrics
+# Import independent two-sample t-test
+from scipy.stats import ttest_ind
+
+# Divide `df.brain_vol` by `df.skull_vol`
+df['adj_brain_vol'] = df.brain_vol / df.skull_vol
+
+# Select brain measures by Alzheimers group
+brain_alz = df.loc[df.alzheimers == 1, 'adj_brain_vol']
+brain_typ = df.loc[df.alzheimers == 0, 'adj_brain_vol']
+
+# Evaluate null hypothesis
+results = ttest_ind(brain_alz, brain_typ)
