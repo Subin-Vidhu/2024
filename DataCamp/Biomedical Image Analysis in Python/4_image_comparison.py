@@ -92,3 +92,13 @@ format_and_render_plot()
 # Calculate mean absolute error
 mean_abs_err = np.mean((np.abs(im1 - im2)))
 print('MAE:', mean_abs_err)
+
+# Identifying potential confounds
+# Print random sample of rows
+print(df.sample(3))
+
+# Print prevalence of Alzheimer's Disease
+print(df.alzheimers.value_counts())
+
+# Print a correlation table
+print(df.corr())
