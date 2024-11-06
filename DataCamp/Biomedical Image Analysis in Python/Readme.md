@@ -18,3 +18,11 @@
 - Histograms display the distribution of values in your image by binning each element by its intensity then measuring the size of each bin.
 
 - The area under a histogram is called the cumulative distribution function. It measures the frequency with which a given range of pixel intensities occurs.
+
+# Affine Matrix
+
+- Affine transform
+
+    - An affine transformation matrix provides directions for up to four types of changes: translating, rotating, rescaling and shearing. The elements of the matrix map the coordinates from the input array to the output.
+
+    - ![alt text](image.png)
