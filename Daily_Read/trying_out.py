@@ -249,3 +249,26 @@ zero_array = np.zeros(image.shape[:-1])
 
 # Print the shape of the zero array
 print(zero_array.shape)  # Output: (512, 512)
+
+
+# Bag of Words
+from collections import Counter
+import re
+
+def create_bow(text):
+    # Remove punctuation and convert to lowercase
+    text = re.sub(r'[^\w\s]', '', text).lower()
+    
+    # Split the text into words
+    words = text.split()
+    
+    # Create a BoW representation using Counter
+    bow = Counter(words)
+    
+    return bow
+
+# Example usage
+text = "The quick brown fox jumps over the lazy dog."
+bow = create_bow(text)
+
+print(bow)
