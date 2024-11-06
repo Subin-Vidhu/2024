@@ -41,3 +41,35 @@ fig, axes = plt.subplots(2, 1)
 axes[0].imshow(im)
 axes[1].imshow(xfm)
 format_and_render_plot()
+
+
+# Resampling
+# Center and level image
+xfm = ndi.shift(im, shift=[-20, -20])
+xfm = ndi.rotate(xfm, angle=-35, reshape=False)
+
+# Resample image
+im_dn = ndi.zoom(xfm, zoom=.25)
+im_up = ndi.zoom(xfm, zoom=4)
+
+# Plot the images
+fig, axes = plt.subplots(2, 1)
+axes[0].imshow(im_dn)
+axes[1].imshow(im_up)
+format_and_render_plot()
+
+
+# Interpolation
+# Upsample "im" by a factor of 4
+up0 = ndi.zoom(im, zoom=4, order=0)
+up5 = ndi.zoom(im, zoom=4, order=5)
+
+# Print original and new shape
+print('Original shape:', im.shape)
+print('Upsampled shape:', up5.shape)
+
+# Plot close-ups of the new images
+fig, axes = plt.subplots(1, 2)
+axes[0].imshow(up0[128:256, 128:256])
+axes[1].imshow(up5[128:256, 128:256])
+format_and_render_plots()
