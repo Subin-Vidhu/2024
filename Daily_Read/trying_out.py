@@ -272,3 +272,27 @@ text = "The quick brown fox jumps over the lazy dog."
 bow = create_bow(text)
 
 print(bow)
+
+#######  example of how you might use train_test_split to split a dataset:
+    
+from sklearn.model_selection import train_test_split
+import numpy as np
+
+# Create a sample dataset
+X = np.random.rand(100, 10)
+y = np.random.rand(100)
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)    
+
+##################### And here's an example of how you might use skip and take to split a TensorFlow dataset:
+
+import tensorflow as tf
+
+# Create a sample dataset
+dataset = tf.data.Dataset.from_tensor_slices((X, y))
+
+# Split the dataset into training and validation sets
+num_validation_samples = 20
+validation_data = dataset.take(num_validation_samples)
+train_data = dataset.skip(num_validation_samples)
