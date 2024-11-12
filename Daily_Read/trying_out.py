@@ -296,3 +296,17 @@ dataset = tf.data.Dataset.from_tensor_slices((X, y))
 num_validation_samples = 20
 validation_data = dataset.take(num_validation_samples)
 train_data = dataset.skip(num_validation_samples)
+
+
+################ 
+
+import tensorflow as tf
+
+# Load the model from the .hdf5 file
+model = tf.keras.models.load_model('D:\PROTOS\AIRA\AIRA_CUSTOM_EDITOR_LOCAL\Renal_Web_App\model\model_checkpoint_202_0.69.h5', compile=False)
+
+# Plot the model's graph
+tf.keras.utils.plot_model(model, to_file='model.png', show_shapes=True, show_layer_names=True)
+
+# Plot the model's graph
+tf.keras.utils.plot_model(model, to_file='model_arch.png', show_shapes=False, show_layer_names=False)
