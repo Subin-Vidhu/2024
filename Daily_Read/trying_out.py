@@ -310,3 +310,16 @@ tf.keras.utils.plot_model(model, to_file='model.png', show_shapes=True, show_lay
 
 # Plot the model's graph
 tf.keras.utils.plot_model(model, to_file='model_arch.png', show_shapes=False, show_layer_names=False)
+
+
+
+###################
+
+import tensorflow as tf
+
+# Load the model from the .hdf5 file
+model = tf.keras.models.load_model('D:\PROTOS\AIRA\AIRA_CUSTOM_EDITOR_LOCAL\Renal_Web_App\model\model_checkpoint_202_0.69.h5', compile=False)
+
+# Plot the model's graph with customized layout
+tf.keras.utils.plot_model(model, to_file='model_LR.png', show_shapes=True, show_layer_names=True,
+                           rankdir='LR')
