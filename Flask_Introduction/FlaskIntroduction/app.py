@@ -52,7 +52,30 @@ def index():
             return render_template('index.html', tasks=tasks)
         except:
             return 'No tasks found'
-
+        
+@app.route('/test', methods=['POST', 'GET'])
+def test():
+    if request.method == 'POST':
+        data = request.get_json()
+        task_content = data.get('data_for_radium', '')
+        if not task_content:
+            return {'message': 'Invalid JSON data'}
+        
+        # Convert the JSON data to a string
+        task_content = str(task_content)
+        
+        existing_task = Todo.query.filter_by(content=task_content).first()
+        if existing_task:
+            return {'message': f'Task already exists: {task_content}'}
+        new_task = Todo(content=task_content)
+        try:
+            db.session.add(new_task)
+            db.session.commit()
+            return {'message': f'Task added successfully: {task_content}'}
+        except:
+            return {'message': 'There was an issue adding your task'}
+    else:
+        return {'message': 'This is a GET request'}
 @app.route('/delete/<int:id>')
 def delete(id):
     task_to_delete = Todo.query.get_or_404(id)
@@ -82,4 +105,4 @@ def update(id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5232)
+    app.run(host='0.0.0.0',port=5232, debug=True)
