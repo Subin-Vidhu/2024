@@ -1,0 +1,1 @@
+- [Wide and Deep Model](https://research.google/blog/wide-amp-deep-learning-better-together-with-tensorflow/)
