@@ -1,0 +1,1 @@
+- 2_Custom and Distributed Training with TensorFlow\Week3 : refer telegram saved msgs for data and model
