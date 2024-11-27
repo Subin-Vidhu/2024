@@ -1,3 +1,105 @@
+import os
+import pydicom
+import csv
+from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
+from threading import Lock
+import re
+
+class DicomInfoExtractor:
+    def __init__(self, base_dir):
+        self.base_dir = base_dir
+        self.print_lock = Lock()
+        self.csv_lock = Lock()
+        self.output_file = r"E:\___SK_TEST_CASES_SREENADH___\DICOM\dicom_info.csv"
+        
+    def safe_print(self, message):
+        with self.print_lock:
+            print(message)
+            
+    def extract_number(self, folder_name):
+        # Extract number from folder name (e.g., 'PA10' -> 10)
+        match = re.search(r'PA(\d+)', folder_name)
+        return int(match.group(1)) if match else float('inf')
+            
+    def extract_dicom_info(self, file_path):
+        try:
+            ds = pydicom.dcmread(file_path)
+            folder_name = os.path.basename(os.path.dirname(os.path.dirname(os.path.dirname(file_path))))
+            info = {
+                'Folder_Number': self.extract_number(folder_name),  # For sorting
+                'Folder': folder_name,
+                'StudyInstanceUID': getattr(ds, 'StudyInstanceUID', 'N/A'),
+                'SeriesInstanceUID': getattr(ds, 'SeriesInstanceUID', 'N/A'),
+                'StudyDescription': getattr(ds, 'StudyDescription', 'N/A'),
+                'SeriesDescription': getattr(ds, 'SeriesDescription', 'N/A'),
+                'PatientID': getattr(ds, 'PatientID', 'N/A'),
+                'PatientName': str(getattr(ds, 'PatientName', 'N/A')),
+                'StudyDate': getattr(ds, 'StudyDate', 'N/A'),
+                'SeriesDate': getattr(ds, 'SeriesDate', 'N/A'),
+                'Modality': getattr(ds, 'Modality', 'N/A'),
+                'FilePath': file_path
+            }
+            return info
+            
+        except Exception as e:
+            self.safe_print(f"✗ Error processing {file_path}: {str(e)}")
+            return None
+
+    def process_all(self):
+        # Find all DICOM files
+        dicom_info_list = []
+        pa_dirs = [d for d in os.listdir(self.base_dir) 
+                   if os.path.isdir(os.path.join(self.base_dir, d)) 
+                   and d.startswith('PA') 
+                   and d != 'not_uploaded_to_cloud']
+        
+        # Sort PA dirs numerically
+        pa_dirs.sort(key=self.extract_number)
+        
+        for pa_dir in pa_dirs:
+            se_path = os.path.join(self.base_dir, pa_dir, 'ST0', 'SE0')
+            if not os.path.exists(se_path):
+                continue
+                
+            im_files = [os.path.join(se_path, f) for f in os.listdir(se_path) 
+                       if f.startswith('IM')]
+            # Only take first file from each series for efficiency
+            if im_files:
+                dicom_info_list.append(im_files[0])
+        
+        print(f"\nProcessing {len(dicom_info_list)} DICOM folders...")
+        
+        # Process files in parallel and collect results
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            results = list(executor.map(self.extract_dicom_info, dicom_info_list))
+        
+        # Filter out None results (from errors) and sort by folder number
+        results = [r for r in results if r]
+        results.sort(key=lambda x: x['Folder_Number'])
+        
+        # Write sorted results to CSV
+        if results:
+            headers = list(results[0].keys())
+            headers.remove('Folder_Number')  # Remove sorting key from output
+            
+            with open(self.output_file, 'w', newline='', encoding='utf-8') as f:
+                writer = csv.DictWriter(f, fieldnames=headers)
+                writer.writeheader()
+                for result in results:
+                    row = {k: v for k, v in result.items() if k != 'Folder_Number'}
+                    writer.writerow(row)
+        
+        success_count = len(results)
+        print(f"\nExtraction complete: {success_count}/{len(dicom_info_list)} folders processed")
+        print(f"Results saved to: {self.output_file}")
+
+if __name__ == "__main__":
+    base_directory = r"E:\___SK_TEST_CASES_SREENADH___\DICOM"
+    
+    extractor = DicomInfoExtractor(base_directory)
+    extractor.process_all()
+
 #############################   details as json data
 # import os
 # import pydicom
