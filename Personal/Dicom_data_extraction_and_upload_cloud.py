@@ -1,125 +1,126 @@
-import os
-import pydicom
-import json
-from pathlib import Path
-from concurrent.futures import ThreadPoolExecutor
-from threading import Lock
-import re
+#############################   details as json data
+# import os
+# import pydicom
+# import json
+# from pathlib import Path
+# from concurrent.futures import ThreadPoolExecutor
+# from threading import Lock
+# import re
 
-class DicomInfoExtractor:
-    def __init__(self, base_dir):
-        self.base_dir = base_dir
-        self.print_lock = Lock()
-        self.json_data = {}
+# class DicomInfoExtractor:
+#     def __init__(self, base_dir):
+#         self.base_dir = base_dir
+#         self.print_lock = Lock()
+#         self.json_data = {}
         
-    def safe_print(self, message):
-        with self.print_lock:
-            print(message)
+#     def safe_print(self, message):
+#         with self.print_lock:
+#             print(message)
             
-    def extract_dicom_info(self, file_path, folder_number):
-        try:
-            ds = pydicom.dcmread(file_path)
-            folder_name = os.path.basename(os.path.dirname(os.path.dirname(os.path.dirname(file_path))))
+#     def extract_dicom_info(self, file_path, folder_number):
+#         try:
+#             ds = pydicom.dcmread(file_path)
+#             folder_name = os.path.basename(os.path.dirname(os.path.dirname(os.path.dirname(file_path))))
             
-            info = {
-                'folder_name': folder_name,
-                'folder_number': folder_number,
-                'study_info': {
-                    'StudyInstanceUID': getattr(ds, 'StudyInstanceUID', 'N/A'),
-                    'StudyDescription': getattr(ds, 'StudyDescription', 'N/A'),
-                    'StudyDate': getattr(ds, 'StudyDate', 'N/A'),
-                },
-                'series_info': {
-                    'SeriesInstanceUID': getattr(ds, 'SeriesInstanceUID', 'N/A'),
-                    'SeriesDescription': getattr(ds, 'SeriesDescription', 'N/A'),
-                    'SeriesDate': getattr(ds, 'SeriesDate', 'N/A'),
-                },
-                'patient_info': {
-                    'PatientID': getattr(ds, 'PatientID', 'N/A'),
-                    'PatientName': str(getattr(ds, 'PatientName', 'N/A')),
-                },
-                'modality': getattr(ds, 'Modality', 'N/A'),
-                'file_path': file_path
-            }
+#             info = {
+#                 'folder_name': folder_name,
+#                 'folder_number': folder_number,
+#                 'study_info': {
+#                     'StudyInstanceUID': getattr(ds, 'StudyInstanceUID', 'N/A'),
+#                     'StudyDescription': getattr(ds, 'StudyDescription', 'N/A'),
+#                     'StudyDate': getattr(ds, 'StudyDate', 'N/A'),
+#                 },
+#                 'series_info': {
+#                     'SeriesInstanceUID': getattr(ds, 'SeriesInstanceUID', 'N/A'),
+#                     'SeriesDescription': getattr(ds, 'SeriesDescription', 'N/A'),
+#                     'SeriesDate': getattr(ds, 'SeriesDate', 'N/A'),
+#                 },
+#                 'patient_info': {
+#                     'PatientID': getattr(ds, 'PatientID', 'N/A'),
+#                     'PatientName': str(getattr(ds, 'PatientName', 'N/A')),
+#                 },
+#                 'modality': getattr(ds, 'Modality', 'N/A'),
+#                 'file_path': file_path
+#             }
             
-            return info
+#             return info
             
-        except Exception as e:
-            self.safe_print(f"✗ Error processing {file_path}: {str(e)}")
-            return None
+#         except Exception as e:
+#             self.safe_print(f"✗ Error processing {file_path}: {str(e)}")
+#             return None
 
-    def natural_sort_key(self, s):
-        return [int(c) if c.isdigit() else c.lower() for c in re.split('([0-9]+)', s)]
+#     def natural_sort_key(self, s):
+#         return [int(c) if c.isdigit() else c.lower() for c in re.split('([0-9]+)', s)]
 
-    def process_all(self):
-        # Find all DICOM files
-        pa_dirs = [d for d in os.listdir(self.base_dir) 
-                   if os.path.isdir(os.path.join(self.base_dir, d)) 
-                   and d.startswith('PA') 
-                   and d != 'not_uploaded_to_cloud']
+#     def process_all(self):
+#         # Find all DICOM files
+#         pa_dirs = [d for d in os.listdir(self.base_dir) 
+#                    if os.path.isdir(os.path.join(self.base_dir, d)) 
+#                    and d.startswith('PA') 
+#                    and d != 'not_uploaded_to_cloud']
         
-        # Sort PA dirs naturally
-        pa_dirs.sort(key=self.natural_sort_key)
+#         # Sort PA dirs naturally
+#         pa_dirs.sort(key=self.natural_sort_key)
         
-        dicom_files = []
-        folder_numbers = []
+#         dicom_files = []
+#         folder_numbers = []
         
-        # Create a mapping of folder names to numbers
-        for index, pa_dir in enumerate(pa_dirs, 1):
-            se_path = os.path.join(self.base_dir, pa_dir, 'ST0', 'SE0')
-            if not os.path.exists(se_path):
-                continue
+#         # Create a mapping of folder names to numbers
+#         for index, pa_dir in enumerate(pa_dirs, 1):
+#             se_path = os.path.join(self.base_dir, pa_dir, 'ST0', 'SE0')
+#             if not os.path.exists(se_path):
+#                 continue
                 
-            im_files = [os.path.join(se_path, f) for f in os.listdir(se_path) 
-                       if f.startswith('IM')]
-            # Only take first file from each series for efficiency
-            if im_files:
-                dicom_files.append(im_files[0])
-                folder_numbers.append(index)
+#             im_files = [os.path.join(se_path, f) for f in os.listdir(se_path) 
+#                        if f.startswith('IM')]
+#             # Only take first file from each series for efficiency
+#             if im_files:
+#                 dicom_files.append(im_files[0])
+#                 folder_numbers.append(index)
         
-        print(f"\nProcessing {len(dicom_files)} DICOM folders...")
+#         print(f"\nProcessing {len(dicom_files)} DICOM folders...")
         
-        # Process files and store results
-        results = []
-        with ThreadPoolExecutor(max_workers=10) as executor:
-            futures = [executor.submit(self.extract_dicom_info, file, num) 
-                      for file, num in zip(dicom_files, folder_numbers)]
-            for future in futures:
-                result = future.result()
-                if result:
-                    results.append(result)
+#         # Process files and store results
+#         results = []
+#         with ThreadPoolExecutor(max_workers=10) as executor:
+#             futures = [executor.submit(self.extract_dicom_info, file, num) 
+#                       for file, num in zip(dicom_files, folder_numbers)]
+#             for future in futures:
+#                 result = future.result()
+#                 if result:
+#                     results.append(result)
         
-        # Sort results by folder number
-        results.sort(key=lambda x: x['folder_number'])
+#         # Sort results by folder number
+#         results.sort(key=lambda x: x['folder_number'])
         
-        # Create final JSON structure
-        json_data = {
-            'total_folders': len(results),
-            'folders': results
-        }
+#         # Create final JSON structure
+#         json_data = {
+#             'total_folders': len(results),
+#             'folders': results
+#         }
         
-        # Save to JSON file
-        output_file = "dicom_info.json"
-        with open(output_file, 'w', encoding='utf-8') as f:
-            json.dump(json_data, f, indent=2)
+#         # Save to JSON file
+#         output_file = r"E:\___SK_TEST_CASES_SREENADH___\DICOM\dicom_info.json"
+#         with open(output_file, 'w', encoding='utf-8') as f:
+#             json.dump(json_data, f, indent=2)
         
-        print(f"\nExtraction complete: {len(results)} folders processed")
-        print(f"Results saved to: {output_file}")
+#         print(f"\nExtraction complete: {len(results)} folders processed")
+#         print(f"Results saved to: {output_file}")
         
-        # Print sample of the first folder's data
-        if results:
-            print("\nSample data from first folder:")
-            first_folder = results[0]
-            print(f"Folder Number: {first_folder['folder_number']}")
-            print(f"Folder Name: {first_folder['folder_name']}")
-            print(f"Study UID: {first_folder['study_info']['StudyInstanceUID']}")
-            print(f"Series UID: {first_folder['series_info']['SeriesInstanceUID']}")
+#         # Print sample of the first folder's data
+#         if results:
+#             print("\nSample data from first folder:")
+#             first_folder = results[0]
+#             print(f"Folder Number: {first_folder['folder_number']}")
+#             print(f"Folder Name: {first_folder['folder_name']}")
+#             print(f"Study UID: {first_folder['study_info']['StudyInstanceUID']}")
+#             print(f"Series UID: {first_folder['series_info']['SeriesInstanceUID']}")
 
-if __name__ == "__main__":
-    base_directory = r"E:\___SK_TEST_CASES_SREENADH___\DICOM"
+# if __name__ == "__main__":
+#     base_directory = r"E:\___SK_TEST_CASES_SREENADH___\DICOM"
     
-    extractor = DicomInfoExtractor(base_directory)
-    extractor.process_all()
+#     extractor = DicomInfoExtractor(base_directory)
+#     extractor.process_all()
 
 # import os
 # import requests
