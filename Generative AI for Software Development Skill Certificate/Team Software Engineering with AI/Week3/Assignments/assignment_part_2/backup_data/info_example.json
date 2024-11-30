@@ -1,0 +1,146 @@
+[
+  {
+    "user_id": "1",
+    "income_day": "869",
+    "work_day_of_week": "Monday",
+    "date_work": "2024-03-01",
+    "time_in": "08:59:29",
+    "time_out": "15:55:52"
+  },
+  {
+    "user_id": "1",
+    "income_day": "833",
+    "work_day_of_week": "Tuesday",
+    "date_work": "2024-03-02",
+    "time_in": "09:24:15",
+    "time_out": "17:27:25"
+  },
+  {
+    "user_id": "1",
+    "income_day": "956",
+    "work_day_of_week": "Friday",
+    "date_work": "2024-03-05",
+    "time_in": "09:49:14",
+    "time_out": "18:30:08"
+  },
+  {
+    "user_id": "1",
+    "income_day": "980",
+    "work_day_of_week": "Monday",
+    "date_work": "2024-03-08",
+    "time_in": "09:57:30",
+    "time_out": "18:51:18"
+  },
+  {
+    "user_id": "1",
+    "income_day": "468",
+    "work_day_of_week": "Tuesday",
+    "date_work": "2024-03-09",
+    "time_in": "09:00:43",
+    "time_out": "18:27:15"
+  },
+  {
+    "user_id": "1",
+    "income_day": "136",
+    "work_day_of_week": "Friday",
+    "date_work": "2024-03-12",
+    "time_in": "09:49:45",
+    "time_out": "16:34:19"
+  },
+  {
+    "user_id": "1",
+    "income_day": "853",
+    "work_day_of_week": "Monday",
+    "date_work": "2024-03-15",
+    "time_in": "08:46:35",
+    "time_out": "18:53:17"
+  },
+  {
+    "user_id": "1",
+    "income_day": "374",
+    "work_day_of_week": "Tuesday",
+    "date_work": "2024-03-16",
+    "time_in": "08:28:32",
+    "time_out": "16:36:43"
+  },
+  {
+    "user_id": "1",
+    "income_day": "17",
+    "work_day_of_week": "Friday",
+    "date_work": "2024-03-19",
+    "time_in": "08:57:27",
+    "time_out": "17:11:33"
+  },
+  {
+    "user_id": "2",
+    "income_day": "189",
+    "work_day_of_week": "Tuesday",
+    "date_work": "2024-03-02",
+    "time_in": "08:12:50",
+    "time_out": "16:47:04"
+  },
+  {
+    "user_id": "2",
+    "income_day": "499",
+    "work_day_of_week": "Wednesday",
+    "date_work": "2024-03-03",
+    "time_in": "08:39:47",
+    "time_out": "15:20:25"
+  },
+  {
+    "user_id": "2",
+    "income_day": "658",
+    "work_day_of_week": "Friday",
+    "date_work": "2024-03-05",
+    "time_in": "08:17:12",
+    "time_out": "16:34:57"
+  },
+  {
+    "user_id": "2",
+    "income_day": "723",
+    "work_day_of_week": "Tuesday",
+    "date_work": "2024-03-09",
+    "time_in": "09:09:50",
+    "time_out": "15:34:35"
+  },
+  {
+    "user_id": "2",
+    "income_day": "756",
+    "work_day_of_week": "Wednesday",
+    "date_work": "2024-03-10",
+    "time_in": "09:37:30",
+    "time_out": "15:55:38"
+  },
+  {
+    "user_id": "2",
+    "income_day": "324",
+    "work_day_of_week": "Friday",
+    "date_work": "2024-03-12",
+    "time_in": "09:24:25",
+    "time_out": "18:25:44"
+  },
+  {
+    "user_id": "2",
+    "income_day": "356",
+    "work_day_of_week": "Tuesday",
+    "date_work": "2024-03-16",
+    "time_in": "08:47:33",
+    "time_out": "15:00:48"
+  },
+  {
+    "user_id": "2",
+    "income_day": "678",
+    "work_day_of_week": "Wednesday",
+    "date_work": "2024-03-17",
+    "time_in": "09:04:46",
+    "time_out": "17:16:39"
+  },
+  {
+    "user_id": "2",
+    "income_day": "4",
+    "work_day_of_week": "Friday",
+    "date_work": "2024-03-19",
+    "time_in": "08:35:36",
+    "time_out": "17:58:52"
+  }
+]
