@@ -1,0 +1,14 @@
+{
+    "api_key": "YOUR API KEY",
+    "url": "https://api.openai.com/v1/images/generations",
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "payload": {
+        "prompt": "A futuristic cityscape at dusk with flying cars and neon lights",
+        "n": 1,
+        "size": "1024x1024",
+        "response_format": "url",
+        "user": "1234"
+    }
+}
