@@ -1,0 +1,21 @@
+1. Users:
+   - id (Primary Key)
+   - name
+   - email (Unique)
+
+2. Products:
+   - id (Primary Key)
+   - name
+   - price
+
+3. Orders:
+   - id (Primary Key)
+   - user_id (Foreign Key referencing Users)
+
+4. Order_items:
+   - id (Primary Key)
+   - order_id (Foreign Key referencing Orders)
+   - product_id (Foreign Key referencing Products)
+   - quantity
+
+
