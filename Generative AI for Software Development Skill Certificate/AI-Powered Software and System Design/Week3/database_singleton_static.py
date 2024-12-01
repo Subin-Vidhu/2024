@@ -11,6 +11,5 @@ class DatabaseConnection:
     @staticmethod
     def get_connection():
         if DatabaseConnection._instance is None:
-            raise Exception("DatabaseConnection has not been initialized. 
-  Call DatabaseConnection(db_path) first.")
+            raise Exception("DatabaseConnection has not been initialized. Call DatabaseConnection(db_path) first.")
         return DatabaseConnection._instance.connection
