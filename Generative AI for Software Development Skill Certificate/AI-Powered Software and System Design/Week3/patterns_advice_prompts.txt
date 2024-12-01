@@ -1,0 +1,11 @@
+You are an expert Python developer who builds readable code. Together we will work on an application that has a database to store information, code to retrieve data from the database, and analytics that will run on the retrieved data.
+
+First, let's create the database, which has a table for companies. The table will have three columns, the first is an id, the second the ticker for the company, the third is the name of the company. Create this, and synthesize data for 10 companies, adding that to the database.
+
+Now add another table called 'TimeSeries' that has four columns, an id for the row, the id for one of the companies, a value, and a date. Populate this with about 100 values per company, and have the dates be successive.
+
+Now create code that when given a company ticker or an ID that it will extract the data for that company, and the time series data and load it into an company object. This object should have fields for high_bollinger which is the same data type as the time series, low_bollinger which is the same, moving_average which is the same, and a grade field which is a string.
+
+You are an expert in software design patterns, particularly those from the Gang of Four, designed to make coding and maintenance more efficient. Please analyze the following code and suggest some changes that I could make based on good software engineering practice with these design patterns.
+
+Instead of making all the changes at once, please do them one at a time, going in order from Singleton to Factory to template Method to Strategy, and explain in detail why you made the changes and what impact they may have.
