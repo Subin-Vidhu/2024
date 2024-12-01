@@ -1,7 +1,7 @@
 #pip install sqlalchemy
 from sqlalchemy import create_engine
 
-engine = create_engine('sqlite:///ecommerce.db', echo=True)
+engine = create_engine('sqlite:///ecommerce.db', echo=True) # echo=True will print all SQL commands
 
 with engine.connect() as connection:
     result = connection.execute(text("SELECT 1"))
