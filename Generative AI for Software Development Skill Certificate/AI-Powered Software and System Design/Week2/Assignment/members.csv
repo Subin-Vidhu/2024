@@ -1,0 +1,21 @@
+ID,Name,Surname,Location,Age,Gender,Friendships,Clubs
+0,John,Rocha,"948 Christian Park Apt. 683 New Christopher, MN 06675",57,Male,"[4, 10, 12, 5, 19, 14]",['Fitness Club']
+1,William,Ruiz,"09477 Paul Station Williamsmouth, NM 93899",42,Female,"[9, 15, 17, 10, 3]","['Travel Club', 'Art Club', 'Cooking Club']"
+2,Jackie,Mccullough,"903 Keller River Suite 149 Davidside, IN 11476",36,Non-binary,"[6, 4, 10, 9]","['Hiking Club', 'Art Club']"
+3,Michael,Powell,"7528 Brenda Mills Jenniferstad, RI 38209",67,Female,"[11, 7, 13, 6, 14, 2]","['Hiking Club', 'Chess Club', 'Gaming Club', 'Book Club', 'Travel Club']"
+4,Scott,Boyd,"545 Evelyn Shores Apt. 744 North Craigchester, CO 47369",47,Female,"[15, 17, 1, 11, 0, 10, 5]",['Gaming Club']
+5,Andrew,Williams,USCGC Jacobs FPO AE 78539,24,Male,"[4, 2, 7, 1, 11, 3, 8]",['Chess Club']
+6,Amanda,Norris,"8446 Thomas Crossing Suite 184 West Jacobshire, CA 41663",27,Non-binary,"[10, 9, 18]","['Fitness Club', 'Hiking Club', 'Photography Club', 'Book Club', 'Art Club']"
+7,Becky,Peterson,"230 Hines Green East Michael, KY 08226",56,Male,"[6, 1, 11]","['Art Club', 'Travel Club']"
+8,Julie,Hutchinson,"PSC 7522, Box 4191 APO AE 64474",23,Female,"[15, 13, 16, 4, 2, 5]","['Music Club', 'Gaming Club']"
+9,Mark,Allen,"8532 Jacob Alley Christopherville, MP 94129",70,Female,"[11, 16, 10, 2, 7, 4, 5, 12]","['Art Club', 'Music Club']"
+10,Nicholas,Harrington,"97681 Hernandez Villages Suite 344 Elizabethborough, UT 44717",52,Female,"[4, 5, 15, 1, 18]","['Travel Club', 'Book Club']"
+11,Michael,Clark,"688 Sean River Apt. 585 Amandatown, AZ 76721",39,Non-binary,"[4, 15, 19, 16, 1, 10]","['Hiking Club', 'Chess Club', 'Fitness Club']"
+12,Christina,Murphy,"276 Wolfe Springs Lake Eric, PA 61512",19,Non-binary,"[16, 14, 15, 3, 10, 13, 17, 8, 0]","['Photography Club', 'Hiking Club', 'Chess Club', 'Fitness Club']"
+13,Omar,Mason,"1765 Christopher Spur South Jessica, GU 68648",24,Female,"[12, 10, 9, 14, 17, 19, 2]",['Gaming Club']
+14,Luis,Kim,"23367 Chase Heights Apt. 892 Calebchester, NC 59073",34,Non-binary,"[9, 1, 17]","['Music Club', 'Travel Club', 'Hiking Club']"
+15,Brian,Mays,"80208 Parker Glen Harrisland, PW 54882",61,Male,"[6, 11, 8, 13, 5, 0, 3]","['Art Club', 'Book Club', 'Photography Club', 'Cooking Club']"
+16,Eric,Dougherty,"4260 Steven Views Suite 123 Port Kim, MD 32261",33,Male,"[8, 4, 6, 5]","['Chess Club', 'Art Club', 'Cooking Club']"
+17,Nathan,Mendez,"16039 Carey Views Apt. 776 Tylerfurt, DE 67034",70,Male,"[14, 1, 4, 18, 0, 5]","['Hiking Club', 'Music Club', 'Art Club', 'Travel Club']"
+18,Elizabeth,Hernandez,"7875 Miller Cliffs Apt. 506 South Jessica, DC 04795",36,Non-binary,"[16, 14, 2, 3, 12, 15, 7]","['Gaming Club', 'Book Club', 'Chess Club', 'Music Club']"
+19,Mark,Mcintyre,"5635 Jennifer Freeway Suite 436 Newmanberg, IL 05315",22,Female,"[9, 18, 5, 13, 10, 1]","['Book Club', 'Gaming Club']"
