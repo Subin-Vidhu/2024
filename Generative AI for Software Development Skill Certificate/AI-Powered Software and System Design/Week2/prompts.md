@@ -49,3 +49,7 @@
         Prompt an LLM to implement code to delete a record from the database. 
 
         Then implement the code in your database and check that you can delete the user John Doe. Use your read function to check that the user has been deleted.
+
+- Debugging
+
+    Prompt the LLM to tell you how to use the EXPLAIN feature in SQLAlchemy to debug queries, and ask it to add code to your database to implement this.Prompt the LLM to tell you how to use the EXPLAIN feature in SQLAlchemy to debug queries, and ask it to add code to your database to implement this.
