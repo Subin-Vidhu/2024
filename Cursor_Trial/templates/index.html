@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radiologist Task Manager</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --medical-100: #E3F2FD;
+            --medical-200: #BBDEFB;
+            --medical-500: #2196F3;
+            --medical-600: #1E88E5;
+            --medical-700: #1976D2;
+            --medical-800: #1565C0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(to bottom right, #f8fafc, var(--medical-100));
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 48rem;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .glass-effect:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--medical-800);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+        }
+
+        .form-container {
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: var(--medical-500);
+            box-shadow: 0 0 0 3px var(--medical-100);
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--medical-600);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--medical-700);
+        }
+
+        .todo-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .todo-item {
+            padding: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .todo-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .todo-title {
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .todo-title.completed {
+            text-decoration: line-through;
+            color: #9ca3af;
+        }
+
+        .todo-date {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .loader {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid var(--medical-500);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            transform: translateX(150%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .toast.error {
+            background-color: #FEE2E2;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .complete-btn {
+            font-size: 1.25rem;
+            color: var(--medical-500);
+        }
+
+        .complete-btn:hover {
+            color: var(--medical-600);
+            background-color: var(--medical-100);
+        }
+
+        .delete-btn {
+            color: #9ca3af;
+        }
+
+        .delete-btn:hover {
+            color: #ef4444;
+            background-color: #fee2e2;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem 0;
+            color: #6b7280;
+        }
+
+        .empty-state i {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-notes-medical"></i> Radiologist Task Manager</h1>
+            <p>Organize your medical workflow efficiently</p>
+        </div>
+        
+        <div class="glass-effect form-container">
+            <form id="todoForm" action="{{ url_for('add') }}" method="POST">
+                <div class="form-group">
+                    <input type="text" name="title" class="input-field" 
+                           placeholder="Add a new task or patient follow-up..." required>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        <span>Add Task</span>
+                        <div class="loader"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="todoList" class="todo-list">
+            {% for todo in todos %}
+            <div class="glass-effect todo-item">
+                <div class="todo-content">
+                    <button onclick="toggleComplete({{ todo.id }})" class="action-btn complete-btn">
+                        <div class="loader"></div>
+                        {% if todo.completed %}
+                        <i class="fas fa-check-circle"></i>
+                        {% else %}
+                        <i class="far fa-circle"></i>
+                        {% endif %}
+                    </button>
+                    <div>
+                        <div class="todo-title {% if todo.completed %}completed{% endif %}">
+                            {{ todo.title }}
+                        </div>
+                        <div class="todo-date">
+                            <i class="far fa-clock"></i>
+                            {{ todo.created_at.strftime('%Y-%m-%d %H:%M') }}
+                        </div>
+                    </div>
+                </div>
+                <button onclick="deleteTodo({{ todo.id }})" class="action-btn delete-btn">
+                    <div class="loader"></div>
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </div>
+            {% endfor %}
+
+            {% if not todos %}
+            <div class="empty-state">
+                <i class="fas fa-clipboard-list"></i>
+                <p>No tasks yet. Add your first task above.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div id="toast" class="toast glass-effect">
+        <i class="fas fa-info-circle"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <footer>
+        <p>© 2024 Radiologist Task Manager</p>
+    </footer>
+
+    <script>
+        function createTodoElement(todo) {
+            return `
+                <div class="glass-effect todo-item">
+                    <div class="todo-content">
+                        <button onclick="toggleComplete(${todo.id})" class="action-btn complete-btn">
+                            <div class="loader"></div>
+                            ${todo.completed ? 
+                                '<i class="fas fa-check-circle"></i>' : 
+                                '<i class="far fa-circle"></i>'}
+                        </button>
+                        <div>
+                            <div class="todo-title ${todo.completed ? 'completed' : ''}">
+                                ${todo.title}
+                            </div>
+                            <div class="todo-date">
+                                <i class="far fa-clock"></i>
+                                ${todo.created_at}
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="deleteTodo(${todo.id})" class="action-btn delete-btn">
+                        <div class="loader"></div>
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            `;
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.className = `toast glass-effect ${isError ? 'error' : ''}`;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function toggleComplete(id) {
+            const button = event.currentTarget;
+            const loader = button.querySelector('.loader');
+            const icon = button.querySelector('i');
+            
+            icon.style.display = 'none';
+            loader.style.display = 'block';
+            
+            fetch(`/complete/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.error) {
+                        const todoElement = button.closest('.glass-effect');
+                        todoElement.outerHTML = createTodoElement(data.todo);
+                        showToast(data.message);
+                    } else {
+                        showToast(data.message, true);
+                    }
+                })
+                .catch(error => {
+                    icon.style.display = 'block';
+                    loader.style.display = 'none';
+                    showToast('Error updating task', true);
+                });
+        }
+
+        function deleteTodo(id) {
+            const button = event.currentTarget;
+            const loader = button.querySelector('.loader');
+            const icon = button.querySelector('i');
+            
+            icon.style.display = 'none';
+            loader.style.display = 'block';
+            
+            fetch(`/delete/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.error) {
+                        button.closest('.glass-effect').remove();
+                        showToast(data.message);
+                        
+                        // Show "no tasks" message if list is empty
+                        const todoList = document.getElementById('todoList');
+                        if (todoList.children.length === 0) {
+                            todoList.innerHTML = `
+                                <div class="empty-state">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    <p>No tasks yet. Add your first task above.</p>
+                                </div>
+                            `;
+                        }
+                    } else {
+                        showToast(data.message, true);
+                    }
+                })
+                .catch(error => {
+                    icon.style.display = 'block';
+                    loader.style.display = 'none';
+                    showToast('Error deleting task', true);
+                });
+        }
+
+        document.getElementById('todoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = this;
+            const button = form.querySelector('button');
+            const loader = button.querySelector('.loader');
+            const text = button.querySelector('span');
+            
+            text.style.display = 'none';
+            loader.style.display = 'block';
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.error) {
+                    // Remove "no tasks" message if it exists
+                    const todoList = document.getElementById('todoList');
+                    if (todoList.querySelector('.empty-state')) {
+                        todoList.innerHTML = '';
+                    }
+                    
+                    // Add new todo at the top
+                    const newTodoHTML = createTodoElement(data.todo);
+                    todoList.insertAdjacentHTML('afterbegin', newTodoHTML);
+                    
+                    // Clear input
+                    form.reset();
+                    showToast(data.message);
+                } else {
+                    showToast(data.message, true);
+                }
+            })
+            .catch(error => {
+                showToast('Error adding task', true);
+            })
+            .finally(() => {
+                text.style.display = 'block';
+                loader.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html> 
