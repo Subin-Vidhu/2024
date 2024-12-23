@@ -45,7 +45,7 @@ def add():
         db.session.commit()
         return jsonify({
             'error': False,
-            'message': 'Task added successfully',
+            'message': 'Added new task',
             'todo': new_todo.to_dict()
         })
     return jsonify({'error': True, 'message': 'Title is required'}), 400
@@ -55,10 +55,10 @@ def complete(id):
     todo = Todo.query.get_or_404(id)
     todo.completed = not todo.completed
     db.session.commit()
-    status = 'completed' if todo.completed else 'uncompleted'
+    status = 'Completed task' if todo.completed else 'Uncompleted task'
     return jsonify({
         'error': False,
-        'message': f'Task {status} successfully',
+        'message': status,
         'todo': todo.to_dict()
     })
 
@@ -69,7 +69,7 @@ def delete(id):
     db.session.commit()
     return jsonify({
         'error': False,
-        'message': 'Task deleted successfully'
+        'message': 'Deleted task'
     })
 
 if __name__ == '__main__':

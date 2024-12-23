@@ -162,10 +162,32 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .toast.success {
+            background-color: #ECFDF5;
+            color: #065F46;
+            border-left: 4px solid #059669;
         }
 
         .toast.error {
-            background-color: #FEE2E2;
+            background-color: #FEF2F2;
+            color: #991B1B;
+            border-left: 4px solid #DC2626;
+        }
+
+        .toast.warning {
+            background-color: #FFFBEB;
+            color: #92400E;
+            border-left: 4px solid #D97706;
+        }
+
+        .toast.info {
+            background-color: #EFF6FF;
+            color: #1E40AF;
+            border-left: 4px solid #3B82F6;
         }
 
         .toast.show {
@@ -197,7 +219,7 @@
         }
 
         .delete-btn:hover {
-            color: #ef4444;
+            color: #bb1919;
             background-color: #fee2e2;
         }
 
@@ -320,9 +342,31 @@
         function showToast(message, isError = false) {
             const toast = document.getElementById('toast');
             const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = toast.querySelector('i');
             toastMessage.textContent = message;
-            toast.className = `toast glass-effect ${isError ? 'error' : ''}`;
-            toast.classList.add('show');
+            
+            // Remove all existing classes except 'toast'
+            toast.className = 'toast';
+            
+            // Update icon and color based on action type
+            if (isError) {
+                toast.classList.add('error');
+                toastIcon.className = 'fas fa-exclamation-circle';
+            } else if (message.toLowerCase().includes('complete')) {
+                toast.classList.add('success');
+                toastIcon.className = 'fas fa-check-circle';
+            } else if (message.toLowerCase().includes('delete')) {
+                toast.classList.add('warning');
+                toastIcon.className = 'fas fa-trash-alt';
+            } else if (message.toLowerCase().includes('add')) {
+                toast.classList.add('info');
+                toastIcon.className = 'fas fa-plus-circle';
+            } else {
+                toast.classList.add('info');
+                toastIcon.className = 'fas fa-info-circle';
+            }
+            
+            toast.classList.add('glass-effect', 'show');
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
