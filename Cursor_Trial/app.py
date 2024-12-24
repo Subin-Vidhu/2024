@@ -1,9 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import json
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
+# Load configuration from config.json
+with open('config.json') as config_file:
+    config = json.load(config_file)
+
+app = Flask(__name__, static_folder='static')
+app.config['SQLALCHEMY_DATABASE_URI'] = config['database']['uri']
+app.config['SECRET_KEY'] = config['flask']['secret_key']
+app.config['DEBUG'] = config['flask']['debug']
 db = SQLAlchemy(app)
 
 class Todo(db.Model):
