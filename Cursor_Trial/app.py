@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import json
+
+# Define Indian Timezone (UTC+5:30)
+IST = timezone(timedelta(hours=5, minutes=30))
 
 # Load configuration from config.json
 with open('config.json') as config_file:
@@ -16,14 +19,14 @@ db = SQLAlchemy(app)
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(IST))
     completed = db.Column(db.Boolean, default=False)
 
     def to_dict(self):
         return {
             'id': self.id,
             'title': self.title,
-            'created_at': self.created_at.strftime('%Y-%m-%d %H:%M'),
+            'created_at': self.created_at.astimezone(IST).strftime('%Y-%m-%d %H:%M'),
             'completed': self.completed
         }
 
