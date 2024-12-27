@@ -4,7 +4,7 @@ Created on Fri Dec 27 09:59:10 2024
 
 @author: Subin-PC
 """
-import nibabel as nib
+# now works in both itksnap and radiant - there is some flip issues though
 import nibabel as nib
 import numpy as np
 import pydicom
@@ -15,7 +15,8 @@ import os
 
 def nifti_to_dicom_labels(nifti_path, output_dir):
     """
-    Convert a NIfTI label map to DICOM series with enhanced viewer compatibility.
+    Convert a NIfTI label map to DICOM series with correct orientation
+    and ITK-SNAP compatibility.
     
     Parameters:
     nifti_path (str): Path to input NIfTI file
@@ -30,6 +31,9 @@ def nifti_to_dicom_labels(nifti_path, output_dir):
         print("Loading NIfTI file...")
         nifti_img = nib.load(nifti_path)
         nifti_data = nifti_img.get_fdata()
+        
+        # Fix orientation: flip the data array if needed
+        nifti_data = np.flip(nifti_data, axis=1)  # Flip left-right
         
         # Convert to integers and scale to visible range
         unique_values = np.unique(nifti_data)
@@ -47,7 +51,7 @@ def nifti_to_dicom_labels(nifti_path, output_dir):
         pixel_spacing = header.get_zooms()[:2]
         slice_thickness = header.get_zooms()[2]
         
-        # Generate UIDs
+        # Generate minimal set of UIDs
         study_instance_uid = generate_uid()
         series_instance_uid = generate_uid()
         
@@ -59,40 +63,33 @@ def nifti_to_dicom_labels(nifti_path, output_dir):
         print(f"Converting {nifti_data.shape[2]} slices...")
         
         for slice_idx in range(nifti_data.shape[2]):
-            # Create file meta information
+            # Create minimal file meta information
             file_meta = FileMetaDataset()
             file_meta.MediaStorageSOPClassUID = '1.2.840.10008.5.1.4.1.1.2'
             file_meta.MediaStorageSOPInstanceUID = generate_uid()
             file_meta.TransferSyntaxUID = ImplicitVRLittleEndian
             
-            # Create the FileDataset
+            # Create the FileDataset with minimal required tags
             ds = FileDataset(None, {}, file_meta=file_meta, preamble=b"\0" * 128)
             
-            # Basic DICOM tags
+            # Only include essential DICOM tags
             ds.SOPClassUID = file_meta.MediaStorageSOPClassUID
             ds.SOPInstanceUID = file_meta.MediaStorageSOPInstanceUID
             ds.StudyInstanceUID = study_instance_uid
             ds.SeriesInstanceUID = series_instance_uid
             ds.StudyDate = date_string
-            ds.SeriesDate = date_string
             ds.StudyTime = time_string
-            ds.SeriesTime = time_string
             ds.PatientName = "Anonymous"
             ds.PatientID = "123"
             ds.Modality = "CT"
             ds.SeriesNumber = 1
-            ds.StudyID = "1"
             ds.InstanceNumber = slice_idx + 1
-            ds.ImageType = ['DERIVED', 'SECONDARY', 'LABEL']
             
-            # Image Position and Orientation
-            ds.ImagePositionPatient = list(map(float, affine[:3, 3]))
-            ds.ImageOrientationPatient = (list(map(float, affine[:3, 0])) + 
-                                        list(map(float, affine[:3, 1])))
+            # Set standard orientation vectors for axial view
+            ds.ImageOrientationPatient = [1, 0, 0, 0, 1, 0]
             ds.PixelSpacing = list(map(float, pixel_spacing))
             ds.SliceThickness = float(slice_thickness)
-            ds.SpacingBetweenSlices = float(slice_thickness)
-            ds.SliceLocation = float(slice_idx * slice_thickness)
+            ds.ImagePositionPatient = [0, 0, slice_idx * slice_thickness]
             
             # Image-specific attributes
             ds.SamplesPerPixel = 1
@@ -104,14 +101,13 @@ def nifti_to_dicom_labels(nifti_path, output_dir):
             ds.HighBit = 11
             ds.PixelRepresentation = 0
             
-            # Window settings for better visibility
+            # Window settings
             ds.WindowCenter = 2048
             ds.WindowWidth = 4096
             ds.RescaleIntercept = 0
             ds.RescaleSlope = 1
-            ds.RescaleType = "US"
             
-            # Set the actual pixel data for this slice
+            # Set the pixel data for this slice
             slice_data = nifti_data[:, :, slice_idx].astype(np.uint16)
             ds.PixelData = slice_data.tobytes()
             
@@ -131,6 +127,7 @@ def nifti_to_dicom_labels(nifti_path, output_dir):
     except Exception as e:
         print(f"Error during conversion: {str(e)}")
         raise
+
 # Example usage
 if __name__ == "__main__":
     nifti_file = "D:/__SHARED__/Radium_2/mask.nii"  # Replace with your NIfTI file path
