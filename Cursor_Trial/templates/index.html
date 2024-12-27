@@ -32,7 +32,7 @@
             {% for todo in todos %}
             <div class="glass-effect todo-item">
                 <div class="todo-content">
-                    <button onclick="toggleComplete({{ todo.id }})" class="action-btn complete-btn">
+                    <button onclick="toggleComplete(todo[id])" class="action-btn complete-btn">
                         <div class="loader"></div>
                         {% if todo.completed %}
                         <i class="fas fa-check-circle"></i>
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-                <button onclick="deleteTodo({{ todo.id }})" class="action-btn delete-btn">
+                <button onclick="deleteTodo(todo[id])" class="action-btn delete-btn">
                     <div class="loader"></div>
                     <i class="fas fa-trash-alt"></i>
                 </button>
