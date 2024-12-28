@@ -12,10 +12,6 @@
         <div class="header">
             <h1><i class="fas fa-notes-medical"></i> Radiologist Task Manager</h1>
             <p>Organize your medical workflow efficiently</p>
-            <button onclick="openHistory()" class="btn btn-secondary history-btn">
-                <i class="fas fa-history"></i>
-                <span>View History</span>
-            </button>
         </div>
         
         <div class="glass-effect form-container">
@@ -70,6 +66,47 @@
         </div>
     </div>
 
+    <!-- Floating Action Buttons -->
+    <button onclick="openHistory()" class="floating-btn" aria-label="View History" style="bottom: 8rem;">
+        <div class="floating-btn-content">
+            <i class="fas fa-history"></i>
+            <span class="floating-btn-label">View History</span>
+        </div>
+    </button>
+
+    <button onclick="confirmCompleteAll()" class="floating-btn" aria-label="Complete All Tasks" style="bottom: 5rem; background-color: #059669;">
+        <div class="floating-btn-content">
+            <i class="fas fa-check-double"></i>
+            <span class="floating-btn-label">Complete All</span>
+        </div>
+    </button>
+
+    <button onclick="confirmDeleteAll()" class="floating-btn" aria-label="Delete All Tasks" style="background-color: #DC2626;">
+        <div class="floating-btn-content">
+            <i class="fas fa-trash"></i>
+            <span class="floating-btn-label">Delete All</span>
+        </div>
+    </button>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content glass-effect confirmation-modal">
+            <div class="modal-header">
+                <h2 id="confirmTitle"></h2>
+                <button onclick="closeConfirmModal()" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage"></p>
+                <div class="confirmation-buttons">
+                    <button onclick="closeConfirmModal()" class="btn btn-secondary">Cancel</button>
+                    <button id="confirmAction" class="btn btn-danger">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- History Modal -->
     <div id="historyModal" class="modal">
         <div class="modal-content glass-effect">
@@ -99,7 +136,7 @@
     <script>
         function createTodoElement(todo) {
             return `
-                <div class="glass-effect todo-item">
+                <div class="glass-effect todo-item" data-id="${todo.id}">
                     <div class="todo-content">
                         <button onclick="toggleComplete(${todo.id})" class="action-btn complete-btn">
                             <div class="loader"></div>
@@ -357,6 +394,87 @@
             if (event.target === modal) {
                 closeHistory();
             }
+        }
+
+        function confirmCompleteAll() {
+            const confirmModal = document.getElementById('confirmModal');
+            document.getElementById('confirmTitle').innerHTML = '<i class="fas fa-check-double"></i> Complete All Tasks';
+            document.getElementById('confirmMessage').textContent = 'Are you sure you want to mark all incomplete tasks as completed?';
+            
+            const confirmBtn = document.getElementById('confirmAction');
+            confirmBtn.className = 'btn btn-primary';
+            confirmBtn.onclick = completeAllTasks;
+            
+            confirmModal.classList.add('show');
+        }
+
+        function confirmDeleteAll() {
+            const confirmModal = document.getElementById('confirmModal');
+            document.getElementById('confirmTitle').innerHTML = '<i class="fas fa-exclamation-triangle"></i> Delete All Tasks';
+            document.getElementById('confirmMessage').textContent = 'Are you sure you want to delete all tasks? This action cannot be undone.';
+            
+            const confirmBtn = document.getElementById('confirmAction');
+            confirmBtn.className = 'btn btn-danger';
+            confirmBtn.onclick = deleteAllTasks;
+            
+            confirmModal.classList.add('show');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('show');
+        }
+
+        function completeAllTasks() {
+            closeConfirmModal();
+            
+            fetch('/complete-all', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.error) {
+                    // Update all incomplete tasks in the UI
+                    data.todos.forEach(todo => {
+                        const todoElement = document.querySelector(`[data-id="${todo.id}"]`);
+                        if (todoElement) {
+                            todoElement.outerHTML = createTodoElement(todo);
+                        }
+                    });
+                    showToast(data.message);
+                } else {
+                    showToast(data.message, true);
+                }
+            })
+            .catch(error => {
+                showToast('Error completing tasks', true);
+            });
+        }
+
+        function deleteAllTasks() {
+            closeConfirmModal();
+            
+            fetch('/delete-all', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.error) {
+                    // Clear the todo list
+                    const todoList = document.getElementById('todoList');
+                    todoList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-clipboard-list"></i>
+                            <p>No tasks yet. Add your first task above.</p>
+                        </div>
+                    `;
+                    showToast(data.message);
+                } else {
+                    showToast(data.message, true);
+                }
+            })
+            .catch(error => {
+                showToast('Error deleting tasks', true);
+            });
         }
     </script>
 </body>

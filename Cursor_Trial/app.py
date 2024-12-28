@@ -136,5 +136,63 @@ def get_history():
         'history': [item.to_dict() for item in history]
     })
 
+@app.route('/delete-all', methods=['POST'])
+def delete_all():
+    todos = Todo.query.all()
+    count = len(todos)
+    
+    if count == 0:
+        return jsonify({
+            'error': True,
+            'message': 'No tasks to delete'
+        })
+
+    # Record history for each deletion
+    for todo in todos:
+        history = TaskHistory(
+            task_id=None,
+            action='deleted',
+            task_title=todo.title
+        )
+        db.session.add(history)
+    
+    # Delete all todos
+    Todo.query.delete()
+    db.session.commit()
+    
+    return jsonify({
+        'error': False,
+        'message': f'Deleted {count} tasks'
+    })
+
+@app.route('/complete-all', methods=['POST'])
+def complete_all():
+    todos = Todo.query.filter_by(completed=False).all()
+    count = len(todos)
+    
+    if count == 0:
+        return jsonify({
+            'error': True,
+            'message': 'No incomplete tasks found'
+        })
+
+    # Complete all incomplete todos and record history
+    for todo in todos:
+        todo.completed = True
+        history = TaskHistory(
+            task_id=todo.id,
+            action='completed',
+            task_title=todo.title
+        )
+        db.session.add(history)
+    
+    db.session.commit()
+    
+    return jsonify({
+        'error': False,
+        'message': f'Completed {count} tasks',
+        'todos': [todo.to_dict() for todo in todos]
+    })
+
 if __name__ == '__main__':
     app.run(debug=True) 
