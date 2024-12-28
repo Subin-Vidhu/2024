@@ -112,13 +112,42 @@
         <div class="modal-content glass-effect">
             <div class="modal-header">
                 <h2><i class="fas fa-history"></i> Task History</h2>
-                <button onclick="closeHistory()" class="close-btn">
-                    <i class="fas fa-times"></i>
-                </button>
+                <div class="modal-actions">
+                    <button onclick="confirmClearHistory()" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash-alt"></i>
+                        Clear History
+                    </button>
+                    <button onclick="closeHistory()" class="close-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             </div>
             <div class="modal-body">
                 <div id="historyList" class="history-list">
                     <!-- History items will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code Verification Modal -->
+    <div id="codeVerificationModal" class="modal">
+        <div class="modal-content glass-effect confirmation-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-shield-alt"></i> Permission Required</h2>
+                <button onclick="closeCodeVerificationModal()" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Enter the admin code to clear history:</p>
+                <div class="code-input-container">
+                    <input type="password" id="adminCode" class="input-field" placeholder="Enter code">
+                    <div id="codeError" class="error-message"></div>
+                </div>
+                <div class="confirmation-buttons">
+                    <button onclick="closeCodeVerificationModal()" class="btn btn-secondary">Cancel</button>
+                    <button onclick="verifyAndClearHistory()" class="btn btn-danger">Verify & Clear</button>
                 </div>
             </div>
         </div>
@@ -390,9 +419,18 @@
 
         // Close modal when clicking outside
         window.onclick = function(event) {
-            const modal = document.getElementById('historyModal');
-            if (event.target === modal) {
+            const historyModal = document.getElementById('historyModal');
+            const confirmModal = document.getElementById('confirmModal');
+            const codeVerificationModal = document.getElementById('codeVerificationModal');
+            
+            if (event.target === historyModal) {
                 closeHistory();
+            }
+            if (event.target === confirmModal) {
+                closeConfirmModal();
+            }
+            if (event.target === codeVerificationModal) {
+                closeCodeVerificationModal();
             }
         }
 
@@ -476,6 +514,68 @@
                 showToast('Error deleting tasks', true);
             });
         }
+
+        function confirmClearHistory() {
+            const codeVerificationModal = document.getElementById('codeVerificationModal');
+            const adminCodeInput = document.getElementById('adminCode');
+            const codeError = document.getElementById('codeError');
+            
+            // Reset the input and error message
+            adminCodeInput.value = '';
+            codeError.textContent = '';
+            
+            codeVerificationModal.classList.add('show');
+        }
+
+        function closeCodeVerificationModal() {
+            document.getElementById('codeVerificationModal').classList.remove('show');
+            document.getElementById('codeError').textContent = '';
+        }
+
+        function verifyAndClearHistory() {
+            const adminCode = document.getElementById('adminCode').value;
+            const codeError = document.getElementById('codeError');
+            
+            if (!adminCode.trim()) {
+                codeError.textContent = 'Please enter the admin code';
+                return;
+            }
+
+            fetch('/clear-history', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ code: adminCode })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.error) {
+                    // Clear the history list
+                    const historyList = document.getElementById('historyList');
+                    historyList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-history"></i>
+                            <p>No history available yet.</p>
+                        </div>
+                    `;
+                    closeCodeVerificationModal();
+                    showToast(data.message);
+                } else {
+                    codeError.textContent = data.message;
+                }
+            })
+            .catch(error => {
+                codeError.textContent = 'Error verifying code';
+            });
+        }
+
+        // Add keyboard event listener for the code input
+        document.getElementById('adminCode').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyAndClearHistory();
+            }
+        });
     </script>
 </body>
 </html> 

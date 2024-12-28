@@ -194,5 +194,28 @@ def complete_all():
         'todos': [todo.to_dict() for todo in todos]
     })
 
+@app.route('/clear-history', methods=['POST'])
+def clear_history():
+    try:
+        # Get and verify the admin code
+        admin_code = request.json.get('code')
+        if not admin_code or admin_code != config['admin']['history_clear_code']:
+            return jsonify({
+                'error': True,
+                'message': 'Invalid permission code'
+            }), 403
+
+        TaskHistory.query.delete()
+        db.session.commit()
+        return jsonify({
+            'error': False,
+            'message': 'History cleared successfully'
+        })
+    except Exception as e:
+        return jsonify({
+            'error': True,
+            'message': 'Error clearing history'
+        }), 500
+
 if __name__ == '__main__':
     app.run(debug=True) 

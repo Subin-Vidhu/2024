@@ -5,5 +5,8 @@
     "flask": {
         "debug": true,
         "secret_key": "your-secret-key-here"
+    },
+    "admin": {
+        "history_clear_code": "RAD2024"
     }
 } 
