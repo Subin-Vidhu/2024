@@ -1,18 +1,26 @@
 :root {
-    --medical-100: #E3F2FD;
-    --medical-200: #BBDEFB;
-    --medical-500: #2196F3;
-    --medical-600: #1E88E5;
-    --medical-700: #1976D2;
-    --medical-800: #1565C0;
+    --medical-100: #02131a;
+    --medical-200: #041f29;
+    --medical-500: #0bb9e1;
+    --medical-600: #0aa5c9;
+    --medical-700: #0991b1;
+    --medical-800: #087d99;
+    --text-primary: #ffffff;
+    --text-secondary: #c1c1c1;
+    --background-primary: #02131a;
+    --background-secondary: #031821;
+    --border-color: #052936;
+    --text-gradient: linear-gradient(289deg, #c1c1c1, #0bb9e1);
+    --glass-bg: rgba(2, 19, 26, 0.95);
 }
 
 body {
     margin: 0;
     padding: 0;
     font-family: system-ui, -apple-system, sans-serif;
-    background: linear-gradient(to bottom right, #f8fafc, var(--medical-100));
+    background: var(--background-primary);
     min-height: 100vh;
+    color: var(--text-primary);
 }
 
 .container {
@@ -22,15 +30,17 @@ body {
 }
 
 .glass-effect {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
     border-radius: 0.75rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
 }
 
 .glass-effect:hover {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 12px rgba(11, 185, 225, 0.1);
+    border-color: rgba(11, 185, 225, 0.2);
 }
 
 .header {
@@ -42,12 +52,15 @@ body {
 .header h1 {
     font-size: 2.5rem;
     font-weight: bold;
-    color: var(--medical-800);
+    background: var(--text-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     margin-bottom: 0.5rem;
 }
 
 .header p {
-    color: #666;
+    color: var(--text-secondary);
     margin-bottom: 1.5rem;
 }
 
@@ -105,6 +118,8 @@ body {
     flex-direction: column;
     margin: 2rem;
     animation: slideIn 0.3s ease;
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
 }
 
 @keyframes slideIn {
@@ -120,7 +135,7 @@ body {
 
 .modal-header {
     padding: 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -128,7 +143,7 @@ body {
 
 .modal-header h2 {
     font-size: 1.5rem;
-    color: var(--medical-800);
+    color: var(--medical-500);
     margin: 0;
     display: flex;
     align-items: center;
@@ -138,7 +153,7 @@ body {
 .close-btn {
     background: none;
     border: none;
-    color: #6b7280;
+    color: var(--text-secondary);
     cursor: pointer;
     padding: 0.5rem;
     border-radius: 9999px;
@@ -146,8 +161,8 @@ body {
 }
 
 .close-btn:hover {
-    background-color: #f3f4f6;
-    color: #1f2937;
+    background-color: var(--medical-200);
+    color: var(--text-primary);
 }
 
 .modal-body {
@@ -167,10 +182,17 @@ body {
     align-items: flex-start;
     gap: 1rem;
     padding: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.history-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .history-icon {
-    background-color: white;
+    background: var(--background-secondary);
+    color: var(--medical-500);
     border-radius: 9999px;
     width: 2.5rem;
     height: 2.5rem;
@@ -187,18 +209,18 @@ body {
 
 .history-action {
     font-weight: 500;
-    color: #374151;
+    color: var(--text-primary);
     margin-bottom: 0.25rem;
 }
 
 .history-title {
-    color: #6b7280;
+    color: var(--text-secondary);
     margin-bottom: 0.5rem;
 }
 
 .history-timestamp {
     font-size: 0.875rem;
-    color: #9ca3af;
+    color: var(--text-secondary);
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -234,15 +256,18 @@ body {
 .input-field {
     flex: 1;
     padding: 0.75rem 1rem;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--border-color);
     border-radius: 0.5rem;
     outline: none;
     transition: all 0.3s ease;
+    background: var(--background-secondary);
+    color: var(--text-primary);
 }
 
 .input-field:focus {
     border-color: var(--medical-500);
-    box-shadow: 0 0 0 3px var(--medical-100);
+    box-shadow: 0 0 0 3px rgba(11, 185, 225, 0.1);
+    background: var(--background-secondary);
 }
 
 .btn {
@@ -257,12 +282,17 @@ body {
 }
 
 .btn-primary {
-    background-color: var(--medical-600);
-    color: white;
+    background: var(--medical-500);
+    color: var(--background-primary);
+    font-weight: 500;
+    border: none;
+    transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
-    background-color: var(--medical-700);
+    background: var(--medical-600);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(11, 185, 225, 0.2);
 }
 
 .todo-list {
@@ -276,6 +306,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.todo-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .todo-content {
@@ -287,24 +323,24 @@ body {
 
 .todo-title {
     font-weight: 500;
-    color: #374151;
+    color: var(--text-primary);
 }
 
 .todo-title.completed {
     text-decoration: line-through;
-    color: #9ca3af;
+    color: var(--text-secondary);
 }
 
 .todo-date {
     font-size: 0.875rem;
-    color: #6b7280;
+    color: var(--text-secondary);
 }
 
 .loader {
     display: none;
     width: 24px;
     height: 24px;
-    border: 3px solid #f3f3f3;
+    border: 3px solid var(--background-secondary);
     border-radius: 50%;
     border-top: 3px solid var(--medical-500);
     animation: spin 1s linear infinite;
@@ -328,30 +364,29 @@ body {
     gap: 0.75rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: var(--glass-bg);
+    border-left: 4px solid var(--medical-500);
+    color: var(--text-primary);
 }
 
 .toast.success {
-    background-color: #ECFDF5;
-    color: #065F46;
-    border-left: 4px solid #059669;
+    background: rgba(11, 185, 225, 0.1);
+    border-left: 4px solid var(--medical-500);
 }
 
 .toast.error {
-    background-color: #FEF2F2;
-    color: #991B1B;
-    border-left: 4px solid #DC2626;
+    background: rgba(255, 68, 68, 0.1);
+    border-left: 4px solid #ff4444;
 }
 
 .toast.warning {
-    background-color: #FFFBEB;
-    color: #92400E;
-    border-left: 4px solid #D97706;
+    background: rgba(255, 170, 0, 0.1);
+    border-left: 4px solid #ffaa00;
 }
 
 .toast.info {
-    background-color: #EFF6FF;
-    color: #1E40AF;
-    border-left: 4px solid #3B82F6;
+    background: rgba(11, 185, 225, 0.1);
+    border-left: 4px solid var(--medical-500);
 }
 
 .toast.show {
@@ -375,7 +410,7 @@ body {
 
 .complete-btn:hover {
     color: var(--medical-600);
-    background-color: var(--medical-100);
+    background: rgba(11, 185, 225, 0.1);
 }
 
 .delete-btn {
@@ -390,7 +425,7 @@ body {
 .empty-state {
     text-align: center;
     padding: 2rem 0;
-    color: #6b7280;
+    color: var(--text-secondary);
 }
 
 .empty-state i {
@@ -401,7 +436,7 @@ body {
 footer {
     text-align: center;
     padding: 1.5rem 0;
-    color: #6b7280;
+    color: var(--text-secondary);
     font-size: 0.875rem;
 }
 
@@ -412,20 +447,20 @@ footer {
     right: 2rem;
     z-index: 99;
     border: none;
-    background: var(--medical-600);
-    color: white;
+    background: var(--medical-500);
+    color: var(--background-primary);
     border-radius: 9999px;
     padding: 1rem;
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 12px rgba(11, 185, 225, 0.2);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     outline: none;
 }
 
 .floating-btn:hover {
+    background: var(--medical-600);
     transform: translateY(-2px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15), 0 4px 6px rgba(0, 0, 0, 0.1);
-    background: var(--medical-700);
+    box-shadow: 0 8px 16px rgba(11, 185, 225, 0.3);
 }
 
 .floating-btn:active {
@@ -481,21 +516,25 @@ footer {
 }
 
 .btn-secondary {
-    background-color: #6B7280;
-    color: white;
+    background: var(--medical-200);
+    color: var(--text-primary);
 }
 
 .btn-secondary:hover {
-    background-color: #4B5563;
+    background: var(--medical-100);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(11, 185, 225, 0.1);
 }
 
 .btn-danger {
-    background-color: #DC2626;
+    background: #ff4444;
     color: white;
 }
 
 .btn-danger:hover {
-    background-color: #B91C1C;
+    background: #ff2222;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);
 }
 
 /* Responsive Styles */
@@ -555,7 +594,7 @@ footer {
 }
 
 .error-message {
-    color: #DC2626;
+    color: #ff4444;
     font-size: 0.875rem;
     margin-top: 0.5rem;
     min-height: 1.25rem;
@@ -564,16 +603,18 @@ footer {
 #adminCode {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--border-color);
     border-radius: 0.5rem;
     font-size: 1rem;
     transition: all 0.3s ease;
+    background: var(--background-secondary);
+    color: var(--text-primary);
 }
 
 #adminCode:focus {
     outline: none;
     border-color: var(--medical-500);
-    box-shadow: 0 0 0 3px var(--medical-100);
+    box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.2);
 }
 
 /* Update modal styles for better mobile view */
