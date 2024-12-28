@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radiologist Task Manager</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-notes-medical"></i> Radiologist Task Manager</h1>
+            <p>Organize your medical workflow efficiently</p>
+        </div>
+        
+        <div class="glass-effect form-container">
+            <form id="todoForm" action="{{ url_for('add') }}" method="POST">
+                <div class="form-group">
+                    <input type="text" name="title" class="input-field" 
+                           placeholder="Add a new task or patient follow-up..." required>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        <span>Add Task</span>
+                        <div class="loader"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="todoList" class="todo-list">
+            {% for todo in todos %}
+            <div class="glass-effect todo-item">
+                <div class="todo-content">
+                    <button onclick="toggleComplete(todo[id])" class="action-btn complete-btn">
+                        <div class="loader"></div>
+                        {% if todo.completed %}
+                        <i class="fas fa-check-circle"></i>
+                        {% else %}
+                        <i class="far fa-circle"></i>
+                        {% endif %}
+                    </button>
+                    <div>
+                        <div class="todo-title {% if todo.completed %}completed{% endif %}">
+                            {{ todo.title }}
+                        </div>
+                        <div class="todo-date">
+                            <i class="far fa-clock"></i>
+                            {{ todo.created_at.strftime('%Y-%m-%d %H:%M') }}
+                        </div>
+                    </div>
+                </div>
+                <button onclick="deleteTodo(todo[id])" class="action-btn delete-btn">
+                    <div class="loader"></div>
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </div>
+            {% endfor %}
+
+            {% if not todos %}
+            <div class="empty-state">
+                <i class="fas fa-clipboard-list"></i>
+                <p>No tasks yet. Add your first task above.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div id="toast" class="toast glass-effect">
+        <i class="fas fa-info-circle"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <footer>
+        <p>© 2024 Radiologist Task Manager</p>
+    </footer>
+
+    <script>
+        function createTodoElement(todo) {
+            return `
+                <div class="glass-effect todo-item">
+                    <div class="todo-content">
+                        <button onclick="toggleComplete(${todo.id})" class="action-btn complete-btn">
+                            <div class="loader"></div>
+                            ${todo.completed ? 
+                                '<i class="fas fa-check-circle"></i>' : 
+                                '<i class="far fa-circle"></i>'}
+                        </button>
+                        <div>
+                            <div class="todo-title ${todo.completed ? 'completed' : ''}">
+                                ${todo.title}
+                            </div>
+                            <div class="todo-date">
+                                <i class="far fa-clock"></i>
+                                ${todo.created_at}
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="deleteTodo(${todo.id})" class="action-btn delete-btn">
+                        <div class="loader"></div>
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            `;
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = toast.querySelector('i');
+            toastMessage.textContent = message;
+            
+            // Remove all existing classes except 'toast'
+            toast.className = 'toast';
+            
+            // Update icon and color based on action type
+            if (isError) {
+                toast.classList.add('error');
+                toastIcon.className = 'fas fa-exclamation-circle';
+            } else if (message.toLowerCase().includes('complete')) {
+                toast.classList.add('success');
+                toastIcon.className = 'fas fa-check-circle';
+            } else if (message.toLowerCase().includes('delete')) {
+                toast.classList.add('warning');
+                toastIcon.className = 'fas fa-trash-alt';
+            } else if (message.toLowerCase().includes('add')) {
+                toast.classList.add('info');
+                toastIcon.className = 'fas fa-plus-circle';
+            } else {
+                toast.classList.add('info');
+                toastIcon.className = 'fas fa-info-circle';
+            }
+            
+            toast.classList.add('glass-effect', 'show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function toggleComplete(id) {
+            const button = event.currentTarget;
+            const loader = button.querySelector('.loader');
+            const icon = button.querySelector('i');
+            
+            icon.style.display = 'none';
+            loader.style.display = 'block';
+            
+            fetch(`/complete/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.error) {
+                        const todoElement = button.closest('.glass-effect');
+                        todoElement.outerHTML = createTodoElement(data.todo);
+                        showToast(data.message);
+                    } else {
+                        showToast(data.message, true);
+                    }
+                })
+                .catch(error => {
+                    icon.style.display = 'block';
+                    loader.style.display = 'none';
+                    showToast('Error updating task', true);
+                });
+        }
+
+        function deleteTodo(id) {
+            const button = event.currentTarget;
+            const loader = button.querySelector('.loader');
+            const icon = button.querySelector('i');
+            
+            icon.style.display = 'none';
+            loader.style.display = 'block';
+            
+            fetch(`/delete/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.error) {
+                        button.closest('.glass-effect').remove();
+                        showToast(data.message);
+                        
+                        // Show "no tasks" message if list is empty
+                        const todoList = document.getElementById('todoList');
+                        if (todoList.children.length === 0) {
+                            todoList.innerHTML = `
+                                <div class="empty-state">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    <p>No tasks yet. Add your first task above.</p>
+                                </div>
+                            `;
+                        }
+                    } else {
+                        showToast(data.message, true);
+                    }
+                })
+                .catch(error => {
+                    icon.style.display = 'block';
+                    loader.style.display = 'none';
+                    showToast('Error deleting task', true);
+                });
+        }
+
+        document.getElementById('todoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = this;
+            const button = form.querySelector('button');
+            const loader = button.querySelector('.loader');
+            const text = button.querySelector('span');
+            
+            text.style.display = 'none';
+            loader.style.display = 'block';
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.error) {
+                    // Remove "no tasks" message if it exists
+                    const todoList = document.getElementById('todoList');
+                    if (todoList.querySelector('.empty-state')) {
+                        todoList.innerHTML = '';
+                    }
+                    
+                    // Add new todo at the top
+                    const newTodoHTML = createTodoElement(data.todo);
+                    todoList.insertAdjacentHTML('afterbegin', newTodoHTML);
+                    
+                    // Clear input
+                    form.reset();
+                    showToast(data.message);
+                } else {
+                    showToast(data.message, true);
+                }
+            })
+            .catch(error => {
+                showToast('Error adding task', true);
+            })
+            .finally(() => {
+                text.style.display = 'block';
+                loader.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html> 

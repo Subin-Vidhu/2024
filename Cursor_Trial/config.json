@@ -1,0 +1,9 @@
+{
+    "database": {
+        "uri": "sqlite:///todo.db"
+    },
+    "flask": {
+        "debug": true,
+        "secret_key": "your-secret-key-here"
+    }
+} 
