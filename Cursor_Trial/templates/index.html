@@ -12,6 +12,10 @@
         <div class="header">
             <h1><i class="fas fa-notes-medical"></i> Radiologist Task Manager</h1>
             <p>Organize your medical workflow efficiently</p>
+            <button onclick="openHistory()" class="btn btn-secondary history-btn">
+                <i class="fas fa-history"></i>
+                <span>View History</span>
+            </button>
         </div>
         
         <div class="glass-effect form-container">
@@ -63,6 +67,23 @@
                 <p>No tasks yet. Add your first task above.</p>
             </div>
             {% endif %}
+        </div>
+    </div>
+
+    <!-- History Modal -->
+    <div id="historyModal" class="modal">
+        <div class="modal-content glass-effect">
+            <div class="modal-header">
+                <h2><i class="fas fa-history"></i> Task History</h2>
+                <button onclick="closeHistory()" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="historyList" class="history-list">
+                    <!-- History items will be inserted here -->
+                </div>
+            </div>
         </div>
     </div>
 
@@ -239,6 +260,104 @@
                 loader.style.display = 'none';
             });
         });
+
+        function getActionIcon(action) {
+            switch(action) {
+                case 'created':
+                    return '<i class="fas fa-plus-circle text-blue"></i>';
+                case 'completed':
+                    return '<i class="fas fa-check-circle text-green"></i>';
+                case 'uncompleted':
+                    return '<i class="fas fa-undo text-yellow"></i>';
+                case 'deleted':
+                    return '<i class="fas fa-trash-alt text-red"></i>';
+                default:
+                    return '<i class="fas fa-info-circle"></i>';
+            }
+        }
+
+        function getActionText(action) {
+            switch(action) {
+                case 'created':
+                    return 'Created';
+                case 'completed':
+                    return 'Completed';
+                case 'uncompleted':
+                    return 'Marked as incomplete';
+                case 'deleted':
+                    return 'Deleted';
+                default:
+                    return action;
+            }
+        }
+
+        function createHistoryElement(item) {
+            return `
+                <div class="history-item glass-effect">
+                    <div class="history-icon">
+                        ${getActionIcon(item.action)}
+                    </div>
+                    <div class="history-content">
+                        <div class="history-action">
+                            ${getActionText(item.action)}
+                        </div>
+                        <div class="history-title">
+                            ${item.task_title}
+                        </div>
+                        <div class="history-timestamp">
+                            <i class="far fa-clock"></i>
+                            ${item.timestamp}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function openHistory() {
+            const modal = document.getElementById('historyModal');
+            const historyList = document.getElementById('historyList');
+            
+            // Show loading state
+            historyList.innerHTML = '<div class="loader"></div>';
+            modal.classList.add('show');
+            
+            // Fetch history data
+            fetch('/history')
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.error) {
+                        if (data.history.length === 0) {
+                            historyList.innerHTML = `
+                                <div class="empty-state">
+                                    <i class="fas fa-history"></i>
+                                    <p>No history available yet.</p>
+                                </div>
+                            `;
+                        } else {
+                            historyList.innerHTML = data.history
+                                .map(item => createHistoryElement(item))
+                                .join('');
+                        }
+                    } else {
+                        showToast(data.message, true);
+                    }
+                })
+                .catch(error => {
+                    showToast('Error loading history', true);
+                });
+        }
+
+        function closeHistory() {
+            document.getElementById('historyModal').classList.remove('show');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('historyModal');
+            if (event.target === modal) {
+                closeHistory();
+            }
+        }
     </script>
 </body>
 </html> 

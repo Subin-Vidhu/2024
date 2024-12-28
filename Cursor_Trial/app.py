@@ -30,6 +30,22 @@ class Todo(db.Model):
             'completed': self.completed
         }
 
+class TaskHistory(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    task_id = db.Column(db.Integer, db.ForeignKey('todo.id'), nullable=True)
+    action = db.Column(db.String(20), nullable=False)  # 'created', 'completed', 'uncompleted', 'deleted'
+    task_title = db.Column(db.String(100), nullable=False)
+    timestamp = db.Column(db.DateTime, default=lambda: datetime.now(IST))
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'task_id': self.task_id,
+            'action': self.action,
+            'task_title': self.task_title,
+            'timestamp': self.timestamp.astimezone(IST).strftime('%Y-%m-%d %H:%M')
+        }
+
 with app.app_context():
     db.create_all()
 
@@ -53,6 +69,16 @@ def add():
         new_todo = Todo(title=title)
         db.session.add(new_todo)
         db.session.commit()
+
+        # Record history
+        history = TaskHistory(
+            task_id=new_todo.id,
+            action='created',
+            task_title=title
+        )
+        db.session.add(history)
+        db.session.commit()
+
         return jsonify({
             'error': False,
             'message': 'Added new task',
@@ -64,7 +90,17 @@ def add():
 def complete(id):
     todo = Todo.query.get_or_404(id)
     todo.completed = not todo.completed
+    
+    # Record history
+    action = 'completed' if todo.completed else 'uncompleted'
+    history = TaskHistory(
+        task_id=todo.id,
+        action=action,
+        task_title=todo.title
+    )
+    db.session.add(history)
     db.session.commit()
+
     status = 'Completed task' if todo.completed else 'Uncompleted task'
     return jsonify({
         'error': False,
@@ -75,11 +111,29 @@ def complete(id):
 @app.route('/delete/<int:id>')
 def delete(id):
     todo = Todo.query.get_or_404(id)
+    
+    # Record history before deletion
+    history = TaskHistory(
+        task_id=None,  # Set to None since task will be deleted
+        action='deleted',
+        task_title=todo.title
+    )
+    db.session.add(history)
+    
     db.session.delete(todo)
     db.session.commit()
+    
     return jsonify({
         'error': False,
         'message': 'Deleted task'
+    })
+
+@app.route('/history')
+def get_history():
+    history = TaskHistory.query.order_by(TaskHistory.timestamp.desc()).all()
+    return jsonify({
+        'error': False,
+        'history': [item.to_dict() for item in history]
     })
 
 if __name__ == '__main__':

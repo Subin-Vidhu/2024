@@ -36,6 +36,7 @@ body {
 .header {
     text-align: center;
     margin-bottom: 2rem;
+    position: relative;
 }
 
 .header h1 {
@@ -47,6 +48,172 @@ body {
 
 .header p {
     color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.history-btn {
+    background-color: white;
+    color: var(--medical-600);
+    border: 2px solid var(--medical-200);
+    padding: 0.5rem 1.25rem;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+}
+
+.history-btn:hover {
+    background-color: var(--medical-100);
+    border-color: var(--medical-500);
+    color: var(--medical-700);
+}
+
+.history-btn i {
+    margin-right: 0.5rem;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-header h2 {
+    font-size: 1.5rem;
+    color: var(--medical-800);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+.modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+/* History List Styles */
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.history-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.history-icon {
+    background-color: white;
+    border-radius: 9999px;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.history-content {
+    flex: 1;
+}
+
+.history-action {
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.25rem;
+}
+
+.history-title {
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.history-timestamp {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Action Colors */
+.text-blue {
+    color: var(--medical-500);
+}
+
+.text-green {
+    color: #059669;
+}
+
+.text-yellow {
+    color: #D97706;
+}
+
+.text-red {
+    color: #DC2626;
 }
 
 .form-container {
