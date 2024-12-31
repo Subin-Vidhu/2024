@@ -35,8 +35,8 @@
 .theme-toggle {
     position: fixed;
     top: 1rem;
-    right: 1rem;
-    z-index: 1000;
+    left: 1rem;
+    z-index: 1002;
     background: none;
     border: none;
     color: var(--text-primary);
@@ -55,6 +55,7 @@
 .theme-toggle:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(11, 185, 225, 0.2);
+    border-color: var(--medical-500);
 }
 
 .theme-toggle i {
@@ -64,6 +65,20 @@
 
 .theme-toggle:hover i {
     transform: rotate(45deg);
+}
+
+/* Add responsive styles for theme toggle */
+@media (max-width: 640px) {
+    .theme-toggle {
+        top: 0.75rem;
+        left: 0.75rem;
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+    
+    .theme-toggle i {
+        font-size: 1.125rem;
+    }
 }
 
 body {
