@@ -228,19 +228,19 @@ body {
 
 /* Action Colors */
 .text-blue {
-    color: var(--medical-500);
+    color: #0BB9E1;
 }
 
 .text-green {
-    color: #059669;
+    color: #10B981;
 }
 
 .text-yellow {
-    color: #D97706;
+    color: #F59E0B;
 }
 
 .text-red {
-    color: #DC2626;
+    color: #EF4444;
 }
 
 .form-container {
@@ -365,28 +365,31 @@ body {
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background: var(--glass-bg);
-    border-left: 4px solid var(--medical-500);
     color: var(--text-primary);
 }
 
 .toast.success {
-    background: rgba(11, 185, 225, 0.1);
-    border-left: 4px solid var(--medical-500);
+    background: rgba(16, 185, 129, 0.15);
+    border-left: 4px solid #10B981;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
 }
 
 .toast.error {
-    background: rgba(255, 68, 68, 0.1);
-    border-left: 4px solid #ff4444;
+    background: rgba(239, 68, 68, 0.15);
+    border-left: 4px solid #EF4444;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
 }
 
 .toast.warning {
-    background: rgba(255, 170, 0, 0.1);
-    border-left: 4px solid #ffaa00;
+    background: rgba(239, 68, 68, 0.12);
+    border-left: 4px solid #EF4444;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
 }
 
 .toast.info {
-    background: rgba(11, 185, 225, 0.1);
-    border-left: 4px solid var(--medical-500);
+    background: rgba(11, 185, 225, 0.15);
+    border-left: 4px solid #0BB9E1;
+    box-shadow: 0 4px 12px rgba(11, 185, 225, 0.2);
 }
 
 .toast.show {
@@ -418,8 +421,8 @@ body {
 }
 
 .delete-btn:hover {
-    color: #bb1919;
-    background-color: #fee2e2;
+    color: #EF4444;
+    background-color: rgba(239, 68, 68, 0.1);
 }
 
 .empty-state {
