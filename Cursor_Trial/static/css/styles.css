@@ -14,6 +14,58 @@
     --glass-bg: rgba(2, 19, 26, 0.95);
 }
 
+/* Light theme colors */
+[data-theme="light"] {
+    --medical-100: #f0f9ff;
+    --medical-200: #e0f2fe;
+    --medical-500: #0bb9e1;
+    --medical-600: #0aa5c9;
+    --medical-700: #0991b1;
+    --medical-800: #087d99;
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+    --background-primary: #ffffff;
+    --background-secondary: #f8fafc;
+    --border-color: #e2e8f0;
+    --text-gradient: linear-gradient(289deg, #1a1a1a, #0bb9e1);
+    --glass-bg: rgba(255, 255, 255, 0.95);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+}
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(11, 185, 225, 0.2);
+}
+
+.theme-toggle i {
+    font-size: 1.25rem;
+    transition: transform 0.5s ease;
+}
+
+.theme-toggle:hover i {
+    transform: rotate(45deg);
+}
+
 body {
     margin: 0;
     padding: 0;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle glass-effect" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
     <div class="container">
         <div class="header">
             <h1><i class="fas fa-notes-medical"></i> Radiologist Task Manager</h1>
@@ -163,6 +168,41 @@
     </footer>
 
     <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeIcon = document.querySelector('.theme-toggle i');
+            
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                themeIcon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const html = document.documentElement;
+            const themeIcon = document.querySelector('.theme-toggle i');
+            
+            if (savedTheme) {
+                html.setAttribute('data-theme', savedTheme);
+                themeIcon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            } else if (prefersDark) {
+                html.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-moon';
+            } else {
+                html.setAttribute('data-theme', 'light');
+                themeIcon.className = 'fas fa-sun';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeTheme);
+
         function createTodoElement(todo) {
             return `
                 <div class="glass-effect todo-item" data-id="${todo.id}">
