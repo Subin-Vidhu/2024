@@ -3,9 +3,26 @@ import os
 import platform
 import psutil
 import multiprocessing
+import socket
+
+def get_lan_ip():
+    """Get the LAN IP address of the machine."""
+    try:
+        # Create a socket to get the local IP
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # Doesn't need to be reachable
+        s.connect(('8.8.8.8', 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except Exception:
+        return '0.0.0.0'  # Fallback to all interfaces
 
 def get_system_info():
     """Collect system information relevant for server configuration."""
+    
+    # Get LAN IP
+    lan_ip = get_lan_ip()
     
     # Get CPU information
     cpu_info = {
@@ -33,7 +50,8 @@ def get_system_info():
         'os': platform.system(),
         'os_version': platform.version(),
         'architecture': platform.machine(),
-        'python_version': platform.python_version()
+        'python_version': platform.python_version(),
+        'lan_ip': lan_ip
     }
     
     # Calculate recommended server configuration
@@ -49,7 +67,8 @@ def get_system_info():
             'min_threads': min_threads,
             'max_threads': max_threads,
             'recommended_threads': recommended_threads,
-            'command': f'waitress-serve --port=8000 --threads={recommended_threads} app:app'
+            'command': f'waitress-serve --port=8000 --threads={recommended_threads} --host={lan_ip} app:app',
+            'url': f'http://{lan_ip}:8000'
         }
     else:
         # Gunicorn configuration (workers)
@@ -61,7 +80,8 @@ def get_system_info():
             'min_workers': min_workers,
             'max_workers': max_workers,
             'recommended_workers': recommended_workers,
-            'command': f'gunicorn -w {recommended_workers} -b 0.0.0.0:8000 app:app'
+            'command': f'gunicorn -w {recommended_workers} -b {lan_ip}:8000 app:app',
+            'url': f'http://{lan_ip}:8000'
         }
     
     # Combine all information
@@ -94,6 +114,8 @@ def save_system_info(filename='system_info.json'):
             json.dump(info, f, indent=4)
         
         print(f"System information has been saved to {filename}")
+        print("\nSystem Network Information:")
+        print(f"LAN IP: {info['system']['lan_ip']}")
         print("\nRecommended server configuration:")
         print(f"Server: {info['server_config']['server']}")
         if info['server_config']['server'] == 'waitress':
@@ -101,6 +123,7 @@ def save_system_info(filename='system_info.json'):
         else:
             print(f"Recommended workers: {info['server_config']['recommended_workers']}")
         print(f"Command: {info['server_config']['command']}")
+        print(f"\nAccess your application at: {info['server_config']['url']}")
         
         return True
     except Exception as e:

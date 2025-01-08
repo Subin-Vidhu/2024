@@ -1,0 +1,32 @@
+{
+    "cpu": {
+        "physical_cores": 8,
+        "total_cores": 16,
+        "cpu_frequency": {
+            "max": "3792 MHz",
+            "current": "3792 MHz"
+        },
+        "cpu_usage_percent": 24.8
+    },
+    "memory": {
+        "total": "47.87 GB",
+        "available": "8.99 GB",
+        "used": "38.88 GB",
+        "free": "8.99 GB",
+        "percent_used": 81.2
+    },
+    "system": {
+        "os": "Windows",
+        "os_version": "10.0.19045",
+        "architecture": "AMD64",
+        "python_version": "3.9.12"
+    },
+    "server_config": {
+        "server": "waitress",
+        "min_threads": 32,
+        "max_threads": 64,
+        "recommended_threads": 32,
+        "command": "waitress-serve --port=8000 --threads=32 app:app"
+    },
+    "timestamp": "2025-01-08T10:05:28.365864"
+}
