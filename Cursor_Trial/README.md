@@ -81,33 +81,72 @@ A modern, responsive task management application built specifically for radiolog
    ```
    python app.py
    ```
+   The development server will be accessible:
+   - Locally: http://localhost:5000
+   - Over LAN: http://<your-ip>:5000
 
 6. Server Configuration (Recommended):
    ```
    # Generate optimal server configuration based on your system
    python system_info.py
    ```
-   This will create a system_info.json file with recommended server settings based on your CPU cores and system specifications.
+   This will create a system_info.json file with:
+   - CPU information (cores, frequency, usage)
+   - Memory statistics
+   - OS and system details
+   - Network information (LAN IP)
+   - Recommended server configuration (Gunicorn/Waitress)
+   - Optimal number of workers/threads for your hardware
+   - Ready-to-use server command
+
+   Example output:
+   ```
+   System information has been saved to system_info.json
+
+   System Network Information:
+   LAN IP: 192.168.1.100
+
+   Recommended server configuration:
+   Server: waitress
+   Recommended threads: 16
+   Command: waitress-serve --port=8000 --threads=16 --host=192.168.1.100 app:app
+
+   Access your application at: http://192.168.1.100:8000
+   ```
 
 7. Production Mode (Recommended):
    ```
-   # On Unix/MacOS/Linux
-   gunicorn -w 4 -b 0.0.0.0:8000 app:app
-
-   # On Windows (using waitress as Gunicorn is not supported)
-   # Use 4-8 threads per CPU core. For a 4-core CPU, 16-32 threads would be reasonable
-   waitress-serve --port=8000 --threads=16 app:app
+   # Run the production server with optimal configuration
+   python run_production.py
    ```
-   Note: Use the command provided by system_info.py for optimal configuration on your system.
+   This will automatically:
+   - Use the optimal configuration from system_info.json
+   - Set proper production environment variables
+   - Use Gunicorn on Unix/Linux or Waitress on Windows
+   - Configure optimal number of workers/threads for your CPU
+   - Make the application accessible over LAN
+   - Provide graceful shutdown on Ctrl+C
 
-8. Open your browser and navigate to:
+   Manual commands (if needed):
+   ```
+   # On Unix/MacOS/Linux
+   gunicorn -w 4 -b <your-ip>:8000 app:app
+
+   # On Windows
+   waitress-serve --port=8000 --threads=16 --host=<your-ip> app:app
+   ```
+
+8. Access the Application:
    ```
    # For development mode
-   http://localhost:5000
+   Local: http://localhost:5000
+   LAN: http://<your-ip>:5000
 
    # For production mode
-   http://localhost:8000
+   Local: http://localhost:8000
+   LAN: http://<your-ip>:8000
    ```
+   Replace <your-ip> with your actual LAN IP (shown by system_info.py)
 
 ### Production Deployment Notes
 - Use Gunicorn in production with multiple workers (2-4x number of CPU cores)
