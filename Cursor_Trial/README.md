@@ -30,7 +30,7 @@ A modern, responsive task management application built specifically for radiolog
 - Error boundary handling
 
 ## Technology Stack
-- Backend: Flask 3.0.0 + SQLAlchemy 2.0.23
+- Backend: Flask 2.3.3 + SQLAlchemy 2.0.23 + Gunicorn 21.2.0
 - Database: SQLite
 - Frontend: Vanilla JavaScript + CSS
 - Icons: Font Awesome 6.0.0
@@ -77,15 +77,43 @@ A modern, responsive task management application built specifically for radiolog
      }
      ```
 
-5. Run the application:
+5. Development Mode:
    ```
    python app.py
    ```
 
-6. Open your browser and navigate to:
+6. Server Configuration (Recommended):
    ```
+   # Generate optimal server configuration based on your system
+   python system_info.py
+   ```
+   This will create a system_info.json file with recommended server settings based on your CPU cores and system specifications.
+
+7. Production Mode (Recommended):
+   ```
+   # On Unix/MacOS/Linux
+   gunicorn -w 4 -b 0.0.0.0:8000 app:app
+
+   # On Windows (using waitress as Gunicorn is not supported)
+   # Use 4-8 threads per CPU core. For a 4-core CPU, 16-32 threads would be reasonable
+   waitress-serve --port=8000 --threads=16 app:app
+   ```
+   Note: Use the command provided by system_info.py for optimal configuration on your system.
+
+8. Open your browser and navigate to:
+   ```
+   # For development mode
    http://localhost:5000
+
+   # For production mode
+   http://localhost:8000
    ```
+
+### Production Deployment Notes
+- Use Gunicorn in production with multiple workers (2-4x number of CPU cores)
+- Configure a reverse proxy (Nginx/Apache) in front of Gunicorn
+- Set debug=False in config.json for production
+- Use environment variables for sensitive configuration
 
 ## Usage
 
