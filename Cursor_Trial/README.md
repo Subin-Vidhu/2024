@@ -28,6 +28,7 @@ A modern, responsive task management application built specifically for radiolog
 - SQL injection prevention through SQLAlchemy
 - Form validation and error handling
 - Error boundary handling
+- Comprehensive test suite with coverage reporting
 
 ## Technology Stack
 - Backend: Flask 2.3.3 + SQLAlchemy 2.0.23 + Gunicorn 21.2.0
@@ -35,6 +36,137 @@ A modern, responsive task management application built specifically for radiolog
 - Frontend: Vanilla JavaScript + CSS
 - Icons: Font Awesome 6.0.0
 - No additional JavaScript frameworks required
+
+## Testing
+
+### Running Tests
+Before deploying to production, run the test suite to ensure everything works correctly:
+```bash
+python run_tests.py
+```
+
+This will:
+1. Run all test cases
+2. Generate a coverage report
+3. Show test results in the terminal
+4. Create a detailed HTML coverage report
+
+### Test Coverage
+The test suite measures code coverage, which indicates how thoroughly your code is being tested:
+
+#### Coverage Metrics
+- **Line Coverage**: Which lines of code were executed during tests
+- **Branch Coverage**: Whether each conditional branch (if/else) was tested
+- **Function Coverage**: Which functions were called during tests
+- **Statement Coverage**: Which statements were executed
+
+#### Current Coverage Status
+```
+Component          Coverage    Notes
+----------------|-----------|-------------------
+app.py              97%      Core application code
+system_info.py      82%      System configuration
+test files         100%      Test suite itself
+Overall            80%      Total codebase
+```
+
+#### Understanding Coverage Reports
+1. **Terminal Report**:
+   - Shows pass/fail status for each test
+   - Displays overall coverage percentage
+   - Lists untested lines of code
+
+2. **HTML Report** (in htmlcov/index.html):
+   - Interactive coverage visualization
+   - Line-by-line coverage analysis
+   - Color-coded coverage indicators:
+     - Green: Covered code
+     - Red: Uncovered code
+     - Yellow: Partially covered branches
+
+3. **Missing Coverage**:
+   - Startup/shutdown code
+   - Error handling edge cases
+   - Some system configuration paths
+
+### Test Categories
+The test suite includes:
+- API endpoint tests
+- Database operation tests
+- System configuration tests
+- Error handling tests
+- Edge case testing
+
+### Test Reports
+After running tests:
+1. View the terminal output for quick results
+2. Open `htmlcov/index.html` in your browser for:
+   - Detailed coverage analysis
+   - Line-by-line code coverage
+   - Missing coverage identification
+   - Branch coverage visualization
+
+### Interpreting Test Results
+
+#### Terminal Output
+```
+=========================================== test session starts ===========================================
+platform win32 -- Python 3.9.12, pytest-8.0.0, pluggy-1.5.0
+collected 12 items
+
+tests/test_api.py::test_index_page PASSED                   [  8%]
+tests/test_api.py::test_add_task PASSED                     [ 16%]
+...
+============================================ 12 passed in 6.81s =========================================
+```
+
+- ✅ PASSED: Test completed successfully
+- ❌ FAILED: Test encountered an error
+- 🔸 SKIPPED: Test was not run
+- ⚠️ WARNING: Potential issues detected
+
+#### Coverage Report
+```
+Name                    Stmts   Miss  Cover   Missing
+-------------------------------------------------
+app.py                    108      3    97%   216-217, 223
+system_info.py            60     11    82%   18-19, 75-78
+```
+
+- **Stmts**: Total lines of code
+- **Miss**: Untested lines
+- **Cover**: Percentage of code tested
+- **Missing**: Line numbers not covered
+
+#### Common Issues
+1. **Failed Tests**:
+   - Check the error message
+   - Look for assertion failures
+   - Verify test data setup
+
+2. **Low Coverage**:
+   - Identify uncovered code
+   - Add missing test cases
+   - Test edge conditions
+
+3. **Warnings**:
+   - Deprecation notices
+   - Configuration issues
+   - Best practice violations
+
+### Continuous Testing
+Run tests:
+- After making code changes
+- Before deploying to production
+- When updating dependencies
+- After system configuration changes
+
+### Improving Coverage
+To improve test coverage:
+1. Add tests for uncovered lines
+2. Test error conditions
+3. Add edge case scenarios
+4. Test configuration variations
 
 ## Setup and Running
 

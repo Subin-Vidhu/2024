@@ -199,7 +199,9 @@ def clear_history():
     try:
         # Get and verify the admin code
         admin_code = request.json.get('code')
-        if not admin_code or admin_code != config['admin']['history_clear_code']:
+        config_code = app.config.get('ADMIN', {}).get('history_clear_code')
+        
+        if not admin_code or not config_code or admin_code != config_code:
             return jsonify({
                 'error': True,
                 'message': 'Invalid permission code'
