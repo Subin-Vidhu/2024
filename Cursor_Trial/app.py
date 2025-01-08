@@ -51,7 +51,7 @@ with app.app_context():
 
 @app.route('/')
 def index():
-    todos = Todo.query.order_by(Todo.created_at.desc()).all()
+    todos = db.session.execute(db.select(Todo).order_by(Todo.created_at.desc())).scalars().all()
     return render_template('index.html', todos=todos)
 
 @app.route('/add', methods=['POST'])
@@ -59,7 +59,7 @@ def add():
     title = request.form.get('title')
     if title:
         # Check for duplicate
-        existing_todo = Todo.query.filter_by(title=title).first()
+        existing_todo = db.session.execute(db.select(Todo).filter_by(title=title)).scalar_one_or_none()
         if existing_todo:
             return jsonify({
                 'error': True,
@@ -88,7 +88,10 @@ def add():
 
 @app.route('/complete/<int:id>')
 def complete(id):
-    todo = Todo.query.get_or_404(id)
+    todo = db.session.get(Todo, id)
+    if not todo:
+        return jsonify({'error': True, 'message': 'Task not found'}), 404
+    
     todo.completed = not todo.completed
     
     # Record history
@@ -110,7 +113,9 @@ def complete(id):
 
 @app.route('/delete/<int:id>')
 def delete(id):
-    todo = Todo.query.get_or_404(id)
+    todo = db.session.get(Todo, id)
+    if not todo:
+        return jsonify({'error': True, 'message': 'Task not found'}), 404
     
     # Record history before deletion
     history = TaskHistory(
@@ -130,7 +135,7 @@ def delete(id):
 
 @app.route('/history')
 def get_history():
-    history = TaskHistory.query.order_by(TaskHistory.timestamp.desc()).all()
+    history = db.session.execute(db.select(TaskHistory).order_by(TaskHistory.timestamp.desc())).scalars().all()
     return jsonify({
         'error': False,
         'history': [item.to_dict() for item in history]
@@ -138,7 +143,7 @@ def get_history():
 
 @app.route('/delete-all', methods=['POST'])
 def delete_all():
-    todos = Todo.query.all()
+    todos = db.session.execute(db.select(Todo)).scalars().all()
     count = len(todos)
     
     if count == 0:
@@ -157,7 +162,7 @@ def delete_all():
         db.session.add(history)
     
     # Delete all todos
-    Todo.query.delete()
+    db.session.execute(db.delete(Todo))
     db.session.commit()
     
     return jsonify({
@@ -167,7 +172,7 @@ def delete_all():
 
 @app.route('/complete-all', methods=['POST'])
 def complete_all():
-    todos = Todo.query.filter_by(completed=False).all()
+    todos = db.session.execute(db.select(Todo).filter_by(completed=False)).scalars().all()
     count = len(todos)
     
     if count == 0:

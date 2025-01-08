@@ -91,7 +91,8 @@ def test_delete_all(client, sample_todos):
     assert f'Deleted {initial_count} tasks' in data['message']
     
     # Verify all tasks are deleted
-    assert db.session.query(Todo).count() == 0
+    remaining_todos = db.session.execute(db.select(Todo)).scalars().all()
+    assert len(remaining_todos) == 0
     
     # Test when no tasks exist
     response = client.post('/delete-all')
@@ -110,8 +111,8 @@ def test_complete_all(client, sample_todos):
     assert 'Completed' in data['message']
     
     # Verify all tasks are completed
-    incomplete_count = db.session.query(Todo).filter_by(completed=False).count()
-    assert incomplete_count == 0
+    incomplete_todos = db.session.execute(db.select(Todo).filter_by(completed=False)).scalars().all()
+    assert len(incomplete_todos) == 0
     
     # Test when all tasks are already completed
     response = client.post('/complete-all')
@@ -129,11 +130,13 @@ def test_clear_history(client, sample_history, app_config):
                           json={'code': 'wrong-code'},
                           content_type='application/json')
     assert response.status_code == 403
-    assert db.session.query(TaskHistory).count() == initial_count
+    remaining_history = db.session.execute(db.select(TaskHistory)).scalars().all()
+    assert len(remaining_history) == initial_count
     
     # Test with valid code
     response = client.post('/clear-history',
                           json={'code': app_config['ADMIN']['history_clear_code']},
                           content_type='application/json')
     assert response.status_code == 200
-    assert db.session.query(TaskHistory).count() == 0 
+    remaining_history = db.session.execute(db.select(TaskHistory)).scalars().all()
+    assert len(remaining_history) == 0 
