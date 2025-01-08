@@ -31,6 +31,18 @@ def test_add_task(client):
     data = json.loads(response.data)
     assert data['error'] == True
     assert data['message'] == 'Title is required'
+    
+    # Test very long title
+    long_title = 'A' * 150  # Longer than 100 chars limit
+    response = client.post('/add', data={'title': long_title})
+    assert response.status_code == 400
+    
+    # Test special characters in title
+    special_title = '!@#$%^&*()'
+    response = client.post('/add', data={'title': special_title})
+    assert response.status_code == 200
+    data = json.loads(response.data)
+    assert data['todo']['title'] == special_title
 
 def test_complete_task(client, sample_todo):
     """Test completing and uncompleting a task."""
@@ -49,6 +61,10 @@ def test_complete_task(client, sample_todo):
     # Test non-existent task
     response = client.get('/complete/999')
     assert response.status_code == 404
+    
+    # Test invalid ID format
+    response = client.get('/complete/abc')
+    assert response.status_code == 404
 
 def test_delete_task(client, sample_todo):
     """Test deleting a task."""
@@ -66,6 +82,14 @@ def test_delete_task(client, sample_todo):
     # Test deleting non-existent task
     response = client.get('/delete/999')
     assert response.status_code == 404
+    
+    # Test invalid ID format
+    response = client.get('/delete/abc')
+    assert response.status_code == 404
+    
+    # Test deleting already deleted task
+    response = client.get(f'/delete/{sample_todo.id}')
+    assert response.status_code == 404
 
 def test_get_history(client, sample_history):
     """Test retrieving task history."""
@@ -74,10 +98,18 @@ def test_get_history(client, sample_history):
     data = json.loads(response.data)
     assert data['error'] == False
     assert len(data['history']) == len(sample_history)
+    
     # Verify the order (newest first)
     assert data['history'][0]['action'] == 'deleted'
     assert data['history'][1]['action'] == 'completed'
     assert data['history'][2]['action'] == 'created'
+    
+    # Verify timestamp format
+    for entry in data['history']:
+        assert 'timestamp' in entry
+        assert len(entry['timestamp']) == 16  # YYYY-MM-DD HH:MM
+        assert entry['timestamp'][4] == '-'   # Check date format
+        assert entry['timestamp'][13] == ':'  # Check time format
 
 def test_delete_all(client, sample_todos):
     """Test deleting all tasks."""
@@ -100,15 +132,22 @@ def test_delete_all(client, sample_todos):
     data = json.loads(response.data)
     assert data['error'] == True
     assert data['message'] == 'No tasks to delete'
+    
+    # Verify history entries are created
+    history = db.session.execute(db.select(TaskHistory).filter_by(action='deleted')).scalars().all()
+    assert len(history) == initial_count
 
 def test_complete_all(client, sample_todos):
     """Test completing all tasks."""
+    # Count initial incomplete tasks
+    incomplete_count = len([t for t in sample_todos if not t.completed])
+    
     # Test successful completion
     response = client.post('/complete-all')
     assert response.status_code == 200
     data = json.loads(response.data)
     assert data['error'] == False
-    assert 'Completed' in data['message']
+    assert f'Completed {incomplete_count}' in data['message']
     
     # Verify all tasks are completed
     incomplete_todos = db.session.execute(db.select(Todo).filter_by(completed=False)).scalars().all()
@@ -120,6 +159,14 @@ def test_complete_all(client, sample_todos):
     data = json.loads(response.data)
     assert data['error'] == True
     assert data['message'] == 'No incomplete tasks found'
+    
+    # Verify history entries are created
+    history = db.session.execute(
+        db.select(TaskHistory)
+        .filter_by(action='completed')
+        .order_by(TaskHistory.timestamp.desc())
+    ).scalars().all()
+    assert len(history) == incomplete_count
 
 def test_clear_history(client, sample_history, app_config):
     """Test clearing task history."""
@@ -133,10 +180,28 @@ def test_clear_history(client, sample_history, app_config):
     remaining_history = db.session.execute(db.select(TaskHistory)).scalars().all()
     assert len(remaining_history) == initial_count
     
+    # Test with missing code
+    response = client.post('/clear-history',
+                          json={},
+                          content_type='application/json')
+    assert response.status_code == 403
+    
+    # Test with invalid JSON
+    response = client.post('/clear-history',
+                          data='invalid json',
+                          content_type='application/json')
+    assert response.status_code == 400
+    
     # Test with valid code
     response = client.post('/clear-history',
                           json={'code': app_config['ADMIN']['history_clear_code']},
                           content_type='application/json')
     assert response.status_code == 200
     remaining_history = db.session.execute(db.select(TaskHistory)).scalars().all()
-    assert len(remaining_history) == 0 
+    assert len(remaining_history) == 0
+    
+    # Test clearing empty history
+    response = client.post('/clear-history',
+                          json={'code': app_config['ADMIN']['history_clear_code']},
+                          content_type='application/json')
+    assert response.status_code == 200 

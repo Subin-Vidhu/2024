@@ -51,43 +51,60 @@ with app.app_context():
 
 @app.route('/')
 def index():
+    # SQLAlchemy 2.0 Select Pattern:
+    # 1. Create select statement: db.select(Model)
+    # 2. Add any filters/ordering: .order_by()
+    # 3. Execute with session: db.session.execute()
+    # 4. Convert to objects: .scalars().all()
     todos = db.session.execute(db.select(Todo).order_by(Todo.created_at.desc())).scalars().all()
     return render_template('index.html', todos=todos)
 
 @app.route('/add', methods=['POST'])
 def add():
     title = request.form.get('title')
-    if title:
-        # Check for duplicate
-        existing_todo = db.session.execute(db.select(Todo).filter_by(title=title)).scalar_one_or_none()
-        if existing_todo:
-            return jsonify({
-                'error': True,
-                'message': 'This task already exists'
-            }), 400
+    if not title:
+        return jsonify({'error': True, 'message': 'Title is required'}), 400
         
-        new_todo = Todo(title=title)
-        db.session.add(new_todo)
-        db.session.commit()
-
-        # Record history
-        history = TaskHistory(
-            task_id=new_todo.id,
-            action='created',
-            task_title=title
-        )
-        db.session.add(history)
-        db.session.commit()
-
+    if len(title) > 100:  # Validate title length
+        return jsonify({'error': True, 'message': 'Title must be 100 characters or less'}), 400
+        
+    # SQLAlchemy 2.0 Single Result Pattern:
+    # 1. Create select with filter: db.select(Model).filter_by()
+    # 2. Execute and get one or none: scalar_one_or_none()
+    existing_todo = db.session.execute(db.select(Todo).filter_by(title=title)).scalar_one_or_none()
+    if existing_todo:
         return jsonify({
-            'error': False,
-            'message': 'Added new task',
-            'todo': new_todo.to_dict()
-        })
-    return jsonify({'error': True, 'message': 'Title is required'}), 400
+            'error': True,
+            'message': 'This task already exists'
+        }), 400
+    
+    # SQLAlchemy 2.0 Insert Pattern:
+    # 1. Create model instance
+    # 2. Add to session
+    # 3. Commit transaction
+    new_todo = Todo(title=title)
+    db.session.add(new_todo)
+    db.session.commit()
+
+    # Record history using same pattern
+    history = TaskHistory(
+        task_id=new_todo.id,
+        action='created',
+        task_title=title
+    )
+    db.session.add(history)
+    db.session.commit()
+
+    return jsonify({
+        'error': False,
+        'message': 'Added new task',
+        'todo': new_todo.to_dict()
+    })
 
 @app.route('/complete/<int:id>')
 def complete(id):
+    # SQLAlchemy 2.0 Get By Primary Key Pattern:
+    # Use session.get() instead of Model.query.get()
     todo = db.session.get(Todo, id)
     if not todo:
         return jsonify({'error': True, 'message': 'Task not found'}), 404
@@ -113,6 +130,9 @@ def complete(id):
 
 @app.route('/delete/<int:id>')
 def delete(id):
+    # SQLAlchemy 2.0 Get and Delete Pattern:
+    # 1. Get object by primary key
+    # 2. Delete using session.delete()
     todo = db.session.get(Todo, id)
     if not todo:
         return jsonify({'error': True, 'message': 'Task not found'}), 404
@@ -125,7 +145,7 @@ def delete(id):
     )
     db.session.add(history)
     
-    db.session.delete(todo)
+    db.session.delete(todo)  # SQLAlchemy 2.0 delete pattern
     db.session.commit()
     
     return jsonify({
@@ -135,7 +155,12 @@ def delete(id):
 
 @app.route('/history')
 def get_history():
-    history = db.session.execute(db.select(TaskHistory).order_by(TaskHistory.timestamp.desc())).scalars().all()
+    # SQLAlchemy 2.0 Select with Order Pattern:
+    # Combines select, ordering, and result conversion
+    history = db.session.execute(
+        db.select(TaskHistory)
+        .order_by(TaskHistory.timestamp.desc())  # Chain criteria
+    ).scalars().all()
     return jsonify({
         'error': False,
         'history': [item.to_dict() for item in history]
@@ -143,6 +168,9 @@ def get_history():
 
 @app.route('/delete-all', methods=['POST'])
 def delete_all():
+    # SQLAlchemy 2.0 Bulk Operations Pattern:
+    # 1. Get all records: db.select()
+    # 2. Delete all: db.delete()
     todos = db.session.execute(db.select(Todo)).scalars().all()
     count = len(todos)
     
@@ -161,7 +189,7 @@ def delete_all():
         )
         db.session.add(history)
     
-    # Delete all todos
+    # SQLAlchemy 2.0 Bulk Delete Pattern
     db.session.execute(db.delete(Todo))
     db.session.commit()
     
@@ -172,7 +200,12 @@ def delete_all():
 
 @app.route('/complete-all', methods=['POST'])
 def complete_all():
-    todos = db.session.execute(db.select(Todo).filter_by(completed=False)).scalars().all()
+    # SQLAlchemy 2.0 Select with Filter Pattern:
+    # Combines select and filter in one statement
+    todos = db.session.execute(
+        db.select(Todo)
+        .filter_by(completed=False)  # Chain filters
+    ).scalars().all()
     count = len(todos)
     
     if count == 0:
@@ -181,7 +214,7 @@ def complete_all():
             'message': 'No incomplete tasks found'
         })
 
-    # Complete all incomplete todos and record history
+    # Bulk update with individual history records
     for todo in todos:
         todo.completed = True
         history = TaskHistory(
@@ -202,17 +235,34 @@ def complete_all():
 @app.route('/clear-history', methods=['POST'])
 def clear_history():
     try:
+        if not request.is_json:
+            return jsonify({
+                'error': True,
+                'message': 'Invalid content type, expected application/json'
+            }), 400
+            
+        try:
+            data = request.get_json()
+        except:
+            return jsonify({
+                'error': True,
+                'message': 'Invalid JSON format'
+            }), 400
+            
         # Get and verify the admin code
-        admin_code = request.json.get('code')
-        config_code = app.config.get('ADMIN', {}).get('history_clear_code')
+        admin_code = data.get('code') if data else None
         
-        if not admin_code or not config_code or admin_code != config_code:
+        # Try to get code from app config first (for testing), then fall back to JSON config
+        config_code = app.config.get('ADMIN', {}).get('history_clear_code') or config['admin']['history_clear_code']
+        
+        if not admin_code or admin_code != config_code:
             return jsonify({
                 'error': True,
                 'message': 'Invalid permission code'
             }), 403
 
-        TaskHistory.query.delete()
+        # SQLAlchemy 2.0 Bulk Delete Pattern
+        db.session.execute(db.delete(TaskHistory))
         db.session.commit()
         return jsonify({
             'error': False,

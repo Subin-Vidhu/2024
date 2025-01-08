@@ -30,6 +30,70 @@ A modern, responsive task management application built specifically for radiolog
 - Error boundary handling
 - Comprehensive test suite with coverage reporting
 
+### Database Patterns (SQLAlchemy 2.0)
+The application uses modern SQLAlchemy 2.0 patterns for database operations:
+
+#### Query Patterns
+1. **Select Records**
+   ```python
+   # Get all records
+   items = db.session.execute(db.select(Model)).scalars().all()
+   
+   # Get with ordering
+   items = db.session.execute(
+       db.select(Model).order_by(Model.field.desc())
+   ).scalars().all()
+   ```
+
+2. **Single Record Operations**
+   ```python
+   # Get by primary key
+   item = db.session.get(Model, id)
+   
+   # Get single result with filter
+   item = db.session.execute(
+       db.select(Model).filter_by(field='value')
+   ).scalar_one_or_none()
+   ```
+
+3. **Insert Operations**
+   ```python
+   # Add new record
+   new_item = Model(field='value')
+   db.session.add(new_item)
+   db.session.commit()
+   ```
+
+4. **Delete Operations**
+   ```python
+   # Delete single record
+   db.session.delete(item)
+   
+   # Bulk delete
+   db.session.execute(db.delete(Model))
+   db.session.commit()
+   ```
+
+5. **Filter and Update**
+   ```python
+   # Get filtered records
+   items = db.session.execute(
+       db.select(Model).filter_by(completed=False)
+   ).scalars().all()
+   
+   # Update records
+   for item in items:
+       item.field = new_value
+   db.session.commit()
+   ```
+
+#### Best Practices
+- Use `db.session.get()` instead of `Model.query.get()`
+- Chain select operations for readability
+- Use `scalar_one_or_none()` for single results
+- Commit transactions after modifications
+- Handle bulk operations efficiently
+
 ## Technology Stack
 - Backend: Flask 2.3.3 + SQLAlchemy 2.0.23 + Gunicorn 21.2.0
 - Database: SQLite
