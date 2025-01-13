@@ -536,6 +536,16 @@ func readPassword() string {
 	return password
 }
 
+// tryDefaultPassword attempts to connect with the default password
+func (pg *PostgreSQL) tryDefaultPassword() (bool, error) {
+	pg.SetPassword("password") // Try default password first
+	_, needsPassword, err := pg.IsRunning()
+	if err != nil {
+		return false, err
+	}
+	return !needsPassword, nil
+}
+
 func main() {
 	fmt.Println("\nPostgreSQL Setup")
 	fmt.Println("================")
@@ -547,7 +557,7 @@ func main() {
 
 	// Check if our PostgreSQL instance is already running on port 8060
 	fmt.Printf("Checking if PostgreSQL is already running on port %s...\n", pgPort)
-	isRunning, needsPassword, err := pg.IsRunning()
+	serverRunning, needsPassword, err := pg.IsRunning()
 	if err != nil {
 		fmt.Printf("Error checking PostgreSQL: %v\n", err)
 		fmt.Println("\nPress Enter to exit...")
@@ -555,18 +565,33 @@ func main() {
 		return
 	}
 
-	if isRunning {
+	if serverRunning {
 		fmt.Printf("\nExisting PostgreSQL instance found on port %s!\n", pgPort)
-		password := readPassword()
-		pg.SetPassword(password)
 
-		// Try connection again
-		isRunning, needsPassword, err = pg.IsRunning()
-		if err != nil || needsPassword {
-			fmt.Println("\n❌ Connection failed: Invalid password or access denied")
+		// First try with default password
+		fmt.Println("Attempting to connect with default password...")
+		success, err := pg.tryDefaultPassword()
+		if err != nil {
+			fmt.Printf("Error during connection attempt: %v\n", err)
 			fmt.Println("\nPress Enter to exit...")
 			fmt.Scanln()
 			return
+		}
+
+		// If default password failed, prompt for password
+		if !success {
+			fmt.Println("Default password failed. Please enter your password:")
+			password := readPassword()
+			pg.SetPassword(password)
+
+			// Try connection again
+			_, needsPassword, err = pg.IsRunning()
+			if err != nil || needsPassword {
+				fmt.Println("\n❌ Connection failed: Invalid password or access denied")
+				fmt.Println("\nPress Enter to exit...")
+				fmt.Scanln()
+				return
+			}
 		}
 		fmt.Printf("\n✓ Successfully connected to existing PostgreSQL instance on port %s\n", pgPort)
 	} else {
@@ -630,7 +655,7 @@ func main() {
 	<-c
 
 	// Cleanup on exit
-	if !isRunning {
+	if !serverRunning {
 		fmt.Println("\nStopping PostgreSQL...")
 		if err := pg.Stop(); err != nil {
 			fmt.Printf("Error stopping PostgreSQL: %v\n", err)
