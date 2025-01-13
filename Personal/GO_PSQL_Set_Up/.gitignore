@@ -1,0 +1,18 @@
+# Binaries and data
+*.exe
+*.exe~
+data/
+pgsql/
+*.zip
+
+# Go specific
+*.test
+*.out
+go.work
+
+# IDE specific
+.idea/
+.vscode/
+*.swp 
+postgres_files/
+postgres_data/
