@@ -618,25 +618,19 @@ func main() {
 		time.Sleep(5 * time.Second)
 	}
 
-	// Try database creation multiple times
-	var dbError error
-	for attempts := 1; attempts <= 3; attempts++ {
-		fmt.Printf("\nAttempt %d to create database and tables...\n", attempts)
-		if err := pg.CreateTestTable(); err != nil {
-			dbError = err
-			fmt.Printf("Attempt %d failed: %v\n", attempts, err)
-			time.Sleep(3 * time.Second)
-			continue
+	// Try database setup once
+	fmt.Println("\nAttempting database setup...")
+	err = pg.CreateTestTable()
+	if err != nil {
+		if strings.Contains(err.Error(), "database \"radiumtest\" already exists") ||
+			strings.Contains(err.Error(), "being accessed by other users") {
+			fmt.Println("✓ Database already exists and is in use")
+		} else {
+			fmt.Printf("\nError: Failed to setup database: %v\n", err)
+			fmt.Println("\nPress Enter to exit...")
+			fmt.Scanln()
+			return
 		}
-		dbError = nil
-		break
-	}
-
-	if dbError != nil {
-		fmt.Printf("\nError: Failed to create database/tables after multiple attempts: %v\n", dbError)
-		fmt.Println("\nPress Enter to exit...")
-		fmt.Scanln()
-		return
 	}
 
 	fmt.Println("\n✓ Setup completed successfully!")
