@@ -1,0 +1,7 @@
+html, body {
+    margin: 0;
+    display: grid;
+    background: #212121;
+    place-items: center;
+    padding-top: 42px;
+}
