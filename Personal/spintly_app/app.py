@@ -1,15 +1,17 @@
 from flask import Flask, render_template, request, send_file, flash, redirect, url_for, session, jsonify
 import os
-from datetime import datetime
+from datetime import datetime, time, timedelta
 import pandas as pd
 from werkzeug.utils import secure_filename
-import sys
-import json
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from spintly_daily_time_multiple_days import (
-    load_data, process_multiple_dates, generate_summary_tables,
-    save_multiple_dates_to_csv, calculate_total_difference_from_csv
-)
+from typing import Dict, List, Tuple
+from colorama import Fore, Style, init
+
+init(autoreset=True)  # Initialize colorama
+
+# Constants
+OFFICE_START = time(7, 30)
+OFFICE_END = time(19, 30)
+TARGET_TIME = 8 * 3600 + 30 * 60  # 8 hours 30 minutes in seconds
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-here'  # Required for flash messages
@@ -28,6 +30,286 @@ LOCAL_CSV_FILE = os.path.join(CSV_STORAGE, 'time_differences_local.csv')
 
 # Configure allowed file extensions
 ALLOWED_EXTENSIONS = {'xlsx', 'xls'}
+
+def parse_datetime(date: str, time_str: str) -> datetime:
+    """Parse datetime from date and time strings"""
+    return datetime.strptime(f"{date} {time_str.split('(')[0].strip()}", "%b %d, %Y %I:%M:%S %p")
+
+def load_data(file_path: str, sheet_name: str, skip_rows: int) -> pd.DataFrame:
+    """Load Excel data and preprocess it"""
+    try:
+        df = pd.read_excel(file_path, sheet_name=sheet_name, skiprows=skip_rows)
+        df['DateTime'] = df.apply(lambda row: parse_datetime(row['Date'], row['Time']), axis=1)
+        df['Date'] = pd.to_datetime(df['Date'], format='%b %d, %Y').dt.date
+        return df[['Date', 'DateTime', 'Name', 'Direction']].sort_values(by=['Name', 'DateTime'])
+    except Exception as e:
+        print(f"Error loading data: {e}")
+        return None
+
+def truncate_seconds(dt: datetime) -> datetime:
+    """Truncate seconds from datetime"""
+    return dt.replace(second=0, microsecond=0)
+
+def calculate_time_spent(group: pd.DataFrame, current_time: datetime = None, truncate: bool = False) -> Dict[str, float]:
+    """Calculate time spent in office"""
+    total_time, total_office_hours_time, total_break_time = 0, 0, 0
+    entry_time, first_entry_time, last_exit_time = None, None, None
+
+    if current_time and isinstance(current_time, datetime):
+        current_time = current_time.replace(tzinfo=None)
+
+    for _, row in group.iterrows():
+        dt = truncate_seconds(row['DateTime']) if truncate else row['DateTime']
+        dt = dt.replace(tzinfo=None)
+
+        if row['Direction'].lower() == 'entry':
+            if first_entry_time is None:
+                first_entry_time = dt
+            entry_time = dt
+        elif row['Direction'].lower() == 'exit' and entry_time:
+            exit_time = dt
+            last_exit_time = exit_time
+            duration = (exit_time - entry_time).total_seconds()
+            total_time += duration
+
+            entry_time_within_office_hours = max(entry_time, entry_time.replace(hour=OFFICE_START.hour, minute=OFFICE_START.minute, second=0))
+            exit_time_within_office_hours = min(exit_time, exit_time.replace(hour=OFFICE_END.hour, minute=OFFICE_END.minute, second=0))
+
+            if entry_time_within_office_hours < exit_time_within_office_hours:
+                office_duration = (exit_time_within_office_hours - entry_time_within_office_hours).total_seconds()
+                total_office_hours_time += office_duration
+
+            entry_time = None
+
+    if entry_time and current_time:
+        exit_time = truncate_seconds(current_time) if truncate else current_time
+        last_exit_time = exit_time
+        duration = (exit_time - entry_time).total_seconds()
+        if duration > 0:
+            total_time += duration
+
+            entry_time_within_office_hours = max(entry_time, entry_time.replace(hour=OFFICE_START.hour, minute=OFFICE_START.minute, second=0))
+            exit_time_within_office_hours = min(exit_time, exit_time.replace(hour=OFFICE_END.hour, minute=OFFICE_END.minute, second=0))
+
+            if entry_time_within_office_hours < exit_time_within_office_hours:
+                office_duration = (exit_time_within_office_hours - entry_time_within_office_hours).total_seconds()
+                total_office_hours_time += office_duration
+
+    if first_entry_time and last_exit_time:
+        total_duration = (last_exit_time - first_entry_time).total_seconds()
+        total_break_time = max(0, total_duration - total_time)
+
+    return {
+        'total': total_time,
+        'office': total_office_hours_time,
+        'break': total_break_time,
+        'last_exit': last_exit_time
+    }
+
+def format_time(seconds: float) -> str:
+    """Format time from seconds to HH:MM:SS"""
+    return str(timedelta(seconds=int(seconds)))
+
+def analyze_time_spent(df: pd.DataFrame, date: datetime.date, current_time: datetime = None) -> Tuple[Dict[str, Dict[str, float]], datetime.date]:
+    """Analyze and calculate time spent for each user on the specified date"""
+    time_spent = {}
+    
+    for name, group in df.groupby('Name'):
+        group_by_date = group[group['Date'] == date]
+        if not group_by_date.empty:
+            time_spent[name] = calculate_time_spent(group_by_date, current_time=current_time)
+            time_spent[f"{name}_no_seconds"] = calculate_time_spent(group_by_date, current_time=current_time, truncate=True)
+    
+    return time_spent, date
+
+def calculate_leave_time(office_time: float, current_time: datetime, analyzed_date: datetime.date) -> Tuple[datetime, bool, str, timedelta]:
+    time_left = max(TARGET_TIME - office_time, 0)
+    is_current_day = analyzed_date == current_time.date()
+    
+    difference = timedelta(seconds=int(office_time - TARGET_TIME))
+    
+    if time_left == 0:
+        return current_time, True, "Target met", difference
+    else:
+        if is_current_day:
+            leave_time = current_time + timedelta(seconds=time_left)
+            if leave_time.time() > time(19, 30):
+                return datetime.combine(analyzed_date, time(19, 30)), False, "Leave by end of day", difference
+            else:
+                return leave_time, False, f"Leave by {leave_time.strftime('%I:%M:%S %p')}", difference
+        else:
+            return current_time, False, "Target not met", difference
+
+def get_dates_in_month(year: int, month: int) -> List[datetime.date]:
+    """Get all dates in the specified month and year."""
+    start_date = datetime(year, month, 1).date()
+    end_date = (datetime(year, month + 1, 1) if month < 12 else datetime(year + 1, 1, 1)).date() - timedelta(days=1)
+    return [start_date + timedelta(days=x) for x in range((end_date - start_date).days + 1)]
+
+def process_multiple_dates(df: pd.DataFrame, dates: List[datetime.date], current_time: datetime) -> Dict[datetime.date, Dict[str, Dict[str, float]]]:
+    """Process multiple dates and return time spent data for each date."""
+    results = {}
+    for date in dates:
+        time_spent, _ = analyze_time_spent(df, date, current_time=current_time)
+        results[date] = time_spent
+    return results
+
+def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_date: datetime.date, current_time: datetime, csv_file: str = None) -> None:
+    """Save time differences to CSV file."""
+    if csv_file is None:
+        csv_file = LOCAL_CSV_FILE
+        
+    data = []
+
+    for name in time_spent:
+        if "_no_seconds" in name:
+            continue
+
+        time_with_seconds = time_spent[name]['office']
+        time_without_seconds = time_spent[f"{name}_no_seconds"]['office']
+
+        leave_time_with_seconds, target_met_with_seconds, status_with_seconds, difference_with_seconds = calculate_leave_time(time_with_seconds, current_time, analyzed_date)
+        leave_time_without_seconds, target_met_without_seconds, _, difference_without_seconds = calculate_leave_time(time_without_seconds, current_time, analyzed_date)
+
+        sign_with_seconds = '+' if difference_with_seconds.total_seconds() >= 0 else '-'
+        sign_without_seconds = '+' if difference_without_seconds.total_seconds() >= 0 else '-'
+
+        def cap_difference(difference: timedelta, sign: str) -> Tuple[str, str, str]:
+            if sign == '+' and difference > timedelta(hours=1):
+                return '+', '01:00:00', 'Only 1 hour/day can be considered extra'
+            else:
+                return sign, format_time(abs(difference.total_seconds())), ''
+
+        sign_with_seconds, diff_with_seconds, msg_with_seconds = cap_difference(difference_with_seconds, sign_with_seconds)
+        sign_without_seconds, diff_without_seconds, msg_without_seconds = cap_difference(difference_without_seconds, sign_without_seconds)
+
+        data.append({
+            'Date': analyzed_date,
+            'Name': name,
+            'Office Time With Seconds': format_time(time_with_seconds),
+            'Office Time Without Seconds': format_time(time_without_seconds),
+            'Sign With Seconds': sign_with_seconds,
+            'Difference With Seconds': diff_with_seconds,
+            'Sign Without Seconds': sign_without_seconds,
+            'Difference Without Seconds': diff_without_seconds,
+            'Status': status_with_seconds,
+            'Message With Seconds': msg_with_seconds,
+            'Message Without Seconds': msg_without_seconds
+        })
+
+    new_df = pd.DataFrame(data)
+
+    try:
+        df = pd.read_csv(csv_file)
+        df = df[~((df['Date'] == str(analyzed_date)) & (df['Name'].isin(new_df['Name'])))]
+        df = pd.concat([df, new_df]).reset_index(drop=True)
+    except (FileNotFoundError, pd.errors.EmptyDataError):
+        df = new_df
+
+    df = df[['Date', 'Name', 'Office Time With Seconds', 'Office Time Without Seconds',
+             'Sign With Seconds', 'Difference With Seconds', 
+             'Sign Without Seconds', 'Difference Without Seconds',
+             'Status', 'Message With Seconds', 'Message Without Seconds']]
+
+    df.to_csv(csv_file, index=False)
+
+def save_multiple_dates_to_csv(results: Dict[datetime.date, Dict[str, Dict[str, float]]], current_time: datetime, csv_file: str = None) -> None:
+    """Save time differences for multiple dates to CSV."""
+    if csv_file is None:
+        csv_file = LOCAL_CSV_FILE
+        
+    for date, time_spent in results.items():
+        save_differences_to_csv(time_spent, date, current_time, csv_file)
+
+def generate_summary_table(time_spent: Dict[str, Dict[str, float]], current_time: datetime, analyzed_date: datetime.date, use_seconds: bool = True) -> str:
+    headers = ['Name', 'Total Time', 'Office Hours Time', 'Break Time', 'Target', 'Difference', 'Last Exit', 'Status']
+    table = []
+
+    for name, times in time_spent.items():
+        if (use_seconds and '_no_seconds' in name) or (not use_seconds and '_no_seconds' not in name):
+            continue
+
+        last_exit_time = times['last_exit']
+        is_current_day = analyzed_date == current_time.date()
+
+        leave_time, target_met, status, difference = calculate_leave_time(times['office'], current_time, analyzed_date)
+
+        difference_str = format_time(abs(difference.total_seconds()))
+        last_exit_time_str = "No exit" if last_exit_time is None else (
+            last_exit_time.strftime("%I:%M:%S %p") if use_seconds else last_exit_time.strftime("%I:%M %p")
+        )
+        
+        if is_current_day and not target_met:
+            time_left_str = f"-{difference_str}"
+            status_color = Fore.YELLOW
+        elif target_met:
+            time_left_str = f"+{difference_str}" if difference.total_seconds() > 0 else "00:00:00"
+            status_color = Fore.GREEN
+        else:
+            time_left_str = f"-{difference_str}"
+            status_color = Fore.RED
+
+        table.append([
+            name,
+            format_time(times['total']),
+            format_time(times['office']),
+            format_time(times['break']),
+            '✓' if target_met else '✗',
+            f"{status_color}{time_left_str}{Style.RESET_ALL}",
+            last_exit_time_str,
+            f"{status_color}{status}{Style.RESET_ALL}"
+        ])
+
+    from tabulate import tabulate
+    return tabulate(table, headers, tablefmt="pretty")
+
+def generate_summary_tables(results: Dict[datetime.date, Dict[str, Dict[str, float]]], current_time: datetime) -> str:
+    """Generate summary tables for multiple dates."""
+    summary = ""
+    for date, time_spent in results.items():
+        summary += "\n" + f"{('Time Spent on ' + date.strftime('%b %d, %Y')).center(80)}" + "\n"
+        summary += generate_summary_table(time_spent, current_time, date, use_seconds=True)
+        summary += "\n" + "-"*80 + "\n"
+        summary += generate_summary_table(time_spent, current_time, date, use_seconds=False)
+        summary += "\n\n"
+    return summary
+
+def calculate_total_difference_from_csv(csv_file: str, start_date: datetime.date = None, end_date: datetime.date = None):
+    try:
+        df = pd.read_csv(csv_file)
+        df['Date'] = pd.to_datetime(df['Date']).dt.date
+        
+        if start_date and end_date:
+            df = df[(df['Date'] >= start_date) & (df['Date'] <= end_date)]
+        
+        def parse_time_difference(time_str):
+            h, m, s = map(int, time_str.split(':'))
+            return timedelta(hours=h, minutes=m, seconds=s)
+        
+        df['Difference With Seconds'] = df['Difference With Seconds'].apply(parse_time_difference)
+        df['Difference Without Seconds'] = df['Difference Without Seconds'].apply(parse_time_difference)
+        
+        total_diff_with_seconds = timedelta()
+        total_diff_without_seconds = timedelta()
+        
+        for index, row in df.iterrows():
+            if row['Sign With Seconds'] == '+':
+                total_diff_with_seconds += row['Difference With Seconds']
+            if row['Sign Without Seconds'] == '+':
+                total_diff_without_seconds += row['Difference Without Seconds']
+        
+        result = {
+            "Total Cumulative Difference With Seconds": str(total_diff_with_seconds),
+            "Total Cumulative Difference Without Seconds": str(total_diff_without_seconds)
+        }
+        
+        return result
+        
+    except FileNotFoundError:
+        return None
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
