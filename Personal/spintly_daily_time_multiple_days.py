@@ -22,8 +22,15 @@ def load_data(file_path: str, sheet_name: str, skip_rows: int) -> pd.DataFrame:
     """Load Excel data and preprocess it"""
     try:
         df = pd.read_excel(file_path, sheet_name=sheet_name, skiprows=skip_rows)
+        print("\nRaw data from Excel:")
+        print(df[['Date', 'Time', 'Name', 'Direction']].head())
+        
         df['DateTime'] = df.apply(lambda row: parse_datetime(row['Date'], row['Time']), axis=1)
         df['Date'] = pd.to_datetime(df['Date'], format='%b %d, %Y').dt.date
+        
+        print("\nProcessed data:")
+        print(df[['Date', 'DateTime', 'Name', 'Direction']].head())
+        
         return df[['Date', 'DateTime', 'Name', 'Direction']].sort_values(by=['Name', 'DateTime'])
     except Exception as e:
         print(f"Error loading data: {e}")
@@ -38,45 +45,96 @@ def calculate_time_spent(group: pd.DataFrame, current_time: datetime = None, tru
     total_time, total_office_hours_time, total_break_time = 0, 0, 0
     entry_time, first_entry_time, last_exit_time = None, None, None
 
+    print(f"\nCalculating time for group with {len(group)} records")
+    print(f"Current time: {current_time}")
+
+    # Convert current_time to datetime if it's not None
+    if current_time and isinstance(current_time, datetime):
+        current_time = current_time.replace(tzinfo=None)  # Remove timezone if present
+
     for _, row in group.iterrows():
         dt = truncate_seconds(row['DateTime']) if truncate else row['DateTime']
+        dt = dt.replace(tzinfo=None)  # Remove timezone if present
+        
+        print(f"\nProcessing record: {dt} - {row['Direction']}")
 
-        if row['Direction'] == 'entry':
+        if row['Direction'].lower() == 'entry':
             if first_entry_time is None:
                 first_entry_time = dt
+                print(f"First entry time set to: {first_entry_time}")
             entry_time = dt
-        elif row['Direction'] == 'exit' and entry_time:
+            print(f"Entry time set to: {entry_time}")
+        elif row['Direction'].lower() == 'exit' and entry_time:
             exit_time = dt
             last_exit_time = exit_time
             duration = (exit_time - entry_time).total_seconds()
             total_time += duration
+            print(f"Exit time: {exit_time}")
+            print(f"Duration: {format_time(duration)}")
 
             # Calculate time during office hours
             entry_time_within_office_hours = max(entry_time, entry_time.replace(hour=OFFICE_START.hour, minute=OFFICE_START.minute, second=0))
             exit_time_within_office_hours = min(exit_time, exit_time.replace(hour=OFFICE_END.hour, minute=OFFICE_END.minute, second=0))
 
             if entry_time_within_office_hours < exit_time_within_office_hours:
-                total_office_hours_time += (exit_time_within_office_hours - entry_time_within_office_hours).total_seconds()
+                office_duration = (exit_time_within_office_hours - entry_time_within_office_hours).total_seconds()
+                total_office_hours_time += office_duration
+                print(f"Office hours duration: {format_time(office_duration)}")
 
             entry_time = None
 
-    # Handle open entry without exit
+    # Handle open entry without exit or no exit record for the day
     if entry_time and current_time:
+        print(f"\nHandling open entry:")
+        print(f"Entry time: {entry_time}")
+        print(f"Current time: {current_time}")
+        
         exit_time = truncate_seconds(current_time) if truncate else current_time
         last_exit_time = exit_time
-        total_time += (exit_time - entry_time).total_seconds()
+        duration = (exit_time - entry_time).total_seconds()
+        if duration > 0:  # Only add if duration is positive
+            total_time += duration
+            print(f"Duration until current time: {format_time(duration)}")
 
-        # Office hours calculation
-        entry_time_within_office_hours = max(entry_time, entry_time.replace(hour=OFFICE_START.hour, minute=OFFICE_START.minute, second=0))
-        exit_time_within_office_hours = min(exit_time, exit_time.replace(hour=OFFICE_END.hour, minute=OFFICE_END.minute, second=0))
+            # Office hours calculation for current open session
+            entry_time_within_office_hours = max(entry_time, entry_time.replace(hour=OFFICE_START.hour, minute=OFFICE_START.minute, second=0))
+            exit_time_within_office_hours = min(exit_time, exit_time.replace(hour=OFFICE_END.hour, minute=OFFICE_END.minute, second=0))
 
-        if entry_time_within_office_hours < exit_time_within_office_hours:
-            total_office_hours_time += (exit_time_within_office_hours - entry_time_within_office_hours).total_seconds()
+            if entry_time_within_office_hours < exit_time_within_office_hours:
+                office_duration = (exit_time_within_office_hours - entry_time_within_office_hours).total_seconds()
+                total_office_hours_time += office_duration
+                print(f"Office hours duration until current time: {format_time(office_duration)}")
+    elif first_entry_time and current_time and current_time.date() == first_entry_time.date():
+        # This handles the case where we have an entry but somehow lost track of it
+        print(f"\nHandling first entry without exit:")
+        print(f"First entry time: {first_entry_time}")
+        print(f"Current time: {current_time}")
+        
+        exit_time = truncate_seconds(current_time) if truncate else current_time
+        last_exit_time = exit_time
+        duration = (exit_time - first_entry_time).total_seconds()
+        if duration > 0:
+            total_time += duration
+            print(f"Duration until current time: {format_time(duration)}")
+
+            # Office hours calculation for current open session
+            entry_time_within_office_hours = max(first_entry_time, first_entry_time.replace(hour=OFFICE_START.hour, minute=OFFICE_START.minute, second=0))
+            exit_time_within_office_hours = min(exit_time, exit_time.replace(hour=OFFICE_END.hour, minute=OFFICE_END.minute, second=0))
+
+            if entry_time_within_office_hours < exit_time_within_office_hours:
+                office_duration = (exit_time_within_office_hours - entry_time_within_office_hours).total_seconds()
+                total_office_hours_time += office_duration
+                print(f"Office hours duration until current time: {format_time(office_duration)}")
 
     # Calculate total break time
     if first_entry_time and last_exit_time:
         total_duration = (last_exit_time - first_entry_time).total_seconds()
-        total_break_time = total_duration - total_time
+        total_break_time = max(0, total_duration - total_time)  # Ensure break time is not negative
+        print(f"\nFinal calculations:")
+        print(f"Total duration: {format_time(total_duration)}")
+        print(f"Total time: {format_time(total_time)}")
+        print(f"Office hours time: {format_time(total_office_hours_time)}")
+        print(f"Break time: {format_time(total_break_time)}")
 
     return {
         'total': total_time,
@@ -139,7 +197,10 @@ def generate_summary_table(time_spent: Dict[str, Dict[str, float]], current_time
         leave_time, target_met, status, difference = calculate_leave_time(times['office'], current_time, analyzed_date)
 
         difference_str = format_time(abs(difference.total_seconds()))
-        last_exit_time_str = last_exit_time.strftime("%I:%M:%S %p") if use_seconds else last_exit_time.strftime("%I:%M %p")
+        # Handle None value for last_exit_time
+        last_exit_time_str = "No exit" if last_exit_time is None else (
+            last_exit_time.strftime("%I:%M:%S %p") if use_seconds else last_exit_time.strftime("%I:%M %p")
+        )
         
         if is_current_day and not target_met:
             time_left_str = f"-{difference_str}"
@@ -227,20 +288,19 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
             'Message Without Seconds': msg_without_seconds
         })
 
-    # Load existing CSV if it exists, otherwise create a new DataFrame
-    try:
-        df = pd.read_csv(csv_file)
-    except FileNotFoundError:
-        df = pd.DataFrame()
-
-    # Convert the new data to a DataFrame
+    # Create a new DataFrame with the current data
     new_df = pd.DataFrame(data)
 
-    # Remove any existing rows for the same Date and Name (to avoid duplicates)
-    df = df[~((df['Date'] == str(analyzed_date)) & (df['Name'].isin(new_df['Name'])))]
-
-    # Append new data and reset the index
-    df = pd.concat([df, new_df]).reset_index(drop=True)
+    try:
+        # Try to read existing CSV
+        df = pd.read_csv(csv_file)
+        # Remove any existing rows for the same Date and Name (to avoid duplicates)
+        df = df[~((df['Date'] == str(analyzed_date)) & (df['Name'].isin(new_df['Name'])))]
+        # Append new data
+        df = pd.concat([df, new_df]).reset_index(drop=True)
+    except (FileNotFoundError, pd.errors.EmptyDataError):
+        # If file doesn't exist or is empty, use only the new data
+        df = new_df
 
     # Ensure the columns are in the correct order
     df = df[['Date', 'Name', 'Office Time With Seconds', 'Office Time Without Seconds',
@@ -317,9 +377,9 @@ def calculate_total_difference_from_csv(csv_file: str):
         print(f"An error occurred: {e}")
 if __name__ == "__main__":
     file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
-    year = 2024
-    month = 10
-    start_day = 7
-    end_day = 8
+    year = 2025
+    month = 2
+    start_day = 5
+    end_day = 5
     main(file_path, year, month, start_day, end_day)
     calculate_total_difference_from_csv(CSV_FILE_NAME)

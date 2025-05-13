@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spintly Time Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --bs-body-bg: #1a1d20;
+            --bs-body-color: #e9ecef;
+        }
+        
+        body {
+            padding: 20px;
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            background-color: #212529;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            border: 1px solid #343a40;
+            margin-bottom: 30px;
+        }
+        
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control, .form-select {
+            background-color: #2b3035;
+            border-color: #495057;
+            color: #e9ecef;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background-color: #2b3035;
+            border-color: #0d6efd;
+            color: #e9ecef;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            padding: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+            transform: translateY(-2px);
+        }
+        
+        .alert {
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 20px;
+        }
+        
+        .alert-danger {
+            background-color: #842029;
+            color: #fff;
+        }
+        
+        label {
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #adb5bd;
+        }
+        
+        h1, h2, h3 {
+            color: #fff;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px dashed #495057;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .file-input-wrapper:hover {
+            border-color: #0d6efd;
+        }
+        
+        .file-input-wrapper input[type="file"] {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .file-input-label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #adb5bd;
+        }
+        
+        .file-name {
+            color: #0d6efd;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .results-container {
+            display: none;
+            margin-top: 40px;
+        }
+        
+        .summary-table {
+            background-color: #2b3035;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #495057;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        
+        .date-header {
+            font-size: 1.5em;
+            color: #fff;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: 600;
+            background-color: #343a40;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .table {
+            margin-bottom: 30px;
+        }
+        
+        .table th {
+            background-color: #343a40;
+            color: #adb5bd;
+            font-weight: 600;
+            border-bottom: 2px solid #495057;
+            text-align: center;
+            padding: 12px;
+        }
+        
+        .table td {
+            padding: 12px;
+            border-color: #495057;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        .table-dark {
+            background-color: #2b3035;
+            color: #e9ecef;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: #343a40;
+        }
+        
+        .table-success {
+            background-color: rgba(25, 135, 84, 0.2) !important;
+        }
+        
+        .table-danger {
+            background-color: rgba(220, 53, 69, 0.2) !important;
+        }
+        
+        .text-success {
+            color: #198754 !important;
+        }
+        
+        .text-warning {
+            color: #ffc107 !important;
+        }
+        
+        .text-danger {
+            color: #dc3545 !important;
+        }
+        
+        .table-responsive {
+            margin-bottom: 30px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .total-difference {
+            background-color: #2b3035;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #495057;
+        }
+        
+        .total-difference-card {
+            background-color: #343a40;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .total-difference-card h4 {
+            color: #adb5bd;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .total-difference-card .time {
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        
+        .status-icon {
+            font-size: 1.2em;
+        }
+        
+        .status-success {
+            color: #198754;
+        }
+        
+        .status-warning {
+            color: #ffc107;
+        }
+        
+        .status-danger {
+            color: #dc3545;
+        }
+        
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        @media print {
+            .form-container {
+                display: none;
+            }
+            .results-container {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1 class="text-center">Spintly Time Calculator</h1>
+            
+            <div id="alert-container"></div>
+            
+            <form id="calculator-form" enctype="multipart/form-data">
+                <div class="file-input-wrapper">
+                    <span class="file-input-label">
+                        <i class="bi bi-cloud-upload me-2"></i>
+                        Drop your Excel file here or click to browse
+                    </span>
+                    <input type="file" class="form-control" id="file" name="file" accept=".xlsx,.xls">
+                    <div class="file-name">Current file: {{ current_file }}</div>
+                </div>
+                
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="year">Year</label>
+                            <input type="number" class="form-control" id="year" name="year" 
+                                   value="{{ default_data.year }}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="month">Month</label>
+                            <input type="number" class="form-control" id="month" name="month" 
+                                   min="1" max="12" value="{{ default_data.month }}" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="start_day">Start Day</label>
+                            <input type="number" class="form-control" id="start_day" name="start_day" 
+                                   min="1" max="31" value="{{ default_data.start_day }}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="end_day">End Day</label>
+                            <input type="number" class="form-control" id="end_day" name="end_day" 
+                                   min="1" max="31" value="{{ default_data.end_day }}" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-calculator me-2"></i>Calculate Time
+                </button>
+            </form>
+        </div>
+        
+        <div class="loading-spinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Processing your data...</p>
+        </div>
+        
+        <div class="results-container">
+            <h2>Time Summary</h2>
+            <div class="summary-table" id="summary-content"></div>
+            
+            <div class="total-difference">
+                <h3>Total Cumulative Difference</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="total-difference-card">
+                            <h4>With Seconds</h4>
+                            <div class="time" id="local-diff-with-seconds"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="total-difference-card">
+                            <h4>Without Seconds</h4>
+                            <div class="time" id="local-diff-without-seconds"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4 d-flex justify-content-center gap-3">
+                <button class="btn btn-secondary" onclick="window.print()">
+                    <i class="bi bi-printer me-2"></i>Print Results
+                </button>
+                <button class="btn btn-primary" onclick="clearSession()">
+                    <i class="bi bi-arrow-clockwise me-2"></i>Start New Calculation
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Show filename when file is selected
+        document.getElementById('file').addEventListener('change', function() {
+            const fileName = this.files[0]?.name;
+            const fileNameDiv = document.querySelector('.file-name');
+            if (fileName) {
+                fileNameDiv.textContent = 'Selected file: ' + fileName;
+                fileNameDiv.style.display = 'block';
+            }
+        });
+        
+        // Handle form submission
+        document.getElementById('calculator-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const alertContainer = document.getElementById('alert-container');
+            const loadingSpinner = document.querySelector('.loading-spinner');
+            const resultsContainer = document.querySelector('.results-container');
+            
+            // Show loading spinner
+            loadingSpinner.style.display = 'block';
+            alertContainer.innerHTML = '';
+            resultsContainer.style.display = 'none';
+            
+            try {
+                const response = await fetch('/', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    alertContainer.innerHTML = `
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-triangle me-2"></i>${data.error}
+                        </div>
+                    `;
+                } else {
+                    // Update results
+                    document.getElementById('summary-content').innerHTML = data.summary;
+                    document.getElementById('local-diff-with-seconds').textContent = data.total_difference_local.with_seconds;
+                    document.getElementById('local-diff-without-seconds').textContent = data.total_difference_local.without_seconds;
+                    
+                    // Update file name
+                    document.querySelector('.file-name').textContent = `Current file: ${data.current_file}`;
+                    document.querySelector('.file-name').style.display = 'block';
+                    
+                    // Show results
+                    resultsContainer.style.display = 'block';
+                    
+                    // Add color to status symbols in summary table
+                    const summaryContent = document.getElementById('summary-content');
+                    summaryContent.innerHTML = summaryContent.innerHTML
+                        .replace(/✓/g, '<i class="bi bi-check-circle-fill status-icon status-success"></i>')
+                        .replace(/✗/g, '<i class="bi bi-x-circle-fill status-icon status-danger"></i>');
+                }
+            } catch (error) {
+                alertContainer.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle me-2"></i>An error occurred while processing your request
+                    </div>
+                `;
+            } finally {
+                loadingSpinner.style.display = 'none';
+            }
+        });
+        
+        async function clearSession() {
+            try {
+                await fetch('/clear-session', { method: 'POST' });
+                // Just hide the results instead of reloading
+                document.querySelector('.results-container').style.display = 'none';
+                document.getElementById('alert-container').innerHTML = '';
+                // Clear form values to defaults except the file
+                document.getElementById('year').value = new Date().getFullYear();
+                document.getElementById('month').value = new Date().getMonth() + 1;
+                document.getElementById('start_day').value = new Date().getDate();
+                document.getElementById('end_day').value = new Date().getDate();
+            } catch (error) {
+                console.error('Error clearing session:', error);
+            }
+        }
+        
+        // Initialize file name display if exists
+        const currentFile = "{{ current_file }}";
+        if (currentFile && currentFile !== "No file selected") {
+            document.querySelector('.file-name').textContent = `Current file: ${currentFile}`;
+            document.querySelector('.file-name').style.display = 'block';
+        }
+    </script>
+</body>
+</html> 
