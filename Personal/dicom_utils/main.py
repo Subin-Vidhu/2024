@@ -10,12 +10,14 @@ from .extractor import (
     extract_dicom_components,
     EXTRACTION_MODE_MINIMAL,
     EXTRACTION_MODE_STANDARD,
-    EXTRACTION_MODE_FULL
+    EXTRACTION_MODE_FULL,
+    PIXEL_FORMAT_RAW,
+    PIXEL_FORMAT_PICKLE
 )
 from .recombiner import recombine_components
 from .analyzer import analyze_dicom_compression, compare_dicom_files, analyze_dicom_tag_sizes
 
-def process_folder(dicom_folder, output_folder, extraction_mode=EXTRACTION_MODE_FULL):
+def process_folder(dicom_folder, output_folder, extraction_mode=EXTRACTION_MODE_FULL, pixel_format=PIXEL_FORMAT_RAW):
     """
     Extract and recombine all DICOM files in a folder
     
@@ -23,10 +25,12 @@ def process_folder(dicom_folder, output_folder, extraction_mode=EXTRACTION_MODE_
         dicom_folder: Input folder with DICOM files
         output_folder: Output folder for extracted data
         extraction_mode: Level of extraction detail (minimal, standard, full)
+        pixel_format: Format to save pixel data in (raw, pickle)
     """
     # Extract all components
     logger.info(f"Extracting components from DICOM files in {dicom_folder} using {extraction_mode} mode")
-    extract_dicom_components(dicom_folder, output_folder, extraction_mode)
+    logger.info(f"Saving pixel data in {pixel_format} format")
+    extract_dicom_components(dicom_folder, output_folder, extraction_mode, pixel_format)
     
     # Get all metadata files
     metadata_files = list(Path(output_folder).glob('*_metadata.json'))
@@ -35,7 +39,11 @@ def process_folder(dicom_folder, output_folder, extraction_mode=EXTRACTION_MODE_
     # Process each file
     for metadata_file in metadata_files:
         base_name = metadata_file.stem.replace('_metadata', '')
-        pixel_file = os.path.join(output_folder, f"{base_name}_pixels.raw")
+        
+        # Check for pixel file with appropriate extension based on format
+        pixel_ext = '.p' if pixel_format == PIXEL_FORMAT_PICKLE else '.raw'
+        pixel_file = os.path.join(output_folder, f"{base_name}_pixels{pixel_ext}")
+        
         output_dcm = os.path.join(output_folder, f"{base_name}_recombined.dcm")
         
         if os.path.exists(pixel_file):
@@ -83,6 +91,8 @@ def main():
                         help='Pixel data file for recombine command')
     parser.add_argument('--mode', choices=['minimal', 'standard', 'full'], default='full',
                         help='Extraction mode: minimal (metadata+pixels only), standard (essential data), full (all data)')
+    parser.add_argument('--pixel-format', choices=['raw', 'pickle'], default='raw',
+                        help='Pixel data format: raw (binary .raw) or pickle (Python pickle .p)')
     
     args = parser.parse_args()
     
@@ -93,9 +103,15 @@ def main():
         'full': EXTRACTION_MODE_FULL
     }.get(args.mode, EXTRACTION_MODE_FULL)
     
+    # Map pixel format string to constant
+    pixel_format = {
+        'raw': PIXEL_FORMAT_RAW,
+        'pickle': PIXEL_FORMAT_PICKLE
+    }.get(args.pixel_format, PIXEL_FORMAT_RAW)
+    
     if args.command == 'extract':
         if os.path.isdir(args.input):
-            extract_dicom_components(args.input, args.output, extraction_mode)
+            extract_dicom_components(args.input, args.output, extraction_mode, pixel_format)
         else:
             logger.error("Input must be a directory for extract command")
     
@@ -117,7 +133,7 @@ def main():
     
     elif args.command == 'process':
         if os.path.isdir(args.input) and os.path.isdir(args.output):
-            process_folder(args.input, args.output, extraction_mode)
+            process_folder(args.input, args.output, extraction_mode, pixel_format)
         else:
             logger.error("Both input and output must be directories for process command")
 

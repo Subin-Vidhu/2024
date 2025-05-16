@@ -4,6 +4,7 @@ Functions for extracting components from DICOM files
 
 import os
 import json
+import pickle
 import pydicom
 from pathlib import Path
 from .constants import TRANSFER_SYNTAX_NAMES, UNCOMPRESSED_TRANSFER_SYNTAXES
@@ -14,6 +15,10 @@ from .utils import get_orig_value_format
 EXTRACTION_MODE_MINIMAL = "minimal"  # Just extract metadata and pixel data
 EXTRACTION_MODE_STANDARD = "standard"  # Extract metadata, pixel data, and essential binary data
 EXTRACTION_MODE_FULL = "full"  # Extract all components including all binary data
+
+# Define pixel data formats
+PIXEL_FORMAT_RAW = "raw"      # Save as raw binary (.raw)
+PIXEL_FORMAT_PICKLE = "pickle"  # Save as Python pickle (.p)
 
 def extract_and_preserve_sequences(dicom_dataset):
     """
@@ -122,7 +127,7 @@ def extract_icon_data(dicom_dataset, output_dir, base_filename, extraction_mode=
     
     return icon_data
 
-def extract_dicom_components(dicom_folder, output_folder, extraction_mode=EXTRACTION_MODE_FULL):
+def extract_dicom_components(dicom_folder, output_folder, extraction_mode=EXTRACTION_MODE_FULL, pixel_format=PIXEL_FORMAT_RAW):
     """
     Extract DICOM components with compression support:
     - Store metadata as JSON files
@@ -136,6 +141,9 @@ def extract_dicom_components(dicom_folder, output_folder, extraction_mode=EXTRAC
                          - minimal: Only metadata and pixel data
                          - standard: Metadata, pixel data, and essential binary data
                          - full: All data including private tags and binary data
+        pixel_format: Format to save pixel data in
+                     - raw: Save as raw binary (.raw)
+                     - pickle: Save as Python pickle (.p)
     """
     # Create output directory if it doesn't exist
     os.makedirs(output_folder, exist_ok=True)
@@ -145,7 +153,13 @@ def extract_dicom_components(dicom_folder, output_folder, extraction_mode=EXTRAC
         logger.warning(f"Invalid extraction mode: {extraction_mode}. Using 'full' mode.")
         extraction_mode = EXTRACTION_MODE_FULL
     
+    # Validate pixel format
+    if pixel_format not in [PIXEL_FORMAT_RAW, PIXEL_FORMAT_PICKLE]:
+        logger.warning(f"Invalid pixel format: {pixel_format}. Using 'raw' format.")
+        pixel_format = PIXEL_FORMAT_RAW
+    
     logger.info(f"Using extraction mode: {extraction_mode}")
+    logger.info(f"Using pixel format: {pixel_format}")
     
     # Get list of DICOM files
     dicom_files = list(Path(dicom_folder).glob('*.dcm'))
@@ -197,10 +211,27 @@ def extract_dicom_components(dicom_folder, output_folder, extraction_mode=EXTRAC
                 uncompressed_bytes_per_pixel = bits_allocated // 8
                 theoretical_uncompressed_size = rows * columns * samples_per_pixel * uncompressed_bytes_per_pixel * number_of_frames
                 
-                # Save compressed pixel data
-                pixel_path = os.path.join(output_folder, f"{base_filename}_pixels.raw")
-                with open(pixel_path, 'wb') as f:
-                    f.write(compressed_pixel_data)
+                # Save pixel data in the selected format
+                if pixel_format == PIXEL_FORMAT_RAW:
+                    # Save as raw binary
+                    pixel_path = os.path.join(output_folder, f"{base_filename}_pixels.raw")
+                    with open(pixel_path, 'wb') as f:
+                        f.write(compressed_pixel_data)
+                else:  # pixel_format == PIXEL_FORMAT_PICKLE
+                    # Save as Python pickle with metadata
+                    pixel_info = {
+                        'data': compressed_pixel_data,
+                        'rows': rows,
+                        'columns': columns,
+                        'samples_per_pixel': samples_per_pixel,
+                        'bits_allocated': bits_allocated,
+                        'number_of_frames': number_of_frames,
+                        'transfer_syntax_uid': transfer_syntax_uid,
+                        'is_compressed': is_compressed
+                    }
+                    pixel_path = os.path.join(output_folder, f"{base_filename}_pixels.p")
+                    with open(pixel_path, 'wb') as f:
+                        pickle.dump(pixel_info, f)
                 
                 # Compression ratio (if compressed)
                 compression_ratio = theoretical_uncompressed_size / compressed_size if is_compressed and compressed_size > 0 else 1.0
@@ -349,7 +380,8 @@ def extract_dicom_components(dicom_folder, output_folder, extraction_mode=EXTRAC
                 'CompressedPixelDataSize': compressed_size,
                 'TheoreticalUncompressedSize': theoretical_uncompressed_size,
                 'CompressionRatio': compression_ratio,
-                'ExtractionMode': extraction_mode  # Store the extraction mode used
+                'ExtractionMode': extraction_mode,  # Store the extraction mode used
+                'PixelFormat': pixel_format  # Store the pixel format used
             }
             
             # Add image shape information
@@ -373,7 +405,7 @@ def extract_dicom_components(dicom_folder, output_folder, extraction_mode=EXTRAC
             if is_compressed:
                 logger.info(f"  - Compression ratio: {compression_ratio:.2f}x")
             logger.info(f"  - Metadata: {os.path.basename(json_path)}")
-            logger.info(f"  - Pixel data: {os.path.basename(pixel_path)}")
+            logger.info(f"  - Pixel data: {os.path.basename(pixel_path)} ({pixel_format} format)")
             if binary_dir:
                 logger.info(f"  - Binary data: {os.path.basename(binary_dir)}/")
             

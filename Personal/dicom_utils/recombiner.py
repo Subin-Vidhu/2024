@@ -4,6 +4,7 @@ Functions for recombining extracted DICOM components
 
 import os
 import json
+import pickle
 import pydicom
 import datetime
 from pydicom.dataset import FileDataset
@@ -75,7 +76,7 @@ def recombine_components(metadata_file, pixel_file, output_dcm):
     
     Args:
         metadata_file: Path to JSON metadata file
-        pixel_file: Path to raw pixel data file
+        pixel_file: Path to raw pixel data file or pickle file (.raw or .p)
         output_dcm: Path to save output DICOM file
     """
     # Load metadata
@@ -309,9 +310,21 @@ def recombine_components(metadata_file, pixel_file, output_dcm):
             except Exception as e:
                 logger.warning(f"Error restoring icon binary data for {tag_str}: {e}")
 
-    # Load raw pixel data
-    with open(pixel_file, 'rb') as f:
-        pixel_data = f.read()
+    # Load raw pixel data - check for file extension to determine format
+    pixel_format = metadata.get('CompressionInfo', {}).get('PixelFormat', 'raw')
+    
+    # Determine if the file is a pickle file
+    is_pickle = pixel_file.endswith('.p') or pixel_format == 'pickle'
+    
+    if is_pickle:
+        # Load pixel data from pickle file
+        with open(pixel_file, 'rb') as f:
+            pixel_info = pickle.load(f)
+            pixel_data = pixel_info['data']  # Get the actual binary data
+    else:
+        # Load raw binary data directly
+        with open(pixel_file, 'rb') as f:
+            pixel_data = f.read()
     
     # Set pixel data
     pixel_tag = pydicom.tag.Tag('PixelData')

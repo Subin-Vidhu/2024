@@ -10,6 +10,7 @@ A comprehensive set of tools for extracting, analyzing, and recombining DICOM me
 - **Recombine Components**: Rebuild exact DICOM files from extracted components 
 - **Analysis Tools**: Compare DICOM files and analyze tag size contributions
 - **Flexible Extraction Modes**: Choose how much data to extract based on your needs
+- **Multiple Pixel Formats**: Save pixel data in raw binary (.raw) or Python pickle (.p) formats
 
 ## Extraction Modes
 
@@ -34,6 +35,22 @@ The package supports three extraction modes to give you flexibility when working
    - DICOM preamble
    - Icon image data
    - Results in the largest output size but preserves everything
+
+## Pixel Data Formats
+
+You can choose how to save the extracted pixel data:
+
+1. **Raw Binary (.raw)**: Default format
+   - Simple binary data exactly as stored in the DICOM file
+   - No additional metadata or structure
+   - Maximum compatibility with any language or tool
+   - Requires size and format information from the metadata to interpret
+
+2. **Python Pickle (.p)**: Python-specific format
+   - Preserves exact data types and additional metadata
+   - Stores image dimensions and DICOM properties with the data
+   - Easier to load directly in Python scripts
+   - Requires Python's pickle module to read
 
 ## Installation
 
@@ -64,27 +81,33 @@ from dicom_utils import (
     recombine_components,
     EXTRACTION_MODE_MINIMAL,
     EXTRACTION_MODE_STANDARD,
-    EXTRACTION_MODE_FULL
+    EXTRACTION_MODE_FULL,
+    PIXEL_FORMAT_RAW,
+    PIXEL_FORMAT_PICKLE
 )
 
 # Extract DICOM components with standard mode (default is EXTRACTION_MODE_FULL)
+# and save pixel data in raw format (default)
 extract_dicom_components(
     dicom_folder="path/to/dicom/files", 
     output_folder="path/to/output",
-    extraction_mode=EXTRACTION_MODE_STANDARD
+    extraction_mode=EXTRACTION_MODE_STANDARD,
+    pixel_format=PIXEL_FORMAT_RAW
 )
 
-# For minimal extraction (smallest output)
+# For minimal extraction with pickle format for pixel data
 extract_dicom_components(
     dicom_folder="path/to/dicom/files", 
     output_folder="path/to/output/minimal",
-    extraction_mode=EXTRACTION_MODE_MINIMAL
+    extraction_mode=EXTRACTION_MODE_MINIMAL,
+    pixel_format=PIXEL_FORMAT_PICKLE
 )
 
 # Recombine components into a new DICOM file
+# The function automatically detects if the pixel file is raw or pickle format
 recombine_components(
     metadata_file="path/to/metadata.json",
-    pixel_file="path/to/pixels.raw",
+    pixel_file="path/to/pixels.raw",  # or "path/to/pixels.p" for pickle format
     output_dcm="path/to/output.dcm"
 )
 ```
@@ -102,7 +125,8 @@ from dicom_utils import (
     analyze_dicom_compression,
     compare_dicom_files,
     analyze_dicom_tag_sizes,
-    EXTRACTION_MODE_STANDARD
+    EXTRACTION_MODE_STANDARD,
+    PIXEL_FORMAT_PICKLE
 )
 
 # Define paths
@@ -117,12 +141,17 @@ if sample_dicom.exists():
     print(f"Transfer Syntax: {compression_info['compression_type']}")
     print(f"Compression Ratio: {compression_info['compression_ratio']:.2f}x")
 
-# Extract all DICOM files in the folder using standard mode
-extract_dicom_components(dicom_folder, output_folder, EXTRACTION_MODE_STANDARD)
+# Extract all DICOM files in the folder using standard mode and pickle format
+extract_dicom_components(
+    dicom_folder, 
+    output_folder, 
+    extraction_mode=EXTRACTION_MODE_STANDARD, 
+    pixel_format=PIXEL_FORMAT_PICKLE
+)
 
 # Recombine a specific file
 metadata_file = os.path.join(output_folder, "sample_metadata.json")
-pixel_file = os.path.join(output_folder, "sample_pixels.raw")
+pixel_file = os.path.join(output_folder, "sample_pixels.p")  # Note the .p extension
 output_dcm = os.path.join(output_folder, "sample_recombined.dcm")
 
 if os.path.exists(metadata_file) and os.path.exists(pixel_file):
@@ -142,23 +171,23 @@ if os.path.exists(metadata_file) and os.path.exists(pixel_file):
 The package provides a command-line interface for common operations:
 
 ```bash
-# Extract all DICOM files in a folder using standard extraction mode
-python -m dicom_utils extract -i /path/to/dicom/files -o /path/to/output --mode standard
+# Extract all DICOM files in a folder using standard extraction mode and raw format
+python -m dicom_utils extract -i /path/to/dicom/files -o /path/to/output --mode standard --pixel-format raw
 
-# Extract with minimal mode (smallest output)
-python -m dicom_utils extract -i /path/to/dicom/files -o /path/to/output --mode minimal
+# Extract with minimal mode and pickle format
+python -m dicom_utils extract -i /path/to/dicom/files -o /path/to/output --mode minimal --pixel-format pickle
 
-# Extract with full mode (complete preservation)
+# Extract with full mode
 python -m dicom_utils extract -i /path/to/dicom/files -o /path/to/output --mode full
 
 # Recombine a single file
-python -m dicom_utils recombine -m /path/to/metadata.json -p /path/to/pixels.raw -o /path/to/output.dcm
+python -m dicom_utils recombine -m /path/to/metadata.json -p /path/to/pixels.p -o /path/to/output.dcm
 
 # Analyze a DICOM file
 python -m dicom_utils analyze -i /path/to/dicom/file.dcm -o /path/to/comparison.dcm
 
-# Process a folder (extract, recombine, and compare) with standard mode
-python -m dicom_utils process -i /path/to/dicom/files -o /path/to/output --mode standard
+# Process a folder (extract, recombine, and compare) with standard mode and pickle format
+python -m dicom_utils process -i /path/to/dicom/files -o /path/to/output --mode standard --pixel-format pickle
 ```
 
 ### Real-world Example
@@ -169,13 +198,13 @@ For a real-world example, if you have DICOM files in `D:/dicom_data/patient1` an
 # Create output directory
 mkdir -p D:/dicom_data/processed
 
-# Extract all DICOM files with standard mode
-python -m dicom_utils extract -i D:/dicom_data/patient1 -o D:/dicom_data/processed --mode standard
+# Extract all DICOM files with standard mode and pickle format
+python -m dicom_utils extract -i D:/dicom_data/patient1 -o D:/dicom_data/processed --mode standard --pixel-format pickle
 
 # Process specific file for recombination
 python -m dicom_utils recombine \
     -m D:/dicom_data/processed/CT000123_metadata.json \
-    -p D:/dicom_data/processed/CT000123_pixels.raw \
+    -p D:/dicom_data/processed/CT000123_pixels.p \
     -o D:/dicom_data/processed/CT000123_recombined.dcm
 
 # Compare original and recombined files
@@ -204,7 +233,7 @@ This package handles the full lifecycle of DICOM processing:
 
 1. **Extraction**: The original DICOM file is decomposed into:
    - Structured metadata (JSON)
-   - Raw pixel data (binary)
+   - Raw pixel data (binary or pickle format)
    - Binary data elements (stored separately)
    - Sequence elements (specially encoded)
 
