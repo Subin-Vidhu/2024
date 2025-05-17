@@ -34,7 +34,8 @@ def extract_and_preserve_sequences(dicom_dataset):
     sequence_data = {}
     
     for elem in dicom_dataset:
-        if elem.VR == 'SQ':
+        # Check if element has VR attribute before accessing it
+        if hasattr(elem, 'VR') and elem.VR == 'SQ':
             keyword = elem.keyword if hasattr(elem, 'keyword') else str(elem.tag)
             sequence_data[keyword] = []
             
@@ -43,7 +44,7 @@ def extract_and_preserve_sequences(dicom_dataset):
                 item_dict = {}
                 for dataset_elem in item:
                     # Handle nested sequences recursively
-                    if dataset_elem.VR == 'SQ':
+                    if hasattr(dataset_elem, 'VR') and dataset_elem.VR == 'SQ':
                         nested_keyword = dataset_elem.keyword if hasattr(dataset_elem, 'keyword') else str(dataset_elem.tag)
                         item_dict[nested_keyword] = extract_and_preserve_sequences(dataset_elem.value)
                     else:
@@ -53,7 +54,7 @@ def extract_and_preserve_sequences(dicom_dataset):
                             # Convert binary data to a list of integers for JSON serialization
                             item_dict[elem_keyword] = {
                                 'tag': [dataset_elem.tag.group, dataset_elem.tag.element],
-                                'VR': dataset_elem.VR,
+                                'VR': dataset_elem.VR if hasattr(dataset_elem, 'VR') else 'UN',
                                 'value': "BINARY_DATA",
                                 'binary_length': len(dataset_elem.value)
                             }
@@ -63,14 +64,14 @@ def extract_and_preserve_sequences(dicom_dataset):
                                 json.dumps(dataset_elem.value)
                                 item_dict[elem_keyword] = {
                                     'tag': [dataset_elem.tag.group, dataset_elem.tag.element],
-                                    'VR': dataset_elem.VR,
+                                    'VR': dataset_elem.VR if hasattr(dataset_elem, 'VR') else 'UN',
                                     'value': dataset_elem.value
                                 }
                             except (TypeError, OverflowError):
                                 # If it can't be serialized, convert to string
                                 item_dict[elem_keyword] = {
                                     'tag': [dataset_elem.tag.group, dataset_elem.tag.element],
-                                    'VR': dataset_elem.VR,
+                                    'VR': dataset_elem.VR if hasattr(dataset_elem, 'VR') else 'UN',
                                     'value': str(dataset_elem.value)
                                 }
                 
