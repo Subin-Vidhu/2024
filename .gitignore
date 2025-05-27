@@ -164,3 +164,5 @@ cython_debug/
 
 flask_venv/
 Chaimeleon/
+*.json
+*.csv

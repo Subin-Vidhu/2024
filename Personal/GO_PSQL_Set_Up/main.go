@@ -236,17 +236,22 @@ func (pg *PostgreSQL) Start() error {
 
 	// Ensure port is explicitly set in postgres configuration
 	configPath := filepath.Join(pg.dataDir, "postgresql.conf")
-	configContent := fmt.Sprintf("port = %s\nlisten_addresses = '*'", pg.port)
+	configContent := fmt.Sprintf(`
+port = %s
+listen_addresses = '*'
+max_connections = 100
+shared_buffers = 128MB
+`, pg.port)
 	err := os.WriteFile(configPath, []byte(configContent), 0600)
 	if err != nil {
 		return fmt.Errorf("failed to update postgresql.conf: %w", err)
 	}
 
+	fmt.Printf("Starting PostgreSQL on port %s...\n", pg.port)
 	cmd := exec.Command(ctlExe,
 		"-D", pg.dataDir,
 		"-l", logFile,
 		"-o", fmt.Sprintf(`"-p %s"`, pg.port),
-		"-w", // Wait for startup to complete
 		"start",
 	)
 
@@ -261,28 +266,51 @@ func (pg *PostgreSQL) Start() error {
 		return fmt.Errorf("start failed: %w\n%s", err, output)
 	}
 
-	// Verify server is running by attempting a connection
-	for i := 0; i < 3; i++ {
+	fmt.Println("Server process started, waiting for connections...")
+
+	// Wait for the server to be ready
+	maxAttempts := 30 // 30 seconds total
+	for i := 0; i < maxAttempts; i++ {
+		// First check if port is open
 		conn, err := net.DialTimeout("tcp", fmt.Sprintf("localhost:%s", pg.port), time.Second)
 		if err == nil {
 			conn.Close()
-			fmt.Println("✓ Server is running and accepting connections")
-			return nil
+			fmt.Println("Port is now open, checking database connection...")
+			break
+		}
+		if i == maxAttempts-1 {
+			return fmt.Errorf("server failed to open port %s after %d seconds", pg.port, maxAttempts)
 		}
 		time.Sleep(time.Second)
+		fmt.Print(".")
 	}
 
-	// Try to connect to the database to ensure it's really ready
-	db, err := sql.Open("postgres", pg.getDefaultConnString())
-	if err == nil {
-		defer db.Close()
-		if err = db.Ping(); err == nil {
-			fmt.Println("✓ Database connection verified")
-			return nil
+	fmt.Println("\nPort is ready, waiting for database to accept connections...")
+	// Now wait for database to accept connections
+	for i := 0; i < maxAttempts; i++ {
+		db, err := sql.Open("postgres", pg.getDefaultConnString())
+		if err == nil {
+			err = db.Ping()
+			db.Close()
+			if err == nil {
+				fmt.Println("✓ Database is now accepting connections")
+				return nil
+			}
 		}
+		if i == maxAttempts-1 {
+			// Try to read log file for any errors
+			logContent, readErr := os.ReadFile(logFile)
+			if readErr == nil {
+				fmt.Println("\nServer log:")
+				fmt.Println(string(logContent))
+			}
+			return fmt.Errorf("database not ready after %d seconds, last error: %v", maxAttempts, err)
+		}
+		time.Sleep(time.Second)
+		fmt.Print(".")
 	}
 
-	return fmt.Errorf("server started but not responding to connections")
+	return nil
 }
 
 // Stop stops the PostgreSQL server
@@ -371,47 +399,54 @@ func (pg *PostgreSQL) CreateTestTable() error {
 	// Convert database name to lowercase for consistency
 	dbName := strings.ToLower(pgDatabase)
 
-	// Drop database if exists
-	fmt.Printf("4. Attempting to drop database '%s' if it exists...\n", dbName)
-	_, err = db.Exec(fmt.Sprintf("DROP DATABASE IF EXISTS %s", dbName))
+	// Check if database exists
+	var exists bool
+	err = db.QueryRow("SELECT EXISTS(SELECT 1 FROM pg_database WHERE datname = $1)", dbName).Scan(&exists)
 	if err != nil {
-		fmt.Printf("⚠️ Warning: Could not drop database: %v\n", err)
+		return fmt.Errorf("❌ failed to check if database exists: %w", err)
+	}
+
+	var newDb *sql.DB
+	if exists {
+		fmt.Printf("✓ Database '%s' already exists, connecting to it...\n", dbName)
+		newDb, err = sql.Open("postgres", pg.getConnString())
+		if err != nil {
+			return fmt.Errorf("❌ failed to connect to existing database: %w", err)
+		}
 	} else {
-		fmt.Printf("✓ Successfully dropped existing database '%s'\n", dbName)
-	}
+		// Create the database
+		fmt.Printf("4. Creating new database '%s'...\n", dbName)
+		_, err = db.Exec(fmt.Sprintf("CREATE DATABASE %s WITH OWNER = %s ENCODING = 'UTF8'", dbName, pgUser))
+		if err != nil {
+			return fmt.Errorf("❌ failed to create database: %w", err)
+		}
+		fmt.Printf("✓ Database '%s' created successfully\n", dbName)
 
-	// Create the database
-	fmt.Printf("5. Creating new database '%s'...\n", dbName)
-	_, err = db.Exec(fmt.Sprintf("CREATE DATABASE %s WITH OWNER = %s ENCODING = 'UTF8'", dbName, pgUser))
-	if err != nil {
-		return fmt.Errorf("❌ failed to create database: %w", err)
-	}
-	fmt.Printf("✓ Database '%s' created successfully\n", dbName)
+		// Close connection to postgres database and wait
+		db.Close()
+		fmt.Println("5. Waiting for database to be ready (5 seconds)...")
+		time.Sleep(5 * time.Second)
 
-	// Close connection to postgres database and wait
-	db.Close()
-	fmt.Println("6. Waiting for database to be ready (5 seconds)...")
-	time.Sleep(5 * time.Second)
-
-	// Connect to the new database
-	fmt.Printf("7. Connecting to new '%s' database...\n", dbName)
-	fmt.Printf("Connection string: %s\n", pg.getConnString())
-	newDb, err := sql.Open("postgres", pg.getConnString())
-	if err != nil {
-		return fmt.Errorf("❌ failed to connect to %s database: %w", dbName, err)
+		// Connect to the new database
+		fmt.Printf("6. Connecting to new '%s' database...\n", dbName)
+		fmt.Printf("Connection string: %s\n", pg.getConnString())
+		newDb, err = sql.Open("postgres", pg.getConnString())
+		if err != nil {
+			return fmt.Errorf("❌ failed to connect to %s database: %w", dbName, err)
+		}
 	}
 	defer newDb.Close()
 
-	// Test connection to new database
-	fmt.Println("8. Testing connection to new database...")
+	// Test connection to database
+	fmt.Println("7. Testing database connection...")
 	err = newDb.Ping()
 	if err != nil {
-		return fmt.Errorf("❌ failed to ping new database: %w", err)
+		return fmt.Errorf("❌ failed to ping database: %w", err)
 	}
 	fmt.Printf("✓ Successfully connected to '%s' database\n", dbName)
 
 	// Create extensions
-	fmt.Println("9. Creating required extensions...")
+	fmt.Println("8. Creating required extensions...")
 	_, err = newDb.Exec("CREATE EXTENSION IF NOT EXISTS citext")
 	if err != nil {
 		return fmt.Errorf("❌ failed to create citext extension: %w", err)
@@ -419,7 +454,7 @@ func (pg *PostgreSQL) CreateTestTable() error {
 	fmt.Println("✓ Extensions created successfully")
 
 	// Create schema
-	fmt.Println("10. Creating RadiumTest schema...")
+	fmt.Println("9. Creating RadiumTest schema...")
 	_, err = newDb.Exec("CREATE SCHEMA IF NOT EXISTS RadiumTest")
 	if err != nil {
 		return fmt.Errorf("❌ failed to create schema: %w", err)
@@ -427,7 +462,7 @@ func (pg *PostgreSQL) CreateTestTable() error {
 	fmt.Println("✓ Schema created successfully")
 
 	// Create PACS table
-	fmt.Println("11. Creating PACS table...")
+	fmt.Println("10. Creating PACS table...")
 	_, err = newDb.Exec(`
 		CREATE TABLE IF NOT EXISTS RadiumTest.pacs (
 			ixStudy SERIAL PRIMARY KEY,
@@ -465,7 +500,7 @@ func (pg *PostgreSQL) CreateTestTable() error {
 	fmt.Println("✓ PACS table created successfully")
 
 	// Create indexes
-	fmt.Println("12. Creating indexes...")
+	fmt.Println("11. Creating indexes...")
 	indexes := []struct {
 		name string
 		sql  string
@@ -486,38 +521,39 @@ func (pg *PostgreSQL) CreateTestTable() error {
 	}
 	fmt.Println("✓ All indexes created successfully")
 
-	// Insert sample data
-	fmt.Println("13. Adding sample data...")
-	_, err = newDb.Exec(`
-		INSERT INTO RadiumTest.pacs (
-			StudyInstanceUID, PatientID, PatientName, PatientBirthDate,
-			PatientAge, PatientSex, StudyDate, StudyTime, Modality,
-			StudyDescription, InstitutionName, StudyStatus,
-			NumberOfStudyRelatedSeries, NumberOfStudyRelatedInstances,
-			ReferringPhysicianName, PerformingPhysicianName
-		) VALUES 
-		(
-			'1.2.3.4.5.1', 'PAT001', 'John Doe', '19800101',
-			'43', 'M', '20231201', '093000', 'CT',
-			'Chest CT', 'General Hospital', 1,
-			2, 124,
-			'Dr. Smith', 'Dr. Johnson'
-		)
-		ON CONFLICT (StudyInstanceUID) DO NOTHING
-	`)
-	if err != nil {
-		return fmt.Errorf("❌ failed to insert sample data: %w", err)
-	}
-	fmt.Println("✓ Sample data added successfully")
-
-	// Verify data
-	fmt.Println("14. Verifying data...")
+	// Insert sample data only if table is empty
 	var count int
 	err = newDb.QueryRow("SELECT COUNT(*) FROM RadiumTest.pacs").Scan(&count)
 	if err != nil {
-		return fmt.Errorf("❌ failed to verify data: %w", err)
+		return fmt.Errorf("❌ failed to check table data: %w", err)
 	}
-	fmt.Printf("✓ Verified %d records in database\n", count)
+
+	if count == 0 {
+		fmt.Println("12. Adding sample data...")
+		_, err = newDb.Exec(`
+			INSERT INTO RadiumTest.pacs (
+				StudyInstanceUID, PatientID, PatientName, PatientBirthDate,
+				PatientAge, PatientSex, StudyDate, StudyTime, Modality,
+				StudyDescription, InstitutionName, StudyStatus,
+				NumberOfStudyRelatedSeries, NumberOfStudyRelatedInstances,
+				ReferringPhysicianName, PerformingPhysicianName
+			) VALUES 
+			(
+				'1.2.3.4.5.1', 'PAT001', 'John Doe', '19800101',
+				'43', 'M', '20231201', '093000', 'CT',
+				'Chest CT', 'General Hospital', 1,
+				2, 124,
+				'Dr. Smith', 'Dr. Johnson'
+			)
+			ON CONFLICT (StudyInstanceUID) DO NOTHING
+		`)
+		if err != nil {
+			return fmt.Errorf("❌ failed to insert sample data: %w", err)
+		}
+		fmt.Println("✓ Sample data added successfully")
+	} else {
+		fmt.Printf("✓ Table already contains %d records, skipping sample data\n", count)
+	}
 
 	fmt.Println("\n=== Database Setup Complete ===")
 	return nil
@@ -565,7 +601,33 @@ func main() {
 		return
 	}
 
-	if serverRunning {
+	var startedByUs bool
+	// Handle server startup if not running
+	if !serverRunning {
+		fmt.Printf("No PostgreSQL instance found on port %s.\n", pgPort)
+		fmt.Println("Starting new PostgreSQL instance...")
+		startedByUs = true
+
+		// Initialize and start PostgreSQL
+		if err := pg.Initialize(); err != nil {
+			fmt.Printf("Failed to initialize PostgreSQL: %v\n", err)
+			fmt.Println("\nPress Enter to exit...")
+			fmt.Scanln()
+			return
+		}
+
+		if err := pg.Start(); err != nil {
+			fmt.Printf("Failed to start PostgreSQL: %v\n", err)
+			fmt.Printf("Please check if port %s is available\n", pg.port)
+			fmt.Println("\nPress Enter to exit...")
+			fmt.Scanln()
+			return
+		}
+
+		// Set default password for new instance
+		pg.SetPassword("password")
+
+	} else {
 		fmt.Printf("\nExisting PostgreSQL instance found on port %s!\n", pgPort)
 
 		// First try with default password
@@ -594,43 +656,43 @@ func main() {
 			}
 		}
 		fmt.Printf("\n✓ Successfully connected to existing PostgreSQL instance on port %s\n", pgPort)
-	} else {
-		fmt.Printf("No PostgreSQL instance found on port %s.\n", pgPort)
-		fmt.Println("Starting new PostgreSQL instance...")
-		// Initialize and start PostgreSQL
-		if err := pg.Initialize(); err != nil {
-			fmt.Printf("Failed to initialize PostgreSQL: %v\n", err)
-			fmt.Println("\nPress Enter to exit...")
-			fmt.Scanln()
-			return
-		}
-
-		if err := pg.Start(); err != nil {
-			fmt.Printf("Failed to start PostgreSQL: %v\n", err)
-			fmt.Printf("Please check if port %s is available\n", pg.port)
-			fmt.Println("\nPress Enter to exit...")
-			fmt.Scanln()
-			return
-		}
-		fmt.Printf("✓ PostgreSQL started successfully on port %s\n", pgPort)
-
-		fmt.Println("Waiting for server to be ready...")
-		time.Sleep(5 * time.Second)
 	}
 
-	// Try database setup once
+	// Now that server is running, attempt database setup with retries
 	fmt.Println("\nAttempting database setup...")
-	err = pg.CreateTestTable()
-	if err != nil {
-		if strings.Contains(err.Error(), "database \"radiumtest\" already exists") ||
-			strings.Contains(err.Error(), "being accessed by other users") {
-			fmt.Println("✓ Database already exists and is in use")
-		} else {
-			fmt.Printf("\nError: Failed to setup database: %v\n", err)
-			fmt.Println("\nPress Enter to exit...")
-			fmt.Scanln()
-			return
+	maxDBRetries := 3
+	var dbErr error
+	for i := 0; i < maxDBRetries; i++ {
+		if i > 0 {
+			fmt.Printf("\nRetrying database setup (attempt %d of %d)...\n", i+1, maxDBRetries)
+			time.Sleep(5 * time.Second)
 		}
+
+		dbErr = pg.CreateTestTable()
+		if dbErr == nil {
+			break
+		}
+
+		// If it's not a connection error, break immediately
+		if !strings.Contains(dbErr.Error(), "connection refused") &&
+			!strings.Contains(dbErr.Error(), "connection reset by peer") {
+			break
+		}
+
+		fmt.Printf("Database connection failed, will retry: %v\n", dbErr)
+	}
+
+	if dbErr != nil {
+		fmt.Printf("\nError: Failed to setup database: %v\n", dbErr)
+		if startedByUs {
+			fmt.Println("\nStopping PostgreSQL...")
+			if err := pg.Stop(); err != nil {
+				fmt.Printf("Error stopping PostgreSQL: %v\n", err)
+			}
+		}
+		fmt.Println("\nPress Enter to exit...")
+		fmt.Scanln()
+		return
 	}
 
 	fmt.Println("\n✓ Setup completed successfully!")
@@ -649,7 +711,7 @@ func main() {
 	<-c
 
 	// Cleanup on exit
-	if !serverRunning {
+	if startedByUs {
 		fmt.Println("\nStopping PostgreSQL...")
 		if err := pg.Stop(); err != nil {
 			fmt.Printf("Error stopping PostgreSQL: %v\n", err)

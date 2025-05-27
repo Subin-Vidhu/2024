@@ -11,7 +11,6 @@ init(autoreset=True)  # Initialize colorama
 # Constants
 OFFICE_START = time(7, 30)
 OFFICE_END = time(19, 30)
-TARGET_TIME = 8 * 3600 + 30 * 60  # 8 hours 30 minutes in seconds
 CSV_FILE_NAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'time_differences.csv')  # Name of the CSV file to store differences
 
 def parse_datetime(date: str, time_str: str) -> datetime:
@@ -245,8 +244,11 @@ def process_multiple_dates(df: pd.DataFrame, dates: List[datetime.date], current
         time_spent, _ = analyze_time_spent(df, date, current_time=current_time)
         results[date] = time_spent
     return results
-def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_date: datetime.date, current_time: datetime) -> None:
-    csv_file = CSV_FILE_NAME
+def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_date: datetime.date, current_time: datetime, csv_file: str = None) -> None:
+    """Save time differences to CSV file."""
+    if csv_file is None:
+        csv_file = CSV_FILE_NAME
+        
     data = []
 
     for name in time_spent:
@@ -311,11 +313,14 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
     # Save the DataFrame to CSV
     df.to_csv(csv_file, index=False)
 
-def save_multiple_dates_to_csv(results: Dict[datetime.date, Dict[str, Dict[str, float]]], current_time: datetime) -> None:
+def save_multiple_dates_to_csv(results: Dict[datetime.date, Dict[str, Dict[str, float]]], current_time: datetime, csv_file: str = None) -> None:
     """Save time differences for multiple dates to CSV."""
+    if csv_file is None:
+        csv_file = CSV_FILE_NAME
+        
     for date, time_spent in results.items():
-        save_differences_to_csv(time_spent, date, current_time)
-    print(f"\nTime differences saved to {CSV_FILE_NAME}\n")
+        save_differences_to_csv(time_spent, date, current_time, csv_file)
+    print(f"\nTime differences saved to {csv_file}\n")
 
 def generate_summary_tables(results: Dict[datetime.date, Dict[str, Dict[str, float]]], current_time: datetime) -> str:
     """Generate summary tables for multiple dates."""
@@ -343,10 +348,17 @@ def main(file_path: str, year: int, month: int, start_day: int, end_day: int) ->
         print(generate_summary_tables(results, current_time))
         
         save_multiple_dates_to_csv(results, current_time)
-def calculate_total_difference_from_csv(csv_file: str):
+def calculate_total_difference_from_csv(csv_file: str, start_date: datetime.date = None, end_date: datetime.date = None):
     try:
         # Read the CSV file
         df = pd.read_csv(csv_file)
+        
+        # Convert Date column to datetime
+        df['Date'] = pd.to_datetime(df['Date']).dt.date
+        
+        # Filter by date range if provided
+        if start_date and end_date:
+            df = df[(df['Date'] >= start_date) & (df['Date'] <= end_date)]
         
         # Parse the 'Difference With Seconds' and 'Difference Without Seconds' columns to timedelta
         def parse_time_difference(time_str):
@@ -367,19 +379,24 @@ def calculate_total_difference_from_csv(csv_file: str):
             if row['Sign Without Seconds'] == '+':
                 total_diff_without_seconds += row['Difference Without Seconds']
         
-        # Print the total difference (cumulative for all days)
-        print(f"Total Cumulative Difference With Seconds: {total_diff_with_seconds}")
-        print(f"Total Cumulative Difference Without Seconds: {total_diff_without_seconds}")
+        # Format the results as strings
+        result = {
+            "Total Cumulative Difference With Seconds": str(total_diff_with_seconds),
+            "Total Cumulative Difference Without Seconds": str(total_diff_without_seconds)
+        }
+        
+        return result
         
     except FileNotFoundError:
-        print(f"Error: The file {csv_file} was not found.")
+        return None
     except Exception as e:
         print(f"An error occurred: {e}")
+        return None
 if __name__ == "__main__":
     file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
     year = 2025
-    month = 2
-    start_day = 5
-    end_day = 5
+    month = 5
+    start_day = 12
+    end_day = 12
     main(file_path, year, month, start_day, end_day)
     calculate_total_difference_from_csv(CSV_FILE_NAME)
