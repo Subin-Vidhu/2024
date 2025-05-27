@@ -18,8 +18,8 @@ from dicom_utils.recombiner import recombine_components
 from dicom_utils.analyzer import analyze_dicom_compression, compare_dicom_files, analyze_dicom_tag_sizes
 
 # Define paths
-dicom_folder = r"D:/ARAMIS_radon/radonData/dcm/ARAMIS/MR/2025/5/17/AZbc-T-WC-wAIF/AZbc-T-WC-wAIF.000"
-output_folder = r"D:/ARAMIS_radon/radonData/dcm/ARAMIS/MR/2025/5/17/AZbc-T-WC-wAIF/AZbc-T-WC-wAIF.000/output"
+dicom_folder = r"D:/ARAMIS_radon/radonData/dcm/ARAMIS/MR/2025/5/21/AZbx-T64W-wSYq/AZbx-T64W-wSYq.000"
+output_folder = r"D:/ARAMIS_radon/radonData/dcm/ARAMIS/MR/2025/5/21/AZbx-T64W-wSYq/AZbx-T64W-wSYq.000/output"
 os.makedirs(output_folder, exist_ok=True)
 # Analyze a sample DICOM file
 sample_dicom = Path(dicom_folder) / "00294.dcm"
@@ -35,14 +35,15 @@ print("Extracting DICOM components with 'standard' extraction mode and raw forma
 extract_dicom_components(
     dicom_folder, 
     output_folder, 
-    extraction_mode=EXTRACTION_MODE_STANDARD,
+    # extraction_mode=EXTRACTION_MODE_STANDARD,
     # extraction_mode=EXTRACTION_MODE_FULL,
-    # extraction_mode=EXTRACTION_MODE_MINIMAL,
+    extraction_mode=EXTRACTION_MODE_MINIMAL,
     pixel_format=PIXEL_FORMAT_PICKLE
 )
 
 # Recombine a specific file with raw pixel data
-metadata_file = os.path.join(output_folder, "00294_metadata.json")
+# metadata_file = os.path.join(output_folder, "00294_metadata.json")
+metadata_file = os.path.join(r"D:/2024/Personal/dicom_utils/00294_metadata.json")
 pixel_file = os.path.join(output_folder, "00294_pixels.p")
 output_dcm = os.path.join(output_folder, "00294_recombined.dcm")
 
