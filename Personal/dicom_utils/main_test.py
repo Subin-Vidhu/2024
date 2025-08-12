@@ -18,8 +18,8 @@ from dicom_utils.recombiner import recombine_components
 from dicom_utils.analyzer import analyze_dicom_compression, compare_dicom_files, analyze_dicom_tag_sizes
 
 # Define paths
-dicom_folder = r"D:/ARAMIS_radon/radonData/dcm/ARAMIS/MR/2025/5/21/AZbx-T64W-wSYq/AZbx-T64W-wSYq.000"
-output_folder = r"D:/ARAMIS_radon/radonData/dcm/ARAMIS/MR/2025/5/21/AZbx-T64W-wSYq/AZbx-T64W-wSYq.000/output"
+dicom_folder = r"D:\ARAMIS_radon\radonData\dcm\ARAMIS\MR\2025\6\11\AZdd-dP0y-bhpo\AZdd-dP0y-bhpo.000"
+output_folder = r"D:\ARAMIS_radon\radonData\dcm\ARAMIS\MR\2025\6\11\AZdd-dP0y-bhpo\AZdd-dP0y-bhpo.000/output"
 os.makedirs(output_folder, exist_ok=True)
 # Analyze a sample DICOM file
 sample_dicom = Path(dicom_folder) / "00294.dcm"
