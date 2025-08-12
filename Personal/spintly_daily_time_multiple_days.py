@@ -150,32 +150,28 @@ def analyze_time_spent(df: pd.DataFrame, date: datetime.date, current_time: date
 
 def calculate_leave_time(office_time: float, break_time: float, analyzed_date: datetime.date, has_open_entry: bool = False, first_entry_time: datetime = None) -> Tuple[datetime, bool, str, timedelta]:
     """
-    Calculate leave time: 7:30 AM + 8.5 hours + break time taken
-    Simple logic: If no break, leave at 4:00 PM. Add break time to that.
+    Calculate leave time based on target working hours.
+    office_time is time spent in office during office hours.
+    break_time is time spent outside office (gaps between entry/exit).
+    actual_working_time = office_time - break_time
     """
-    actual_working_time = office_time - break_time  # Subtract break time from office time
+    # Calculate actual working time by subtracting break time (time outside office)
+    actual_working_time = office_time - break_time
     time_left = max(TARGET_TIME - actual_working_time, 0)
     is_current_day = analyzed_date == datetime.now().date()
     
     difference = timedelta(seconds=int(actual_working_time - TARGET_TIME))
     
-    if time_left == 0:
+    if actual_working_time >= TARGET_TIME:
         return None, True, "Target met", difference
     else:
         if is_current_day and not has_open_entry:
             # For current day with complete data
             return None, False, "Target not met (day complete)", difference
         elif is_current_day and has_open_entry:
-            # Simple calculation: 7:30 AM + 8.5 hours + total break time
-            office_start_today = datetime.combine(analyzed_date, OFFICE_START)
-            ideal_leave_time = office_start_today + timedelta(seconds=TARGET_TIME) + timedelta(seconds=break_time)
-            
-            # If current time is past ideal leave time, show current time + remaining work
+            # Calculate when to leave: current time + remaining work time
             now = datetime.now()
-            if now > ideal_leave_time:
-                leave_time = now + timedelta(seconds=time_left)
-            else:
-                leave_time = ideal_leave_time
+            leave_time = now + timedelta(seconds=time_left)
             
             # Check if leave time exceeds office hours
             office_end_today = datetime.combine(analyzed_date, OFFICE_END)
@@ -202,7 +198,7 @@ def generate_summary_table(time_spent: Dict[str, Dict[str, float]], analyzed_dat
         leave_time, target_met, status, difference = calculate_leave_time(
             times['office'], times['break'], analyzed_date, has_open_entry, times.get('first_entry_time'))
         
-        # Calculate actual working time (office time - break time)
+        # Calculate actual working time (office time minus break time)
         working_time = times['office'] - times['break']
 
         difference_str = format_time(abs(difference.total_seconds()))
@@ -281,7 +277,7 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
         leave_time_without_seconds, target_met_without_seconds, _, difference_without_seconds = calculate_leave_time(
             time_without_seconds, break_time_without_seconds, analyzed_date, has_open_entry_without_seconds, time_spent[f"{name}_no_seconds"].get('first_entry_time'))
 
-        # Calculate actual working times
+        # Calculate actual working times (office time minus break time)
         working_time_with_seconds = time_with_seconds - break_time_with_seconds
         working_time_without_seconds = time_without_seconds - break_time_without_seconds
 
