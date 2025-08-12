@@ -11,7 +11,8 @@ init(autoreset=True)  # Initialize colorama
 # Constants
 OFFICE_START = time(7, 30)
 OFFICE_END = time(19, 30)
-CSV_FILE_NAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'time_differences.csv')  # Name of the CSV file to store differences
+CSV_FILE_NAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'time_differences_multiple.csv')
+TARGET_TIME = 8 * 3600 + 30 * 60  # 8 hours 30 minutes in seconds
 
 def parse_datetime(date: str, time_str: str) -> datetime:
     """Parse datetime from date and time strings"""
@@ -39,13 +40,15 @@ def truncate_seconds(dt: datetime) -> datetime:
     """Truncate seconds from datetime"""
     return dt.replace(second=0, microsecond=0)
 
-def calculate_time_spent(group: pd.DataFrame, current_time: datetime = None, truncate: bool = False) -> Dict[str, float]:
-    """Calculate time spent in office"""
+def calculate_time_spent(group: pd.DataFrame, analysis_date: datetime.date, current_time: datetime = None, truncate: bool = False) -> Dict[str, float]:
+    """Calculate time spent in office for a specific date"""
     total_time, total_office_hours_time, total_break_time = 0, 0, 0
     entry_time, first_entry_time, last_exit_time = None, None, None
+    is_current_day = analysis_date == datetime.now().date()
 
-    print(f"\nCalculating time for group with {len(group)} records")
+    print(f"\nCalculating time for group with {len(group)} records on {analysis_date}")
     print(f"Current time: {current_time}")
+    print(f"Is current day: {is_current_day}")
 
     # Convert current_time to datetime if it's not None
     if current_time and isinstance(current_time, datetime):
@@ -82,9 +85,9 @@ def calculate_time_spent(group: pd.DataFrame, current_time: datetime = None, tru
 
             entry_time = None
 
-    # Handle open entry without exit or no exit record for the day
-    if entry_time and current_time:
-        print(f"\nHandling open entry:")
+    # Handle open entry without exit ONLY for current day
+    if entry_time and current_time and is_current_day:
+        print(f"\nHandling open entry for current day:")
         print(f"Entry time: {entry_time}")
         print(f"Current time: {current_time}")
         
@@ -103,27 +106,12 @@ def calculate_time_spent(group: pd.DataFrame, current_time: datetime = None, tru
                 office_duration = (exit_time_within_office_hours - entry_time_within_office_hours).total_seconds()
                 total_office_hours_time += office_duration
                 print(f"Office hours duration until current time: {format_time(office_duration)}")
-    elif first_entry_time and current_time and current_time.date() == first_entry_time.date():
-        # This handles the case where we have an entry but somehow lost track of it
-        print(f"\nHandling first entry without exit:")
-        print(f"First entry time: {first_entry_time}")
-        print(f"Current time: {current_time}")
-        
-        exit_time = truncate_seconds(current_time) if truncate else current_time
-        last_exit_time = exit_time
-        duration = (exit_time - first_entry_time).total_seconds()
-        if duration > 0:
-            total_time += duration
-            print(f"Duration until current time: {format_time(duration)}")
-
-            # Office hours calculation for current open session
-            entry_time_within_office_hours = max(first_entry_time, first_entry_time.replace(hour=OFFICE_START.hour, minute=OFFICE_START.minute, second=0))
-            exit_time_within_office_hours = min(exit_time, exit_time.replace(hour=OFFICE_END.hour, minute=OFFICE_END.minute, second=0))
-
-            if entry_time_within_office_hours < exit_time_within_office_hours:
-                office_duration = (exit_time_within_office_hours - entry_time_within_office_hours).total_seconds()
-                total_office_hours_time += office_duration
-                print(f"Office hours duration until current time: {format_time(office_duration)}")
+    
+    # For non-current days with open entries, don't extrapolate - just use what we have
+    elif entry_time and not is_current_day:
+        print(f"\nOpen entry found for past date {analysis_date}, but not calculating hypothetical time")
+        # Set last_exit_time to None to indicate incomplete data
+        last_exit_time = None
 
     # Calculate total break time
     if first_entry_time and last_exit_time:
@@ -139,14 +127,14 @@ def calculate_time_spent(group: pd.DataFrame, current_time: datetime = None, tru
         'total': total_time,
         'office': total_office_hours_time,
         'break': total_break_time,
-        'last_exit': last_exit_time
+        'last_exit': last_exit_time,
+        'has_open_entry': entry_time is not None,
+        'first_entry_time': first_entry_time
     }
 
 def format_time(seconds: float) -> str:
-    """Format time from seconds to hh:mm:ss"""
-    hours, remainder = divmod(seconds, 3600)
-    minutes, seconds = divmod(remainder, 60)
-    return f"{int(hours):02d}:{int(minutes):02d}:{int(seconds):02d}"
+    """Format time from seconds to HH:MM:SS"""
+    return str(timedelta(seconds=int(seconds)))
 
 def analyze_time_spent(df: pd.DataFrame, date: datetime.date, current_time: datetime = None) -> Tuple[Dict[str, Dict[str, float]], datetime.date]:
     """Analyze and calculate time spent for each user on the specified date"""
@@ -155,35 +143,52 @@ def analyze_time_spent(df: pd.DataFrame, date: datetime.date, current_time: date
     for name, group in df.groupby('Name'):
         group_by_date = group[group['Date'] == date]
         if not group_by_date.empty:
-            time_spent[name] = calculate_time_spent(group_by_date, current_time=current_time)
-            time_spent[f"{name}_no_seconds"] = calculate_time_spent(group_by_date, current_time=current_time, truncate=True)
+            time_spent[name] = calculate_time_spent(group_by_date, date, current_time=current_time)
+            time_spent[f"{name}_no_seconds"] = calculate_time_spent(group_by_date, date, current_time=current_time, truncate=True)
     
     return time_spent, date
 
-def format_time(seconds: float) -> str:
-    """Format time from seconds to HH:MM:SS"""
-    return str(timedelta(seconds=int(seconds)))
-
-def calculate_leave_time(office_time: float, current_time: datetime, analyzed_date: datetime.date) -> Tuple[datetime, bool, str, timedelta]:
-    time_left = max(TARGET_TIME - office_time, 0)
-    is_current_day = analyzed_date == current_time.date()
+def calculate_leave_time(office_time: float, break_time: float, analyzed_date: datetime.date, has_open_entry: bool = False, first_entry_time: datetime = None) -> Tuple[datetime, bool, str, timedelta]:
+    """
+    Calculate leave time: 7:30 AM + 8.5 hours + break time taken
+    Simple logic: If no break, leave at 4:00 PM. Add break time to that.
+    """
+    actual_working_time = office_time - break_time  # Subtract break time from office time
+    time_left = max(TARGET_TIME - actual_working_time, 0)
+    is_current_day = analyzed_date == datetime.now().date()
     
-    difference = timedelta(seconds=int(office_time - TARGET_TIME))
+    difference = timedelta(seconds=int(actual_working_time - TARGET_TIME))
     
     if time_left == 0:
-        return current_time, True, "Target met", difference
+        return None, True, "Target met", difference
     else:
-        if is_current_day:
-            leave_time = current_time + timedelta(seconds=time_left)
-            if leave_time.time() > time(19, 30):  # If leave time is after office hours
-                return datetime.combine(analyzed_date, time(19, 30)), False, "Leave by end of day", difference
+        if is_current_day and not has_open_entry:
+            # For current day with complete data
+            return None, False, "Target not met (day complete)", difference
+        elif is_current_day and has_open_entry:
+            # Simple calculation: 7:30 AM + 8.5 hours + total break time
+            office_start_today = datetime.combine(analyzed_date, OFFICE_START)
+            ideal_leave_time = office_start_today + timedelta(seconds=TARGET_TIME) + timedelta(seconds=break_time)
+            
+            # If current time is past ideal leave time, show current time + remaining work
+            now = datetime.now()
+            if now > ideal_leave_time:
+                leave_time = now + timedelta(seconds=time_left)
+            else:
+                leave_time = ideal_leave_time
+            
+            # Check if leave time exceeds office hours
+            office_end_today = datetime.combine(analyzed_date, OFFICE_END)
+            if leave_time > office_end_today:
+                return office_end_today, False, "Leave by end of day", difference
             else:
                 return leave_time, False, f"Leave by {leave_time.strftime('%I:%M:%S %p')}", difference
         else:
-            return current_time, False, "Target not met", difference
+            # For past dates
+            return None, False, "Target not met", difference
 
-def generate_summary_table(time_spent: Dict[str, Dict[str, float]], current_time: datetime, analyzed_date: datetime.date, use_seconds: bool = True) -> str:
-    headers = ['Name', 'Total Time', 'Office Hours Time', 'Break Time', 'Target', 'Difference', 'Last Exit', 'Status']
+def generate_summary_table(time_spent: Dict[str, Dict[str, float]], analyzed_date: datetime.date, use_seconds: bool = True) -> str:
+    headers = ['Name', 'Total Time', 'Office Hours Time', 'Break Time', 'Working Time', 'Target', 'Difference', 'Last Exit', 'Status']
     table = []
 
     for name, times in time_spent.items():
@@ -191,17 +196,30 @@ def generate_summary_table(time_spent: Dict[str, Dict[str, float]], current_time
             continue
 
         last_exit_time = times['last_exit']
-        is_current_day = analyzed_date == current_time.date()
+        has_open_entry = times.get('has_open_entry', False)
 
-        leave_time, target_met, status, difference = calculate_leave_time(times['office'], current_time, analyzed_date)
+        # Pass has_open_entry and first_entry_time to calculate_leave_time
+        leave_time, target_met, status, difference = calculate_leave_time(
+            times['office'], times['break'], analyzed_date, has_open_entry, times.get('first_entry_time'))
+        
+        # Calculate actual working time (office time - break time)
+        working_time = times['office'] - times['break']
 
         difference_str = format_time(abs(difference.total_seconds()))
-        # Handle None value for last_exit_time
-        last_exit_time_str = "No exit" if last_exit_time is None else (
-            last_exit_time.strftime("%I:%M:%S %p") if use_seconds else last_exit_time.strftime("%I:%M %p")
-        )
         
-        if is_current_day and not target_met:
+        # Handle None value for last_exit_time
+        if last_exit_time is None and has_open_entry:
+            last_exit_time_str = "Still in office"
+        elif last_exit_time is None:
+            last_exit_time_str = "No exit"
+        else:
+            last_exit_time_str = (
+                last_exit_time.strftime("%I:%M:%S %p") if use_seconds else last_exit_time.strftime("%I:%M %p")
+            )
+        
+        is_current_day = analyzed_date == datetime.now().date()
+        
+        if is_current_day and has_open_entry and not target_met:
             time_left_str = f"-{difference_str}"
             status_color = Fore.YELLOW
         elif target_met:
@@ -216,6 +234,7 @@ def generate_summary_table(time_spent: Dict[str, Dict[str, float]], current_time
             format_time(times['total']),
             format_time(times['office']),
             format_time(times['break']),
+            format_time(working_time),  # Add working time column
             '✓' if target_met else '✗',
             f"{status_color}{time_left_str}{Style.RESET_ALL}",
             last_exit_time_str,
@@ -224,14 +243,6 @@ def generate_summary_table(time_spent: Dict[str, Dict[str, float]], current_time
 
     return tabulate(table, headers, tablefmt="pretty")
 
-
-CSV_FILE_NAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'time_differences_multiple.csv')
-# TARGET_TIME = 8 * 3600 + 30 * 60  # 8 hours 30 minutes in seconds
-TARGET_TIME = 8 * 3600 + 30 * 60  # 4 hours 30 minutes in seconds
-
-def format_time(seconds: float) -> str:
-    """Format time from seconds to HH:MM:SS"""
-    return str(timedelta(seconds=int(seconds)))
 def get_dates_in_month(year: int, month: int) -> List[datetime.date]:
     """Get all dates in the specified month and year."""
     start_date = datetime(year, month, 1).date()
@@ -245,7 +256,8 @@ def process_multiple_dates(df: pd.DataFrame, dates: List[datetime.date], current
         time_spent, _ = analyze_time_spent(df, date, current_time=current_time)
         results[date] = time_spent
     return results
-def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_date: datetime.date, current_time: datetime, csv_file: str = None) -> None:
+
+def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_date: datetime.date, csv_file: str = None) -> None:
     """Save time differences to CSV file."""
     if csv_file is None:
         csv_file = CSV_FILE_NAME
@@ -258,9 +270,20 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
 
         time_with_seconds = time_spent[name]['office']
         time_without_seconds = time_spent[f"{name}_no_seconds"]['office']
+        break_time_with_seconds = time_spent[name]['break']
+        break_time_without_seconds = time_spent[f"{name}_no_seconds"]['break']
+        has_open_entry_with_seconds = time_spent[name].get('has_open_entry', False)
+        has_open_entry_without_seconds = time_spent[f"{name}_no_seconds"].get('has_open_entry', False)
 
-        leave_time_with_seconds, target_met_with_seconds, status_with_seconds, difference_with_seconds = calculate_leave_time(time_with_seconds, current_time, analyzed_date)
-        leave_time_without_seconds, target_met_without_seconds, _, difference_without_seconds = calculate_leave_time(time_without_seconds, current_time, analyzed_date)
+        # Pass has_open_entry and first_entry_time to calculate_leave_time
+        leave_time_with_seconds, target_met_with_seconds, status_with_seconds, difference_with_seconds = calculate_leave_time(
+            time_with_seconds, break_time_with_seconds, analyzed_date, has_open_entry_with_seconds, time_spent[name].get('first_entry_time'))
+        leave_time_without_seconds, target_met_without_seconds, _, difference_without_seconds = calculate_leave_time(
+            time_without_seconds, break_time_without_seconds, analyzed_date, has_open_entry_without_seconds, time_spent[f"{name}_no_seconds"].get('first_entry_time'))
+
+        # Calculate actual working times
+        working_time_with_seconds = time_with_seconds - break_time_with_seconds
+        working_time_without_seconds = time_without_seconds - break_time_without_seconds
 
         # Adjust the sign of the difference based on whether the target was met
         sign_with_seconds = '+' if difference_with_seconds.total_seconds() >= 0 else '-'
@@ -282,6 +305,10 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
             'Name': name,
             'Office Time With Seconds': format_time(time_with_seconds),
             'Office Time Without Seconds': format_time(time_without_seconds),
+            'Break Time With Seconds': format_time(break_time_with_seconds),
+            'Break Time Without Seconds': format_time(break_time_without_seconds),
+            'Working Time With Seconds': format_time(working_time_with_seconds),
+            'Working Time Without Seconds': format_time(working_time_without_seconds),
             'Sign With Seconds': sign_with_seconds,
             'Difference With Seconds': diff_with_seconds,
             'Sign Without Seconds': sign_without_seconds,
@@ -307,6 +334,8 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
 
     # Ensure the columns are in the correct order
     df = df[['Date', 'Name', 'Office Time With Seconds', 'Office Time Without Seconds',
+             'Break Time With Seconds', 'Break Time Without Seconds',
+             'Working Time With Seconds', 'Working Time Without Seconds',
              'Sign With Seconds', 'Difference With Seconds', 
              'Sign Without Seconds', 'Difference Without Seconds',
              'Status', 'Message With Seconds', 'Message Without Seconds']]
@@ -314,23 +343,23 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
     # Save the DataFrame to CSV
     df.to_csv(csv_file, index=False)
 
-def save_multiple_dates_to_csv(results: Dict[datetime.date, Dict[str, Dict[str, float]]], current_time: datetime, csv_file: str = None) -> None:
+def save_multiple_dates_to_csv(results: Dict[datetime.date, Dict[str, Dict[str, float]]], csv_file: str = None) -> None:
     """Save time differences for multiple dates to CSV."""
     if csv_file is None:
         csv_file = CSV_FILE_NAME
         
     for date, time_spent in results.items():
-        save_differences_to_csv(time_spent, date, current_time, csv_file)
+        save_differences_to_csv(time_spent, date, csv_file)
     print(f"\nTime differences saved to {csv_file}\n")
 
-def generate_summary_tables(results: Dict[datetime.date, Dict[str, Dict[str, float]]], current_time: datetime) -> str:
+def generate_summary_tables(results: Dict[datetime.date, Dict[str, Dict[str, float]]]) -> str:
     """Generate summary tables for multiple dates."""
     summary = ""
     for date, time_spent in results.items():
-        summary += "\n" + f"{('Time Spent on ' + date.strftime('%b %d, %Y')).center(80)}" + "\n"
-        summary += generate_summary_table(time_spent, current_time, date, use_seconds=True)
-        summary += "\n" + "-"*80 + "\n"
-        summary += generate_summary_table(time_spent, current_time, date, use_seconds=False)
+        summary += "\n" + f"{('Time Spent on ' + date.strftime('%b %d, %Y')).center(100)}" + "\n"
+        summary += generate_summary_table(time_spent, date, use_seconds=True)
+        summary += "\n" + "-"*100 + "\n"
+        summary += generate_summary_table(time_spent, date, use_seconds=False)
         summary += "\n\n"
     return summary
 
@@ -346,9 +375,10 @@ def main(file_path: str, year: int, month: int, start_day: int, end_day: int) ->
         
         results = process_multiple_dates(df, selected_dates, current_time)
         
-        print(generate_summary_tables(results, current_time))
+        print(generate_summary_tables(results))
         
-        save_multiple_dates_to_csv(results, current_time)
+        save_multiple_dates_to_csv(results)
+
 def calculate_total_difference_from_csv(csv_file: str, start_date: datetime.date = None, end_date: datetime.date = None):
     try:
         # Read the CSV file
@@ -393,6 +423,7 @@ def calculate_total_difference_from_csv(csv_file: str, start_date: datetime.date
     except Exception as e:
         print(f"An error occurred: {e}")
         return None
+
 if __name__ == "__main__":
     file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
     year = 2025
