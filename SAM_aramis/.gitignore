@@ -1,0 +1,7 @@
+
+/dcm2niix
+/SAM_testing_only/SAM_models
+/static/models/SAM_models
+/static/nifti_files
+/user_files_nifti
+test_venv/

@@ -1,0 +1,7 @@
+Flask==3.0.3
+nibabel==5.3.2
+--extra-index-url https://download.pytorch.org/whl/cu124
+torch==2.5.0+cu124
+torchvision==0.20.0+cu124
+torchaudio==2.5.0+cu124
+git+https://github.com/facebookresearch/segment-anything.git

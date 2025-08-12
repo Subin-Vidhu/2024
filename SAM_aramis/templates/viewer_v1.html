@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename = 'css/viewer.css') }}" rel="stylesheet" type="text/css">
+    <title>Document</title>
+</head>
+<body>
+    <script src="{{ url_for('static', filename = 'js/nifti-reader-min.js') }}" defer></script>
+    <script src="{{ url_for('static', filename = 'js/aramis_v2.js') }}" defer></script>
+    <div class="under_c">
+        <canvas f_p="{{ url_for('static', filename = 'nifti_files/img_CT_new_LPI.nii.gz') }}"></canvas>
+        <canvas f_p="{{ url_for('static', filename = 'nifti_files/mask_Ct.nii.gz') }}" color_map = '{ "1":"#FF0000", "2":"#0000FF", "3":"#00FF00", "4":"#00FF00", "5":"#00FF00", "6":"#00FF00", "7":"#FF1FF8"}'></canvas>
+    </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+.under_c{
+    background-color: #000000;
+}
+.under_c,canvas, svg {
+    /* border: 3px; */
+    /* border-style: solid; */
+    /* border-color: red; */
+    width:100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* image-rendering: pixelated; */
+}

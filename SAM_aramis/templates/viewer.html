@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename = 'css/viewer.css') }}" rel="stylesheet" type="text/css">
+    <title>Document</title>
+</head>
+<body>
+    <script src="{{ url_for('static', filename = 'js/nifti-reader-min.js') }}" defer></script>
+    <script src="{{ url_for('static', filename = 'js/aramis.js') }}" defer></script>
+    <div class="under_c">
+        {% for item in items %}
+        <canvas f_p="{{ item[0] }}"></canvas>
+        <canvas f_p="{{ item[1] }}" color_map = '{{ item[2] }}' tabindex="-1"></canvas>
+        {% endfor %}
+    </div>
+</body>
+</html>
