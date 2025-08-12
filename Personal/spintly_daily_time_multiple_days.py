@@ -92,7 +92,7 @@ def calculate_time_spent(group: pd.DataFrame, analysis_date: datetime.date, curr
         print(f"Current time: {current_time}")
         
         exit_time = truncate_seconds(current_time) if truncate else current_time
-        last_exit_time = exit_time
+        last_exit_time = exit_time  # This should be current time for consistency
         duration = (exit_time - entry_time).total_seconds()
         if duration > 0:  # Only add if duration is positive
             total_time += duration
