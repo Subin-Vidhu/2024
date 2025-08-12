@@ -43,7 +43,9 @@ def truncate_seconds(dt: datetime) -> datetime:
 def calculate_time_spent(group: pd.DataFrame, analysis_date: datetime.date, current_time: datetime = None, truncate: bool = False) -> Dict[str, float]:
     """Calculate time spent in office for a specific date"""
     total_time, total_office_hours_time, total_break_time = 0, 0, 0
+    sum_of_sessions = 0  # Track actual time in sessions
     entry_time, first_entry_time, last_exit_time = None, None, None
+    first_office_entry_time, last_office_exit_time = None, None
     is_current_day = analysis_date == datetime.now().date()
 
     print(f"\nCalculating time for group with {len(group)} records on {analysis_date}")
@@ -66,22 +68,27 @@ def calculate_time_spent(group: pd.DataFrame, analysis_date: datetime.date, curr
                 print(f"First entry time set to: {first_entry_time}")
             entry_time = dt
             print(f"Entry time set to: {entry_time}")
+            
+            # Track first entry during office hours
+            if first_office_entry_time is None:
+                office_entry_time = max(dt, dt.replace(hour=OFFICE_START.hour, minute=OFFICE_START.minute, second=0))
+                if office_entry_time.time() <= OFFICE_END:
+                    first_office_entry_time = office_entry_time
+                    print(f"First office hours entry time set to: {first_office_entry_time}")
+                    
         elif row['Direction'].lower() == 'exit' and entry_time:
             exit_time = dt
             last_exit_time = exit_time
             duration = (exit_time - entry_time).total_seconds()
-            total_time += duration
+            sum_of_sessions += duration
             print(f"Exit time: {exit_time}")
             print(f"Duration: {format_time(duration)}")
 
-            # Calculate time during office hours
-            entry_time_within_office_hours = max(entry_time, entry_time.replace(hour=OFFICE_START.hour, minute=OFFICE_START.minute, second=0))
-            exit_time_within_office_hours = min(exit_time, exit_time.replace(hour=OFFICE_END.hour, minute=OFFICE_END.minute, second=0))
-
-            if entry_time_within_office_hours < exit_time_within_office_hours:
-                office_duration = (exit_time_within_office_hours - entry_time_within_office_hours).total_seconds()
-                total_office_hours_time += office_duration
-                print(f"Office hours duration: {format_time(office_duration)}")
+            # Track last exit during office hours and calculate office duration for this session
+            office_exit_time = min(exit_time, exit_time.replace(hour=OFFICE_END.hour, minute=OFFICE_END.minute, second=0))
+            if office_exit_time.time() >= OFFICE_START:
+                last_office_exit_time = office_exit_time
+                print(f"Office hours exit time: {last_office_exit_time}")
 
             entry_time = None
 
@@ -92,20 +99,17 @@ def calculate_time_spent(group: pd.DataFrame, analysis_date: datetime.date, curr
         print(f"Current time: {current_time}")
         
         exit_time = truncate_seconds(current_time) if truncate else current_time
-        last_exit_time = exit_time  # This should be current time for consistency
+        last_exit_time = exit_time
         duration = (exit_time - entry_time).total_seconds()
         if duration > 0:  # Only add if duration is positive
-            total_time += duration
+            sum_of_sessions += duration
             print(f"Duration until current time: {format_time(duration)}")
 
-            # Office hours calculation for current open session
-            entry_time_within_office_hours = max(entry_time, entry_time.replace(hour=OFFICE_START.hour, minute=OFFICE_START.minute, second=0))
-            exit_time_within_office_hours = min(exit_time, exit_time.replace(hour=OFFICE_END.hour, minute=OFFICE_END.minute, second=0))
-
-            if entry_time_within_office_hours < exit_time_within_office_hours:
-                office_duration = (exit_time_within_office_hours - entry_time_within_office_hours).total_seconds()
-                total_office_hours_time += office_duration
-                print(f"Office hours duration until current time: {format_time(office_duration)}")
+            # Track current time as office exit for office hours calculation
+            office_exit_time = min(exit_time, exit_time.replace(hour=OFFICE_END.hour, minute=OFFICE_END.minute, second=0))
+            if office_exit_time.time() >= OFFICE_START:
+                last_office_exit_time = office_exit_time
+                print(f"Current office hours exit time: {last_office_exit_time}")
     
     # For non-current days with open entries, don't extrapolate - just use what we have
     elif entry_time and not is_current_day:
@@ -113,13 +117,20 @@ def calculate_time_spent(group: pd.DataFrame, analysis_date: datetime.date, curr
         # Set last_exit_time to None to indicate incomplete data
         last_exit_time = None
 
-    # Calculate total break time
+    # Calculate office hours time as the span from first office entry to last office exit
+    if first_office_entry_time and last_office_exit_time:
+        total_office_hours_time = (last_office_exit_time - first_office_entry_time).total_seconds()
+        print(f"Office hours span: {first_office_entry_time} to {last_office_exit_time}")
+        print(f"Total office hours time (span): {format_time(total_office_hours_time)}")
+
+    # Calculate total break time and total time span
     if first_entry_time and last_exit_time:
-        total_duration = (last_exit_time - first_entry_time).total_seconds()
-        total_break_time = max(0, total_duration - total_time)  # Ensure break time is not negative
+        # Total time is the complete span from first entry to last exit (or current time)
+        total_time = (last_exit_time - first_entry_time).total_seconds()
+        total_break_time = max(0, total_time - sum_of_sessions)  # Break time is gaps between sessions
         print(f"\nFinal calculations:")
-        print(f"Total duration: {format_time(total_duration)}")
-        print(f"Total time: {format_time(total_time)}")
+        print(f"Total time (complete span): {format_time(total_time)}")
+        print(f"Sum of actual sessions: {format_time(sum_of_sessions)}")
         print(f"Office hours time: {format_time(total_office_hours_time)}")
         print(f"Break time: {format_time(total_break_time)}")
 
