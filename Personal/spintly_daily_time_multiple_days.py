@@ -226,7 +226,8 @@ def generate_summary_table(time_spent: Dict[str, Dict[str, float]], current_time
 
 
 CSV_FILE_NAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'time_differences_multiple.csv')
-TARGET_TIME = 8 * 3600 + 30 * 60  # 8 hours 30 minutes in seconds
+# TARGET_TIME = 8 * 3600 + 30 * 60  # 8 hours 30 minutes in seconds
+TARGET_TIME = 8 * 3600 + 30 * 60  # 4 hours 30 minutes in seconds
 
 def format_time(seconds: float) -> str:
     """Format time from seconds to HH:MM:SS"""
@@ -395,8 +396,8 @@ def calculate_total_difference_from_csv(csv_file: str, start_date: datetime.date
 if __name__ == "__main__":
     file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
     year = 2025
-    month = 5
-    start_day = 12
+    month = 8
+    start_day = 11
     end_day = 12
     main(file_path, year, month, start_day, end_day)
     calculate_total_difference_from_csv(CSV_FILE_NAME)
