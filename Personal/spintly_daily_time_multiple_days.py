@@ -436,6 +436,6 @@ if __name__ == "__main__":
     year = 2025
     month = 8
     start_day = 11
-    end_day = 12
+    end_day = 13
     main(file_path, year, month, start_day, end_day)
     calculate_total_difference_from_csv(CSV_FILE_NAME)
