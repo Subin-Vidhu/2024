@@ -620,10 +620,10 @@ def create_roc_curves(df, results_dir, timestamp, config):
     
     # ROC curves for different Dice thresholds
     dice_columns = ['Dice_Right_Kidney', 'Dice_Left_Kidney']
-    thresholds = [0.7, 0.75, 0.8, 0.85, 0.9]
+    thresholds = [0.7, 0.8, 0.85, 0.9]  # Reduced for better legend fit
     
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-    fig.suptitle('ROC Curves for Dice Coefficient Thresholds', fontsize=14, fontweight='bold')
+    fig, axes = plt.subplots(1, 2, figsize=(15, 6))  # Larger figure
+    fig.suptitle('AUC-ROC Curves for Dice Coefficient Thresholds', fontsize=16, fontweight='bold', y=0.98)
     
     for idx, dice_col in enumerate(dice_columns):
         if dice_col not in successful_cases.columns:
@@ -645,17 +645,18 @@ def create_roc_curves(df, results_dir, timestamp, config):
             fpr, tpr, _ = roc_curve(y_true, y_scores)
             roc_auc = auc(fpr, tpr)
             
-            ax.plot(fpr, tpr, linewidth=2, 
-                   label=f'Threshold {threshold} (AUC = {roc_auc:.3f})')
+            ax.plot(fpr, tpr, linewidth=2.5, 
+                   label=f'Dice ≥ {threshold} (AUC = {roc_auc:.3f})')
         
-        ax.plot([0, 1], [0, 1], 'k--', linewidth=1, alpha=0.6, label='Random Classifier')
+        ax.plot([0, 1], [0, 1], 'k--', linewidth=1.5, alpha=0.6, label='Random Classifier')
         ax.set_xlim([0.0, 1.0])
         ax.set_ylim([0.0, 1.05])
-        ax.set_xlabel('False Positive Rate')
-        ax.set_ylabel('True Positive Rate')
-        ax.set_title(f'{kidney_name} ROC Curves')
-        ax.legend(loc="lower right", fontsize=8)
+        ax.set_xlabel('False Positive Rate', fontsize=12, fontweight='bold')
+        ax.set_ylabel('True Positive Rate', fontsize=12, fontweight='bold')
+        ax.set_title(f'{kidney_name} AUC-ROC Analysis', fontsize=14, fontweight='bold', pad=20)
+        ax.legend(loc="lower right", fontsize=10, frameon=True, fancybox=True, shadow=True)
         ax.grid(True, alpha=0.3)
+        ax.tick_params(labelsize=10)
     
     plt.tight_layout()
     
@@ -690,8 +691,8 @@ def create_bland_altman_plots(df, results_dir, timestamp, config):
         ('FDA_Left_Kidney_Vol_cm3', 'AIRA_Left_Kidney_Vol_cm3', 'Left Kidney')
     ]
     
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    fig.suptitle('Bland-Altman Plots: Volume Agreement Analysis', fontsize=14, fontweight='bold')
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7))  # Larger figure
+    fig.suptitle('Bland-Altman Plots: Volume Agreement Analysis', fontsize=16, fontweight='bold', y=0.95)
     
     for idx, (fda_col, aira_col, kidney_name) in enumerate(volume_pairs):
         if fda_col not in successful_cases.columns or aira_col not in successful_cases.columns:
@@ -719,32 +720,36 @@ def create_bland_altman_plots(df, results_dir, timestamp, config):
         lower_loa = mean_diff - 1.96 * std_diff
         
         # Scatter plot
-        ax.scatter(mean_vals, diff_vals, alpha=0.6, s=50, edgecolors='black', linewidth=0.5)
+        ax.scatter(mean_vals, diff_vals, alpha=0.7, s=60, edgecolors='black', linewidth=0.8, c='steelblue')
         
         # Mean difference line
-        ax.axhline(mean_diff, color='red', linestyle='-', linewidth=2, 
-                   label=f'Mean Diff: {mean_diff:.2f} cm³')
+        ax.axhline(mean_diff, color='red', linestyle='-', linewidth=2.5, 
+                   label=f'Bias: {mean_diff:.2f} cm³')
         
         # Limits of agreement
-        ax.axhline(upper_loa, color='red', linestyle='--', linewidth=1.5,
-                   label=f'Upper LoA: {upper_loa:.2f} cm³')
-        ax.axhline(lower_loa, color='red', linestyle='--', linewidth=1.5,
-                   label=f'Lower LoA: {lower_loa:.2f} cm³')
+        ax.axhline(upper_loa, color='red', linestyle='--', linewidth=2,
+                   label=f'+1.96 SD: {upper_loa:.2f} cm³')
+        ax.axhline(lower_loa, color='red', linestyle='--', linewidth=2,
+                   label=f'-1.96 SD: {lower_loa:.2f} cm³')
         
         # Zero line
-        ax.axhline(0, color='black', linestyle='-', linewidth=1, alpha=0.5)
+        ax.axhline(0, color='black', linestyle='-', linewidth=1.5, alpha=0.7, label='Perfect Agreement')
         
-        ax.set_xlabel('Mean of FDA and AIRA Volumes (cm³)')
-        ax.set_ylabel('AIRA - FDA Volume (cm³)')
-        ax.set_title(f'{kidney_name} Volume Agreement')
-        ax.legend(fontsize=9)
+        ax.set_xlabel('Mean of FDA and AIRA Volumes (cm³)', fontsize=12, fontweight='bold')
+        ax.set_ylabel('Difference: AIRA - FDA (cm³)', fontsize=12, fontweight='bold')
+        ax.set_title(f'{kidney_name} Bland-Altman Analysis', fontsize=14, fontweight='bold', pad=20)
+        ax.legend(fontsize=10, loc='best', frameon=True, fancybox=True, shadow=True)
         ax.grid(True, alpha=0.3)
+        ax.tick_params(labelsize=10)
         
-        # Add text with statistics
-        textstr = f'Bias: {mean_diff:.2f} cm³\nSD: {std_diff:.2f} cm³\n95% LoA: [{lower_loa:.2f}, {upper_loa:.2f}]'
-        props = dict(boxstyle='round', facecolor='wheat', alpha=0.8)
-        ax.text(0.05, 0.95, textstr, transform=ax.transAxes, fontsize=9,
-                verticalalignment='top', bbox=props)
+        # Add text with statistics in a better location
+        textstr = f'n = {len(diff_vals)}\nBias = {mean_diff:.2f} cm³\nSD = {std_diff:.2f} cm³\n95% LoA: [{lower_loa:.2f}, {upper_loa:.2f}] cm³'
+        props = dict(boxstyle='round', facecolor='lightblue', alpha=0.9, edgecolor='black')
+        # Position text box to avoid overlap
+        text_x = 0.02 if mean_diff > 0 else 0.98
+        text_ha = 'left' if mean_diff > 0 else 'right'
+        ax.text(text_x, 0.98, textstr, transform=ax.transAxes, fontsize=10,
+                verticalalignment='top', horizontalalignment=text_ha, bbox=props)
     
     plt.tight_layout()
     
@@ -779,8 +784,8 @@ def create_correlation_plots(df, results_dir, timestamp, config):
         ('FDA_Left_Kidney_Vol_cm3', 'AIRA_Left_Kidney_Vol_cm3', 'Left Kidney')
     ]
     
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    fig.suptitle('Volume Correlation Analysis: FDA vs AIRA', fontsize=14, fontweight='bold')
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7))  # Larger figure
+    fig.suptitle('Volume Correlation Analysis: FDA vs AIRA', fontsize=16, fontweight='bold', y=0.95)
     
     for idx, (fda_col, aira_col, kidney_name) in enumerate(volume_pairs):
         if fda_col not in successful_cases.columns or aira_col not in successful_cases.columns:
@@ -797,19 +802,20 @@ def create_correlation_plots(df, results_dir, timestamp, config):
         aira_vals = aira_vals.iloc[:min_len]
         
         # Scatter plot
-        ax.scatter(fda_vals, aira_vals, alpha=0.7, s=60, edgecolors='black', linewidth=0.5)
+        ax.scatter(fda_vals, aira_vals, alpha=0.7, s=80, edgecolors='black', linewidth=0.8, c='steelblue')
         
         # Perfect correlation line (y=x)
         min_val = min(min(fda_vals), min(aira_vals))
         max_val = max(max(fda_vals), max(aira_vals))
-        ax.plot([min_val, max_val], [min_val, max_val], 'r--', linewidth=2, 
-                alpha=0.7, label='Perfect Agreement (y=x)')
+        ax.plot([min_val, max_val], [min_val, max_val], 'r--', linewidth=2.5, 
+                alpha=0.8, label='Perfect Agreement (y=x)')
         
         # Regression line
         z = np.polyfit(fda_vals, aira_vals, 1)
         p = np.poly1d(z)
-        ax.plot(fda_vals.sort_values(), p(fda_vals.sort_values()), "b-", linewidth=2, alpha=0.7,
-                label=f'Regression Line (y={z[0]:.3f}x+{z[1]:.2f})')
+        sorted_fda = fda_vals.sort_values()
+        ax.plot(sorted_fda, p(sorted_fda), "g-", linewidth=2.5, alpha=0.8,
+                label=f'Best Fit (y={z[0]:.3f}x+{z[1]:.1f})')
         
         # Calculate metrics
         correlation = np.corrcoef(fda_vals, aira_vals)[0, 1]
@@ -819,16 +825,17 @@ def create_correlation_plots(df, results_dir, timestamp, config):
         ss_tot = np.sum((aira_vals - np.mean(aira_vals))**2)
         r_squared = 1 - (ss_res / ss_tot) if ss_tot != 0 else 0
         
-        ax.set_xlabel('FDA Volume (cm³)')
-        ax.set_ylabel('AIRA Volume (cm³)')
-        ax.set_title(f'{kidney_name} Volume Correlation')
-        ax.legend()
+        ax.set_xlabel('FDA Ground Truth Volume (cm³)', fontsize=12, fontweight='bold')
+        ax.set_ylabel('AIRA Predicted Volume (cm³)', fontsize=12, fontweight='bold')
+        ax.set_title(f'{kidney_name} Volume Correlation', fontsize=14, fontweight='bold', pad=20)
+        ax.legend(fontsize=11, loc='best', frameon=True, fancybox=True, shadow=True)
         ax.grid(True, alpha=0.3)
+        ax.tick_params(labelsize=10)
         
-        # Add statistics text
-        textstr = f'r = {correlation:.4f}\nR² = {r_squared:.4f}\nn = {len(fda_vals)}'
-        props = dict(boxstyle='round', facecolor='lightblue', alpha=0.8)
-        ax.text(0.05, 0.95, textstr, transform=ax.transAxes, fontsize=10,
+        # Add statistics text with better formatting
+        textstr = f'Pearson r = {correlation:.4f}\nR² = {r_squared:.4f}\nn = {len(fda_vals)} cases'
+        props = dict(boxstyle='round', facecolor='lightyellow', alpha=0.9, edgecolor='black')
+        ax.text(0.05, 0.95, textstr, transform=ax.transAxes, fontsize=11, fontweight='bold',
                 verticalalignment='top', bbox=props)
     
     plt.tight_layout()
@@ -858,8 +865,8 @@ def create_performance_summary_plot(df, results_dir, timestamp, config):
     
     plot_files = []
     
-    fig, axes = plt.subplots(2, 2, figsize=(15, 12))
-    fig.suptitle('FDA vs AIRA: Comprehensive Performance Summary', fontsize=16, fontweight='bold')
+    fig, axes = plt.subplots(2, 2, figsize=(16, 12))  # Larger figure
+    fig.suptitle('FDA vs AIRA: Comprehensive Performance Summary', fontsize=18, fontweight='bold', y=0.95)
     
     # 1. Dice Coefficient Distribution
     ax1 = axes[0, 0]
@@ -873,13 +880,16 @@ def create_performance_summary_plot(df, results_dir, timestamp, config):
             dice_labels.append(col.replace('Dice_', '').replace('_', ' '))
     
     if dice_data:
-        ax1.boxplot(dice_data, labels=dice_labels, patch_artist=True, 
-                   boxprops=dict(facecolor='lightblue', alpha=0.7))
-        ax1.set_ylabel('Dice Coefficient')
-        ax1.set_title('Dice Coefficient Distribution')
+        bp1 = ax1.boxplot(dice_data, labels=dice_labels, patch_artist=True, 
+                         boxprops=dict(facecolor='lightblue', alpha=0.7),
+                         medianprops=dict(color='red', linewidth=2),
+                         flierprops=dict(marker='o', markerfacecolor='red', alpha=0.5))
+        ax1.set_ylabel('Dice Coefficient', fontsize=12, fontweight='bold')
+        ax1.set_title('Dice Coefficient Distribution', fontsize=14, fontweight='bold', pad=15)
         ax1.grid(True, alpha=0.3)
-        ax1.axhline(y=0.85, color='red', linestyle='--', alpha=0.7, label='Clinical Threshold (0.85)')
-        ax1.legend()
+        ax1.axhline(y=0.85, color='red', linestyle='--', linewidth=2, alpha=0.8, label='Clinical Threshold (0.85)')
+        ax1.legend(fontsize=10)
+        ax1.tick_params(labelsize=10)
     
     # 2. Volume Error Distribution
     ax2 = axes[0, 1]
