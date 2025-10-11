@@ -1,10 +1,16 @@
-# pip install nibabel numpy pandas openpyxl
+# pip install nibabel numpy pandas openpyxl matplotlib seaborn scikit-learn
 import nibabel as nib
 import numpy as np
 import pandas as pd
 import os
 from datetime import datetime
 import glob
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.metrics import roc_curve, auc
+from sklearn.preprocessing import label_binarize
+import warnings
+warnings.filterwarnings('ignore')
 
 # ============================================================================
 # CONFIGURATION SECTION - Customize what to include in the output
@@ -44,6 +50,13 @@ CONFIG = {
     'create_summary_sheet': True,       # Create summary statistics sheet
     'create_failed_sheet': True,        # Create sheet for failed cases
     'save_detailed_stats': True,        # Save detailed statistics CSV file
+    
+    # Visualization Options
+    'create_plots': True,               # Generate visualization plots
+    'save_individual_plots': True,      # Save individual plot files
+    'create_combined_figure': True,     # Create one combined figure with all plots
+    'plot_dpi': 300,                   # Plot resolution (300 DPI for publication quality)
+    'plot_style': 'seaborn-v0_8',     # Plot style
 }
 
 # Label mapping configuration
@@ -588,6 +601,388 @@ def calculate_comprehensive_statistics(df):
     stats_df = pd.DataFrame(stats_data, columns=['Metric', 'Value1', 'Value2', 'Value3', 'Value4', 'Value5'])
     return stats_df
 
+def create_roc_curves(df, results_dir, timestamp, config):
+    """Create ROC curves for Dice coefficient thresholds."""
+    if not config.get('create_plots', False):
+        return []
+    
+    successful_cases = df[df['Status'] == 'Success'] if 'Status' in df.columns else df
+    
+    if len(successful_cases) < 5:  # Need sufficient cases for meaningful ROC
+        return []
+    
+    try:
+        plt.style.use(config.get('plot_style', 'default'))
+    except:
+        pass
+    
+    plot_files = []
+    
+    # ROC curves for different Dice thresholds
+    dice_columns = ['Dice_Right_Kidney', 'Dice_Left_Kidney']
+    thresholds = [0.7, 0.75, 0.8, 0.85, 0.9]
+    
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+    fig.suptitle('ROC Curves for Dice Coefficient Thresholds', fontsize=14, fontweight='bold')
+    
+    for idx, dice_col in enumerate(dice_columns):
+        if dice_col not in successful_cases.columns:
+            continue
+            
+        ax = axes[idx]
+        kidney_name = dice_col.replace('Dice_', '').replace('_', ' ')
+        
+        dice_values = successful_cases[dice_col].dropna()
+        
+        for threshold in thresholds:
+            # Create binary classification (above/below threshold)
+            y_true = (dice_values >= threshold).astype(int)
+            y_scores = dice_values.values
+            
+            if len(np.unique(y_true)) < 2:  # Need both classes
+                continue
+                
+            fpr, tpr, _ = roc_curve(y_true, y_scores)
+            roc_auc = auc(fpr, tpr)
+            
+            ax.plot(fpr, tpr, linewidth=2, 
+                   label=f'Threshold {threshold} (AUC = {roc_auc:.3f})')
+        
+        ax.plot([0, 1], [0, 1], 'k--', linewidth=1, alpha=0.6, label='Random Classifier')
+        ax.set_xlim([0.0, 1.0])
+        ax.set_ylim([0.0, 1.05])
+        ax.set_xlabel('False Positive Rate')
+        ax.set_ylabel('True Positive Rate')
+        ax.set_title(f'{kidney_name} ROC Curves')
+        ax.legend(loc="lower right", fontsize=8)
+        ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    
+    if config.get('save_individual_plots', True):
+        roc_file = os.path.join(results_dir, f'ROC_Curves_{timestamp}.png')
+        plt.savefig(roc_file, dpi=config.get('plot_dpi', 300), bbox_inches='tight')
+        plot_files.append(roc_file)
+    
+    plt.close()
+    return plot_files
+
+def create_bland_altman_plots(df, results_dir, timestamp, config):
+    """Create Bland-Altman plots for volume agreement analysis."""
+    if not config.get('create_plots', False):
+        return []
+    
+    successful_cases = df[df['Status'] == 'Success'] if 'Status' in df.columns else df
+    
+    if len(successful_cases) < 3:
+        return []
+    
+    try:
+        plt.style.use(config.get('plot_style', 'default'))
+    except:
+        pass
+    
+    plot_files = []
+    
+    # Volume comparison pairs
+    volume_pairs = [
+        ('FDA_Right_Kidney_Vol_cm3', 'AIRA_Right_Kidney_Vol_cm3', 'Right Kidney'),
+        ('FDA_Left_Kidney_Vol_cm3', 'AIRA_Left_Kidney_Vol_cm3', 'Left Kidney')
+    ]
+    
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    fig.suptitle('Bland-Altman Plots: Volume Agreement Analysis', fontsize=14, fontweight='bold')
+    
+    for idx, (fda_col, aira_col, kidney_name) in enumerate(volume_pairs):
+        if fda_col not in successful_cases.columns or aira_col not in successful_cases.columns:
+            continue
+        
+        ax = axes[idx]
+        
+        fda_vals = successful_cases[fda_col].dropna()
+        aira_vals = successful_cases[aira_col].dropna()
+        
+        # Ensure same length
+        min_len = min(len(fda_vals), len(aira_vals))
+        fda_vals = fda_vals.iloc[:min_len]
+        aira_vals = aira_vals.iloc[:min_len]
+        
+        # Bland-Altman calculations
+        mean_vals = (fda_vals + aira_vals) / 2
+        diff_vals = aira_vals - fda_vals
+        
+        mean_diff = np.mean(diff_vals)
+        std_diff = np.std(diff_vals)
+        
+        # 95% limits of agreement
+        upper_loa = mean_diff + 1.96 * std_diff
+        lower_loa = mean_diff - 1.96 * std_diff
+        
+        # Scatter plot
+        ax.scatter(mean_vals, diff_vals, alpha=0.6, s=50, edgecolors='black', linewidth=0.5)
+        
+        # Mean difference line
+        ax.axhline(mean_diff, color='red', linestyle='-', linewidth=2, 
+                   label=f'Mean Diff: {mean_diff:.2f} cm³')
+        
+        # Limits of agreement
+        ax.axhline(upper_loa, color='red', linestyle='--', linewidth=1.5,
+                   label=f'Upper LoA: {upper_loa:.2f} cm³')
+        ax.axhline(lower_loa, color='red', linestyle='--', linewidth=1.5,
+                   label=f'Lower LoA: {lower_loa:.2f} cm³')
+        
+        # Zero line
+        ax.axhline(0, color='black', linestyle='-', linewidth=1, alpha=0.5)
+        
+        ax.set_xlabel('Mean of FDA and AIRA Volumes (cm³)')
+        ax.set_ylabel('AIRA - FDA Volume (cm³)')
+        ax.set_title(f'{kidney_name} Volume Agreement')
+        ax.legend(fontsize=9)
+        ax.grid(True, alpha=0.3)
+        
+        # Add text with statistics
+        textstr = f'Bias: {mean_diff:.2f} cm³\nSD: {std_diff:.2f} cm³\n95% LoA: [{lower_loa:.2f}, {upper_loa:.2f}]'
+        props = dict(boxstyle='round', facecolor='wheat', alpha=0.8)
+        ax.text(0.05, 0.95, textstr, transform=ax.transAxes, fontsize=9,
+                verticalalignment='top', bbox=props)
+    
+    plt.tight_layout()
+    
+    if config.get('save_individual_plots', True):
+        bland_file = os.path.join(results_dir, f'Bland_Altman_Plots_{timestamp}.png')
+        plt.savefig(bland_file, dpi=config.get('plot_dpi', 300), bbox_inches='tight')
+        plot_files.append(bland_file)
+    
+    plt.close()
+    return plot_files
+
+def create_correlation_plots(df, results_dir, timestamp, config):
+    """Create correlation and scatter plots for volume comparison."""
+    if not config.get('create_plots', False):
+        return []
+    
+    successful_cases = df[df['Status'] == 'Success'] if 'Status' in df.columns else df
+    
+    if len(successful_cases) < 3:
+        return []
+    
+    try:
+        plt.style.use(config.get('plot_style', 'default'))
+    except:
+        pass
+    
+    plot_files = []
+    
+    # Volume comparison pairs
+    volume_pairs = [
+        ('FDA_Right_Kidney_Vol_cm3', 'AIRA_Right_Kidney_Vol_cm3', 'Right Kidney'),
+        ('FDA_Left_Kidney_Vol_cm3', 'AIRA_Left_Kidney_Vol_cm3', 'Left Kidney')
+    ]
+    
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    fig.suptitle('Volume Correlation Analysis: FDA vs AIRA', fontsize=14, fontweight='bold')
+    
+    for idx, (fda_col, aira_col, kidney_name) in enumerate(volume_pairs):
+        if fda_col not in successful_cases.columns or aira_col not in successful_cases.columns:
+            continue
+        
+        ax = axes[idx]
+        
+        fda_vals = successful_cases[fda_col].dropna()
+        aira_vals = successful_cases[aira_col].dropna()
+        
+        # Ensure same length
+        min_len = min(len(fda_vals), len(aira_vals))
+        fda_vals = fda_vals.iloc[:min_len]
+        aira_vals = aira_vals.iloc[:min_len]
+        
+        # Scatter plot
+        ax.scatter(fda_vals, aira_vals, alpha=0.7, s=60, edgecolors='black', linewidth=0.5)
+        
+        # Perfect correlation line (y=x)
+        min_val = min(min(fda_vals), min(aira_vals))
+        max_val = max(max(fda_vals), max(aira_vals))
+        ax.plot([min_val, max_val], [min_val, max_val], 'r--', linewidth=2, 
+                alpha=0.7, label='Perfect Agreement (y=x)')
+        
+        # Regression line
+        z = np.polyfit(fda_vals, aira_vals, 1)
+        p = np.poly1d(z)
+        ax.plot(fda_vals.sort_values(), p(fda_vals.sort_values()), "b-", linewidth=2, alpha=0.7,
+                label=f'Regression Line (y={z[0]:.3f}x+{z[1]:.2f})')
+        
+        # Calculate metrics
+        correlation = np.corrcoef(fda_vals, aira_vals)[0, 1]
+        
+        # Calculate R²
+        ss_res = np.sum((aira_vals - p(fda_vals))**2)
+        ss_tot = np.sum((aira_vals - np.mean(aira_vals))**2)
+        r_squared = 1 - (ss_res / ss_tot) if ss_tot != 0 else 0
+        
+        ax.set_xlabel('FDA Volume (cm³)')
+        ax.set_ylabel('AIRA Volume (cm³)')
+        ax.set_title(f'{kidney_name} Volume Correlation')
+        ax.legend()
+        ax.grid(True, alpha=0.3)
+        
+        # Add statistics text
+        textstr = f'r = {correlation:.4f}\nR² = {r_squared:.4f}\nn = {len(fda_vals)}'
+        props = dict(boxstyle='round', facecolor='lightblue', alpha=0.8)
+        ax.text(0.05, 0.95, textstr, transform=ax.transAxes, fontsize=10,
+                verticalalignment='top', bbox=props)
+    
+    plt.tight_layout()
+    
+    if config.get('save_individual_plots', True):
+        corr_file = os.path.join(results_dir, f'Correlation_Plots_{timestamp}.png')
+        plt.savefig(corr_file, dpi=config.get('plot_dpi', 300), bbox_inches='tight')
+        plot_files.append(corr_file)
+    
+    plt.close()
+    return plot_files
+
+def create_performance_summary_plot(df, results_dir, timestamp, config):
+    """Create a comprehensive performance summary visualization."""
+    if not config.get('create_plots', False):
+        return []
+    
+    successful_cases = df[df['Status'] == 'Success'] if 'Status' in df.columns else df
+    
+    if len(successful_cases) < 3:
+        return []
+    
+    try:
+        plt.style.use(config.get('plot_style', 'default'))
+    except:
+        pass
+    
+    plot_files = []
+    
+    fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+    fig.suptitle('FDA vs AIRA: Comprehensive Performance Summary', fontsize=16, fontweight='bold')
+    
+    # 1. Dice Coefficient Distribution
+    ax1 = axes[0, 0]
+    dice_cols = ['Dice_Right_Kidney', 'Dice_Left_Kidney']
+    dice_data = []
+    dice_labels = []
+    
+    for col in dice_cols:
+        if col in successful_cases.columns:
+            dice_data.append(successful_cases[col].dropna())
+            dice_labels.append(col.replace('Dice_', '').replace('_', ' '))
+    
+    if dice_data:
+        ax1.boxplot(dice_data, labels=dice_labels, patch_artist=True, 
+                   boxprops=dict(facecolor='lightblue', alpha=0.7))
+        ax1.set_ylabel('Dice Coefficient')
+        ax1.set_title('Dice Coefficient Distribution')
+        ax1.grid(True, alpha=0.3)
+        ax1.axhline(y=0.85, color='red', linestyle='--', alpha=0.7, label='Clinical Threshold (0.85)')
+        ax1.legend()
+    
+    # 2. Volume Error Distribution
+    ax2 = axes[0, 1]
+    error_cols = ['Right_Kidney_Diff_%', 'Left_Kidney_Diff_%']
+    error_data = []
+    error_labels = []
+    
+    for col in error_cols:
+        if col in successful_cases.columns:
+            error_data.append(successful_cases[col].dropna())
+            error_labels.append(col.replace('_Diff_%', '').replace('_', ' '))
+    
+    if error_data:
+        ax2.boxplot(error_data, labels=error_labels, patch_artist=True,
+                   boxprops=dict(facecolor='lightcoral', alpha=0.7))
+        ax2.set_ylabel('Volume Error (%)')
+        ax2.set_title('Volume Error Distribution')
+        ax2.grid(True, alpha=0.3)
+        ax2.axhline(y=0, color='black', linestyle='-', alpha=0.5)
+        ax2.axhline(y=10, color='red', linestyle='--', alpha=0.7, label='±10% Threshold')
+        ax2.axhline(y=-10, color='red', linestyle='--', alpha=0.7)
+        ax2.legend()
+    
+    # 3. Case Success Overview
+    ax3 = axes[1, 0]
+    if 'Status' in df.columns:
+        status_counts = df['Status'].value_counts()
+        colors = ['lightgreen' if s == 'Success' else 'lightcoral' for s in status_counts.index]
+        wedges, texts, autotexts = ax3.pie(status_counts.values, labels=status_counts.index, 
+                                          autopct='%1.1f%%', colors=colors, startangle=90)
+        ax3.set_title('Case Processing Success Rate')
+    
+    # 4. Clinical Agreement Summary
+    ax4 = axes[1, 1]
+    agreement_data = []
+    agreement_labels = []
+    
+    # High Dice agreement (≥0.85)
+    for dice_col in dice_cols:
+        if dice_col in successful_cases.columns:
+            high_dice = (successful_cases[dice_col] >= 0.85).sum()
+            total_cases = len(successful_cases)
+            agreement_data.append((high_dice / total_cases) * 100)
+            kidney_name = dice_col.replace('Dice_', '').replace('_', ' ')
+            agreement_labels.append(f'{kidney_name}\nDice ≥ 0.85')
+    
+    # Volume agreement (≤10% error)
+    for error_col in error_cols:
+        if error_col in successful_cases.columns:
+            good_volume = (np.abs(successful_cases[error_col]) <= 10).sum()
+            total_cases = len(successful_cases)
+            agreement_data.append((good_volume / total_cases) * 100)
+            kidney_name = error_col.replace('_Diff_%', '').replace('_', ' ')
+            agreement_labels.append(f'{kidney_name}\n|Error| ≤ 10%')
+    
+    if agreement_data:
+        bars = ax4.bar(agreement_labels, agreement_data, 
+                      color=['lightblue', 'lightgreen', 'orange', 'pink'][:len(agreement_data)])
+        ax4.set_ylabel('Agreement Rate (%)')
+        ax4.set_title('Clinical Agreement Thresholds')
+        ax4.set_ylim(0, 100)
+        ax4.grid(True, alpha=0.3, axis='y')
+        
+        # Add value labels on bars
+        for bar, value in zip(bars, agreement_data):
+            ax4.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1,
+                    f'{value:.1f}%', ha='center', va='bottom', fontweight='bold')
+    
+    plt.tight_layout()
+    
+    if config.get('save_individual_plots', True):
+        summary_file = os.path.join(results_dir, f'Performance_Summary_{timestamp}.png')
+        plt.savefig(summary_file, dpi=config.get('plot_dpi', 300), bbox_inches='tight')
+        plot_files.append(summary_file)
+    
+    plt.close()
+    return plot_files
+
+def create_all_visualizations(df, results_dir, timestamp, config):
+    """Create all visualization plots and return list of created files."""
+    if not config.get('create_plots', False):
+        return []
+    
+    print("\nCreating visualization plots...")
+    
+    plot_files = []
+    
+    try:
+        # Individual plot functions
+        plot_files.extend(create_roc_curves(df, results_dir, timestamp, config))
+        plot_files.extend(create_bland_altman_plots(df, results_dir, timestamp, config))
+        plot_files.extend(create_correlation_plots(df, results_dir, timestamp, config))
+        plot_files.extend(create_performance_summary_plot(df, results_dir, timestamp, config))
+        
+        print(f"✓ Created {len(plot_files)} visualization plots")
+        
+    except Exception as e:
+        print(f"⚠ Warning: Could not create some plots. Reason: {e}")
+        print("  Make sure matplotlib, seaborn, and scikit-learn are installed:")
+        print("  pip install matplotlib seaborn scikit-learn")
+    
+    return plot_files
+
 def process_single_case(ground_truth_path, predicted_path, case_id, label_mapping, config):
     """Process a single case and return results based on configuration."""
     print(f"Processing {case_id}...", end=' ')
@@ -827,6 +1222,9 @@ def main():
         if len(stats_df) > 0:
             stats_df.to_csv(stats_file, index=False)
             print(f"✓ Detailed statistics saved to: {os.path.basename(stats_file)}")
+    
+    # Create visualizations
+    plot_files = create_all_visualizations(df, results_dir, timestamp, CONFIG)
     
     # Save based on format
     if CONFIG['save_format'] == 'csv':
