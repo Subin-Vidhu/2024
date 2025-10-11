@@ -12,6 +12,13 @@ def get_orientation_string(img):
     ornt = nib.orientations.io_orientation(img.affine)
     return ''.join(nib.orientations.ornt2axcodes(ornt))
 
+def get_voxel_volume(img):
+    """Calculate the volume of a single voxel in mm³."""
+    # Get voxel dimensions from the affine matrix
+    voxel_dims = np.abs(img.header.get_zooms()[:3])
+    voxel_volume = np.prod(voxel_dims)
+    return voxel_volume, voxel_dims
+
 def reorient_to_match(target_img, source_img):
     """Reorient source_img to match the orientation of target_img."""
     reoriented_data = source_img.as_reoriented(nib.orientations.ornt_transform(nib.orientations.io_orientation(source_img.affine),nib.orientations.io_orientation(target_img.affine)))
@@ -61,13 +68,23 @@ def multi_class_dice(y_true, y_pred, num_classes, class_names=None):
             print(f'Dice Score for class {c}: {dice_score:.4f}')
     return dice_scores
 
-def inspect_labels(data, name="Image"):
-    """Inspect unique labels in the data."""
+def inspect_labels_with_volume(data, img, name="Image"):
+    """Inspect unique labels in the data with volume calculations."""
     unique_labels = np.unique(data)
-    print(f"\n{name} - Unique labels: {unique_labels}")
+    voxel_volume_mm3, voxel_dims = get_voxel_volume(img)
+    
+    print(f"\n{name} - Voxel dimensions: {voxel_dims[0]:.2f} x {voxel_dims[1]:.2f} x {voxel_dims[2]:.2f} mm")
+    print(f"{name} - Voxel volume: {voxel_volume_mm3:.2f} mm³")
+    print(f"\n{name} - Unique labels and volumes:")
+    print(f"{'Label':<10} {'Voxel Count':<15} {'Volume (mm³)':<15} {'Volume (cm³)':<15}")
+    print("-" * 60)
+    
     for label in unique_labels:
         count = np.sum(data == label)
-        print(f"  Label {label}: {count} voxels")
+        volume_mm3 = count * voxel_volume_mm3
+        volume_cm3 = volume_mm3 / 1000.0
+        print(f"{int(label):<10} {count:<15} {volume_mm3:<15.2f} {volume_cm3:<15.2f}")
+    
     return unique_labels
 
 def check_spatial_overlap(y_true, y_pred, class_label, class_name="Class"):
@@ -106,8 +123,8 @@ def check_spatial_overlap(y_true, y_pred, class_label, class_name="Class"):
         print(f"    ⚠️ WARNING: No spatial overlap! Kidneys may be swapped or misaligned.")
 
 # Paths to the NIfTI files
-ground_truth_path = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025\N-099\N-099\N-099_MC.nii'
-predicted_path = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025\N-099\mask.nii'
+ground_truth_path = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025\N-085\N-085\N-085_MC.nii'
+predicted_path = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025\N-085\mask.nii'
 
 # Load the NIfTI files
 ground_truth_img = load_nifti(ground_truth_path)
@@ -139,10 +156,11 @@ predicted = predicted_img.get_fdata()
 # Ensure the shapes are the same
 assert ground_truth.shape == predicted.shape, "Shape mismatch between ground truth and prediction."
 
-# Inspect labels in both images
+# Inspect labels in both images with volume information
 print("="*60)
-inspect_labels(ground_truth, "Ground Truth")
-inspect_labels(predicted, "Predicted")
+inspect_labels_with_volume(ground_truth, ground_truth_img, "Ground Truth")
+print("\n")
+inspect_labels_with_volume(predicted, predicted_img, "Predicted (Original)")
 print("="*60)
 
 # Define label mapping for the predicted image
@@ -179,9 +197,9 @@ predicted_remapped_img = nib.Nifti1Image(predicted, predicted_img.affine, predic
 nib.save(predicted_remapped_img, remapped_path)
 print(f"✓ Saved processed image (reoriented + remapped) to: {remapped_path}")
 
-# Verify the remapping
+# Verify the remapping with volume information
 print("\nAfter remapping:")
-inspect_labels(predicted, "Predicted (remapped)")
+inspect_labels_with_volume(predicted, predicted_img, "Predicted (Remapped)")
 print("="*60)
 
 # Check spatial overlap for each kidney
@@ -209,3 +227,55 @@ print("-"*60)
 print(f'Mean Dice Score (all classes): {mean_dice_score:.4f}')
 print(f'Mean Dice Score (excluding background): {mean_dice_score_no_bg:.4f}')
 print("="*60)
+
+# Volume comparison table
+print("\n" + "="*80)
+print("VOLUME COMPARISON SUMMARY")
+print("="*80)
+
+voxel_volume_mm3, _ = get_voxel_volume(ground_truth_img)
+
+# Calculate volumes for each class
+print(f"\n{'Class':<20} {'GT Voxels':<15} {'GT Volume (cm³)':<18} {'Pred Voxels':<15} {'Pred Volume (cm³)':<18} {'Difference (cm³)':<18}")
+print("-"*110)
+
+for c in range(num_classes):
+    gt_count = np.sum(ground_truth == c)
+    pred_count = np.sum(predicted == c)
+    
+    gt_volume_cm3 = (gt_count * voxel_volume_mm3) / 1000.0
+    pred_volume_cm3 = (pred_count * voxel_volume_mm3) / 1000.0
+    diff_volume_cm3 = pred_volume_cm3 - gt_volume_cm3
+    
+    if class_names and c < len(class_names):
+        class_name = class_names[c]
+    else:
+        class_name = f"Class {c}"
+    
+    print(f"{class_name:<20} {gt_count:<15} {gt_volume_cm3:<18.2f} {pred_count:<15} {pred_volume_cm3:<18.2f} {diff_volume_cm3:<+18.2f}")
+
+# Calculate percentage differences for kidneys only
+print("\n" + "-"*110)
+print("Volume Difference Analysis (Kidneys Only):")
+print("-"*110)
+print(f"{'Class':<20} {'Absolute Diff (cm³)':<25} {'Relative Diff (%)':<25} {'Dice Score':<15}")
+print("-"*110)
+
+for c in range(1, num_classes):  # Skip background
+    gt_count = np.sum(ground_truth == c)
+    pred_count = np.sum(predicted == c)
+    
+    gt_volume_cm3 = (gt_count * voxel_volume_mm3) / 1000.0
+    pred_volume_cm3 = (pred_count * voxel_volume_mm3) / 1000.0
+    
+    abs_diff = abs(pred_volume_cm3 - gt_volume_cm3)
+    rel_diff = ((pred_volume_cm3 - gt_volume_cm3) / gt_volume_cm3) * 100 if gt_volume_cm3 > 0 else 0
+    
+    if class_names and c < len(class_names):
+        class_name = class_names[c]
+    else:
+        class_name = f"Class {c}"
+    
+    print(f"{class_name:<20} {abs_diff:<25.2f} {rel_diff:<+25.2f} {dice_scores[c]:<15.4f}")
+
+print("="*80)
