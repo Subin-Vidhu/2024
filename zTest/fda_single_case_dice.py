@@ -106,8 +106,8 @@ def check_spatial_overlap(y_true, y_pred, class_label, class_name="Class"):
         print(f"    ⚠️ WARNING: No spatial overlap! Kidneys may be swapped or misaligned.")
 
 # Paths to the NIfTI files
-ground_truth_path = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025\N-072\N-072\N-072_MC.nii'
-predicted_path = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025\N-072\mask.nii.gz'
+ground_truth_path = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025\N-099\N-099\N-099_MC.nii'
+predicted_path = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025\N-099\mask.nii'
 
 # Load the NIfTI files
 ground_truth_img = load_nifti(ground_truth_path)
