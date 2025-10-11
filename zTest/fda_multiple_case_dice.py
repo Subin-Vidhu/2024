@@ -290,8 +290,12 @@ def find_case_files(base_dir):
         gt_patterns = [
             os.path.join(case_folder, case_id, f'{case_id}_MC.nii'),
             os.path.join(case_folder, case_id, f'{case_id}_MC.nii.gz'),
+            os.path.join(case_folder, case_id, f'{case_id}_Updated_MC.nii'),
+            os.path.join(case_folder, case_id, f'{case_id}_Updated_MC.nii.gz'),
             os.path.join(case_folder, f'{case_id}_MC.nii'),
-            os.path.join(case_folder, f'{case_id}_MC.nii.gz')
+            os.path.join(case_folder, f'{case_id}_MC.nii.gz'),
+            os.path.join(case_folder, f'{case_id}_Updated_MC.nii'),
+            os.path.join(case_folder, f'{case_id}_Updated_MC.nii.gz')
         ]
         
         ground_truth_path = None
