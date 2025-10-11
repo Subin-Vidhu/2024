@@ -43,6 +43,7 @@ CONFIG = {
     'save_format': 'csv',              # 'xlsx' or 'csv' (xlsx recommended for multiple sheets)
     'create_summary_sheet': True,       # Create summary statistics sheet
     'create_failed_sheet': True,        # Create sheet for failed cases
+    'save_detailed_stats': True,        # Save detailed statistics CSV file
 }
 
 # Label mapping configuration
@@ -139,6 +140,453 @@ def check_spatial_alignment(y_true, y_pred, class_label):
         'center_distance': distance,
         'overlap_voxels': overlap_voxels
     }
+
+def calculate_regression_metrics(y_true, y_pred):
+    """Calculate comprehensive regression metrics for numerical comparison."""
+    if len(y_true) == 0 or len(y_pred) == 0:
+        return {}
+    
+    # Ensure arrays are the same length and remove NaN values
+    mask = ~(np.isnan(y_true) | np.isnan(y_pred))
+    y_true_clean = np.array(y_true)[mask]
+    y_pred_clean = np.array(y_pred)[mask]
+    
+    if len(y_true_clean) == 0:
+        return {}
+    
+    # Basic error metrics
+    errors = y_pred_clean - y_true_clean
+    abs_errors = np.abs(errors)
+    
+    metrics = {}
+    
+    # Mean Absolute Error (MAE)
+    metrics['MAE'] = np.mean(abs_errors)
+    
+    # Mean Squared Error (MSE)
+    metrics['MSE'] = np.mean(errors**2)
+    
+    # Root Mean Squared Error (RMSE)
+    metrics['RMSE'] = np.sqrt(metrics['MSE'])
+    
+    # Mean Absolute Percentage Error (MAPE) - avoid division by zero
+    non_zero_mask = y_true_clean != 0
+    if np.any(non_zero_mask):
+        mape_values = np.abs(errors[non_zero_mask] / y_true_clean[non_zero_mask]) * 100
+        metrics['MAPE'] = np.mean(mape_values)
+    else:
+        metrics['MAPE'] = np.nan
+    
+    # Symmetric Mean Absolute Percentage Error (SMAPE)
+    denominator = (np.abs(y_true_clean) + np.abs(y_pred_clean)) / 2
+    non_zero_denom = denominator != 0
+    if np.any(non_zero_denom):
+        smape_values = np.abs(errors[non_zero_denom] / denominator[non_zero_denom]) * 100
+        metrics['SMAPE'] = np.mean(smape_values)
+    else:
+        metrics['SMAPE'] = np.nan
+    
+    # R-squared (coefficient of determination)
+    ss_res = np.sum(errors**2)
+    ss_tot = np.sum((y_true_clean - np.mean(y_true_clean))**2)
+    if ss_tot != 0:
+        metrics['R_squared'] = 1 - (ss_res / ss_tot)
+    else:
+        metrics['R_squared'] = np.nan
+    
+    # Pearson correlation coefficient
+    if len(y_true_clean) > 1:
+        correlation_matrix = np.corrcoef(y_true_clean, y_pred_clean)
+        metrics['Correlation'] = correlation_matrix[0, 1] if not np.isnan(correlation_matrix[0, 1]) else 0
+    else:
+        metrics['Correlation'] = np.nan
+    
+    # Mean Bias Error (MBE) - systematic bias
+    metrics['MBE'] = np.mean(errors)
+    
+    # Normalized RMSE (NRMSE) - RMSE normalized by the range of true values
+    y_range = np.max(y_true_clean) - np.min(y_true_clean)
+    if y_range != 0:
+        metrics['NRMSE'] = metrics['RMSE'] / y_range * 100  # as percentage
+    else:
+        metrics['NRMSE'] = np.nan
+    
+    # Index of Agreement (Willmott's d)
+    numerator = np.sum((y_pred_clean - y_true_clean)**2)
+    denominator = np.sum((np.abs(y_pred_clean - np.mean(y_true_clean)) + 
+                         np.abs(y_true_clean - np.mean(y_true_clean)))**2)
+    if denominator != 0:
+        metrics['Index_of_Agreement'] = 1 - (numerator / denominator)
+    else:
+        metrics['Index_of_Agreement'] = np.nan
+    
+    return metrics
+
+def calculate_comprehensive_statistics(df):
+    """Calculate comprehensive statistics for FDA evaluation."""
+    successful_cases = df[df['Status'] == 'Success'] if 'Status' in df.columns else df
+    
+    if len(successful_cases) == 0:
+        return pd.DataFrame()
+    
+    stats_data = []
+    
+    # Basic case information
+    stats_data.append(['CASE SUMMARY', '', '', '', '', ''])
+    stats_data.append(['Total Cases', len(df), '', '', '', ''])
+    if 'Status' in df.columns:
+        stats_data.append(['Successful Cases', len(successful_cases), '', '', '', ''])
+        stats_data.append(['Failed Cases', len(df[df['Status'] == 'Failed']), '', '', '', ''])
+        stats_data.append(['Success Rate (%)', round((len(successful_cases) / len(df)) * 100, 2), '', '', '', ''])
+    stats_data.append(['', '', '', '', '', ''])
+    
+    # Dice Score Statistics
+    dice_metrics = ['Dice_Left_Kidney', 'Dice_Right_Kidney']
+    if any(col in successful_cases.columns for col in dice_metrics):
+        stats_data.append(['DICE COEFFICIENT ANALYSIS', '', '', '', '', ''])
+        stats_data.append(['Metric', 'Mean', 'Std Dev', 'Min', 'Max', 'Median'])
+        
+        for metric in dice_metrics:
+            if metric in successful_cases.columns:
+                values = successful_cases[metric].dropna()
+                if len(values) > 0:
+                    kidney_name = metric.replace('Dice_', '')
+                    stats_data.append([
+                        kidney_name,
+                        round(values.mean(), 4),
+                        round(values.std(), 4),
+                        round(values.min(), 4),
+                        round(values.max(), 4),
+                        round(values.median(), 4)
+                    ])
+        
+        # Overall kidney dice (average of both kidneys)
+        if all(col in successful_cases.columns for col in dice_metrics):
+            overall_dice = successful_cases[dice_metrics].mean(axis=1)
+            stats_data.append([
+                'Overall_Kidneys',
+                round(overall_dice.mean(), 4),
+                round(overall_dice.std(), 4),
+                round(overall_dice.min(), 4),
+                round(overall_dice.max(), 4),
+                round(overall_dice.median(), 4)
+            ])
+        
+        stats_data.append(['', '', '', '', '', ''])
+    
+    # Volume Statistics - FDA (Ground Truth)
+    fda_vol_metrics = ['FDA_Left_Kidney_Vol_cm3', 'FDA_Right_Kidney_Vol_cm3']
+    if any(col in successful_cases.columns for col in fda_vol_metrics):
+        stats_data.append(['FDA VOLUMES (Ground Truth) - cm³', '', '', '', '', ''])
+        stats_data.append(['Metric', 'Mean', 'Std Dev', 'Min', 'Max', 'Median'])
+        
+        for metric in fda_vol_metrics:
+            if metric in successful_cases.columns:
+                values = successful_cases[metric].dropna()
+                if len(values) > 0:
+                    kidney_name = metric.replace('FDA_', '').replace('_Vol_cm3', '')
+                    stats_data.append([
+                        kidney_name,
+                        round(values.mean(), 2),
+                        round(values.std(), 2),
+                        round(values.min(), 2),
+                        round(values.max(), 2),
+                        round(values.median(), 2)
+                    ])
+        
+        # Total kidney volume (both kidneys combined)
+        if all(col in successful_cases.columns for col in fda_vol_metrics):
+            total_fda = successful_cases[fda_vol_metrics].sum(axis=1)
+            stats_data.append([
+                'Total_Kidneys',
+                round(total_fda.mean(), 2),
+                round(total_fda.std(), 2),
+                round(total_fda.min(), 2),
+                round(total_fda.max(), 2),
+                round(total_fda.median(), 2)
+            ])
+        
+        stats_data.append(['', '', '', '', '', ''])
+    
+    # Volume Statistics - AIRA (Predicted)
+    aira_vol_metrics = ['AIRA_Left_Kidney_Vol_cm3', 'AIRA_Right_Kidney_Vol_cm3']
+    if any(col in successful_cases.columns for col in aira_vol_metrics):
+        stats_data.append(['AIRA VOLUMES (Predicted) - cm³', '', '', '', '', ''])
+        stats_data.append(['Metric', 'Mean', 'Std Dev', 'Min', 'Max', 'Median'])
+        
+        for metric in aira_vol_metrics:
+            if metric in successful_cases.columns:
+                values = successful_cases[metric].dropna()
+                if len(values) > 0:
+                    kidney_name = metric.replace('AIRA_', '').replace('_Vol_cm3', '')
+                    stats_data.append([
+                        kidney_name,
+                        round(values.mean(), 2),
+                        round(values.std(), 2),
+                        round(values.min(), 2),
+                        round(values.max(), 2),
+                        round(values.median(), 2)
+                    ])
+        
+        # Total kidney volume (both kidneys combined)
+        if all(col in successful_cases.columns for col in aira_vol_metrics):
+            total_aira = successful_cases[aira_vol_metrics].sum(axis=1)
+            stats_data.append([
+                'Total_Kidneys',
+                round(total_aira.mean(), 2),
+                round(total_aira.std(), 2),
+                round(total_aira.min(), 2),
+                round(total_aira.max(), 2),
+                round(total_aira.median(), 2)
+            ])
+        
+        stats_data.append(['', '', '', '', '', ''])
+    
+    # Volume Differences (Absolute)
+    diff_metrics = ['Left_Kidney_Diff_cm3', 'Right_Kidney_Diff_cm3']
+    if any(col in successful_cases.columns for col in diff_metrics):
+        stats_data.append(['VOLUME DIFFERENCES (AIRA - FDA) - cm³', '', '', '', '', ''])
+        stats_data.append(['Metric', 'Mean', 'Std Dev', 'Min', 'Max', 'Median'])
+        
+        for metric in diff_metrics:
+            if metric in successful_cases.columns:
+                values = successful_cases[metric].dropna()
+                if len(values) > 0:
+                    kidney_name = metric.replace('_Diff_cm3', '')
+                    stats_data.append([
+                        kidney_name,
+                        round(values.mean(), 2),
+                        round(values.std(), 2),
+                        round(values.min(), 2),
+                        round(values.max(), 2),
+                        round(values.median(), 2)
+                    ])
+        
+        stats_data.append(['', '', '', '', '', ''])
+    
+    # Volume Differences (Percentage)
+    perc_metrics = ['Left_Kidney_Diff_%', 'Right_Kidney_Diff_%']
+    if any(col in successful_cases.columns for col in perc_metrics):
+        stats_data.append(['VOLUME DIFFERENCES (AIRA - FDA) - %', '', '', '', '', ''])
+        stats_data.append(['Metric', 'Mean', 'Std Dev', 'Min', 'Max', 'Median'])
+        
+        for metric in perc_metrics:
+            if metric in successful_cases.columns:
+                values = successful_cases[metric].dropna()
+                if len(values) > 0:
+                    kidney_name = metric.replace('_Diff_%', '')
+                    stats_data.append([
+                        kidney_name,
+                        round(values.mean(), 2),
+                        round(values.std(), 2),
+                        round(values.min(), 2),
+                        round(values.max(), 2),
+                        round(values.median(), 2)
+                    ])
+        
+        stats_data.append(['', '', '', '', '', ''])
+    
+    # Agreement Analysis (Clinical Thresholds)
+    stats_data.append(['CLINICAL AGREEMENT ANALYSIS', '', '', '', '', ''])
+    stats_data.append(['Threshold', 'Cases Meeting Criteria', 'Percentage', '', '', ''])
+    
+    # Dice coefficient thresholds
+    for threshold in [0.7, 0.8, 0.85, 0.9]:
+        for metric in dice_metrics:
+            if metric in successful_cases.columns:
+                meeting_criteria = (successful_cases[metric] >= threshold).sum()
+                percentage = (meeting_criteria / len(successful_cases)) * 100
+                kidney_name = metric.replace('Dice_', '')
+                stats_data.append([
+                    f'{kidney_name} Dice ≥ {threshold}',
+                    meeting_criteria,
+                    f'{percentage:.1f}%',
+                    '', '', ''
+                ])
+    
+    # Volume difference thresholds (absolute)
+    for threshold in [5, 10, 15, 20]:  # cm³
+        for metric in diff_metrics:
+            if metric in successful_cases.columns:
+                meeting_criteria = (np.abs(successful_cases[metric]) <= threshold).sum()
+                percentage = (meeting_criteria / len(successful_cases)) * 100
+                kidney_name = metric.replace('_Diff_cm3', '')
+                stats_data.append([
+                    f'{kidney_name} |Diff| ≤ {threshold} cm³',
+                    meeting_criteria,
+                    f'{percentage:.1f}%',
+                    '', '', ''
+                ])
+    
+    # Volume difference thresholds (percentage)
+    for threshold in [5, 10, 15, 20]:  # %
+        for metric in perc_metrics:
+            if metric in successful_cases.columns:
+                meeting_criteria = (np.abs(successful_cases[metric]) <= threshold).sum()
+                percentage = (meeting_criteria / len(successful_cases)) * 100
+                kidney_name = metric.replace('_Diff_%', '')
+                stats_data.append([
+                    f'{kidney_name} |Diff| ≤ {threshold}%',
+                    meeting_criteria,
+                    f'{percentage:.1f}%',
+                    '', '', ''
+                ])
+    
+    stats_data.append(['', '', '', '', '', ''])
+    
+    # AI/ML Regression Metrics Analysis
+    regression_pairs = [
+        ('FDA_Left_Kidney_Vol_cm3', 'AIRA_Left_Kidney_Vol_cm3', 'Left Kidney Volume'),
+        ('FDA_Right_Kidney_Vol_cm3', 'AIRA_Right_Kidney_Vol_cm3', 'Right Kidney Volume')
+    ]
+    
+    stats_data.append(['AI/ML REGRESSION METRICS', '', '', '', '', ''])
+    stats_data.append(['Metric', 'Left Kidney', 'Right Kidney', '', '', ''])
+    
+    # Calculate metrics for each pair
+    all_metrics = {}
+    for fda_col, aira_col, label in regression_pairs:
+        if fda_col in successful_cases.columns and aira_col in successful_cases.columns:
+            fda_vals = successful_cases[fda_col].dropna()
+            aira_vals = successful_cases[aira_col].dropna()
+            
+            # Ensure same length arrays
+            min_len = min(len(fda_vals), len(aira_vals))
+            if min_len > 0:
+                fda_vals = fda_vals.iloc[:min_len]
+                aira_vals = aira_vals.iloc[:min_len]
+                
+                metrics = calculate_regression_metrics(fda_vals.values, aira_vals.values)
+                kidney_side = 'Left' if 'Left' in label else 'Right'
+                all_metrics[kidney_side] = metrics
+    
+    # Display metrics in organized rows
+    metric_names = [
+        ('MAE', 'Mean Absolute Error (cm³)'),
+        ('MSE', 'Mean Squared Error (cm³²)'),
+        ('RMSE', 'Root Mean Squared Error (cm³)'),
+        ('MAPE', 'Mean Absolute Percentage Error (%)'),
+        ('SMAPE', 'Symmetric MAPE (%)'),
+        ('MBE', 'Mean Bias Error (cm³)'),
+        ('NRMSE', 'Normalized RMSE (%)'),
+        ('R_squared', 'R-squared'),
+        ('Correlation', 'Pearson Correlation'),
+        ('Index_of_Agreement', 'Index of Agreement')
+    ]
+    
+    for metric_key, metric_name in metric_names:
+        left_val = all_metrics.get('Left', {}).get(metric_key, 'N/A')
+        right_val = all_metrics.get('Right', {}).get(metric_key, 'N/A')
+        
+        if isinstance(left_val, float) and not np.isnan(left_val):
+            left_val = f'{left_val:.4f}' if abs(left_val) < 1000 else f'{left_val:.2f}'
+        elif isinstance(left_val, float) and np.isnan(left_val):
+            left_val = 'N/A'
+            
+        if isinstance(right_val, float) and not np.isnan(right_val):
+            right_val = f'{right_val:.4f}' if abs(right_val) < 1000 else f'{right_val:.2f}'
+        elif isinstance(right_val, float) and np.isnan(right_val):
+            right_val = 'N/A'
+        
+        stats_data.append([metric_name, left_val, right_val, '', '', ''])
+    
+    stats_data.append(['', '', '', '', '', ''])
+    
+    # Model Performance Classification
+    stats_data.append(['MODEL PERFORMANCE ASSESSMENT', '', '', '', '', ''])
+    stats_data.append(['Metric', 'Left Kidney', 'Right Kidney', 'Interpretation', '', ''])
+    
+    # Performance thresholds and interpretations
+    performance_assessments = []
+    
+    for kidney_side in ['Left', 'Right']:
+        if kidney_side in all_metrics:
+            metrics = all_metrics[kidney_side]
+            assessments = []
+            
+            # R-squared assessment
+            r2 = metrics.get('R_squared', np.nan)
+            if not np.isnan(r2):
+                if r2 >= 0.9:
+                    r2_assessment = 'Excellent'
+                elif r2 >= 0.8:
+                    r2_assessment = 'Good'
+                elif r2 >= 0.6:
+                    r2_assessment = 'Moderate'
+                else:
+                    r2_assessment = 'Poor'
+                assessments.append(f'R²: {r2_assessment}')
+            
+            # Correlation assessment
+            corr = metrics.get('Correlation', np.nan)
+            if not np.isnan(corr):
+                if abs(corr) >= 0.9:
+                    corr_assessment = 'Very Strong'
+                elif abs(corr) >= 0.7:
+                    corr_assessment = 'Strong'
+                elif abs(corr) >= 0.5:
+                    corr_assessment = 'Moderate'
+                else:
+                    corr_assessment = 'Weak'
+                assessments.append(f'Corr: {corr_assessment}')
+            
+            # MAPE assessment
+            mape = metrics.get('MAPE', np.nan)
+            if not np.isnan(mape):
+                if mape <= 5:
+                    mape_assessment = 'Excellent'
+                elif mape <= 10:
+                    mape_assessment = 'Good'
+                elif mape <= 20:
+                    mape_assessment = 'Acceptable'
+                else:
+                    mape_assessment = 'Poor'
+                assessments.append(f'MAPE: {mape_assessment}')
+            
+            performance_assessments.append('; '.join(assessments))
+        else:
+            performance_assessments.append('N/A')
+    
+    stats_data.append(['Overall Assessment', 
+                      performance_assessments[0] if len(performance_assessments) > 0 else 'N/A',
+                      performance_assessments[1] if len(performance_assessments) > 1 else 'N/A',
+                      'R²≥0.9: Excellent, ≥0.8: Good', '', ''])
+    stats_data.append(['', '', '', 'MAPE≤5%: Excellent, ≤10%: Good', '', ''])
+    
+    stats_data.append(['', '', '', '', '', ''])
+    
+    # Bland-Altman Analysis Summary
+    stats_data.append(['BLAND-ALTMAN ANALYSIS', '', '', '', '', ''])
+    stats_data.append(['Metric', 'Left Kidney', 'Right Kidney', '', '', ''])
+    
+    for kidney_side in ['Left', 'Right']:
+        if kidney_side in all_metrics:
+            metrics = all_metrics[kidney_side]
+            
+            # Mean difference (bias)
+            bias = metrics.get('MBE', np.nan)
+            
+            # Limits of agreement (approximate, would need individual data for exact calculation)
+            rmse = metrics.get('RMSE', np.nan)
+            if not np.isnan(rmse):
+                # Approximate 95% limits of agreement as ±1.96 * SD of differences
+                # Using RMSE as approximation for SD of differences
+                loa_upper = 1.96 * rmse
+                loa_lower = -1.96 * rmse
+            else:
+                loa_upper = loa_lower = np.nan
+    
+    bias_left = all_metrics.get('Left', {}).get('MBE', np.nan)
+    bias_right = all_metrics.get('Right', {}).get('MBE', np.nan)
+    
+    bias_left_str = f'{bias_left:.2f}' if not np.isnan(bias_left) else 'N/A'
+    bias_right_str = f'{bias_right:.2f}' if not np.isnan(bias_right) else 'N/A'
+    
+    stats_data.append(['Mean Bias (cm³)', bias_left_str, bias_right_str, '', '', ''])
+    
+    # Convert to DataFrame
+    stats_df = pd.DataFrame(stats_data, columns=['Metric', 'Value1', 'Value2', 'Value3', 'Value4', 'Value5'])
+    return stats_df
 
 def process_single_case(ground_truth_path, predicted_path, case_id, label_mapping, config):
     """Process a single case and return results based on configuration."""
@@ -365,6 +813,15 @@ def main():
     # Create DataFrame
     df = pd.DataFrame(all_results)
     
+    # Calculate comprehensive statistics
+    if CONFIG['save_detailed_stats']:
+        print("\nCalculating comprehensive statistics...")
+        stats_df = calculate_comprehensive_statistics(df)
+        stats_file = f'FDA_AIRA_Statistics_{timestamp}.csv'
+        if len(stats_df) > 0:
+            stats_df.to_csv(stats_file, index=False)
+            print(f"✓ Detailed statistics saved to: {stats_file}")
+    
     # Save based on format
     if CONFIG['save_format'] == 'csv':
         df.to_csv(output_file, index=False)
@@ -432,22 +889,108 @@ def main():
     if 'Status' in df.columns:
         print(f"Successful: {len(successful_cases)}")
         print(f"Failed: {len(df[df['Status'] == 'Failed'])}")
+        print(f"Success rate: {(len(successful_cases) / len(df)) * 100:.1f}%")
     
     if len(successful_cases) > 0:
-        if 'Mean_Dice_Kidneys' in successful_cases.columns:
-            print(f"\nMean Dice (Kidneys): {successful_cases['Mean_Dice_Kidneys'].mean():.4f}")
+        print("\nDICE COEFFICIENTS:")
+        if 'Dice_Left_Kidney' in successful_cases.columns:
+            left_dice = successful_cases['Dice_Left_Kidney']
+            print(f"  Left Kidney:  {left_dice.mean():.4f} ± {left_dice.std():.4f} (range: {left_dice.min():.4f}-{left_dice.max():.4f})")
+        if 'Dice_Right_Kidney' in successful_cases.columns:
+            right_dice = successful_cases['Dice_Right_Kidney']
+            print(f"  Right Kidney: {right_dice.mean():.4f} ± {right_dice.std():.4f} (range: {right_dice.min():.4f}-{right_dice.max():.4f})")
+        
+        # Overall dice
+        if 'Dice_Left_Kidney' in successful_cases.columns and 'Dice_Right_Kidney' in successful_cases.columns:
+            overall_dice = successful_cases[['Dice_Left_Kidney', 'Dice_Right_Kidney']].mean(axis=1)
+            print(f"  Overall:      {overall_dice.mean():.4f} ± {overall_dice.std():.4f} (range: {overall_dice.min():.4f}-{overall_dice.max():.4f})")
+        
+        print("\nVOLUME ANALYSIS:")
+        if 'FDA_Left_Kidney_Vol_cm3' in successful_cases.columns:
+            fda_left = successful_cases['FDA_Left_Kidney_Vol_cm3']
+            print(f"  FDA Left Kidney:  {fda_left.mean():.1f} ± {fda_left.std():.1f} cm³")
+        if 'FDA_Right_Kidney_Vol_cm3' in successful_cases.columns:
+            fda_right = successful_cases['FDA_Right_Kidney_Vol_cm3']
+            print(f"  FDA Right Kidney: {fda_right.mean():.1f} ± {fda_right.std():.1f} cm³")
+        if 'AIRA_Left_Kidney_Vol_cm3' in successful_cases.columns:
+            aira_left = successful_cases['AIRA_Left_Kidney_Vol_cm3']
+            print(f"  AIRA Left Kidney:  {aira_left.mean():.1f} ± {aira_left.std():.1f} cm³")
+        if 'AIRA_Right_Kidney_Vol_cm3' in successful_cases.columns:
+            aira_right = successful_cases['AIRA_Right_Kidney_Vol_cm3']
+            print(f"  AIRA Right Kidney: {aira_right.mean():.1f} ± {aira_right.std():.1f} cm³")
+        
+        print("\nVOLUME DIFFERENCES (AIRA - FDA):")
         if 'Left_Kidney_Diff_cm3' in successful_cases.columns:
-            print(f"Mean Left Kidney Diff: {successful_cases['Left_Kidney_Diff_cm3'].mean():.2f} cm³", end='')
+            left_diff = successful_cases['Left_Kidney_Diff_cm3']
+            print(f"  Left Kidney:  {left_diff.mean():.2f} ± {left_diff.std():.2f} cm³", end='')
             if 'Left_Kidney_Diff_%' in successful_cases.columns:
-                print(f" ({successful_cases['Left_Kidney_Diff_%'].mean():.2f}%)")
+                left_diff_perc = successful_cases['Left_Kidney_Diff_%']
+                print(f" ({left_diff_perc.mean():.2f} ± {left_diff_perc.std():.2f}%)")
             else:
                 print()
         if 'Right_Kidney_Diff_cm3' in successful_cases.columns:
-            print(f"Mean Right Kidney Diff: {successful_cases['Right_Kidney_Diff_cm3'].mean():.2f} cm³", end='')
+            right_diff = successful_cases['Right_Kidney_Diff_cm3']
+            print(f"  Right Kidney: {right_diff.mean():.2f} ± {right_diff.std():.2f} cm³", end='')
             if 'Right_Kidney_Diff_%' in successful_cases.columns:
-                print(f" ({successful_cases['Right_Kidney_Diff_%'].mean():.2f}%)")
+                right_diff_perc = successful_cases['Right_Kidney_Diff_%']
+                print(f" ({right_diff_perc.mean():.2f} ± {right_diff_perc.std():.2f}%)")
             else:
                 print()
+        
+        print("\nCLINICAL AGREEMENT:")
+        # High Dice threshold (≥0.85)
+        if 'Dice_Left_Kidney' in successful_cases.columns:
+            high_dice_left = (successful_cases['Dice_Left_Kidney'] >= 0.85).sum()
+            print(f"  Left Kidney Dice ≥ 0.85: {high_dice_left}/{len(successful_cases)} ({(high_dice_left/len(successful_cases))*100:.1f}%)")
+        if 'Dice_Right_Kidney' in successful_cases.columns:
+            high_dice_right = (successful_cases['Dice_Right_Kidney'] >= 0.85).sum()
+            print(f"  Right Kidney Dice ≥ 0.85: {high_dice_right}/{len(successful_cases)} ({(high_dice_right/len(successful_cases))*100:.1f}%)")
+        
+        # Volume agreement (≤10% difference)
+        if 'Left_Kidney_Diff_%' in successful_cases.columns:
+            good_vol_left = (np.abs(successful_cases['Left_Kidney_Diff_%']) <= 10).sum()
+            print(f"  Left Kidney |Diff| ≤ 10%: {good_vol_left}/{len(successful_cases)} ({(good_vol_left/len(successful_cases))*100:.1f}%)")
+        if 'Right_Kidney_Diff_%' in successful_cases.columns:
+            good_vol_right = (np.abs(successful_cases['Right_Kidney_Diff_%']) <= 10).sum()
+            print(f"  Right Kidney |Diff| ≤ 10%: {good_vol_right}/{len(successful_cases)} ({(good_vol_right/len(successful_cases))*100:.1f}%)")
+        
+        print("\nAI/ML REGRESSION METRICS:")
+        # Calculate and display key ML metrics
+        regression_pairs = [
+            ('FDA_Left_Kidney_Vol_cm3', 'AIRA_Left_Kidney_Vol_cm3', 'Left Kidney'),
+            ('FDA_Right_Kidney_Vol_cm3', 'AIRA_Right_Kidney_Vol_cm3', 'Right Kidney')
+        ]
+        
+        for fda_col, aira_col, label in regression_pairs:
+            if fda_col in successful_cases.columns and aira_col in successful_cases.columns:
+                fda_vals = successful_cases[fda_col].dropna()
+                aira_vals = successful_cases[aira_col].dropna()
+                
+                min_len = min(len(fda_vals), len(aira_vals))
+                if min_len > 0:
+                    fda_vals = fda_vals.iloc[:min_len]
+                    aira_vals = aira_vals.iloc[:min_len]
+                    
+                    metrics = calculate_regression_metrics(fda_vals.values, aira_vals.values)
+                    
+                    mae = metrics.get('MAE', np.nan)
+                    rmse = metrics.get('RMSE', np.nan)
+                    mape = metrics.get('MAPE', np.nan)
+                    r2 = metrics.get('R_squared', np.nan)
+                    corr = metrics.get('Correlation', np.nan)
+                    
+                    print(f"  {label}:")
+                    if not np.isnan(mae):
+                        print(f"    MAE: {mae:.2f} cm³")
+                    if not np.isnan(rmse):
+                        print(f"    RMSE: {rmse:.2f} cm³")
+                    if not np.isnan(mape):
+                        print(f"    MAPE: {mape:.1f}%")
+                    if not np.isnan(r2):
+                        print(f"    R²: {r2:.4f}")
+                    if not np.isnan(corr):
+                        print(f"    Correlation: {corr:.4f}")
+    
     print("="*70)
 
 if __name__ == "__main__":
