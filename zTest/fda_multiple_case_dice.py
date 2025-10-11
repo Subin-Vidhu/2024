@@ -19,7 +19,7 @@ warnings.filterwarnings('ignore')
 CONFIG = {
     # Basic Information
     'include_case_info': True,          # Case ID, Status, Error messages
-    'include_image_properties': True,   # Image shape, voxel dimensions, spacing validation
+    'include_image_properties': False,   # Image shape, voxel dimensions, spacing validation
     'include_orientation_info': False,  # Orientation strings, reorientation status
     'include_label_info': False,        # Unique labels before/after remapping
     
@@ -1233,8 +1233,8 @@ def process_single_case(ground_truth_path, predicted_path, case_id, label_mappin
         if config['include_dice_scores']:
             if config['include_background_dice']:
                 results['Dice_Background'] = round(dice_scores[0], 4)
-            results['Dice_Left_Kidney'] = round(dice_scores[1], 4)
-            results['Dice_Right_Kidney'] = round(dice_scores[2], 4)
+            results['Dice_Right_Kidney'] = round(dice_scores[1], 4)  # Fixed: Index 1 = Right Kidney
+            results['Dice_Left_Kidney'] = round(dice_scores[2], 4)   # Fixed: Index 2 = Left Kidney
         
         if config['include_mean_dice']:
             results['Mean_Dice_Kidneys'] = round(np.mean(dice_scores[1:]), 4)
