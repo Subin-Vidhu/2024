@@ -19,7 +19,7 @@ warnings.filterwarnings('ignore')
 CONFIG = {
     # Basic Information
     'include_case_info': True,          # Case ID, Status, Error messages
-    'include_image_properties': False,  # Image shape, voxel dimensions
+    'include_image_properties': True,   # Image shape, voxel dimensions, spacing validation
     'include_orientation_info': False,  # Orientation strings, reorientation status
     'include_label_info': False,        # Unique labels before/after remapping
     
@@ -90,6 +90,134 @@ def get_voxel_volume(img):
     voxel_dims = np.abs(img.header.get_zooms()[:3])
     voxel_volume = np.prod(voxel_dims)
     return voxel_volume, voxel_dims
+
+def check_voxel_spacing_compatibility(img1, img2, tolerance=1e-3):
+    """
+    Check if two NIfTI images have compatible voxel spacing for volume calculations.
+    
+    Parameters:
+    -----------
+    img1, img2 : nibabel image objects
+        The two images to compare
+    tolerance : float
+        Tolerance for voxel spacing differences (in mm)
+    
+    Returns:
+    --------
+    dict: {
+        'compatible': bool,
+        'img1_spacing': tuple,
+        'img2_spacing': tuple,
+        'max_difference': float,
+        'warning_message': str or None
+    }
+    """
+    # Get voxel dimensions for both images
+    voxel_dims1 = np.abs(img1.header.get_zooms()[:3])
+    voxel_dims2 = np.abs(img2.header.get_zooms()[:3])
+    
+    # Calculate absolute differences
+    spacing_diff = np.abs(voxel_dims1 - voxel_dims2)
+    max_difference = np.max(spacing_diff)
+    
+    # Check compatibility
+    compatible = max_difference <= tolerance
+    
+    result = {
+        'compatible': compatible,
+        'img1_spacing': tuple(voxel_dims1),
+        'img2_spacing': tuple(voxel_dims2),
+        'max_difference': max_difference,
+        'spacing_differences': tuple(spacing_diff),
+        'tolerance': tolerance
+    }
+    
+    # Generate appropriate messages
+    if not compatible:
+        result['error_message'] = (
+            f"Voxel spacing mismatch detected!\n"
+            f"  FDA spacing: {voxel_dims1[0]:.4f} × {voxel_dims1[1]:.4f} × {voxel_dims1[2]:.4f} mm\n"
+            f"  AIRA spacing: {voxel_dims2[0]:.4f} × {voxel_dims2[1]:.4f} × {voxel_dims2[2]:.4f} mm\n"
+            f"  Max difference: {max_difference:.6f} mm (tolerance: {tolerance:.6f} mm)\n"
+            f"  This will cause inaccurate volume calculations!"
+        )
+        result['warning_message'] = None
+    elif max_difference > tolerance * 0.1:  # Warn if close to tolerance
+        result['warning_message'] = (
+            f"Minor voxel spacing differences detected (max: {max_difference:.6f} mm). "
+            f"Within tolerance ({tolerance:.6f} mm) but may affect precision."
+        )
+        result['error_message'] = None
+    else:
+        result['warning_message'] = None
+        result['error_message'] = None
+    
+    return result
+
+def validate_image_compatibility(ground_truth_img, predicted_img, case_id, config):
+    """
+    Comprehensive validation of image compatibility for FDA analysis.
+    
+    Returns:
+    --------
+    dict: {
+        'valid': bool,
+        'error_message': str or None,
+        'warnings': list of str,
+        'voxel_check': dict
+    }
+    """
+    validation_result = {
+        'valid': True,
+        'error_message': None,
+        'warnings': [],
+        'voxel_check': None
+    }
+    
+    # 1. Check voxel spacing compatibility
+    voxel_check = check_voxel_spacing_compatibility(ground_truth_img, predicted_img)
+    validation_result['voxel_check'] = voxel_check
+    
+    if not voxel_check['compatible']:
+        validation_result['valid'] = False
+        validation_result['error_message'] = voxel_check['error_message']
+        return validation_result
+    
+    if voxel_check['warning_message']:
+        validation_result['warnings'].append(voxel_check['warning_message'])
+    
+    # 2. Check image dimensions match
+    gt_shape = ground_truth_img.shape
+    pred_shape = predicted_img.shape
+    
+    if gt_shape != pred_shape:
+        validation_result['valid'] = False
+        validation_result['error_message'] = (
+            f"Image dimension mismatch!\n"
+            f"  FDA shape: {gt_shape}\n"
+            f"  AIRA shape: {pred_shape}\n"
+            f"  Images must have identical dimensions for voxel-by-voxel comparison."
+        )
+        return validation_result
+    
+    # 3. Check affine matrices (spatial orientation)
+    if not np.allclose(ground_truth_img.affine, predicted_img.affine, atol=1e-3):
+        validation_result['warnings'].append(
+            "Different spatial orientations detected. Images will be reoriented for comparison."
+        )
+    
+    # 4. Validate voxel volume consistency
+    gt_volume, _ = get_voxel_volume(ground_truth_img)
+    pred_volume, _ = get_voxel_volume(predicted_img)
+    
+    volume_diff = abs(gt_volume - pred_volume)
+    if volume_diff > gt_volume * 0.001:  # 0.1% tolerance
+        validation_result['warnings'].append(
+            f"Voxel volume difference: {volume_diff:.6f} mm³ "
+            f"({(volume_diff/gt_volume)*100:.3f}% relative difference)"
+        )
+    
+    return validation_result
 
 def reorient_to_match(target_img, source_img):
     """Reorient source_img to match the orientation of target_img."""
@@ -251,6 +379,28 @@ def calculate_comprehensive_statistics(df):
         stats_data.append(['Successful Cases', len(successful_cases), '', '', '', ''])
         stats_data.append(['Failed Cases', len(df[df['Status'] == 'Failed']), '', '', '', ''])
         stats_data.append(['Success Rate (%)', round((len(successful_cases) / len(df)) * 100, 2), '', '', '', ''])
+    
+    # Voxel spacing validation summary
+    if 'Voxel_Spacing_Compatible' in successful_cases.columns:
+        compatible_count = (successful_cases['Voxel_Spacing_Compatible'] == 'Yes').sum()
+        stats_data.append(['Voxel Spacing Compatible', f'{compatible_count}/{len(successful_cases)}', 
+                          f'{(compatible_count/len(successful_cases))*100:.1f}%', '', '', ''])
+        
+        if 'Voxel_Spacing_Max_Diff' in successful_cases.columns:
+            # Extract numeric values from the spacing difference strings
+            spacing_diffs = []
+            for val in successful_cases['Voxel_Spacing_Max_Diff'].dropna():
+                try:
+                    numeric_val = float(val.replace(' mm', ''))
+                    spacing_diffs.append(numeric_val)
+                except:
+                    pass
+            
+            if spacing_diffs:
+                stats_data.append(['Max Voxel Spacing Diff (mm)', 
+                                 f'Mean: {np.mean(spacing_diffs):.6f}', 
+                                 f'Max: {np.max(spacing_diffs):.6f}', '', '', ''])
+    
     stats_data.append(['', '', '', '', '', ''])
     
     # Dice Score Statistics
@@ -1015,6 +1165,27 @@ def process_single_case(ground_truth_path, predicted_path, case_id, label_mappin
             print("✗ Failed to load")
             return results
         
+        # Validate image compatibility (including voxel spacing)
+        validation = validate_image_compatibility(ground_truth_img, predicted_img, case_id, config)
+        
+        if not validation['valid']:
+            if config['include_case_info']:
+                results['Error_Message'] = validation['error_message']
+            print("✗ Validation failed")
+            return results
+        
+        # Print warnings if any
+        for warning in validation['warnings']:
+            print(f"\n  ⚠ Warning: {warning}")
+        
+        # Log voxel spacing info for detailed output
+        if config.get('include_image_properties', False):
+            voxel_info = validation['voxel_check']
+            results['FDA_Voxel_Spacing'] = f"{voxel_info['img1_spacing'][0]:.4f}×{voxel_info['img1_spacing'][1]:.4f}×{voxel_info['img1_spacing'][2]:.4f}"
+            results['AIRA_Voxel_Spacing'] = f"{voxel_info['img2_spacing'][0]:.4f}×{voxel_info['img2_spacing'][1]:.4f}×{voxel_info['img2_spacing'][2]:.4f}"
+            results['Voxel_Spacing_Max_Diff'] = f"{voxel_info['max_difference']:.6f} mm"
+            results['Voxel_Spacing_Compatible'] = 'Yes' if voxel_info['compatible'] else 'No'
+        
         # Orientation info
         if config['include_orientation_info']:
             results['FDA_Orientation'] = get_orientation_string(ground_truth_img)
@@ -1029,16 +1200,9 @@ def process_single_case(ground_truth_path, predicted_path, case_id, label_mappin
             if config['include_orientation_info']:
                 results['Reoriented'] = 'No'
         
-        # Get data arrays
+        # Get data arrays (validation already confirmed compatibility)
         ground_truth = ground_truth_img.get_fdata()
         predicted = predicted_img.get_fdata()
-        
-        # Check shape match
-        if ground_truth.shape != predicted.shape:
-            if config['include_case_info']:
-                results['Error_Message'] = f'Shape mismatch'
-            print("✗ Shape mismatch")
-            return results
         
         if config['include_image_properties']:
             results['Image_Shape'] = str(ground_truth.shape)
@@ -1305,6 +1469,11 @@ def main():
         print(f"Successful: {len(successful_cases)}")
         print(f"Failed: {len(df[df['Status'] == 'Failed'])}")
         print(f"Success rate: {(len(successful_cases) / len(df)) * 100:.1f}%")
+    
+    # Voxel spacing validation summary
+    if 'Voxel_Spacing_Compatible' in successful_cases.columns:
+        compatible_count = (successful_cases['Voxel_Spacing_Compatible'] == 'Yes').sum()
+        print(f"Voxel spacing compatible: {compatible_count}/{len(successful_cases)} ({(compatible_count/len(successful_cases))*100:.1f}%)")
     
     if len(successful_cases) > 0:
         print("\nDICE COEFFICIENTS:")
