@@ -865,8 +865,8 @@ def create_performance_summary_plot(df, results_dir, timestamp, config):
     
     plot_files = []
     
-    fig, axes = plt.subplots(2, 2, figsize=(16, 12))  # Larger figure
-    fig.suptitle('FDA vs AIRA: Comprehensive Performance Summary', fontsize=18, fontweight='bold', y=0.95)
+    fig, axes = plt.subplots(2, 2, figsize=(16, 14))  # Larger figure with more height
+    fig.suptitle('FDA vs AIRA: Comprehensive Performance Summary', fontsize=16, fontweight='bold', y=0.98)
     
     # 1. Dice Coefficient Distribution
     ax1 = axes[0, 0]
@@ -958,7 +958,7 @@ def create_performance_summary_plot(df, results_dir, timestamp, config):
             ax4.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1,
                     f'{value:.1f}%', ha='center', va='bottom', fontweight='bold')
     
-    plt.tight_layout()
+    plt.tight_layout(rect=[0, 0.03, 1, 0.95])  # Add padding for suptitle
     
     if config.get('save_individual_plots', True):
         summary_file = os.path.join(results_dir, f'Performance_Summary_{timestamp}.png')
@@ -1182,13 +1182,14 @@ def main():
     # Base directory containing all case folders
     base_dir = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025'
     
-    # Create results directory
+    # Create results directory with timestamp subdirectory
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    results_dir = os.path.join(script_dir, 'results')
+    base_results_dir = os.path.join(script_dir, 'results')
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    results_dir = os.path.join(base_results_dir, f'FDA_Analysis_{timestamp}')
     os.makedirs(results_dir, exist_ok=True)
     
-    # Output files in results directory
-    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    # Output files in timestamped subdirectory
     output_file = os.path.join(results_dir, f'FDA_AIRA_Results_{timestamp}.{CONFIG["save_format"]}')
     stats_file = os.path.join(results_dir, f'FDA_AIRA_Statistics_{timestamp}.csv')
     
@@ -1196,8 +1197,8 @@ def main():
     print("FDA vs AIRA - Multi-Case Analysis")
     print("="*70)
     print(f"Dataset directory: {base_dir}")
-    print(f"Results directory: {results_dir}")
-    print(f"Output file: {os.path.basename(output_file)}")
+    print(f"Results directory: {os.path.relpath(results_dir)}")
+    print(f"Analysis timestamp: {timestamp}")
     print(f"Label mapping: {LABEL_MAPPING}")
     print("="*70)
     
@@ -1405,6 +1406,17 @@ def main():
                     if not np.isnan(corr):
                         print(f"    Correlation: {corr:.4f}")
     
+    print("="*70)
+    print("GENERATED FILES")
+    print("="*70)
+    print(f"Results saved in: {os.path.relpath(results_dir)}")
+    print(f"📊 Main Results: {os.path.basename(output_file)}")
+    if CONFIG['save_detailed_stats']:
+        print(f"📈 Statistics: {os.path.basename(stats_file)}")
+    if plot_files:
+        print(f"📉 Visualizations: {len(plot_files)} plots created")
+        for plot_file in plot_files:
+            print(f"   • {os.path.basename(plot_file)}")
     print("="*70)
 
 if __name__ == "__main__":

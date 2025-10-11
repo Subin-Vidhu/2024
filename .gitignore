@@ -166,3 +166,4 @@ flask_venv/
 Chaimeleon/
 *.json
 *.csv
+results/
