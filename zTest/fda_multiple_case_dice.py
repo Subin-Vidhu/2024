@@ -6,6 +6,57 @@ import os
 from datetime import datetime
 import glob
 
+# ============================================================================
+# CONFIGURATION SECTION - Customize what to include in the output
+# ============================================================================
+
+CONFIG = {
+    # Basic Information
+    'include_case_info': True,          # Case ID, Status, Error messages
+    'include_image_properties': False,  # Image shape, voxel dimensions
+    'include_orientation_info': False,  # Orientation strings, reorientation status
+    'include_label_info': False,        # Unique labels before/after remapping
+    
+    # Dice Scores
+    'include_dice_scores': True,        # Individual class Dice scores
+    'include_mean_dice': False,          # Mean Dice scores
+    'include_background_dice': False,   # Background Dice score
+    
+    # Volumes - FDA (Ground Truth)
+    'include_fda_volumes': True,        # FDA volumes for kidneys
+    'include_fda_voxel_counts': False,  # FDA voxel counts
+    'include_fda_background': False,    # FDA background volumes
+    
+    # Volumes - AIRA (Predicted)
+    'include_aira_volumes': True,       # AIRA volumes for kidneys
+    'include_aira_voxel_counts': False, # AIRA voxel counts
+    'include_aira_background': False,   # AIRA background volumes
+    
+    # Volume Differences
+    'include_volume_differences': True, # Absolute differences in cm³
+    'include_volume_percentages': True, # Percentage differences
+    
+    # Spatial Analysis
+    'include_spatial_metrics': False,    # Center distances, overlap voxels
+    
+    # Output Format
+    'save_format': 'csv',              # 'xlsx' or 'csv' (xlsx recommended for multiple sheets)
+    'create_summary_sheet': True,       # Create summary statistics sheet
+    'create_failed_sheet': True,        # Create sheet for failed cases
+}
+
+# Label mapping configuration
+LABEL_MAPPING = {
+    0: 0,  # background
+    1: 0,  # noise -> background
+    2: 2,  # right kidney
+    3: 1   # left kidney
+}
+
+# ============================================================================
+# Core Functions
+# ============================================================================
+
 def load_nifti(file_path):
     """Load a NIfTI file and return the image object."""
     try:
@@ -86,21 +137,19 @@ def check_spatial_alignment(y_true, y_pred, class_label):
     
     return {
         'center_distance': distance,
-        'overlap_voxels': overlap_voxels,
-        'true_center': true_center,
-        'pred_center': pred_center
+        'overlap_voxels': overlap_voxels
     }
 
-def process_single_case(ground_truth_path, predicted_path, case_id, label_mapping):
-    """Process a single case and return results."""
-    print(f"\nProcessing {case_id}...")
-    print("="*60)
+def process_single_case(ground_truth_path, predicted_path, case_id, label_mapping, config):
+    """Process a single case and return results based on configuration."""
+    print(f"Processing {case_id}...", end=' ')
     
-    results = {
-        'Case_ID': case_id,
-        'Status': 'Failed',
-        'Error_Message': None
-    }
+    results = {}
+    
+    # Always include basic info
+    if config['include_case_info']:
+        results['Case_ID'] = case_id
+        results['Status'] = 'Failed'
     
     try:
         # Load images
@@ -108,21 +157,24 @@ def process_single_case(ground_truth_path, predicted_path, case_id, label_mappin
         predicted_img = load_nifti(predicted_path)
         
         if ground_truth_img is None or predicted_img is None:
-            results['Error_Message'] = 'Failed to load NIfTI files'
+            if config['include_case_info']:
+                results['Error_Message'] = 'Failed to load NIfTI files'
+            print("✗ Failed to load")
             return results
         
-        # Store orientations
-        results['FDA_Orientation'] = get_orientation_string(ground_truth_img)
-        results['AIRA_Orientation_Original'] = get_orientation_string(predicted_img)
+        # Orientation info
+        if config['include_orientation_info']:
+            results['FDA_Orientation'] = get_orientation_string(ground_truth_img)
+            results['AIRA_Orientation'] = get_orientation_string(predicted_img)
         
         # Reorient if needed
-        reoriented = False
         if not np.allclose(ground_truth_img.affine, predicted_img.affine):
             predicted_img = reorient_to_match(ground_truth_img, predicted_img)
-            reoriented = True
-            results['Reoriented'] = 'Yes'
+            if config['include_orientation_info']:
+                results['Reoriented'] = 'Yes'
         else:
-            results['Reoriented'] = 'No'
+            if config['include_orientation_info']:
+                results['Reoriented'] = 'No'
         
         # Get data arrays
         ground_truth = ground_truth_img.get_fdata()
@@ -130,42 +182,53 @@ def process_single_case(ground_truth_path, predicted_path, case_id, label_mappin
         
         # Check shape match
         if ground_truth.shape != predicted.shape:
-            results['Error_Message'] = f'Shape mismatch: FDA={ground_truth.shape}, AIRA={predicted.shape}'
+            if config['include_case_info']:
+                results['Error_Message'] = f'Shape mismatch'
+            print("✗ Shape mismatch")
             return results
         
-        results['Image_Shape'] = str(ground_truth.shape)
-        
-        # Get voxel information
-        voxel_volume_mm3, voxel_dims = get_voxel_volume(ground_truth_img)
-        results['Voxel_Dimensions_mm'] = f"{voxel_dims[0]:.2f}x{voxel_dims[1]:.2f}x{voxel_dims[2]:.2f}"
-        results['Voxel_Volume_mm3'] = round(voxel_volume_mm3, 2)
+        if config['include_image_properties']:
+            results['Image_Shape'] = str(ground_truth.shape)
+            voxel_volume_mm3, voxel_dims = get_voxel_volume(ground_truth_img)
+            results['Voxel_Size_mm'] = f"{voxel_dims[0]:.2f}x{voxel_dims[1]:.2f}x{voxel_dims[2]:.2f}"
+        else:
+            voxel_volume_mm3, _ = get_voxel_volume(ground_truth_img)
         
         # Get original labels
-        fda_labels = get_unique_labels(ground_truth)
-        aira_labels_original = get_unique_labels(predicted)
-        
-        results['FDA_Unique_Labels'] = str(sorted(fda_labels.keys()))
-        results['AIRA_Unique_Labels_Original'] = str(sorted(aira_labels_original.keys()))
+        if config['include_label_info']:
+            fda_labels = get_unique_labels(ground_truth)
+            aira_labels_original = get_unique_labels(predicted)
+            results['FDA_Labels'] = str(sorted(fda_labels.keys()))
+            results['AIRA_Labels_Original'] = str(sorted(aira_labels_original.keys()))
         
         # Apply label mapping
         predicted = remap_labels(predicted, label_mapping)
-        aira_labels_remapped = get_unique_labels(predicted)
-        results['AIRA_Unique_Labels_Remapped'] = str(sorted(aira_labels_remapped.keys()))
+        
+        if config['include_label_info']:
+            aira_labels_remapped = get_unique_labels(predicted)
+            results['AIRA_Labels_Remapped'] = str(sorted(aira_labels_remapped.keys()))
         
         # Calculate Dice scores
         num_classes = 3
         class_names = ['Background', 'Left_Kidney', 'Right_Kidney']
         dice_scores = multi_class_dice(ground_truth, predicted, num_classes)
         
-        for i, class_name in enumerate(class_names):
-            results[f'Dice_{class_name}'] = round(dice_scores[i], 4)
+        if config['include_dice_scores']:
+            if config['include_background_dice']:
+                results['Dice_Background'] = round(dice_scores[0], 4)
+            results['Dice_Left_Kidney'] = round(dice_scores[1], 4)
+            results['Dice_Right_Kidney'] = round(dice_scores[2], 4)
         
-        results['Mean_Dice_All_Classes'] = round(np.mean(dice_scores), 4)
-        results['Mean_Dice_Kidneys_Only'] = round(np.mean(dice_scores[1:]), 4)
+        if config['include_mean_dice']:
+            results['Mean_Dice_Kidneys'] = round(np.mean(dice_scores[1:]), 4)
         
         # Calculate volumes for each class
         for c in range(num_classes):
             class_name = class_names[c]
+            
+            # Skip background if not configured
+            if c == 0 and not (config['include_fda_background'] or config['include_aira_background']):
+                continue
             
             fda_count = np.sum(ground_truth == c)
             aira_count = np.sum(predicted == c)
@@ -173,34 +236,43 @@ def process_single_case(ground_truth_path, predicted_path, case_id, label_mappin
             fda_volume_cm3 = (fda_count * voxel_volume_mm3) / 1000.0
             aira_volume_cm3 = (aira_count * voxel_volume_mm3) / 1000.0
             
-            results[f'FDA_{class_name}_Voxels'] = int(fda_count)
-            results[f'FDA_{class_name}_Volume_cm3'] = round(fda_volume_cm3, 2)
-            results[f'AIRA_{class_name}_Voxels'] = int(aira_count)
-            results[f'AIRA_{class_name}_Volume_cm3'] = round(aira_volume_cm3, 2)
-            results[f'{class_name}_Volume_Diff_cm3'] = round(aira_volume_cm3 - fda_volume_cm3, 2)
+            # FDA volumes
+            if config['include_fda_volumes'] and (c > 0 or config['include_fda_background']):
+                if config['include_fda_voxel_counts']:
+                    results[f'FDA_{class_name}_Voxels'] = int(fda_count)
+                results[f'FDA_{class_name}_Vol_cm3'] = round(fda_volume_cm3, 2)
             
-            if fda_volume_cm3 > 0:
-                rel_diff = ((aira_volume_cm3 - fda_volume_cm3) / fda_volume_cm3) * 100
-                results[f'{class_name}_Volume_Diff_Percent'] = round(rel_diff, 2)
-            else:
-                results[f'{class_name}_Volume_Diff_Percent'] = None
+            # AIRA volumes
+            if config['include_aira_volumes'] and (c > 0 or config['include_aira_background']):
+                if config['include_aira_voxel_counts']:
+                    results[f'AIRA_{class_name}_Voxels'] = int(aira_count)
+                results[f'AIRA_{class_name}_Vol_cm3'] = round(aira_volume_cm3, 2)
+            
+            # Volume differences (only for kidneys or if background is included)
+            if c > 0 or config['include_fda_background']:
+                if config['include_volume_differences']:
+                    results[f'{class_name}_Diff_cm3'] = round(aira_volume_cm3 - fda_volume_cm3, 2)
+                
+                if config['include_volume_percentages'] and fda_volume_cm3 > 0:
+                    rel_diff = ((aira_volume_cm3 - fda_volume_cm3) / fda_volume_cm3) * 100
+                    results[f'{class_name}_Diff_%'] = round(rel_diff, 2)
         
         # Spatial alignment for kidneys
-        for c, kidney_name in [(1, 'Left_Kidney'), (2, 'Right_Kidney')]:
-            alignment = check_spatial_alignment(ground_truth, predicted, c)
-            if alignment:
-                results[f'{kidney_name}_Center_Distance_Voxels'] = round(alignment['center_distance'], 2)
-                results[f'{kidney_name}_Overlap_Voxels'] = int(alignment['overlap_voxels'])
-            else:
-                results[f'{kidney_name}_Center_Distance_Voxels'] = None
-                results[f'{kidney_name}_Overlap_Voxels'] = None
+        if config['include_spatial_metrics']:
+            for c, kidney_name in [(1, 'Left_Kidney'), (2, 'Right_Kidney')]:
+                alignment = check_spatial_alignment(ground_truth, predicted, c)
+                if alignment:
+                    results[f'{kidney_name}_Center_Dist'] = round(alignment['center_distance'], 2)
+                    results[f'{kidney_name}_Overlap'] = int(alignment['overlap_voxels'])
         
-        results['Status'] = 'Success'
-        print(f"✓ Successfully processed {case_id}")
+        if config['include_case_info']:
+            results['Status'] = 'Success'
+        print("✓")
         
     except Exception as e:
-        results['Error_Message'] = str(e)
-        print(f"✗ Error processing {case_id}: {e}")
+        if config['include_case_info']:
+            results['Error_Message'] = str(e)
+        print(f"✗ Error: {e}")
     
     return results
 
@@ -214,7 +286,7 @@ def find_case_files(base_dir):
     for case_folder in sorted(case_folders):
         case_id = os.path.basename(case_folder)
         
-        # Look for ground truth file (pattern: N-xxx_MC.nii or N-xxx_MC.nii.gz)
+        # Look for ground truth file
         gt_patterns = [
             os.path.join(case_folder, case_id, f'{case_id}_MC.nii'),
             os.path.join(case_folder, case_id, f'{case_id}_MC.nii.gz'),
@@ -228,7 +300,7 @@ def find_case_files(base_dir):
                 ground_truth_path = pattern
                 break
         
-        # Look for predicted file (pattern: mask.nii or mask.nii.gz)
+        # Look for predicted file
         pred_patterns = [
             os.path.join(case_folder, 'mask.nii'),
             os.path.join(case_folder, 'mask.nii.gz')
@@ -246,39 +318,29 @@ def find_case_files(base_dir):
                 'ground_truth': ground_truth_path,
                 'predicted': predicted_path
             })
-            print(f"Found: {case_id}")
-        else:
-            print(f"Skipping {case_id}: Missing files (GT={ground_truth_path is not None}, Pred={predicted_path is not None})")
     
     return cases
 
 def main():
     # Base directory containing all case folders
-    base_dir = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025\test'
+    base_dir = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025'
     
-    # Output Excel file path
+    # Output file in current working directory
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    output_excel = os.path.join(base_dir, f'FDA_AIRA_Analysis_Results_{timestamp}.xlsx')
+    output_file = f'FDA_AIRA_Results_{timestamp}.{CONFIG["save_format"]}'
     
-    # Label mapping (adjust based on your data)
-    label_mapping = {
-        0: 0,  # background
-        1: 0,  # noise -> background
-        2: 2,  # right kidney
-        3: 1   # left kidney
-    }
-    
-    print("="*60)
+    print("="*70)
     print("FDA vs AIRA - Multi-Case Analysis")
-    print("="*60)
-    print(f"Base directory: {base_dir}")
-    print(f"Label mapping: {label_mapping}")
-    print("="*60)
+    print("="*70)
+    print(f"Dataset directory: {base_dir}")
+    print(f"Output file: {output_file}")
+    print(f"Label mapping: {LABEL_MAPPING}")
+    print("="*70)
     
     # Find all cases
-    print("\nSearching for case files...")
+    print("\nSearching for cases...")
     cases = find_case_files(base_dir)
-    print(f"\nFound {len(cases)} cases to process")
+    print(f"Found {len(cases)} cases\n")
     
     if len(cases) == 0:
         print("No cases found. Please check the directory structure.")
@@ -291,122 +353,98 @@ def main():
             case_info['ground_truth'],
             case_info['predicted'],
             case_info['case_id'],
-            label_mapping
+            LABEL_MAPPING,
+            CONFIG
         )
         all_results.append(result)
     
     # Create DataFrame
     df = pd.DataFrame(all_results)
     
-    # Reorder columns for better readability
-    column_order = [
-        'Case_ID', 'Status', 'Error_Message',
-        'Image_Shape', 'Voxel_Dimensions_mm', 'Voxel_Volume_mm3',
-        'FDA_Orientation', 'AIRA_Orientation_Original', 'Reoriented',
-        'FDA_Unique_Labels', 'AIRA_Unique_Labels_Original', 'AIRA_Unique_Labels_Remapped',
-        
-        # Dice Scores
-        'Dice_Background', 'Dice_Left_Kidney', 'Dice_Right_Kidney',
-        'Mean_Dice_All_Classes', 'Mean_Dice_Kidneys_Only',
-        
-        # Background volumes
-        'FDA_Background_Voxels', 'FDA_Background_Volume_cm3',
-        'AIRA_Background_Voxels', 'AIRA_Background_Volume_cm3',
-        'Background_Volume_Diff_cm3', 'Background_Volume_Diff_Percent',
-        
-        # Left Kidney volumes
-        'FDA_Left_Kidney_Voxels', 'FDA_Left_Kidney_Volume_cm3',
-        'AIRA_Left_Kidney_Voxels', 'AIRA_Left_Kidney_Volume_cm3',
-        'Left_Kidney_Volume_Diff_cm3', 'Left_Kidney_Volume_Diff_Percent',
-        'Left_Kidney_Center_Distance_Voxels', 'Left_Kidney_Overlap_Voxels',
-        
-        # Right Kidney volumes
-        'FDA_Right_Kidney_Voxels', 'FDA_Right_Kidney_Volume_cm3',
-        'AIRA_Right_Kidney_Voxels', 'AIRA_Right_Kidney_Volume_cm3',
-        'Right_Kidney_Volume_Diff_cm3', 'Right_Kidney_Volume_Diff_Percent',
-        'Right_Kidney_Center_Distance_Voxels', 'Right_Kidney_Overlap_Voxels'
-    ]
+    # Save based on format
+    if CONFIG['save_format'] == 'csv':
+        df.to_csv(output_file, index=False)
+        print(f"\n✓ Results saved to: {output_file}")
     
-    # Reorder columns (keep any extra columns at the end)
-    existing_columns = [col for col in column_order if col in df.columns]
-    extra_columns = [col for col in df.columns if col not in column_order]
-    df = df[existing_columns + extra_columns]
-    
-    # Save to Excel with multiple sheets
-    with pd.ExcelWriter(output_excel, engine='openpyxl') as writer:
-        # Main results sheet
-        df.to_excel(writer, sheet_name='All_Results', index=False)
+    else:  # xlsx
+        with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
+            # Main results sheet
+            df.to_excel(writer, sheet_name='Results', index=False)
+            
+            # Summary statistics sheet
+            if CONFIG['create_summary_sheet']:
+                successful_cases = df[df['Status'] == 'Success'] if 'Status' in df.columns else df
+                if len(successful_cases) > 0:
+                    summary_data = []
+                    summary_data.append(['Metric', 'Value'])
+                    summary_data.append(['Total Cases', len(df)])
+                    if 'Status' in df.columns:
+                        summary_data.append(['Successful Cases', len(successful_cases)])
+                        summary_data.append(['Failed Cases', len(df[df['Status'] == 'Failed'])])
+                    summary_data.append(['', ''])
+                    
+                    if 'Mean_Dice_Kidneys' in successful_cases.columns:
+                        summary_data.append(['Mean Dice (Kidneys)', round(successful_cases['Mean_Dice_Kidneys'].mean(), 4)])
+                    if 'Dice_Left_Kidney' in successful_cases.columns:
+                        summary_data.append(['Mean Dice - Left Kidney', round(successful_cases['Dice_Left_Kidney'].mean(), 4)])
+                    if 'Dice_Right_Kidney' in successful_cases.columns:
+                        summary_data.append(['Mean Dice - Right Kidney', round(successful_cases['Dice_Right_Kidney'].mean(), 4)])
+                    
+                    if 'FDA_Left_Kidney_Vol_cm3' in successful_cases.columns:
+                        summary_data.append(['', ''])
+                        summary_data.append(['Mean FDA Left Kidney (cm³)', round(successful_cases['FDA_Left_Kidney_Vol_cm3'].mean(), 2)])
+                        summary_data.append(['Mean AIRA Left Kidney (cm³)', round(successful_cases['AIRA_Left_Kidney_Vol_cm3'].mean(), 2)])
+                        if 'Left_Kidney_Diff_cm3' in successful_cases.columns:
+                            summary_data.append(['Mean Left Kidney Diff (cm³)', round(successful_cases['Left_Kidney_Diff_cm3'].mean(), 2)])
+                        if 'Left_Kidney_Diff_%' in successful_cases.columns:
+                            summary_data.append(['Mean Left Kidney Diff (%)', round(successful_cases['Left_Kidney_Diff_%'].mean(), 2)])
+                    
+                    if 'FDA_Right_Kidney_Vol_cm3' in successful_cases.columns:
+                        summary_data.append(['', ''])
+                        summary_data.append(['Mean FDA Right Kidney (cm³)', round(successful_cases['FDA_Right_Kidney_Vol_cm3'].mean(), 2)])
+                        summary_data.append(['Mean AIRA Right Kidney (cm³)', round(successful_cases['AIRA_Right_Kidney_Vol_cm3'].mean(), 2)])
+                        if 'Right_Kidney_Diff_cm3' in successful_cases.columns:
+                            summary_data.append(['Mean Right Kidney Diff (cm³)', round(successful_cases['Right_Kidney_Diff_cm3'].mean(), 2)])
+                        if 'Right_Kidney_Diff_%' in successful_cases.columns:
+                            summary_data.append(['Mean Right Kidney Diff (%)', round(successful_cases['Right_Kidney_Diff_%'].mean(), 2)])
+                    
+                    summary_df = pd.DataFrame(summary_data[1:], columns=summary_data[0])
+                    summary_df.to_excel(writer, sheet_name='Summary', index=False)
+            
+            # Failed cases sheet (if any)
+            if CONFIG['create_failed_sheet'] and 'Status' in df.columns:
+                failed_cases = df[df['Status'] == 'Failed']
+                if len(failed_cases) > 0:
+                    failed_cases.to_excel(writer, sheet_name='Failed_Cases', index=False)
         
-        # Summary statistics sheet
-        successful_cases = df[df['Status'] == 'Success']
-        if len(successful_cases) > 0:
-            summary_data = {
-                'Metric': [
-                    'Total Cases',
-                    'Successful Cases',
-                    'Failed Cases',
-                    '',
-                    'Mean Dice - Left Kidney',
-                    'Mean Dice - Right Kidney',
-                    'Mean Dice - Kidneys Only',
-                    '',
-                    'Mean FDA Left Kidney Volume (cm³)',
-                    'Mean AIRA Left Kidney Volume (cm³)',
-                    'Mean Left Kidney Volume Diff (cm³)',
-                    'Mean Left Kidney Volume Diff (%)',
-                    '',
-                    'Mean FDA Right Kidney Volume (cm³)',
-                    'Mean AIRA Right Kidney Volume (cm³)',
-                    'Mean Right Kidney Volume Diff (cm³)',
-                    'Mean Right Kidney Volume Diff (%)',
-                ],
-                'Value': [
-                    len(df),
-                    len(successful_cases),
-                    len(df[df['Status'] == 'Failed']),
-                    '',
-                    round(successful_cases['Dice_Left_Kidney'].mean(), 4),
-                    round(successful_cases['Dice_Right_Kidney'].mean(), 4),
-                    round(successful_cases['Mean_Dice_Kidneys_Only'].mean(), 4),
-                    '',
-                    round(successful_cases['FDA_Left_Kidney_Volume_cm3'].mean(), 2),
-                    round(successful_cases['AIRA_Left_Kidney_Volume_cm3'].mean(), 2),
-                    round(successful_cases['Left_Kidney_Volume_Diff_cm3'].mean(), 2),
-                    round(successful_cases['Left_Kidney_Volume_Diff_Percent'].mean(), 2),
-                    '',
-                    round(successful_cases['FDA_Right_Kidney_Volume_cm3'].mean(), 2),
-                    round(successful_cases['AIRA_Right_Kidney_Volume_cm3'].mean(), 2),
-                    round(successful_cases['Right_Kidney_Volume_Diff_cm3'].mean(), 2),
-                    round(successful_cases['Right_Kidney_Volume_Diff_Percent'].mean(), 2),
-                ]
-            }
-            summary_df = pd.DataFrame(summary_data)
-            summary_df.to_excel(writer, sheet_name='Summary', index=False)
-        
-        # Failed cases sheet (if any)
-        failed_cases = df[df['Status'] == 'Failed']
-        if len(failed_cases) > 0:
-            failed_cases.to_excel(writer, sheet_name='Failed_Cases', index=False)
+        print(f"\n✓ Results saved to: {output_file}")
     
-    print("\n" + "="*60)
-    print("ANALYSIS COMPLETE")
-    print("="*60)
-    print(f"Total cases processed: {len(cases)}")
-    print(f"Successful: {len(successful_cases)}")
-    print(f"Failed: {len(df[df['Status'] == 'Failed'])}")
-    print(f"\nResults saved to: {output_excel}")
-    print("="*60)
+    # Print summary
+    print("\n" + "="*70)
+    print("SUMMARY")
+    print("="*70)
+    successful_cases = df[df['Status'] == 'Success'] if 'Status' in df.columns else df
+    print(f"Total cases: {len(df)}")
+    if 'Status' in df.columns:
+        print(f"Successful: {len(successful_cases)}")
+        print(f"Failed: {len(df[df['Status'] == 'Failed'])}")
     
-    # Print summary statistics
     if len(successful_cases) > 0:
-        print("\nSUMMARY STATISTICS:")
-        print("-"*60)
-        print(f"Mean Dice Score (Kidneys Only): {successful_cases['Mean_Dice_Kidneys_Only'].mean():.4f}")
-        print(f"Mean Left Kidney Dice: {successful_cases['Dice_Left_Kidney'].mean():.4f}")
-        print(f"Mean Right Kidney Dice: {successful_cases['Dice_Right_Kidney'].mean():.4f}")
-        print(f"\nMean Left Kidney Volume Diff: {successful_cases['Left_Kidney_Volume_Diff_cm3'].mean():.2f} cm³ ({successful_cases['Left_Kidney_Volume_Diff_Percent'].mean():.2f}%)")
-        print(f"Mean Right Kidney Volume Diff: {successful_cases['Right_Kidney_Volume_Diff_cm3'].mean():.2f} cm³ ({successful_cases['Right_Kidney_Volume_Diff_Percent'].mean():.2f}%)")
-        print("="*60)
+        if 'Mean_Dice_Kidneys' in successful_cases.columns:
+            print(f"\nMean Dice (Kidneys): {successful_cases['Mean_Dice_Kidneys'].mean():.4f}")
+        if 'Left_Kidney_Diff_cm3' in successful_cases.columns:
+            print(f"Mean Left Kidney Diff: {successful_cases['Left_Kidney_Diff_cm3'].mean():.2f} cm³", end='')
+            if 'Left_Kidney_Diff_%' in successful_cases.columns:
+                print(f" ({successful_cases['Left_Kidney_Diff_%'].mean():.2f}%)")
+            else:
+                print()
+        if 'Right_Kidney_Diff_cm3' in successful_cases.columns:
+            print(f"Mean Right Kidney Diff: {successful_cases['Right_Kidney_Diff_cm3'].mean():.2f} cm³", end='')
+            if 'Right_Kidney_Diff_%' in successful_cases.columns:
+                print(f" ({successful_cases['Right_Kidney_Diff_%'].mean():.2f}%)")
+            else:
+                print()
+    print("="*70)
 
 if __name__ == "__main__":
     main()
