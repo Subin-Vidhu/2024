@@ -50,8 +50,8 @@ CONFIG = {
 LABEL_MAPPING = {
     0: 0,  # background
     1: 0,  # noise -> background
-    2: 2,  # right kidney
-    3: 1   # left kidney
+    2: 2,  # left kidney
+    3: 1   # right kidney
 }
 
 # ============================================================================
@@ -658,7 +658,7 @@ def process_single_case(ground_truth_path, predicted_path, case_id, label_mappin
         
         # Calculate Dice scores
         num_classes = 3
-        class_names = ['Background', 'Left_Kidney', 'Right_Kidney']
+        class_names = ['Background', 'Right_Kidney', 'Left_Kidney']  # Index 0=Background, 1=Right, 2=Left
         dice_scores = multi_class_dice(ground_truth, predicted, num_classes)
         
         if config['include_dice_scores']:
@@ -777,15 +777,22 @@ def main():
     # Base directory containing all case folders
     base_dir = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025'
     
-    # Output file in current working directory
+    # Create results directory
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    results_dir = os.path.join(script_dir, 'results')
+    os.makedirs(results_dir, exist_ok=True)
+    
+    # Output files in results directory
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    output_file = f'FDA_AIRA_Results_{timestamp}.{CONFIG["save_format"]}'
+    output_file = os.path.join(results_dir, f'FDA_AIRA_Results_{timestamp}.{CONFIG["save_format"]}')
+    stats_file = os.path.join(results_dir, f'FDA_AIRA_Statistics_{timestamp}.csv')
     
     print("="*70)
     print("FDA vs AIRA - Multi-Case Analysis")
     print("="*70)
     print(f"Dataset directory: {base_dir}")
-    print(f"Output file: {output_file}")
+    print(f"Results directory: {results_dir}")
+    print(f"Output file: {os.path.basename(output_file)}")
     print(f"Label mapping: {LABEL_MAPPING}")
     print("="*70)
     
@@ -817,15 +824,14 @@ def main():
     if CONFIG['save_detailed_stats']:
         print("\nCalculating comprehensive statistics...")
         stats_df = calculate_comprehensive_statistics(df)
-        stats_file = f'FDA_AIRA_Statistics_{timestamp}.csv'
         if len(stats_df) > 0:
             stats_df.to_csv(stats_file, index=False)
-            print(f"✓ Detailed statistics saved to: {stats_file}")
+            print(f"✓ Detailed statistics saved to: {os.path.basename(stats_file)}")
     
     # Save based on format
     if CONFIG['save_format'] == 'csv':
         df.to_csv(output_file, index=False)
-        print(f"\n✓ Results saved to: {output_file}")
+        print(f"\n✓ Results saved to: {os.path.basename(output_file)}")
     
     else:  # xlsx
         with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
@@ -878,7 +884,7 @@ def main():
                 if len(failed_cases) > 0:
                     failed_cases.to_excel(writer, sheet_name='Failed_Cases', index=False)
         
-        print(f"\n✓ Results saved to: {output_file}")
+        print(f"\n✓ Results saved to: {os.path.basename(output_file)}")
     
     # Print summary
     print("\n" + "="*70)
