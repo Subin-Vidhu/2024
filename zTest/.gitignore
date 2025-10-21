@@ -1,0 +1,56 @@
+# Results and output files
+*.csv
+*.xlsx
+*.png
+*.pdf
+
+# Results directories and archives
+results/
+*results/
+*Results/
+*_results/
+*_Results/
+
+# Archive directories
+*Archive*/
+*archive*/
+*_archive*/
+*_Archive*/
+
+# Specific analysis output folders
+Multi_Reader_Analysis_*/
+Processed_Mask_Archive_*/
+Multi_Reader_Mask_Archive_*/
+
+# Temporary analysis files
+*.log
+*.tmp
+temp/
+tmp/
+
+# Python cache and virtual environment
+__pycache__/
+*.pyc
+*.pyo
+test_venv/
+venv/
+env/
+.env
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
