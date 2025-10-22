@@ -2,6 +2,13 @@
 import nibabel as nib
 import numpy as np
 
+# IMPORTANT DISCOVERY (2024-10-21):
+# During comprehensive multi-reader analysis, we discovered that GT1_AS files
+# are IDENTICAL to FDA_MC files (verified via MD5 hash). This means GT1_AS
+# represents duplicate annotations, not independent reader annotations.
+# True independent readers are: FDA_MC and GT02_GM only.
+# AIRA performance: ~0.908 Dice after proper spatial reorientation and label mapping.
+
 def load_nifti(file_path):
     """Load a NIfTI file and return the image object."""
     nifti_img = nib.load(file_path)
@@ -26,7 +33,8 @@ def reorient_to_match(target_img, source_img):
 
 def remap_labels(data, label_mapping):
     """
-    Remap labels in the data array according to the provided mapping.
+    Remap labels according to specified mapping with robust handling.
+    Handles floating-point precision issues by rounding to nearest integer first.
     
     Parameters:
     -----------
@@ -40,10 +48,18 @@ def remap_labels(data, label_mapping):
     remapped_data : numpy array
         Data array with remapped labels
     """
-    remapped_data = np.zeros_like(data)
-    for old_label, new_label in label_mapping.items():
-        remapped_data[data == old_label] = new_label
-    return remapped_data
+    # Handle floating-point precision issues by rounding to nearest integer
+    data_rounded = np.round(data).astype(int)
+    
+    # Create output array
+    remapped_data = np.zeros_like(data_rounded)
+    
+    # Apply mapping
+    for original_label, new_label in label_mapping.items():
+        mask = (data_rounded == original_label)
+        remapped_data[mask] = new_label
+    
+    return remapped_data.astype(float)  # Return as float to match original data type
 
 def dice_coefficient(y_true, y_pred, epsilon=1e-6):
     """Compute the Dice coefficient between two numpy arrays."""
@@ -123,8 +139,8 @@ def check_spatial_overlap(y_true, y_pred, class_label, class_name="Class"):
         print(f"    ⚠️ WARNING: No spatial overlap! Kidneys may be swapped or misaligned.")
 
 # Paths to the NIfTI files
-ground_truth_path = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025\N-085\N-085\N-085_MC.nii'
-predicted_path = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025\N-085\mask.nii'
+ground_truth_path = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025\N-072\N-072\N-072_MC.nii'
+predicted_path = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025\N-072\mask.nii'
 
 # Load the NIfTI files
 ground_truth_img = load_nifti(ground_truth_path)
@@ -163,17 +179,17 @@ print("\n")
 inspect_labels_with_volume(predicted, predicted_img, "Predicted (Original)")
 print("="*60)
 
-# Define label mapping for the predicted image
-# Based on the inspection:
-# Ground truth has: {0: background, 1: left kidney, 2: right kidney}
-# Predicted has: {0: background, 1: noise?, 2: left kidney, 3: right kidney}
-# BUT spatially they are swapped! Predicted label 2 is at right kidney location
-# and predicted label 3 is at left kidney location
+# Define label mapping for the predicted image (AIRA)
+# Based on spatial analysis and our comprehensive investigation:
+# Ground truth (human readers): {0: background, 1: left kidney, 2: right kidney}
+# AIRA original labels: {0: background, 1: noise, 2: left kidney, 3: right kidney}
+# BUT spatially AIRA is different: label 2 is at RIGHT kidney location, label 3 is at LEFT kidney location
+# Therefore we need to remap AIRA to match human reader spatial convention:
 label_mapping = {
-    0: 0,  # background stays as 0
-    1: 0,  # noise (only 5 voxels) -> treat as background
-    2: 2,  # predicted label 2 (spatially RIGHT kidney) -> ground truth right kidney (2)
-    3: 1   # predicted label 3 (spatially LEFT kidney) -> ground truth left kidney (1)
+    0: 0,  # background stays as background
+    1: 0,  # noise (only few voxels) -> treat as background
+    2: 2,  # AIRA label 2 (spatially RIGHT kidney) -> ground truth right kidney (2)
+    3: 1   # AIRA label 3 (spatially LEFT kidney) -> ground truth left kidney (1)
 }
 
 print(f"\nApplying label mapping to predicted image: {label_mapping}")

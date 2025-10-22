@@ -13,6 +13,13 @@ from scipy import stats
 import warnings
 warnings.filterwarnings('ignore')
 
+# IMPORTANT DISCOVERY (2024-10-21):
+# During comprehensive multi-reader analysis, we discovered that GT1_AS files
+# are IDENTICAL to FDA_MC files (verified via MD5 hash). This means GT1_AS
+# represents duplicate annotations, not independent reader annotations.
+# True independent readers are: FDA_MC and GT02_GM only.
+# AIRA performance: ~0.908 Dice after proper spatial reorientation and label mapping.
+
 # ============================================================================
 # CONFIGURATION SECTION - Customize what to include in the output
 # ============================================================================
@@ -68,12 +75,15 @@ CONFIG = {
     'regulatory_documentation': True,   # Include regulatory compliance documentation
 }
 
-# Label mapping configuration
+# Label mapping configuration for AIRA
+# AIRA uses different labeling: 0=Background, 1=Noise, 2=Left Kidney, 3=Right Kidney
+# BUT spatially: AIRA label 2 is at RIGHT kidney location, AIRA label 3 is at LEFT kidney location
+# So we remap AIRA to match human reader convention (0=Background, 1=Left Kidney, 2=Right Kidney):
 LABEL_MAPPING = {
-    0: 0,  # background
-    1: 0,  # noise -> background
-    2: 2,  # left kidney
-    3: 1   # right kidney
+    0: 0,  # background -> background
+    1: 0,  # noise (few voxels) -> background
+    2: 2,  # AIRA label 2 (spatially RIGHT kidney) -> GT right kidney (2)
+    3: 1   # AIRA label 3 (spatially LEFT kidney) -> GT left kidney (1)
 }
 
 # ============================================================================
@@ -239,11 +249,34 @@ def reorient_to_match(target_img, source_img):
     return reoriented_data
 
 def remap_labels(data, label_mapping):
-    """Remap labels in the data array according to the provided mapping."""
-    remapped_data = np.zeros_like(data)
-    for old_label, new_label in label_mapping.items():
-        remapped_data[data == old_label] = new_label
-    return remapped_data
+    """
+    Remap labels according to specified mapping with robust handling.
+    Handles floating-point precision issues by rounding to nearest integer first.
+    
+    Parameters:
+    -----------
+    data : numpy array
+        The data array with original labels
+    label_mapping : dict
+        Dictionary mapping old labels to new labels
+    
+    Returns:
+    --------
+    remapped_data : numpy array
+        Data array with remapped labels
+    """
+    # Handle floating-point precision issues by rounding to nearest integer
+    data_rounded = np.round(data).astype(int)
+    
+    # Create output array
+    remapped_data = np.zeros_like(data_rounded)
+    
+    # Apply mapping
+    for original_label, new_label in label_mapping.items():
+        mask = (data_rounded == original_label)
+        remapped_data[mask] = new_label
+    
+    return remapped_data.astype(float)  # Return as float to match original data type
 
 def dice_coefficient(y_true, y_pred, epsilon=1e-6):
     """
