@@ -6,7 +6,7 @@
 
 ## 📋 Overview
 
-This folder contains **5 production tools** and **1 test utility** designed for batch processing AIRA AI-generated kidney segmentation masks for FDA compliance validation. These tools handle the complete workflow from raw AIRA masks to FDA-ready validated results.
+This folder contains **6 production tools** and **1 test utility** designed for batch processing AIRA AI-generated kidney segmentation masks for FDA compliance validation. These tools handle the complete workflow from raw AIRA masks to FDA-ready validated results.
 
 **Creation Date:** October 29, 2025  
 **Last Updated:** October 29, 2025  
@@ -345,7 +345,105 @@ Set DRY_RUN = False to perform actual renaming
 
 ---
 
-### 6. `test_default_orientation.py` - Orientation Test Utility
+### 6. `check_nested_orientation.py` - Nested Folder Analyzer with DICOM Support
+**Purpose:** Recursively scan nested folder structures to find and analyze orientation of NIfTI and DICOM files
+
+**What it does:**
+- Recursively scans deeply nested subfolder hierarchies
+- Finds all NIfTI (.nii, .nii.gz) and DICOM (.dcm) files
+- Reports orientation for each file type
+- Extracts and interprets DICOM Image Orientation Patient (IOP) tags
+- Provides per-folder and overall statistics
+- Calculates total storage size
+
+**Key Features:**
+- ✅ **Deep recursion:** Scans nested folders at any depth level
+- ✅ **DICOM support:** Reads DICOM files and extracts orientation from IOP tags
+- ✅ **NIfTI support:** Standard RAS/LPS/LPI orientation detection
+- ✅ **Modality detection:** Identifies file types (CT, MRI, etc.)
+- ✅ **Smart display:** Limits file display to avoid spam from large DICOM series
+- ✅ **Statistics:** Shows orientation distribution and storage size
+- ✅ **Flexible patterns:** Search for multiple file extensions
+
+**DICOM Orientation Interpretation:**
+- Converts Image Orientation Patient (IOP) 6-element array to readable format
+- Maps DICOM coordinate system to LPH/RAS convention
+- Shows raw IOP values: `[1.00, 0.00, 0.00, 0.00, 1.00, 0.00]`
+- Example: LPH = Left-Posterior-Head/Superior (standard axial CT)
+
+**Configuration:**
+```python
+ROOT_PATH = r"D:\__SHARED__\AIRA_FDA_SET_2_LIVE\Original_Images"
+
+# File patterns to search
+FILE_PATTERNS = [
+    "*.nii",
+    "*.nii.gz",
+    "*.dcm"  # DICOM files
+]
+
+# Display options
+SHOW_DETAILED_FILES = True   # Show individual files
+SHOW_FOLDER_SUMMARY = True   # Show per-folder summaries
+SHOW_OVERALL_STATS = True    # Show overall statistics
+MAX_FILES_PER_FOLDER = 3     # Limit files shown per folder
+```
+
+**Usage:**
+```bash
+python check_nested_orientation.py
+```
+
+**Output Example:**
+```
+================================================================================
+NESTED FOLDER ORIENTATION CHECK
+================================================================================
+Root path: D:\__SHARED__\AIRA_FDA_SET_2_LIVE\Original_Images
+================================================================================
+
+✓ Found 2476 DICOM files in 26 subfolders
+
+────────────────────────────────────────────────────────────────────────────────
+📁 Folder: A089 N195\bff3cd0d1a619595\CT AXIAL WO
+   Depth: 3 | Files: 102
+────────────────────────────────────────────────────────────────────────────────
+  ✓ CT000000.dcm
+     Modality: CT       | Orientation: LPH    | Shape: (512, 512)
+     Image Orientation Patient: [1.00, 0.00, 0.00, 0.00, 1.00, 0.00]
+  ✓ CT000001.dcm
+     Modality: CT       | Orientation: LPH    | Shape: (512, 512)
+     Image Orientation Patient: [1.00, 0.00, 0.00, 0.00, 1.00, 0.00]
+  ... and 99 more files
+
+OVERALL STATISTICS
+Total subfolders scanned: 26
+Total files found: 2476
+Successfully analyzed: 2476
+
+Orientation distribution:
+  LPH    : 2476 files (100.0%) ██████████████████████████████████████████████████
+
+Total size: 0.35 GB (356.5 MB)
+```
+
+**Use Cases:**
+- Analyze original DICOM CT imaging data
+- Verify orientation consistency across nested datasets
+- Find all medical imaging files in complex folder structures
+- Calculate total storage requirements
+- Quality control for imaging archives
+
+**DICOM Orientation Details:**
+- **LPH** = Left-Posterior-Head/Superior (standard axial CT)
+- **IOP [1, 0, 0, 0, 1, 0]** = Standard supine patient position
+  - Rows: X-axis (Right → Left)
+  - Columns: Y-axis (Anterior → Posterior)
+  - Slices: Z-axis (Inferior → Superior / Feet → Head)
+
+---
+
+### 7. `test_default_orientation.py` - Orientation Test Utility
 **Purpose:** Test and verify default LPI orientation conversion logic
 
 **What it does:**
@@ -535,8 +633,15 @@ return remapped_data  # Returns exact integers: 0, 1, 2
 ### Orientation Standards
 - **AIRA default:** RAS (Right-Anterior-Superior)
 - **FDA analysis:** LPI (Left-Posterior-Inferior) - most common in this dataset
+- **Original DICOM CT:** LPH (Left-Posterior-Head/Superior) with IOP [1, 0, 0, 0, 1, 0]
 - **Alternative:** LPS (Left-Posterior-Superior)
 - **Reorientation:** Ensures spatial consistency with ground truth
+
+**DICOM to NIfTI Orientation Conversion:**
+- Original CT scans (DICOM): LPH orientation
+- AIRA processing: Converts DICOM → NIfTI with RAS orientation
+- Our preprocessing: Converts RAS → LPI to match ground truth
+- Result: All processed masks have consistent LPI orientation
 
 ### Workflow Flexibility
 The tools can be used independently or as a complete pipeline:
@@ -554,13 +659,15 @@ import glob
 import nibabel as nib
 import numpy as np
 import pandas as pd
+import pydicom  # For DICOM file support
 from pathlib import Path
 from datetime import datetime
+from collections import Counter, defaultdict
 ```
 
 **Install:**
 ```bash
-pip install nibabel numpy pandas
+pip install nibabel numpy pandas pydicom
 ```
 
 ---
@@ -568,15 +675,16 @@ pip install nibabel numpy pandas
 ## 📞 Support & References
 
 ### Tool Inventory
-**Production Tools (5):**
+**Production Tools (6):**
 1. `process_new_aira_masks.py` - Preprocessing with label remapping and orientation ⭐
 2. `batch_reorient_nifti.py` - Batch orientation converter
 3. `cleanup_aira_folders.py` - Folder cleanup utility
 4. `check_orientation.py` - Orientation verification tool
 5. `rename_files.py` - Batch file renaming tool
+6. `check_nested_orientation.py` - Nested folder structure analyzer with DICOM support
 
 **Test Utilities (1):**
-6. `test_default_orientation.py` - Orientation conversion test
+7. `test_default_orientation.py` - Orientation conversion test
 
 ### FDA Guidance
 - **FDA AI/ML SaMD Guidance (2021)**
@@ -596,6 +704,13 @@ pip install nibabel numpy pandas
 ---
 
 ## 📜 Version History
+
+**v1.3 - October 29, 2025**
+- ✨ New tool: `check_nested_orientation.py` - Nested folder analyzer with DICOM support
+- 🔬 DICOM orientation extraction: Reads and interprets Image Orientation Patient (IOP) tags
+- 📊 Discovered: All 2,476 original CT DICOM files have LPH orientation
+- 📝 Updated dependencies to include `pydicom`
+- 📖 Enhanced README with DICOM orientation documentation
 
 **v1.2 - October 29, 2025**
 - ⭐ Added default LPI orientation feature to `process_new_aira_masks.py`
