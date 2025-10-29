@@ -21,7 +21,7 @@ from pathlib import Path
 # ============================================================================
 
 # Input folder containing NIfTI files
-INPUT_FOLDER = r"d:\__SHARED__\AIRA_FDA_SET_2_LIVE\test"
+INPUT_FOLDER = r"d:\__SHARED__\AIRA_FDA_SET_2_LIVE"
 
 # File pattern to match - looks for files with specific name pattern
 # Examples: "aira_mask_processed.nii", "aira_mask_processed.nii.gz", "*_mask.nii", "case_*.nii"

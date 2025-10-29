@@ -29,7 +29,7 @@ warnings.filterwarnings('ignore')
 # ============================================================================
 
 # New AIRA masks location
-NEW_AIRA_PATH = r"D:\__SHARED__\AIRA_FDA_SET_2_LIVE\test"
+NEW_AIRA_PATH = r"D:\__SHARED__\AIRA_FDA_SET_2_LIVE"
 
 # Ground truth reference (from original FDA dataset)
 # These are used as reference for orientation
