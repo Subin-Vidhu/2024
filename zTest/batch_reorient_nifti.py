@@ -191,24 +191,21 @@ def process_file(input_path, target_orientation, output_suffix, skip_if_oriented
         final_orientation = get_orientation_string(reoriented_img)
         result['final_orientation'] = final_orientation
         
-        # Generate output path
+        # Generate output path using parent folder name with AIRA_ prefix
         path_obj = Path(input_path)
-        if path_obj.suffix == '.gz' and path_obj.stem.endswith('.nii'):
-            # Handle .nii.gz
-            base_name = path_obj.stem[:-4]  # Remove .nii
-            extension = '.nii.gz'
-        else:
-            # Handle .nii
-            base_name = path_obj.stem
-            extension = path_obj.suffix
+        parent_folder_name = path_obj.parent.name  # Get the folder name (e.g., "A-089(N195)")
         
-        output_filename = f"{base_name}{output_suffix}{extension}"
+        # Clean the folder name: replace parentheses with underscores for safer filenames
+        clean_folder_name = parent_folder_name.replace('(', '_').replace(')', '_')
+        
+        # Always save as .nii format with AIRA_ prefix
+        output_filename = f"AIRA_{clean_folder_name}.nii"
         output_path = path_obj.parent / output_filename
         result['output_path'] = str(output_path)
         
         # Create backup if requested
         if create_backup:
-            backup_filename = f"{base_name}_backup{extension}"
+            backup_filename = f"AIRA_{clean_folder_name}_backup.nii"
             backup_path = path_obj.parent / backup_filename
             print(f"  📋 Creating backup: {backup_filename}")
             nib.save(img, backup_path)

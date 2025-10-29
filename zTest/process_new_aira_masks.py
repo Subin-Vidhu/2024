@@ -55,13 +55,53 @@ CREATE_BACKUP = True  # Create backup of original files
 # ============================================================================
 
 def load_nifti(file_path):
-    """Load a NIfTI file safely with error handling."""
+    """
+    Load a NIfTI file safely with error handling.
+    Handles both .nii and .nii.gz files, including files with .gz extension that aren't actually gzipped.
+    """
     try:
         if not os.path.exists(file_path):
             print(f"  ✗ File not found: {file_path}")
             return None
-        img = nib.load(file_path)
-        return img
+        
+        # Try to load the file normally
+        try:
+            img = nib.load(file_path)
+            return img
+        except Exception as gz_error:
+            # If it fails and has .gz extension, it might be a .nii file misnamed as .nii.gz
+            if file_path.endswith('.nii.gz'):
+                print(f"    ⚠️  .nii.gz file appears to not be gzipped, trying to rename...")
+                
+                # Create a temporary .nii filename
+                temp_nii_path = file_path[:-3]  # Remove .gz extension
+                
+                # Try renaming and loading
+                try:
+                    import shutil
+                    shutil.copy2(file_path, temp_nii_path)
+                    img = nib.load(temp_nii_path)
+                    
+                    # If successful, permanently rename the file
+                    backup_path = file_path + '.backup'
+                    shutil.move(file_path, backup_path)
+                    shutil.move(temp_nii_path, file_path[:-3])
+                    
+                    print(f"    ✓ File was not gzipped - renamed to .nii format")
+                    print(f"    ✓ Original backed up as: {os.path.basename(backup_path)}")
+                    
+                    # Reload from the new path
+                    img = nib.load(file_path[:-3])
+                    return img
+                    
+                except Exception as rename_error:
+                    # Clean up temp file if it exists
+                    if os.path.exists(temp_nii_path):
+                        os.remove(temp_nii_path)
+                    raise gz_error  # Re-raise original error
+            else:
+                raise gz_error
+                
     except Exception as e:
         print(f"  ✗ Error loading {file_path}: {e}")
         return None
