@@ -263,20 +263,20 @@ def remap_labels(data, label_mapping):
     Returns:
     --------
     remapped_data : numpy array
-        Data array with remapped labels
+        Data array with remapped labels (int16 for clean integer labels)
     """
     # Handle floating-point precision issues by rounding to nearest integer
-    data_rounded = np.round(data).astype(int)
+    data_rounded = np.round(data).astype(np.int16)
     
-    # Create output array
-    remapped_data = np.zeros_like(data_rounded)
+    # Create output array with int16 dtype
+    remapped_data = np.zeros_like(data_rounded, dtype=np.int16)
     
     # Apply mapping
     for original_label, new_label in label_mapping.items():
         mask = (data_rounded == original_label)
         remapped_data[mask] = new_label
     
-    return remapped_data.astype(float)  # Return as float to match original data type
+    return remapped_data  # Return as int16 for clean integer labels
 
 def dice_coefficient(y_true, y_pred, epsilon=1e-6):
     """

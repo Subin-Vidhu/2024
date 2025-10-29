@@ -23,15 +23,15 @@ LABEL_MAPPING = {
 }
 
 def remap_labels(data, label_mapping, use_rounding=True):
-    """Remap labels with optional rounding for floating-point issues."""
+    """Remap labels with optional rounding for floating-point issues. Returns int16 for clean integer labels."""
     if use_rounding:
         # Round to nearest integer first to handle floating-point precision issues
-        data_rounded = np.round(data).astype(int)
+        data_rounded = np.round(data).astype(np.int16)
         print(f"    After rounding - unique values: {np.unique(data_rounded)}")
     else:
-        data_rounded = data
+        data_rounded = np.round(data).astype(np.int16)
     
-    remapped_data = np.zeros_like(data_rounded)
+    remapped_data = np.zeros_like(data_rounded, dtype=np.int16)
     for original_label, new_label in label_mapping.items():
         mask = (data_rounded == original_label)
         remapped_data[mask] = new_label
@@ -39,7 +39,7 @@ def remap_labels(data, label_mapping, use_rounding=True):
         if count > 0:
             print(f"    Mapping {original_label} -> {new_label}: {count} voxels")
     
-    return remapped_data
+    return remapped_data  # Return as int16 for clean integer labels
 
 def analyze_mask_detailed(file_path, name):
     """Detailed analysis of a mask file."""

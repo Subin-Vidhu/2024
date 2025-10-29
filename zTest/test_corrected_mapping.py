@@ -22,15 +22,15 @@ LABEL_MAPPING_HUMAN = {
 }
 
 def remap_labels(data, label_mapping):
-    """Remap labels with robust handling."""
-    data_rounded = np.round(data).astype(int)
-    remapped_data = np.zeros_like(data_rounded)
+    """Remap labels with robust handling. Returns int16 for clean integer labels."""
+    data_rounded = np.round(data).astype(np.int16)
+    remapped_data = np.zeros_like(data_rounded, dtype=np.int16)
     
     for original_label, new_label in label_mapping.items():
         mask = (data_rounded == original_label)
         remapped_data[mask] = new_label
     
-    return remapped_data.astype(float)
+    return remapped_data  # Return as int16 for clean integer labels
 
 def test_case_n072():
     """Test the remapping on N-072 case."""

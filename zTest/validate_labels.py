@@ -140,10 +140,11 @@ def create_test_data_validation():
     LABEL_MAPPING = {0: 0, 1: 0, 2: 2, 3: 1}
     
     def remap_labels(data, label_mapping):
-        remapped_data = np.zeros_like(data)
+        data_rounded = np.round(data).astype(np.int16)
+        remapped_data = np.zeros_like(data_rounded, dtype=np.int16)
         for old_label, new_label in label_mapping.items():
-            remapped_data[data == old_label] = new_label
-        return remapped_data
+            remapped_data[data_rounded == old_label] = new_label
+        return remapped_data  # Return as int16 for clean integer labels
     
     gt_remapped = remap_labels(ground_truth, LABEL_MAPPING)
     pred_remapped = remap_labels(predicted, LABEL_MAPPING)
