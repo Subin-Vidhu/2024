@@ -28,11 +28,12 @@ warnings.filterwarnings('ignore')
 # ============================================================================
 
 # Root folder containing case subfolders
-ROOT_PATH = r"D:\__SHARED__\AIRA_FDA_SET_2_LIVE"
+# ROOT_PATH = r"D:\__SHARED__\AIRA_FDA_SET_2_LIVE"
+ROOT_PATH = r"D:\__SHARED__\AIRA_FDA_SET_2_LIVE\AIRA_SET_2\LPI"
 
 # Files to check (can be modified)
 FILES_TO_CHECK = [
-    "aira_mask.nii",
+    # "aira_mask.nii",
     "aira_mask_processed.nii"
 ]
 
