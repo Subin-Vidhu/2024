@@ -467,6 +467,35 @@ def batch_process_all_cases():
             successful_cases.append(case_id)
             all_csv_data.extend(csv_rows)
     
+    # Calculate overall average Dice score from successful cases
+    overall_dice_scores = []
+    for row in all_csv_data:
+        # Collect "Average" row Dice scores (Row 4 of each case)
+        if 'Average' in str(row.get('Organ', '')) and row.get('DiceCoefficient') != '':
+            try:
+                dice_val = float(row['DiceCoefficient'])
+                overall_dice_scores.append(dice_val)
+            except (ValueError, TypeError):
+                pass
+    
+    # Add overall summary row
+    if overall_dice_scores:
+        overall_avg_dice = sum(overall_dice_scores) / len(overall_dice_scores)
+        all_csv_data.append({
+            'Patient': 'AVERAGE',
+            'Mask1': '',
+            'Mask2': '',
+            'Organ': 'Overall',
+            'DiceCoefficient': round(overall_avg_dice, 6),
+            'Mask1_Volume_mm3': '',
+            'Mask2_Volume_mm3': '',
+            'Mask1_Volume_cm3': '',
+            'Mask2_Volume_cm3': '',
+            'DiffPercent': '',
+            'LargerMask': '',
+            'Error': ''
+        })
+    
     # Save combined CSV
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     csv_filename = f'Batch_Annotator_Comparison_{timestamp}.csv'
@@ -483,6 +512,10 @@ def batch_process_all_cases():
     print(f"✅ Successful: {len(successful_cases)}")
     print(f"❌ Failed: {len(failed_cases)}")
     
+    if overall_dice_scores:
+        print(f"\n📊 Overall Average Dice Score: {overall_avg_dice:.6f}")
+        print(f"   Based on {len(overall_dice_scores)} successful cases")
+    
     if successful_cases:
         print(f"\n✅ Successful cases: {', '.join(successful_cases)}")
     
@@ -492,7 +525,7 @@ def batch_process_all_cases():
             print(f"   {case_id}: {error}")
     
     print(f"\n💾 Results saved to: {csv_path}")
-    print(f"\n📊 CSV contains {len(all_csv_data)} rows ({len(all_csv_data)//4} cases × 4 rows)")
+    print(f"\n📊 CSV contains {len(all_csv_data)} rows (includes {len(successful_cases)} cases + 1 overall summary)")
     
     print("\n" + "=" * 80)
     print("✅ BATCH PROCESSING COMPLETE")
