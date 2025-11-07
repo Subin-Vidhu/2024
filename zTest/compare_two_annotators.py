@@ -221,7 +221,10 @@ def compare_two_annotators():
     print("DICE COEFFICIENT (Inter-Observer Agreement)")
     print("=" * 80)
     
-    class_names = ['Background', 'Left Kidney', 'Right Kidney']
+    # IMPORTANT: Radiologist's perspective (viewing from front of patient)
+    # Label 1 (lower X ~155) = RIGHT kidney (patient's right)
+    # Label 2 (higher X ~360) = LEFT kidney (patient's left)
+    class_names = ['Background', 'Right Kidney', 'Left Kidney']
     num_classes = len(class_names)
     
     dice_scores = multi_class_dice(data1, data2, num_classes)
@@ -341,12 +344,97 @@ def compare_two_annotators():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     
-    # Save CSV
+    # Create CSV in the exact format from the example
     csv_filename = f'Annotator_Comparison_{CASE_ID}_{timestamp}.csv'
     csv_path = os.path.join(OUTPUT_DIR, csv_filename)
-    df = pd.DataFrame([results])
+    
+    # Extract patient number from case ID (e.g., N-071 -> 71)
+    patient_num = CASE_ID.split('-')[-1] if '-' in CASE_ID else CASE_ID
+    
+    # Get filenames only (not full paths)
+    mask1_filename = os.path.basename(ANNOTATOR_1_PATH)
+    mask2_filename = os.path.basename(ANNOTATOR_2_PATH)
+    
+    # Create 4 rows as per the format
+    csv_data = []
+    
+    # Row 1: Right Kidney (Radiologist's perspective: Label 1 = RIGHT kidney)
+    csv_data.append({
+        'Patient': patient_num,
+        'Mask1': mask1_filename,
+        'Mask2': mask2_filename,
+        'Organ': 'Right Kidney',
+        'DiceCoefficient': round(dice_scores[1], 6),  # Label 1 = Right kidney (radiologist view)
+        'Mask1_Volume_mm3': round(volumes1[1] * 1000, 2),  # Convert cm³ to mm³
+        'Mask2_Volume_mm3': round(volumes2[1] * 1000, 2),
+        'Mask1_Volume_cm3': round(volumes1[1], 2),
+        'Mask2_Volume_cm3': round(volumes2[1], 2),
+        'DiffPercent': f"{abs((volumes2[1] - volumes1[1]) / volumes1[1] * 100):.2f}%" if volumes1[1] > 0 else "0.00%",
+        'LargerMask': 'Mask1' if volumes1[1] > volumes2[1] else 'Mask2',
+        'Error': ''
+    })
+    
+    # Row 2: Left Kidney (Radiologist's perspective: Label 2 = LEFT kidney)
+    csv_data.append({
+        'Patient': patient_num,
+        'Mask1': mask1_filename,
+        'Mask2': mask2_filename,
+        'Organ': 'Left Kidney',
+        'DiceCoefficient': round(dice_scores[2], 6),  # Label 2 = Left kidney (radiologist view)
+        'Mask1_Volume_mm3': round(volumes1[2] * 1000, 2),
+        'Mask2_Volume_mm3': round(volumes2[2] * 1000, 2),
+        'Mask1_Volume_cm3': round(volumes1[2], 2),
+        'Mask2_Volume_cm3': round(volumes2[2], 2),
+        'DiffPercent': f"{abs((volumes2[2] - volumes1[2]) / volumes1[2] * 100):.2f}%" if volumes1[2] > 0 else "0.00%",
+        'LargerMask': 'Mask1' if volumes1[2] > volumes2[2] else 'Mask2',
+        'Error': ''
+    })
+    
+    # Row 3: Both Kidneys (combined)
+    both_kidneys_vol1 = volumes1[1] + volumes1[2]
+    both_kidneys_vol2 = volumes2[1] + volumes2[2]
+    # Calculate Dice for both kidneys combined
+    both_kidneys_mask1 = ((data1 == 1) | (data1 == 2)).astype(np.float32)
+    both_kidneys_mask2 = ((data2 == 1) | (data2 == 2)).astype(np.float32)
+    both_kidneys_dice = dice_coefficient(both_kidneys_mask1, both_kidneys_mask2)
+    
+    csv_data.append({
+        'Patient': patient_num,
+        'Mask1': mask1_filename,
+        'Mask2': mask2_filename,
+        'Organ': 'Both Kidneys',
+        'DiceCoefficient': round(both_kidneys_dice, 6),
+        'Mask1_Volume_mm3': round(both_kidneys_vol1 * 1000, 2),
+        'Mask2_Volume_mm3': round(both_kidneys_vol2 * 1000, 2),
+        'Mask1_Volume_cm3': round(both_kidneys_vol1, 2),
+        'Mask2_Volume_cm3': round(both_kidneys_vol2, 2),
+        'DiffPercent': f"{abs((both_kidneys_vol2 - both_kidneys_vol1) / both_kidneys_vol1 * 100):.2f}%" if both_kidneys_vol1 > 0 else "0.00%",
+        'LargerMask': 'Mask1' if both_kidneys_vol1 > both_kidneys_vol2 else 'Mask2',
+        'Error': ''
+    })
+    
+    # Row 4: Average (mean of Right + Left Dice scores)
+    # dice_scores[1] = Right kidney, dice_scores[2] = Left kidney (radiologist view)
+    avg_dice = (dice_scores[1] + dice_scores[2]) / 2
+    csv_data.append({
+        'Patient': patient_num,
+        'Mask1': mask1_filename,
+        'Mask2': mask2_filename,
+        'Organ': f'{patient_num} Average',
+        'DiceCoefficient': round(avg_dice, 6),
+        'Mask1_Volume_mm3': '',
+        'Mask2_Volume_mm3': '',
+        'Mask1_Volume_cm3': '',
+        'Mask2_Volume_cm3': '',
+        'DiffPercent': '',
+        'LargerMask': '',
+        'Error': ''
+    })
+    
+    # Create DataFrame and save
+    df = pd.DataFrame(csv_data)
     df.to_csv(csv_path, index=False)
-    print(f"\n💾 Results saved to: {csv_path}")
+    print(f"\n💾 CSV Results saved to: {csv_path}")
     
     # Save detailed report
     report_filename = f'Annotator_Comparison_Report_{CASE_ID}_{timestamp}.txt'
