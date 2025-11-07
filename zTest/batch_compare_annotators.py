@@ -6,6 +6,29 @@ Batch Compare Two Annotators - Inter-Observer Agreement Analysis
 This script processes multiple cases and compares segmentation masks from 
 two different annotators to calculate inter-observer agreement metrics.
 
+IMPORTANT - LABEL CONVENTION (RADIOLOGIST'S PERSPECTIVE):
+----------------------------------------------------------
+This script uses the RADIOLOGIST'S VIEWING PERSPECTIVE:
+  - Label 1 = RIGHT kidney (patient's right side, left side of screen)
+  - Label 2 = LEFT kidney (patient's left side, right side of screen)
+
+This is OPPOSITE to the anatomical convention used in FDA scripts where:
+  - Label 1 = LEFT kidney (anatomical left)
+  - Label 2 = RIGHT kidney (anatomical right)
+
+WHY THE DIFFERENCE?
+When radiologists view medical images, they look at the patient from the front,
+so left and right are flipped from the patient's anatomical perspective.
+In LPI orientation, lower X coordinates are on the patient's RIGHT side.
+
+DICE COEFFICIENT CALCULATION:
+This script uses the FDA-COMPLIANT enhanced dice coefficient with:
+  - Boolean logic operations (&) for intersection
+  - Explicit binary mask conversion
+  - Proper edge case handling
+  - Value clamping to [0,1] range
+This matches the implementation in fda_multiple_case_dice.py (FDA compliant version).
+
 Usage:
     python batch_compare_annotators.py
 
@@ -66,23 +89,55 @@ def get_voxel_volume(img):
     return voxel_volume, voxel_dims
 
 def dice_coefficient(y_true, y_pred, epsilon=1e-6):
-    """Calculate Dice coefficient between two binary masks."""
+    """
+    FDA-compliant Dice coefficient calculation.
+    
+    Uses boolean logic operations for more accurate intersection calculation
+    compared to simple multiplication. This implementation matches the enhanced
+    version in fda_multiple_case_dice.py.
+    
+    Formula: Dice = 2 * |A ∩ B| / (|A| + |B|)
+    
+    References:
+    - Dice, L.R. (1945). Ecology 26(3): 297-302
+    - Zou et al. (2004). Academic Radiology 11(2): 178-189
+    - Taha & Hanbury (2015). BMC Medical Imaging 15: 29
+    
+    Parameters:
+    -----------
+    y_true : numpy array
+        First binary mask
+    y_pred : numpy array
+        Second binary mask
+    epsilon : float
+        Small value for numerical stability
+    
+    Returns:
+    --------
+    float : Dice coefficient in range [0, 1]
+    """
     if y_true.shape != y_pred.shape:
         raise ValueError("Masks must have identical shapes")
     
+    # Convert to binary masks with explicit casting for FDA compliance
     y_true_bin = y_true.astype(np.bool_)
     y_pred_bin = y_pred.astype(np.bool_)
     
+    # Calculate components using logical operations for accuracy
     intersection = np.sum(y_true_bin & y_pred_bin)
     sum_true = np.sum(y_true_bin)
     sum_pred = np.sum(y_pred_bin)
     
+    # Handle edge cases per FDA requirements
     if sum_true == 0 and sum_pred == 0:
-        return 1.0
+        return 1.0  # Perfect agreement on empty regions
     elif sum_true == 0 or sum_pred == 0:
-        return 0.0
+        return 0.0  # No overlap possible
     
+    # Standard Sørensen-Dice formula with numerical stability
     dice = (2.0 * intersection + epsilon) / (sum_true + sum_pred + epsilon)
+    
+    # Ensure valid range [0,1]
     return np.clip(dice, 0.0, 1.0)
 
 def multi_class_dice(mask1, mask2, num_classes=3):
@@ -169,8 +224,22 @@ def process_single_case(case_id, annotator1_path, annotator2_path):
         voxel_volume_mm3, _ = get_voxel_volume(img1)
         
         # Calculate Dice scores
-        # IMPORTANT: Radiologist's perspective
-        # Label 1 = RIGHT kidney (lower X), Label 2 = LEFT kidney (higher X)
+        # =====================================================================
+        # IMPORTANT: RADIOLOGIST'S PERSPECTIVE (VIEWING FROM FRONT)
+        # =====================================================================
+        # This differs from FDA scripts which use anatomical convention!
+        #
+        # In LPI orientation with radiologist viewing from front:
+        #   - Lower X coordinates (~155) = Patient's RIGHT side = Label 1
+        #   - Higher X coordinates (~360) = Patient's LEFT side = Label 2
+        #
+        # Therefore:
+        #   - Label 1 = RIGHT kidney (patient's right, radiologist's left on screen)
+        #   - Label 2 = LEFT kidney (patient's left, radiologist's right on screen)
+        #
+        # NOTE: FDA scripts use opposite convention (Label 1=Left, Label 2=Right)
+        # based on anatomical naming. Both are correct in their respective contexts.
+        # =====================================================================
         class_names = ['Background', 'Right Kidney', 'Left Kidney']
         num_classes = len(class_names)
         
@@ -188,7 +257,9 @@ def process_single_case(case_id, annotator1_path, annotator2_path):
         # Create CSV rows
         csv_data = []
         
-        # Row 1: Right Kidney (Label 1 from radiologist's perspective)
+        # Row 1: Right Kidney
+        # Using Label 1 which corresponds to RIGHT kidney (radiologist's perspective)
+        # This is the kidney at lower X coordinate (~155) = patient's right side
         csv_data.append({
             'Patient': patient_num,
             'Mask1': mask1_filename,
@@ -243,6 +314,7 @@ def process_single_case(case_id, annotator1_path, annotator2_path):
         })
         
         # Row 4: Average
+        # Calculate mean of Right (Label 1) and Left (Label 2) kidney Dice scores
         avg_dice = (dice_scores[1] + dice_scores[2]) / 2
         csv_data.append({
             'Patient': patient_num,
