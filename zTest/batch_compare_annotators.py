@@ -29,6 +29,17 @@ This script uses the FDA-COMPLIANT enhanced dice coefficient with:
   - Value clamping to [0,1] range
 This matches the implementation in fda_multiple_case_dice.py (FDA compliant version).
 
+IMPORTANT - "BOTH KIDNEYS" AND "AVERAGE" CALCULATION:
+Both Row 3 (Both Kidneys) and Row 4 (Average) use the UNION METHOD:
+  - Combines all kidney voxels: (Right ∪ Left) for both annotators
+  - Then calculates Dice on the combined regions
+  - Formula: Dice = 2 × |A_Both ∩ B_Both| / (|A_Both| + |B_Both|)
+  - This gives the SAME value for both rows (treats kidneys as one region)
+  
+This is DIFFERENT from the averaging method which would be:
+  - (Dice_Right + Dice_Left) / 2
+  - Union method is preferred for consistency.
+
 Usage:
     python batch_compare_annotators.py
 
@@ -313,15 +324,28 @@ def process_single_case(case_id, annotator1_path, annotator2_path):
             'Error': ''
         })
         
-        # Row 4: Average
-        # Calculate mean of Right (Label 1) and Left (Label 2) kidney Dice scores
-        avg_dice = (dice_scores[1] + dice_scores[2]) / 2
+        # Row 4: Average (using UNION method, same as Both Kidneys)
+        # =====================================================================
+        # IMPORTANT: This uses the UNION-BASED Dice calculation
+        # =====================================================================
+        # This is the SAME VALUE as "Both Kidneys" (Row 3).
+        # We calculate by combining both kidney voxels first, then computing Dice:
+        #   A_Both = A_Right ∪ A_Left (union of both kidneys from Annotator 1)
+        #   B_Both = B_Right ∪ B_Left (union of both kidneys from Annotator 2)
+        #   Dice = 2 × |A_Both ∩ B_Both| / (|A_Both| + |B_Both|)
+        #
+        # This is DIFFERENT from averaging individual Dice scores:
+        #   Average method: (Dice_Right + Dice_Left) / 2
+        #   Union method: Dice(Right ∪ Left)
+        #
+        # Union method is preferred as it treats both kidneys as one region.
+        # =====================================================================
         csv_data.append({
             'Patient': patient_num,
             'Mask1': mask1_filename,
             'Mask2': mask2_filename,
             'Organ': f'{patient_num} Average',
-            'DiceCoefficient': round(avg_dice, 6),
+            'DiceCoefficient': round(both_kidneys_dice, 6),  # Use union-based Dice (same as Both Kidneys)
             'Mask1_Volume_mm3': '',
             'Mask2_Volume_mm3': '',
             'Mask1_Volume_cm3': '',
