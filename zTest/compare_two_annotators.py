@@ -370,7 +370,7 @@ def compare_two_annotators():
         'Mask1_Volume_cm3': round(volumes1[1], 2),
         'Mask2_Volume_cm3': round(volumes2[1], 2),
         'DiffPercent': f"{abs((volumes2[1] - volumes1[1]) / volumes1[1] * 100):.2f}%" if volumes1[1] > 0 else "0.00%",
-        'LargerMask': 'Mask1' if volumes1[1] > volumes2[1] else 'Mask2',
+        'LargerMask': 'Equal' if volumes1[1] == volumes2[1] else ('Mask1' if volumes1[1] > volumes2[1] else 'Mask2'),
         'Error': ''
     })
     
@@ -386,7 +386,7 @@ def compare_two_annotators():
         'Mask1_Volume_cm3': round(volumes1[2], 2),
         'Mask2_Volume_cm3': round(volumes2[2], 2),
         'DiffPercent': f"{abs((volumes2[2] - volumes1[2]) / volumes1[2] * 100):.2f}%" if volumes1[2] > 0 else "0.00%",
-        'LargerMask': 'Mask1' if volumes1[2] > volumes2[2] else 'Mask2',
+        'LargerMask': 'Equal' if volumes1[2] == volumes2[2] else ('Mask1' if volumes1[2] > volumes2[2] else 'Mask2'),
         'Error': ''
     })
     
@@ -409,7 +409,7 @@ def compare_two_annotators():
         'Mask1_Volume_cm3': round(both_kidneys_vol1, 2),
         'Mask2_Volume_cm3': round(both_kidneys_vol2, 2),
         'DiffPercent': f"{abs((both_kidneys_vol2 - both_kidneys_vol1) / both_kidneys_vol1 * 100):.2f}%" if both_kidneys_vol1 > 0 else "0.00%",
-        'LargerMask': 'Mask1' if both_kidneys_vol1 > both_kidneys_vol2 else 'Mask2',
+        'LargerMask': 'Equal' if both_kidneys_vol1 == both_kidneys_vol2 else ('Mask1' if both_kidneys_vol1 > both_kidneys_vol2 else 'Mask2'),
         'Error': ''
     })
     
