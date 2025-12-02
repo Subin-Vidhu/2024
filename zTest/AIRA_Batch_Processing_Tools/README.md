@@ -594,19 +594,20 @@ D:\__SHARED__\AIRA_FDA_SET_2_LIVE\AIRA_SET_2\LPI
 ### **STEP 5: MOVE RENAMED FILES** 📦
 
 #### **09_move_renamed_files.py** - Move Renamed Files to Collection Folder
-**Purpose:** Collect all renamed AIRA files into a single output folder
+**Purpose:** Collect all renamed AIRA files into a single output folder by moving them
 
 **What it does:**
 - Scans case folders for renamed files (AIRA_*.nii pattern)
-- Copies all renamed files to a single collection folder
-- Preserves original files in case folders
+- **Moves** all renamed files to a single collection folder
+- Removes files from original case folders (consolidates dataset)
 - Useful for creating a consolidated dataset
 
 **Key Features:**
 - ✅ **Collection folder:** Creates single folder with all renamed files
-- ✅ **Preserves originals:** Copies (not moves) files
+- ✅ **Moves files:** Files are moved (not copied) from original locations
 - ✅ **Pattern matching:** Finds files matching `AIRA_{folder}.nii`
-- ✅ **Simple:** Straightforward file collection
+- ✅ **Summary statistics:** Shows moved/missing counts
+- ✅ **Error handling:** Continues processing even if some moves fail
 
 **Configuration:**
 ```python
@@ -621,17 +622,34 @@ python 09_move_renamed_files.py
 
 **Output Example:**
 ```
-Found: K:\AIRA_FDA_Models\DATA\batch_storage\N-001\AIRA_N-001.nii
-Copied to: K:\AIRA_FDA_Models\DATA\batch_storage\ARAMIS_RAS_LPI
-Found: K:\AIRA_FDA_Models\DATA\batch_storage\A-068\AIRA_A-068.nii
-Copied to: K:\AIRA_FDA_Models\DATA\batch_storage\ARAMIS_RAS_LPI
+======================================================================
+MOVE RENAMED FILES TO COLLECTION FOLDER
+======================================================================
+Source directory: K:\AIRA_FDA_Models\DATA\batch_storage
+Destination directory: K:\AIRA_FDA_Models\DATA\batch_storage\ARAMIS_RAI_LPS
+======================================================================
+
+Moving: AIRA_N-001.nii
+  ✓ Moved to: K:\AIRA_FDA_Models\DATA\batch_storage\ARAMIS_RAI_LPS
+Moving: AIRA_A-068.nii
+  ✓ Moved to: K:\AIRA_FDA_Models\DATA\batch_storage\ARAMIS_RAI_LPS
+Missing: AIRA_N-002.nii in K:\AIRA_FDA_Models\DATA\batch_storage\N-002
 ...
+
+======================================================================
+SUMMARY
+======================================================================
+Files moved: 45
+Files missing: 12
+Destination: K:\AIRA_FDA_Models\DATA\batch_storage\ARAMIS_RAI_LPS
+======================================================================
 ```
 
 **Use Cases:**
 - Create consolidated dataset folder
 - Prepare files for distribution
 - Organize processed files in one location
+- **Note:** Files are MOVED (removed from original folders), not copied
 
 ---
 
