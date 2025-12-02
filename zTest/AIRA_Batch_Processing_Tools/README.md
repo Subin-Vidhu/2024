@@ -6,10 +6,10 @@
 
 ## 📋 Overview
 
-This folder contains **6 production tools** and **1 test utility** designed for batch processing AIRA AI-generated kidney segmentation masks for FDA compliance validation. These tools handle the complete workflow from raw AIRA masks to FDA-ready validated results.
+This folder contains **7 production tools** and **1 test utility** designed for batch processing AIRA AI-generated kidney segmentation masks for FDA compliance validation. These tools handle the complete workflow from raw AIRA masks to FDA-ready validated results.
 
 **Creation Date:** October 29, 2025  
-**Last Updated:** October 29, 2025  
+**Last Updated:** December 2, 2025  
 **Purpose:** FDA AI/ML Software as a Medical Device (SaMD) Validation  
 **Dataset:** AIRA kidney segmentation predictions (SET_2_LIVE)  
 
@@ -17,7 +17,96 @@ This folder contains **6 production tools** and **1 test utility** designed for 
 
 ## 🛠️ Tools Included
 
-### 1. `process_new_aira_masks.py` - AIRA Mask Preprocessor ⭐
+### 1. `process_batch_storage_masks.py` - Batch Storage Mask Processor ⭐ **NEW**
+**Purpose:** Complete preprocessing pipeline for batch_storage masks with volume CSV export
+
+**What it does:**
+- Processes AIRA masks from `G:\AIRA_Models_RESULTS\batch_storage` folder
+- Handles specific mask pattern: `mask_model_checkpoint_664_0.6738.nii.gz`
+- **Automatically applies LPI orientation** (standardized output)
+- Applies label remapping: {2→2, 3→1} (Left stays, Right becomes 1)
+- Uses int16 data type for exact integer labels
+- **Exports volume CSV** with Case Name, Right Kidney Volume, Left Kidney Volume
+- Saves processed masks ready for analysis
+
+**Key Features:**
+- ✅ **Configurable mask pattern:** Easy to change target filename
+- ✅ **LPI orientation:** Always standardizes to LPI (no reference GT needed)
+- ✅ **Label remapping:** Converts labels 3→1, 2→2
+- ✅ **Volume calculation:** Calculates kidney volumes in cm³
+- ✅ **CSV export:** Automatically generates volume report in results folder
+- ✅ **Timestamped output:** Creates timestamped subfolder for each run
+- ✅ **int16 precision:** Ensures exact integer values (0, 1, 2)
+- ✅ **Detailed logging:** Shows each processing step
+
+**Label Mapping:**
+```python
+LABEL_MAPPING_AIRA = {
+    0: 0,  # Background → Background
+    1: 0,  # Noise (if present) → Background
+    2: 2,  # Left Kidney → stays as 2
+    3: 1   # Right Kidney → becomes 1
+}
+```
+
+**Configuration:**
+```python
+# Input path
+NEW_AIRA_PATH = r"G:\AIRA_Models_RESULTS\batch_storage"
+
+# Mask filename pattern
+MASK_FILENAME_PATTERN = "mask_model_checkpoint_664_0.6738.nii.gz"
+
+# Reference GT (optional - set to None for LPI default)
+GROUND_TRUTH_REFERENCE_PATH = None
+
+# Label mapping
+LABEL_MAPPING_AIRA = {0: 0, 1: 0, 2: 2, 3: 1}
+```
+
+**Usage:**
+```bash
+python process_batch_storage_masks.py
+```
+
+**Output:**
+- Processed masks: `*_processed.nii` in each case folder
+- Volume CSV: `results/Batch_Storage_Volumes_TIMESTAMP/Kidney_Volumes_TIMESTAMP.csv`
+
+**CSV Format:**
+```csv
+Case Name,Right Kidney Volume (cm³),Left Kidney Volume (cm³)
+N-001,125.45,118.32
+N-002,132.18,129.67
+...
+```
+
+**Example Output:**
+```
+Processing: N-001
+  📂 Loading AIRA mask: mask_model_checkpoint_664_0.6738.nii.gz
+    Orientation: RAS
+  🔄 No reference GT found, applying default orientation: RAS → LPI
+    ✓ Default reorientation to LPI successful
+  🏷️  Applying label remapping
+    After remapping: [0, 1, 2]
+  📊 Volume Analysis:
+    Right Kidney: 125,450 voxels = 125.45 cm³
+    Left Kidney: 118,320 voxels = 118.32 cm³
+  💾 Saving processed mask: mask_model_checkpoint_664_0.6738_processed.nii
+    ✓ Saved successfully
+
+📊 Volume CSV exported to: results/Batch_Storage_Volumes_20251202_143022/Kidney_Volumes_20251202_143022.csv
+```
+
+**Recent Updates (Dec 2, 2025):**
+- Added automatic CSV volume export
+- Creates timestamped subfolder in results directory
+- Includes both successful and failed cases in CSV
+
+---
+
+### 2. `process_new_aira_masks.py` - AIRA Mask Preprocessor ⭐
 **Purpose:** Complete preprocessing pipeline for new AIRA masks with label remapping and automatic orientation handling
 
 **What it does:**
@@ -675,16 +764,17 @@ pip install nibabel numpy pandas pydicom
 ## 📞 Support & References
 
 ### Tool Inventory
-**Production Tools (6):**
-1. `process_new_aira_masks.py` - Preprocessing with label remapping and orientation ⭐
-2. `batch_reorient_nifti.py` - Batch orientation converter
-3. `cleanup_aira_folders.py` - Folder cleanup utility
-4. `check_orientation.py` - Orientation verification tool
-5. `rename_files.py` - Batch file renaming tool
-6. `check_nested_orientation.py` - Nested folder structure analyzer with DICOM support
+**Production Tools (7):**
+1. `process_batch_storage_masks.py` - Batch storage mask processor with CSV export ⭐ **NEW**
+2. `process_new_aira_masks.py` - Preprocessing with label remapping and orientation ⭐
+3. `batch_reorient_nifti.py` - Batch orientation converter
+4. `cleanup_aira_folders.py` - Folder cleanup utility
+5. `check_orientation.py` - Orientation verification tool
+6. `rename_files.py` - Batch file renaming tool
+7. `check_nested_orientation.py` - Nested folder structure analyzer with DICOM support
 
 **Test Utilities (1):**
-7. `test_default_orientation.py` - Orientation conversion test
+8. `test_default_orientation.py` - Orientation conversion test
 
 ### FDA Guidance
 - **FDA AI/ML SaMD Guidance (2021)**
@@ -704,6 +794,13 @@ pip install nibabel numpy pandas pydicom
 ---
 
 ## 📜 Version History
+
+**v1.4 - December 2, 2025**
+- ✨ New tool: `process_batch_storage_masks.py` - Batch storage mask processor
+- 📊 Added automatic CSV volume export with Case Name, Right/Left Kidney Volumes
+- 📁 Creates timestamped subfolders in results directory
+- 🎯 Specifically designed for `G:\AIRA_Models_RESULTS\batch_storage` workflow
+- 📝 Updated README with new tool documentation
 
 **v1.3 - October 29, 2025**
 - ✨ New tool: `check_nested_orientation.py` - Nested folder analyzer with DICOM support
@@ -750,6 +847,6 @@ For questions about these tools or FDA validation workflow:
 
 ---
 
-**Last Updated:** October 29, 2025  
+**Last Updated:** December 2, 2025  
 **Status:** Production Ready ✅  
-**Tools Count:** 5 production + 1 test utility
+**Tools Count:** 7 production + 1 test utility

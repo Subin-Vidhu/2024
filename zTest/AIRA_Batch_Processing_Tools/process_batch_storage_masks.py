@@ -20,6 +20,7 @@ import sys
 import glob
 import numpy as np
 import nibabel as nib
+import pandas as pd
 from datetime import datetime
 import warnings
 warnings.filterwarnings('ignore')
@@ -29,7 +30,8 @@ warnings.filterwarnings('ignore')
 # ============================================================================
 
 # Batch storage masks location
-NEW_AIRA_PATH = r"G:\AIRA_Models_RESULTS\batch_storage"
+# NEW_AIRA_PATH = r"G:\AIRA_Models_RESULTS\batch_storage"
+NEW_AIRA_PATH = r"K:/AIRA_FDA_Models/DATA/batch_storage"
 
 # Ground truth reference (optional - set to None if not available)
 # If None, will use default LPI orientation
@@ -272,6 +274,8 @@ def process_single_case(case_id, aira_mask_path, reference_gt_path=None):
         'reorientation_applied': False,
         'original_labels': None,
         'remapped_labels': None,
+        'right_kidney_volume_cm3': None,
+        'left_kidney_volume_cm3': None,
         'error': None
     }
     
@@ -394,6 +398,10 @@ def process_single_case(case_id, aira_mask_path, reference_gt_path=None):
     print(f"\n  📊 Volume Analysis:")
     print(f"    Voxel dimensions: {voxel_dims[0]:.2f} × {voxel_dims[1]:.2f} × {voxel_dims[2]:.2f} mm")
     
+    # Calculate volumes for each kidney
+    right_kidney_volume_cm3 = None
+    left_kidney_volume_cm3 = None
+    
     for label in remapped_labels:
         if label == 0:
             continue  # Skip background
@@ -402,6 +410,15 @@ def process_single_case(case_id, aira_mask_path, reference_gt_path=None):
         
         kidney_name = "Right Kidney" if label == 1 else "Left Kidney" if label == 2 else f"Class {label}"
         print(f"    {kidney_name}: {count:,} voxels = {volume_cm3:.2f} cm³")
+        
+        # Store volumes in result
+        if label == 1:  # Right Kidney
+            right_kidney_volume_cm3 = volume_cm3
+        elif label == 2:  # Left Kidney
+            left_kidney_volume_cm3 = volume_cm3
+    
+    result['right_kidney_volume_cm3'] = right_kidney_volume_cm3
+    result['left_kidney_volume_cm3'] = left_kidney_volume_cm3
     
     # 6. Create processed NIfTI image
     # Save as int16 to preserve exact integer values
@@ -564,7 +581,80 @@ def process_all_new_aira_masks():
     print("✅ PROCESSING COMPLETED")
     print("="*70)
     
+    # Export volume CSV
+    csv_path = export_volume_csv(results)
+    if csv_path:
+        print(f"\n📊 Volume CSV exported to: {csv_path}")
+    
     return results
+
+# ============================================================================
+# CSV EXPORT FUNCTION
+# ============================================================================
+
+def export_volume_csv(results):
+    """
+    Export kidney volumes to CSV file.
+    
+    Parameters:
+    -----------
+    results : list
+        List of result dictionaries from processing
+    
+    Returns:
+    --------
+    csv_path : str or None
+        Path to exported CSV file, or None if export failed
+    """
+    try:
+        # Create results directory path (relative to script location)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        results_base_dir = os.path.join(os.path.dirname(script_dir), 'results')
+        
+        # Create timestamped subfolder
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        results_subfolder = f"Batch_Storage_Volumes_{timestamp}"
+        results_dir = os.path.join(results_base_dir, results_subfolder)
+        
+        # Create directory if it doesn't exist
+        os.makedirs(results_dir, exist_ok=True)
+        
+        # Prepare CSV data
+        csv_data = []
+        for result in results:
+            if result['status'] == 'Success':
+                csv_data.append({
+                    'Case Name': result['case_id'],
+                    'Right Kidney Volume (cm³)': result['right_kidney_volume_cm3'] if result['right_kidney_volume_cm3'] is not None else 'N/A',
+                    'Left Kidney Volume (cm³)': result['left_kidney_volume_cm3'] if result['left_kidney_volume_cm3'] is not None else 'N/A'
+                })
+            else:
+                # Include failed cases with N/A volumes
+                csv_data.append({
+                    'Case Name': result['case_id'],
+                    'Right Kidney Volume (cm³)': 'N/A',
+                    'Left Kidney Volume (cm³)': 'N/A'
+                })
+        
+        # Create DataFrame and save to CSV
+        df = pd.DataFrame(csv_data)
+        csv_filename = f"Kidney_Volumes_{timestamp}.csv"
+        csv_path = os.path.join(results_dir, csv_filename)
+        
+        df.to_csv(csv_path, index=False)
+        
+        print(f"\n📊 Volume Summary:")
+        print(f"  Total cases: {len(csv_data)}")
+        successful_cases = sum(1 for r in csv_data if r['Right Kidney Volume (cm³)'] != 'N/A')
+        print(f"  Cases with volume data: {successful_cases}")
+        
+        return csv_path
+        
+    except Exception as e:
+        print(f"\n⚠️  Warning: Failed to export volume CSV: {e}")
+        import traceback
+        traceback.print_exc()
+        return None
 
 # ============================================================================
 # MAIN EXECUTION
