@@ -19,7 +19,7 @@ from pathlib import Path
 # ============================================================================
 
 # Root folder containing case subfolders
-INPUT_FOLDER = r"D:\__SHARED__\AIRA_FDA_SET_2_LIVE"
+INPUT_FOLDER = r"K:/AIRA_FDA_Models/DATA/batch_storage"
 
 # Search recursively in subfolders?
 RECURSIVE_SEARCH = True
@@ -28,7 +28,10 @@ RECURSIVE_SEARCH = True
 # Use patterns: exact filenames or wildcards
 KEEP_PATTERNS = [
     "aira_mask.nii",           # Original AIRA mask (exact match only)
-    "AIRA_*.nii"               # Processed/reoriented masks starting with AIRA_ (e.g., AIRA_A-089_N195_.nii)
+    "AIRA_*.nii",               # Processed/reoriented masks starting with AIRA_ (e.g., AIRA_A-089_N195_.nii)
+    "img.nii.gz",
+    "metadata.json",
+    "mask_model_checkpoint_664_0.6738.nii.gz"
 ]
 
 # Dry run mode - if True, only shows what would be deleted without actually deleting

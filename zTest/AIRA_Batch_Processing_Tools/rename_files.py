@@ -25,12 +25,13 @@ warnings.filterwarnings('ignore')
 # ============================================================================
 
 # Root folder containing case subfolders
-ROOT_PATH = r"D:\__SHARED__\AIRA_FDA_SET_2_LIVE"
+ROOT_PATH = r"K:/AIRA_FDA_Models/DATA/batch_storage"
 
 # File renaming configuration
 RENAME_CONFIG = {
     # Source filename → Target naming pattern
-    "aira_mask_processed.nii": "AIRA_{folder_name}.nii",
+    # "aira_mask_processed.nii": "AIRA_{folder_name}.nii",
+    "mask_model_checkpoint_664_0.6738_processed.nii": "AIRA_{folder_name}.nii",
     
     # Add more rename rules here:
     # "aira_mask.nii": "AIRA_original_{folder_name}.nii",

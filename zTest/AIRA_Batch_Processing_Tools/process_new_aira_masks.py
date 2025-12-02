@@ -32,7 +32,8 @@ warnings.filterwarnings('ignore')
 # ============================================================================
 
 # New AIRA masks location
-NEW_AIRA_PATH = r"D:\__SHARED__\AIRA_FDA_SET_2_LIVE"
+# NEW_AIRA_PATH = r"D:\__SHARED__\AIRA_FDA_SET_2_LIVE"
+NEW_AIRA_PATH = r"K:/AIRA_FDA_Models/DATA/batch_storage"
 
 # Ground truth reference (from original FDA dataset)
 # These are used as reference for orientation
@@ -200,12 +201,13 @@ def find_aira_mask_in_folder(folder_path):
     """Find AIRA mask file in a folder (mask.nii or mask.nii.gz)."""
     # First, check direct patterns in the folder - prioritize .nii.gz
     direct_patterns = [
-        'mask.nii.gz',
-        'mask.nii',
-        '*_AIRA.nii.gz',
-        '*_AIRA.nii',
-        '*_prediction.nii.gz',
-        '*_prediction.nii',
+        # 'mask.nii.gz',
+        # 'mask.nii',
+        # '*_AIRA.nii.gz',
+        # '*_AIRA.nii',
+        # '*_prediction.nii.gz',
+        # '*_prediction.nii',
+        "mask_model_checkpoint_664_0.6738.nii.gz"
     ]
     
     for pattern in direct_patterns:
