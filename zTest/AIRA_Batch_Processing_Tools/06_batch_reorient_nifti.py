@@ -21,11 +21,13 @@ from pathlib import Path
 # ============================================================================
 
 # Input folder containing NIfTI files
-INPUT_FOLDER = r"d:\__SHARED__\AIRA_FDA_SET_2_LIVE"
+# INPUT_FOLDER = r"d:\__SHARED__\AIRA_FDA_SET_2_LIVE"
+INPUT_FOLDER = r"K:\AIRA_FDA_Models\DATA\batch_storage"
 
 # File pattern to match - looks for files with specific name pattern
 # Examples: "aira_mask_processed.nii", "aira_mask_processed.nii.gz", "*_mask.nii", "case_*.nii"
-FILE_PATTERN = "aira_mask_processed.nii"
+# FILE_PATTERN = "aira_mask_processed.nii"
+FILE_PATTERN = "mask_model_checkpoint_664_0.6738_processed.nii"
 
 # Target orientation (standard medical imaging orientations)
 # Common options: "RAS", "LPI", "LPS", "RPI", "ASL", etc.

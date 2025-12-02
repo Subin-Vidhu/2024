@@ -2,7 +2,8 @@ import os
 import shutil
 
 root_dir = r"K:\AIRA_FDA_Models\DATA\batch_storage"
-output_dir = os.path.join(root_dir, "ARAMIS_RAS_LPI")
+# output_dir = os.path.join(root_dir, "ARAMIS_RAS_LPI")
+output_dir = os.path.join(root_dir, "ARAMIS_RAI_LPS")
 
 # Create output directory if not exists
 os.makedirs(output_dir, exist_ok=True)
@@ -16,6 +17,8 @@ for folder in os.listdir(root_dir):
 
     # Skip output folder itself
     if folder == "ARAMIS_RAS_LPI":
+        continue
+    if folder == "ARAMIS_RAI_LPS":
         continue
     
     # Construct expected filename: AIRA_<folder>.nii
