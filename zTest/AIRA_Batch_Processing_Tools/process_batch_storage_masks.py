@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
 """
-Process New AIRA Masks - Apply All Required Preprocessing
-=========================================================
+Process Batch Storage Masks - Apply All Required Preprocessing
+===============================================================
 
-This script processes AIRA masks and applies:
-1. Spatial reorientation to match ground truth (optional, if reference provided)
+This script processes AIRA masks from batch_storage folder and applies:
+1. Spatial reorientation to LPI orientation (standardized)
 2. Label remapping (Label 3→1, Label 2→2)
-3. Reorientation to RAS orientation (standardized output)
-4. Floating-point precision handling
+3. Floating-point precision handling
 
 The processed masks will be saved in the same folder structure with
-all transformations applied. All output files are standardized to RAS orientation.
+all transformations applied. All output files are standardized to LPI orientation.
 
 Author: Medical AI Validation Team
-Date: 2025-10-29
-Updated: 2025-12-02 (Added RAS reorientation)
+Date: 2025-12-02
 """
 
 import os
@@ -30,13 +28,12 @@ warnings.filterwarnings('ignore')
 # CONFIGURATION
 # ============================================================================
 
-# New AIRA masks location
+# Batch storage masks location
 NEW_AIRA_PATH = r"G:\AIRA_Models_RESULTS\batch_storage"
 
-# Ground truth reference (from original FDA dataset)
-# These are used as reference for orientation (optional - set to None if not available)
-GROUND_TRUTH_REFERENCE_PATH = None  # Set to None if you don't have reference files?
-# GROUND_TRUTH_REFERENCE_PATH = r'c:\Users\Subin-PC\Downloads\Telegram Desktop\OneDrive_1_10-8-2025'
+# Ground truth reference (optional - set to None if not available)
+# If None, will use default LPI orientation
+GROUND_TRUTH_REFERENCE_PATH = None
 
 # Specific mask filename pattern to process
 MASK_FILENAME_PATTERN = "mask_model_checkpoint_664_0.6738.nii.gz"
@@ -51,12 +48,9 @@ LABEL_MAPPING_AIRA = {
     3: 1   # Right Kidney → becomes 1
 }
 
-# Target orientation for output files
-TARGET_ORIENTATION = "RAS"  # Target orientation: "RAS", "LPI", "LPS", etc.
-
 # Output configuration
 OUTPUT_SUFFIX = "_processed"  # Suffix for processed files
-CREATE_BACKUP = True  # Create backup of original files
+CREATE_BACKUP = False  # Create backup of original files
 
 # ============================================================================
 # CORE PREPROCESSING FUNCTIONS
@@ -145,57 +139,6 @@ def reorient_to_match(reference_img, target_img):
         print(f"  ✗ Error during reorientation: {e}")
         return None
 
-def reorient_to_target(source_img, target_orientation):
-    """
-    Reorient a NIfTI image to the target orientation (e.g., 'RAS', 'LPI').
-    
-    Parameters:
-    -----------
-    source_img : nibabel image
-        The source NIfTI image to reorient
-    target_orientation : str
-        Target orientation code (e.g., 'RAS', 'LPI', 'LPS')
-    
-    Returns:
-    --------
-    reoriented_img : nibabel image
-        The reoriented image, or original if reorientation fails
-    success : bool
-        Whether reorientation was successful
-    """
-    try:
-        # Get current orientation
-        current_orientation = get_orientation_string(source_img)
-        
-        # Check if already in target orientation
-        if current_orientation == target_orientation:
-            return source_img, True
-        
-        # More precise reorientation
-        current_ornt = nib.io_orientation(source_img.affine)
-        target_ornt = nib.orientations.axcodes2ornt(target_orientation)
-        transform = nib.orientations.ornt_transform(current_ornt, target_ornt)
-        
-        # Apply transformation
-        reoriented_data = nib.orientations.apply_orientation(source_img.get_fdata(), transform)
-        reoriented_affine = source_img.affine @ nib.orientations.inv_ornt_aff(transform, source_img.shape)
-        
-        # Create new image
-        reoriented_img = nib.Nifti1Image(reoriented_data, reoriented_affine, source_img.header)
-        
-        # Verify the orientation
-        final_orientation = get_orientation_string(reoriented_img)
-        
-        if final_orientation == target_orientation:
-            return reoriented_img, True
-        else:
-            print(f"    ⚠️  Expected {target_orientation}, got {final_orientation}")
-            return reoriented_img, False
-            
-    except Exception as e:
-        print(f"  ✗ Error during reorientation to {target_orientation}: {e}")
-        return source_img, False
-
 def remap_labels(data, label_mapping):
     """
     Remap labels according to specified mapping with robust handling.
@@ -237,7 +180,7 @@ def get_voxel_volume(img):
 # ============================================================================
 
 def find_aira_cases():
-    """Find all case folders in the new AIRA path."""
+    """Find all case folders in the batch storage path."""
     if not os.path.exists(NEW_AIRA_PATH):
         print(f"❌ ERROR: Path does not exist: {NEW_AIRA_PATH}")
         return []
@@ -307,8 +250,8 @@ def process_single_case(case_id, aira_mask_path, reference_gt_path=None):
     Steps:
     1. Load AIRA mask
     2. Load reference GT (if available) for orientation
-    3. Reorient AIRA to match GT orientation
-    4. Remap labels
+    3. Reorient AIRA to LPI orientation (or match reference if available)
+    4. Remap labels (3→1, 2→2)
     5. Save processed mask
     
     Returns:
@@ -327,7 +270,6 @@ def process_single_case(case_id, aira_mask_path, reference_gt_path=None):
         'original_orientation': None,
         'final_orientation': None,
         'reorientation_applied': False,
-        'ras_reorientation_applied': False,
         'original_labels': None,
         'remapped_labels': None,
         'error': None
@@ -376,10 +318,12 @@ def process_single_case(case_id, aira_mask_path, reference_gt_path=None):
             ref_orientation = get_orientation_string(reference_img)
             print(f"    Reference orientation: {ref_orientation}")
     
-    # 3. Apply spatial reorientation (if reference available)
+    # 3. Apply spatial reorientation (if reference available, otherwise use default LPI)
     processed_img = aira_img
+    DEFAULT_ORIENTATION = 'LPI'  # Default target orientation when no reference GT is available
     
     if reference_img is not None:
+        # Use reference GT orientation
         ref_orientation = get_orientation_string(reference_img)
         
         if original_orientation != ref_orientation:
@@ -398,8 +342,27 @@ def process_single_case(case_id, aira_mask_path, reference_gt_path=None):
             print(f"  ℹ️  Orientation matches reference, no reorientation needed")
             result['final_orientation'] = original_orientation
     else:
-        print(f"  ⚠️  No reference GT found, skipping reorientation")
-        result['final_orientation'] = original_orientation
+        # No reference GT: apply default LPI orientation
+        if original_orientation != DEFAULT_ORIENTATION:
+            print(f"  🔄 No reference GT found, applying default orientation: {original_orientation} → {DEFAULT_ORIENTATION}")
+            try:
+                # Convert to default orientation (LPI)
+                processed_img = nib.as_closest_canonical(aira_img)
+                # Then reorient to LPI specifically
+                target_ornt = nib.orientations.axcodes2ornt(DEFAULT_ORIENTATION)
+                current_ornt = nib.io_orientation(processed_img.affine)
+                ornt_transform = nib.orientations.ornt_transform(current_ornt, target_ornt)
+                processed_img = processed_img.as_reoriented(ornt_transform)
+                
+                result['reorientation_applied'] = True
+                result['final_orientation'] = DEFAULT_ORIENTATION
+                print(f"    ✓ Default reorientation to {DEFAULT_ORIENTATION} successful")
+            except Exception as e:
+                print(f"    ✗ Default reorientation failed: {e}")
+                result['final_orientation'] = original_orientation
+        else:
+            print(f"  ℹ️  Already in default orientation ({DEFAULT_ORIENTATION}), no reorientation needed")
+            result['final_orientation'] = original_orientation
     
     # 4. Apply label remapping
     print(f"  🏷️  Applying label remapping")
@@ -437,44 +400,10 @@ def process_single_case(case_id, aira_mask_path, reference_gt_path=None):
         count = np.sum(remapped_data == label)
         volume_cm3 = (count * voxel_vol) / 1000.0
         
-        kidney_name = "Left Kidney" if label == 1 else "Right Kidney" if label == 2 else f"Class {label}"
+        kidney_name = "Right Kidney" if label == 1 else "Left Kidney" if label == 2 else f"Class {label}"
         print(f"    {kidney_name}: {count:,} voxels = {volume_cm3:.2f} cm³")
     
-    # 6. Reorient to target orientation (RAS)
-    print(f"\n  🔄 Reorienting to {TARGET_ORIENTATION} orientation...")
-    current_orientation = get_orientation_string(processed_img)
-    print(f"    Current orientation: {current_orientation}")
-    
-    if current_orientation != TARGET_ORIENTATION:
-        # Create temporary image with remapped data for reorientation
-        temp_img = nib.Nifti1Image(
-            remapped_data.astype(np.int16),
-            processed_img.affine,
-            processed_img.header
-        )
-        
-        # Reorient to target
-        ras_oriented_img, success = reorient_to_target(temp_img, TARGET_ORIENTATION)
-        
-        if success:
-            final_orientation = get_orientation_string(ras_oriented_img)
-            print(f"    ✓ Reoriented: {current_orientation} → {final_orientation}")
-            result['final_orientation'] = final_orientation
-            result['ras_reorientation_applied'] = True
-            
-            # Get the reoriented data
-            remapped_data = ras_oriented_img.get_fdata().astype(np.int16)
-            processed_img = ras_oriented_img
-        else:
-            print(f"    ⚠️  Reorientation to {TARGET_ORIENTATION} failed, keeping original orientation")
-            result['final_orientation'] = current_orientation
-            result['ras_reorientation_applied'] = False
-    else:
-        print(f"    ℹ️  Already in {TARGET_ORIENTATION} orientation, no reorientation needed")
-        result['final_orientation'] = current_orientation
-        result['ras_reorientation_applied'] = False
-    
-    # 7. Create processed NIfTI image
+    # 6. Create processed NIfTI image
     # Save as int16 to preserve exact integer values
     processed_nifti = nib.Nifti1Image(
         remapped_data.astype(np.int16),  # Use int16 for clean integer labels
@@ -486,10 +415,10 @@ def process_single_case(case_id, aira_mask_path, reference_gt_path=None):
     processed_nifti.set_data_dtype(np.int16)
     
     # Update header description
-    description = f"Processed AIRA - Remapped + RAS Oriented - {datetime.now().strftime('%Y%m%d')}"
+    description = f"Processed AIRA - Remapped + LPI Oriented - {datetime.now().strftime('%Y%m%d')}"
     processed_nifti.header['descrip'] = description.encode('ascii')[:79]
     
-    # 8. Save processed mask
+    # 7. Save processed mask
     # Generate output filename
     base_dir = os.path.dirname(aira_mask_path)
     original_filename = os.path.basename(aira_mask_path)
@@ -512,7 +441,7 @@ def process_single_case(case_id, aira_mask_path, reference_gt_path=None):
         result['error'] = f"Save failed: {e}"
         return result
     
-    # 9. Create backup if requested
+    # 8. Create backup if requested
     if CREATE_BACKUP:
         backup_filename = f"{name_without_ext}_original_backup.nii"
         backup_path = os.path.join(base_dir, backup_filename)
@@ -534,20 +463,20 @@ def process_single_case(case_id, aira_mask_path, reference_gt_path=None):
 # ============================================================================
 
 def process_all_new_aira_masks():
-    """Process all new AIRA masks in the specified folder."""
+    """Process all AIRA masks in the batch storage folder."""
     print("="*70)
-    print("PROCESS NEW AIRA MASKS - COMPLETE PREPROCESSING PIPELINE")
+    print("PROCESS BATCH STORAGE MASKS - COMPLETE PREPROCESSING PIPELINE")
     print("="*70)
     print(f"Input path: {NEW_AIRA_PATH}")
     print(f"Mask filename pattern: {MASK_FILENAME_PATTERN}")
-    print(f"Reference GT path: {GROUND_TRUTH_REFERENCE_PATH if GROUND_TRUTH_REFERENCE_PATH else 'None (orientation detection only)'}")
-    print(f"Target orientation: {TARGET_ORIENTATION}")
+    print(f"Reference GT path: {GROUND_TRUTH_REFERENCE_PATH if GROUND_TRUTH_REFERENCE_PATH else 'None (will use LPI orientation)'}")
+    print(f"Target orientation: LPI")
     print(f"Label mapping: {LABEL_MAPPING_AIRA}")
     print(f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("="*70)
     
     # Find all cases
-    print("\n🔍 Scanning for AIRA cases...")
+    print("\n🔍 Scanning for case folders...")
     case_folders = find_aira_cases()
     
     if not case_folders:
@@ -566,11 +495,11 @@ def process_all_new_aira_masks():
         aira_mask_path = find_aira_mask_in_folder(case_path)
         
         if aira_mask_path is None:
-            print(f"\n⚠️  {case_id}: No AIRA mask found in folder")
+            print(f"\n⚠️  {case_id}: No mask file found matching pattern '{MASK_FILENAME_PATTERN}'")
             results.append({
                 'case_id': case_id,
                 'status': 'Failed',
-                'error': 'AIRA mask not found'
+                'error': f'Mask file not found: {MASK_FILENAME_PATTERN}'
             })
             failed += 1
             continue
@@ -579,7 +508,7 @@ def process_all_new_aira_masks():
         reference_gt_path = find_reference_gt(case_id)
         
         if reference_gt_path is None:
-            print(f"\n⚠️  {case_id}: No reference GT found (will process without reorientation)")
+            print(f"\nℹ️  {case_id}: No reference GT found (will apply default LPI orientation)")
         
         # Process the case
         result = process_single_case(case_id, aira_mask_path, reference_gt_path)
@@ -600,10 +529,9 @@ def process_all_new_aira_masks():
     
     print(f"\nPreprocessing applied:")
     if GROUND_TRUTH_REFERENCE_PATH:
-        print(f"  • Spatial reorientation to match reference (when available)")
+        print(f"  • Spatial reorientation (when reference GT available)")
     else:
-        print(f"  • Orientation detection only (no reference GT provided)")
-    print(f"  • Reorientation to {TARGET_ORIENTATION} orientation (final step)")
+        print(f"  • Reorientation to LPI orientation (default)")
     print(f"  • Label remapping: {LABEL_MAPPING_AIRA}")
     print(f"    - Label 2 (Left Kidney) → stays as 2")
     print(f"    - Label 3 (Right Kidney) → becomes 1")
@@ -625,9 +553,7 @@ def process_all_new_aira_masks():
         if result['status'] == 'Success':
             print(f"  Original orientation: {result['original_orientation']}")
             print(f"  Final orientation: {result['final_orientation']}")
-            if GROUND_TRUTH_REFERENCE_PATH:
-                print(f"  Reference reorientation applied: {result['reorientation_applied']}")
-            print(f"  RAS reorientation applied: {result.get('ras_reorientation_applied', False)}")
+            print(f"  Reorientation applied: {result['reorientation_applied']}")
             print(f"  Original labels: {result['original_labels']}")
             print(f"  Remapped labels: {result['remapped_labels']}")
             print(f"  Output: {os.path.basename(result['processed_path'])}")
@@ -650,14 +576,15 @@ if __name__ == "__main__":
         
         print("\n🎯 All preprocessing steps completed!")
         print("\nThe processed masks are now ready with:")
-        print(f"  ✓ Orientation: {TARGET_ORIENTATION} (all files standardized)")
-        print("  ✓ Label mapping applied: Label 3 (Right) → 1, Label 2 (Left) → 2")
+        print("  ✓ LPI orientation (standardized)")
+        print("  ✓ Label mapping: Label 3 (Right) → 1, Label 2 (Left) → 2")
         print("  ✓ Robust floating-point handling")
         print("\nOutput files saved as: '*_processed.nii' in each case folder")
-        print(f"All output files are in {TARGET_ORIENTATION} orientation!")
+        print("All output files are in LPI orientation!")
         
     except Exception as e:
         print(f"\n❌ ERROR: {e}")
         import traceback
         traceback.print_exc()
         sys.exit(1)
+

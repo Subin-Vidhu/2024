@@ -23,11 +23,13 @@ warnings.filterwarnings('ignore')
 # CONFIGURATION
 # ============================================================================
 
-ROOT_PATH = r"D:\__SHARED__\AIRA_FDA_SET_2_LIVE\AIRA_SET_2\LPI"
+# ROOT_PATH = r"D:\__SHARED__\AIRA_FDA_SET_2_LIVE\AIRA_SET_2\LPI"
+ROOT_PATH = r"G:\AIRA_Models_RESULTS\batch_storage"
 
 FILES_TO_CHECK = [
-    "aira_mask_processed.nii",
+    # "aira_mask_processed.nii",
     # "aira_mask.nii",  # Add more as needed
+    "img.nii.gz"
 ]
 
 # ============================================================================
