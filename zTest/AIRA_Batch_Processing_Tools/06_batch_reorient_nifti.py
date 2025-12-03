@@ -3,10 +3,11 @@
 Batch NIfTI Orientation Converter
 
 This script reorients all NIfTI files in a specified folder to a target orientation.
-- Files are saved with '_reoriented' suffix in the same folder
+- Files are saved with AIRA_ prefix using folder name
 - Original files are preserved (no overwriting)
 - Supports both .nii and .nii.gz formats
 - Can search recursively through subfolders
+- Saves files in int16 format for exact integer labels (important for segmentation masks)
 - Generates a summary report
 """
 
@@ -112,8 +113,15 @@ def reorient_to_target(source_img, target_orientation):
         reoriented_data = nib.orientations.apply_orientation(source_img.get_fdata(), transform)
         reoriented_affine = source_img.affine @ nib.orientations.inv_ornt_aff(transform, source_img.shape)
         
-        # Create new image
-        reoriented_img = nib.Nifti1Image(reoriented_data, reoriented_affine, source_img.header)
+        # Convert to int16 for exact integer labels (important for segmentation masks)
+        # Round first to handle any floating-point precision issues
+        reoriented_data_int16 = np.round(reoriented_data).astype(np.int16)
+        
+        # Create new image with int16 data type
+        reoriented_img = nib.Nifti1Image(reoriented_data_int16, reoriented_affine, source_img.header)
+        
+        # Set data type in header to int16
+        reoriented_img.set_data_dtype(np.int16)
         
         # Verify the orientation
         final_orientation = get_orientation_string(reoriented_img)
@@ -212,13 +220,22 @@ def process_file(input_path, target_orientation, output_suffix, skip_if_oriented
             print(f"  📋 Creating backup: {backup_filename}")
             nib.save(img, backup_path)
         
+        # Ensure data is int16 before saving (for segmentation masks)
+        if reoriented_img.get_data_dtype() != np.int16:
+            reoriented_data = reoriented_img.get_fdata()
+            reoriented_data_int16 = np.round(reoriented_data).astype(np.int16)
+            reoriented_img = nib.Nifti1Image(reoriented_data_int16, reoriented_img.affine, reoriented_img.header)
+            reoriented_img.set_data_dtype(np.int16)
+        
         # Save the reoriented image
-        print(f"  💾 Saving to: {output_filename}")
+        print(f"  💾 Saving to: {output_filename} (int16 format)")
         nib.save(reoriented_img, output_path)
         
         # Verify by reloading
         verify_img = nib.load(output_path)
         verify_orientation = get_orientation_string(verify_img)
+        verify_dtype = verify_img.get_data_dtype()
+        print(f"  📊 Data type: {verify_dtype}")
         
         if verify_orientation == target_orientation:
             print(f"  ✅ SUCCESS - Verified orientation: {verify_orientation}")

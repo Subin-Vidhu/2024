@@ -422,12 +422,14 @@ Processing: N-001
 - Creates new files with clean naming convention: `AIRA_{folder_name}.nii`
 - Preserves original files (no overwriting)
 - Handles both `.nii` and `.nii.gz` formats
+- **Saves files in int16 format** for exact integer labels (important for segmentation masks)
 
 **Key Features:**
 - ✅ **Smart naming:** Uses parent folder name (e.g., `A-089(N195)` → `AIRA_A-089_N195_.nii`)
 - ✅ **Safe characters:** Replaces parentheses with underscores to avoid path issues
 - ✅ **Skip already oriented:** Avoids redundant processing
 - ✅ **Verification:** Reloads saved files to confirm correct orientation
+- ✅ **int16 format:** Saves as int16 to ensure exact integer labels (no floating-point precision issues)
 - ✅ **Detailed summary:** Shows success/failed/skipped counts
 
 **Configuration:**
