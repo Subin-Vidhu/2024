@@ -5,10 +5,11 @@ Batch Rename NIfTI Files Across Multiple Folders
 
 This script renames files in case folders using customizable naming patterns.
 Supports folder-name-based renaming with prefix/suffix options.
+Modified to delete existing target files before renaming.
 
 Examples:
-- aira_mask_processed.nii → AIRA_N-071.nii
-- aira_mask_processed.nii → AIRA_A-089_N195_.nii
+- AIRA_img_3591092024.nii → img.nii
+- AIRA_mask_3591092024.nii → mask.nii
 
 Author: Medical AI Validation Team
 Date: 2025-10-29
@@ -25,27 +26,29 @@ warnings.filterwarnings('ignore')
 # ============================================================================
 
 # Root folder containing case subfolders
-ROOT_PATH = r"K:/AIRA_FDA_Models/DATA/batch_storage"
+# ROOT_PATH = r"K:/AIRA_FDA_Models/DATA/batch_storage"
+ROOT_PATH = r"g:\ARAMIS_RENAL_FULL_DATASET_W_FDA_AND_UROKUL\ARAMIS_RENAL_FULL_DATASET"
 
 # File renaming configuration
 RENAME_CONFIG = {
-    # Source filename → Target naming pattern
-    # "aira_mask_processed.nii": "AIRA_{folder_name}.nii",
-    "mask_model_checkpoint_664_0.6738_processed.nii": "AIRA_{folder_name}.nii",
+    # Source filename pattern → Target filename
+    "AIRA_img_{folder_name}.nii": "img.nii",
+    "AIRA_mask_{folder_name}.nii": "mask.nii"
     
     # Add more rename rules here:
-    # "aira_mask.nii": "AIRA_original_{folder_name}.nii",
-    # "some_file.nii": "PREFIX_{folder_name}_SUFFIX.nii",
+    # "AIRA_{folder_name}.nii": "image.nii",
+    # "some_file_{folder_name}.nii": "output.nii",
 }
 
 # Folder name cleaning options
-CLEAN_FOLDER_NAME = True  # Clean folder name (remove/replace special chars)
+CLEAN_FOLDER_NAME = False  # Set to False since we're using exact folder names
 REPLACE_PARENTHESES = True  # Replace ( and ) with underscores
 REMOVE_SPACES = True  # Replace spaces with underscores
 
 # Safety options
 DRY_RUN = False  # Set to False to actually rename files
-CREATE_BACKUP = True  # Create backup before renaming
+CREATE_BACKUP = True  # Create backup before deleting/renaming
+DELETE_EXISTING = True  # Delete existing target files before renaming
 VERBOSE = True  # Show detailed output
 
 # ============================================================================
@@ -71,12 +74,12 @@ def clean_folder_name(folder_name):
     
     return cleaned
 
-def generate_new_filename(pattern, folder_name):
+def generate_source_filename(pattern, folder_name):
     """
-    Generate new filename from pattern.
+    Generate source filename from pattern using folder name.
     
     Supported placeholders:
-    - {folder_name}: Original folder name (cleaned if CLEAN_FOLDER_NAME=True)
+    - {folder_name}: Folder name (cleaned if CLEAN_FOLDER_NAME=True)
     - {folder_name_original}: Original folder name (uncleaned)
     """
     if CLEAN_FOLDER_NAME:
@@ -85,10 +88,10 @@ def generate_new_filename(pattern, folder_name):
         folder_name_cleaned = folder_name
     
     # Replace placeholders
-    new_filename = pattern.replace('{folder_name}', folder_name_cleaned)
-    new_filename = new_filename.replace('{folder_name_original}', folder_name)
+    source_filename = pattern.replace('{folder_name}', folder_name_cleaned)
+    source_filename = source_filename.replace('{folder_name_original}', folder_name)
     
-    return new_filename
+    return source_filename
 
 def find_case_folders(root_path):
     """Find all case folders in the root path."""
@@ -112,75 +115,113 @@ def rename_files_in_folder(folder_path, rename_config, dry_run=True):
     folder_name = os.path.basename(folder_path)
     results = []
     
-    for source_filename, pattern in rename_config.items():
+    for source_pattern, target_filename in rename_config.items():
+        # Generate actual source filename using folder name
+        source_filename = generate_source_filename(source_pattern, folder_name)
         source_path = os.path.join(folder_path, source_filename)
+        target_path = os.path.join(folder_path, target_filename)
         
         # Check if source file exists
         if not os.path.exists(source_path):
             results.append({
                 'source': source_filename,
-                'target': None,
+                'target': target_filename,
                 'status': 'not_found',
                 'message': 'Source file not found'
             })
             continue
         
-        # Generate new filename
-        new_filename = generate_new_filename(pattern, folder_name)
-        target_path = os.path.join(folder_path, new_filename)
-        
-        # Check if target already exists
-        if os.path.exists(target_path) and source_path != target_path:
-            results.append({
-                'source': source_filename,
-                'target': new_filename,
-                'status': 'conflict',
-                'message': 'Target file already exists'
-            })
-            continue
-        
         # Check if source and target are the same
-        if source_filename == new_filename:
+        if source_filename == target_filename:
             results.append({
                 'source': source_filename,
-                'target': new_filename,
+                'target': target_filename,
                 'status': 'skip',
                 'message': 'Source and target are identical'
             })
             continue
         
+        # Check if target already exists
+        target_exists = os.path.exists(target_path)
+        
         # Perform rename
         if not dry_run:
             try:
-                # Create backup if requested
+                # Backup source file if requested
                 if CREATE_BACKUP:
                     backup_path = source_path + '.backup'
+                    if os.path.exists(backup_path):
+                        os.remove(backup_path)  # Remove old backup if exists
                     shutil.copy2(source_path, backup_path)
                 
-                # Rename file
-                os.rename(source_path, target_path)
+                # If target exists, backup and delete it first
+                if target_exists and DELETE_EXISTING:
+                    if CREATE_BACKUP:
+                        target_backup_path = target_path + '.replaced_backup'
+                        if os.path.exists(target_backup_path):
+                            os.remove(target_backup_path)  # Remove old backup if exists
+                        shutil.copy2(target_path, target_backup_path)
+                    
+                    # Delete existing target file
+                    os.remove(target_path)
+                    
+                    # Now rename source to target
+                    os.rename(source_path, target_path)
+                    
+                    results.append({
+                        'source': source_filename,
+                        'target': target_filename,
+                        'status': 'replaced',
+                        'message': 'Deleted existing target and renamed'
+                    })
+                elif target_exists and not DELETE_EXISTING:
+                    results.append({
+                        'source': source_filename,
+                        'target': target_filename,
+                        'status': 'conflict',
+                        'message': 'Target exists (set DELETE_EXISTING=True to replace)'
+                    })
+                else:
+                    # Target doesn't exist, just rename
+                    os.rename(source_path, target_path)
+                    
+                    results.append({
+                        'source': source_filename,
+                        'target': target_filename,
+                        'status': 'success',
+                        'message': 'Renamed successfully'
+                    })
                 
-                results.append({
-                    'source': source_filename,
-                    'target': new_filename,
-                    'status': 'success',
-                    'message': 'Renamed successfully'
-                })
             except Exception as e:
                 results.append({
                     'source': source_filename,
-                    'target': new_filename,
+                    'target': target_filename,
                     'status': 'error',
                     'message': f'Error: {str(e)}'
                 })
         else:
             # Dry run - just report what would happen
-            results.append({
-                'source': source_filename,
-                'target': new_filename,
-                'status': 'would_rename',
-                'message': 'Would rename (dry run)'
-            })
+            if target_exists and DELETE_EXISTING:
+                results.append({
+                    'source': source_filename,
+                    'target': target_filename,
+                    'status': 'would_replace',
+                    'message': 'Would delete existing target and rename (dry run)'
+                })
+            elif target_exists and not DELETE_EXISTING:
+                results.append({
+                    'source': source_filename,
+                    'target': target_filename,
+                    'status': 'conflict',
+                    'message': 'Target exists (set DELETE_EXISTING=True)'
+                })
+            else:
+                results.append({
+                    'source': source_filename,
+                    'target': target_filename,
+                    'status': 'would_rename',
+                    'message': 'Would rename (dry run)'
+                })
     
     return results
 
@@ -188,7 +229,7 @@ def print_results(case_name, results):
     """Print results for a single case."""
     if not VERBOSE:
         # Only print if there are actionable items
-        actionable = [r for r in results if r['status'] in ['success', 'would_rename', 'error', 'conflict']]
+        actionable = [r for r in results if r['status'] in ['success', 'replaced', 'would_rename', 'would_replace', 'error', 'conflict']]
         if not actionable:
             return
     
@@ -205,30 +246,29 @@ def print_results(case_name, results):
         # Status indicators
         if status == 'success':
             indicator = '✓'
-            color = ''
+        elif status == 'replaced':
+            indicator = '⟳'
         elif status == 'would_rename':
             indicator = '→'
-            color = ''
+        elif status == 'would_replace':
+            indicator = '⟳'
         elif status == 'error':
             indicator = '✗'
-            color = ''
         elif status == 'conflict':
             indicator = '⚠'
-            color = ''
         elif status == 'skip':
             indicator = '○'
-            color = ''
         elif status == 'not_found':
             indicator = '○'
-            color = ''
         else:
             indicator = '?'
-            color = ''
         
-        if status in ['success', 'would_rename']:
-            print(f"  {indicator} {source:<35} → {target}")
+        if status in ['success', 'replaced', 'would_rename', 'would_replace']:
+            print(f"  {indicator} {source:<45} → {target}")
+            if status in ['replaced', 'would_replace']:
+                print(f"     {'':45}   (deleting existing target first)")
         else:
-            print(f"  {indicator} {source:<35} - {message}")
+            print(f"  {indicator} {source:<45} - {message}")
 
 def print_summary(all_results):
     """Print overall summary."""
@@ -239,7 +279,9 @@ def print_summary(all_results):
     # Count by status
     status_counts = {
         'success': 0,
+        'replaced': 0,
         'would_rename': 0,
+        'would_replace': 0,
         'error': 0,
         'conflict': 0,
         'skip': 0,
@@ -262,9 +304,13 @@ def print_summary(all_results):
     if DRY_RUN:
         if status_counts['would_rename'] > 0:
             print(f"  → Would rename: {status_counts['would_rename']}")
+        if status_counts['would_replace'] > 0:
+            print(f"  ⟳ Would delete & replace: {status_counts['would_replace']}")
     else:
         if status_counts['success'] > 0:
             print(f"  ✓ Successfully renamed: {status_counts['success']}")
+        if status_counts['replaced'] > 0:
+            print(f"  ⟳ Deleted & replaced: {status_counts['replaced']}")
     
     if status_counts['error'] > 0:
         print(f"  ✗ Errors: {status_counts['error']}")
@@ -284,7 +330,8 @@ def print_summary(all_results):
     else:
         print(f"\n✓ Files have been renamed")
         if CREATE_BACKUP:
-            print(f"✓ Backup files created with .backup extension")
+            print(f"✓ Source backups: .backup extension")
+            print(f"✓ Replaced file backups: .replaced_backup extension")
 
 # ============================================================================
 # MAIN EXECUTION
@@ -299,11 +346,12 @@ def main():
     print(f"Root path: {ROOT_PATH}")
     print(f"Mode: {'DRY RUN' if DRY_RUN else 'LIVE RENAME'}")
     print(f"Backup: {'Enabled' if CREATE_BACKUP else 'Disabled'}")
+    print(f"Delete Existing: {'Enabled' if DELETE_EXISTING else 'Disabled'}")
     print("="*80)
     
     print(f"\nRename rules:")
     for source, pattern in RENAME_CONFIG.items():
-        print(f"  {source:<35} → {pattern}")
+        print(f"  {source:<45} → {pattern}")
     
     print(f"\nFolder name cleaning:")
     print(f"  Clean folder name: {CLEAN_FOLDER_NAME}")

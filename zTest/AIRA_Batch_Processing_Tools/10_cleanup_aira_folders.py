@@ -19,7 +19,8 @@ from pathlib import Path
 # ============================================================================
 
 # Root folder containing case subfolders
-INPUT_FOLDER = r"K:/AIRA_FDA_Models/DATA/batch_storage"
+# INPUT_FOLDER = r"K:/AIRA_FDA_Models/DATA/batch_storage"
+INPUT_FOLDER = r"g:\ARAMIS_RENAL_FULL_DATASET_W_FDA_AND_UROKUL\ARAMIS_RENAL_FULL_DATASET"
 
 # Search recursively in subfolders?
 RECURSIVE_SEARCH = True
@@ -27,12 +28,15 @@ RECURSIVE_SEARCH = True
 # Files to KEEP (all others will be deleted)
 # Use patterns: exact filenames or wildcards
 KEEP_PATTERNS = [
-    "aira_mask.nii",           # Original AIRA mask (exact match only)
-    "AIRA_*.nii",               # Processed/reoriented masks starting with AIRA_ (e.g., AIRA_A-089_N195_.nii)
-    "img.nii.gz",
-    "metadata.json",
-    "mask_model_checkpoint_664_0.6738.nii.gz"
+    "img.nii", "mask.nii"
 ]
+# KEEP_PATTERNS = [
+#     "aira_mask.nii",           # Original AIRA mask (exact match only)
+#     "AIRA_*.nii",               # Processed/reoriented masks starting with AIRA_ (e.g., AIRA_A-089_N195_.nii)
+#     "img.nii.gz",
+#     "metadata.json",
+#     "mask_model_checkpoint_664_0.6738.nii.gz"
+# ]
 
 # Dry run mode - if True, only shows what would be deleted without actually deleting
 DRY_RUN = False  # Set to False to actually delete files

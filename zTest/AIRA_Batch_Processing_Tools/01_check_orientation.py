@@ -25,13 +25,17 @@ warnings.filterwarnings('ignore')
 
 # ROOT_PATH = r"D:\__SHARED__\AIRA_FDA_SET_2_LIVE\AIRA_SET_2\LPI"
 # ROOT_PATH = r"G:\AIRA_Models_RESULTS\batch_storage"
-ROOT_PATH = r"K:/AIRA_FDA_Models/DATA/batch_storage"
+# ROOT_PATH = r"K:/AIRA_FDA_Models/DATA/batch_storage"
+# ROOT_PATH = r"e:\ARAMIS\AIRA\AIRA\ARAMIS_RENAL_FULL_DATASET"
+ROOT_PATH = r"g:\ARAMIS_RENAL_FULL_DATASET_W_FDA_AND_UROKUL\ARAMIS_RENAL_FULL_DATASET"
 
 FILES_TO_CHECK = [
     # "aira_mask_processed.nii",
     # "aira_mask.nii",  # Add more as needed
-    "img.nii.gz",
-    "mask_model_checkpoint_664_0.6738.nii.gz"
+    # "img.nii.gz",
+    # "mask_model_checkpoint_664_0.6738.nii.gz",
+    "img.nii",
+    "mask.nii"
 ]
 
 # ============================================================================

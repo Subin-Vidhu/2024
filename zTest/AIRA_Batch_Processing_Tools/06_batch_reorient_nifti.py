@@ -23,16 +23,20 @@ from pathlib import Path
 
 # Input folder containing NIfTI files
 # INPUT_FOLDER = r"d:\__SHARED__\AIRA_FDA_SET_2_LIVE"
-INPUT_FOLDER = r"K:\AIRA_FDA_Models\DATA\batch_storage"
+# INPUT_FOLDER = r"K:\AIRA_FDA_Models\DATA\batch_storage"
+INPUT_FOLDER = r"g:\ARAMIS_RENAL_FULL_DATASET_W_FDA_AND_UROKUL\ARAMIS_RENAL_FULL_DATASET"
 
 # File pattern to match - looks for files with specific name pattern
 # Examples: "aira_mask_processed.nii", "aira_mask_processed.nii.gz", "*_mask.nii", "case_*.nii"
 # FILE_PATTERN = "aira_mask_processed.nii"
-FILE_PATTERN = "mask_model_checkpoint_664_0.6738_processed.nii"
+# FILE_PATTERN = "mask_model_checkpoint_664_0.6738_processed.nii"
+# FILE_PATTERN = "img.nii" # img -> LAS, mask -> LPS
+FILE_PATTERN = "mask.nii" # img -> LAS, mask -> LPS
 
 # Target orientation (standard medical imaging orientations)
 # Common options: "RAS", "LPI", "LPS", "RPI", "ASL", etc.
 # R=Right, L=Left, A=Anterior, P=Posterior, S=Superior, I=Inferior
+# TARGET_ORIENTATION = "LAS"
 TARGET_ORIENTATION = "LPS"
 
 # Search recursively in subfolders?
@@ -209,7 +213,9 @@ def process_file(input_path, target_orientation, output_suffix, skip_if_oriented
         clean_folder_name = parent_folder_name.replace('(', '_').replace(')', '_')
         
         # Always save as .nii format with AIRA_ prefix
-        output_filename = f"AIRA_{clean_folder_name}.nii"
+        # output_filename = f"AIRA_{clean_folder_name}.nii"
+        # output_filename = f"AIRA_img_{clean_folder_name}.nii"
+        output_filename = f"AIRA_mask_{clean_folder_name}.nii"
         output_path = path_obj.parent / output_filename
         result['output_path'] = str(output_path)
         

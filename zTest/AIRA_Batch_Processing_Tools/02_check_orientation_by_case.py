@@ -18,8 +18,12 @@ warnings.filterwarnings("ignore")
 
 # ROOT_PATH = r"D:\__SHARED__\AIRA_FDA_SET_2_LIVE\AIRA_SET_2\LPS"
 # ROOT_PATH = r"D:\__SHARED__\AIRA_FDA_SET_2_LIVE\AIRA_SET_2\LPI"
-ROOT_PATH = r"K:\AIRA_FDA_Models\DATA\batch_storage"
-FIXED_FILES = ["aira_mask_processed.nii"]
+
+# ROOT_PATH = r"K:\AIRA_FDA_Models\DATA\batch_storage"
+# FIXED_FILES = ["aira_mask_processed.nii"]
+
+ROOT_PATH = r"g:\ARAMIS_RENAL_FULL_DATASET_W_FDA_AND_UROKUL\ARAMIS_RENAL_FULL_DATASET"
+FIXED_FILES = ["img.nii", "mask.nii"]
 DYNAMIC_PREFIX = "AIRA_"
 
 # ============================================================================
