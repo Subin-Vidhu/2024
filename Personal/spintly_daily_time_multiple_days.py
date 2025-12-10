@@ -414,11 +414,13 @@ def generate_summary_tables(results: Dict[datetime.date, Dict[str, Dict[str, flo
 
 def summarize_span_extras(results: Dict[datetime.date, Dict[str, Dict[str, float]]]) -> Dict[str, float]:
     """
-    Aggregate total positive span extras (first punch in to last punch out minus target)
-    across all dates.
+    Aggregate total span extras (first punch in to last punch out minus target)
+    across all dates, keeping positives and negatives separate.
     """
-    total_with_seconds = 0
-    total_without_seconds = 0
+    pos_with_seconds = 0
+    pos_without_seconds = 0
+    neg_with_seconds = 0
+    neg_without_seconds = 0
 
     for _, time_spent in results.items():
         for name, times in time_spent.items():
@@ -427,13 +429,21 @@ def summarize_span_extras(results: Dict[datetime.date, Dict[str, Dict[str, float
             span_extra_with = times['total'] - TARGET_TIME
             span_extra_without = time_spent.get(f"{name}_no_seconds", {}).get('total', 0) - TARGET_TIME
             if span_extra_with > 0:
-                total_with_seconds += span_extra_with
+                pos_with_seconds += span_extra_with
+            elif span_extra_with < 0:
+                neg_with_seconds += abs(span_extra_with)
             if span_extra_without > 0:
-                total_without_seconds += span_extra_without
+                pos_without_seconds += span_extra_without
+            elif span_extra_without < 0:
+                neg_without_seconds += abs(span_extra_without)
 
     return {
-        'with_seconds': total_with_seconds,
-        'without_seconds': total_without_seconds
+        'pos_with_seconds': pos_with_seconds,
+        'pos_without_seconds': pos_without_seconds,
+        'neg_with_seconds': neg_with_seconds,
+        'neg_without_seconds': neg_without_seconds,
+        'net_with_seconds': pos_with_seconds - neg_with_seconds,
+        'net_without_seconds': pos_without_seconds - neg_without_seconds
     }
 
 def main(file_path: str, year: int, month: int, start_day: int, end_day: int) -> None:
@@ -451,8 +461,12 @@ def main(file_path: str, year: int, month: int, start_day: int, end_day: int) ->
         print(generate_summary_tables(results))
         span_totals = summarize_span_extras(results)
         print("\nAggregate span extras (first-in to last-out, uncapped):")
-        print(f"  With seconds   : {format_hours(span_totals['with_seconds'])}")
-        print(f"  Without seconds: {format_hours(span_totals['without_seconds'])}")
+        print(f"  Positives with seconds   : {format_hours(span_totals['pos_with_seconds'])}")
+        print(f"  Negatives with seconds   : {format_hours(span_totals['neg_with_seconds'])}")
+        print(f"  Net with seconds         : {format_hours(span_totals['net_with_seconds'])}")
+        print(f"  Positives without seconds: {format_hours(span_totals['pos_without_seconds'])}")
+        print(f"  Negatives without seconds: {format_hours(span_totals['neg_without_seconds'])}")
+        print(f"  Net without seconds      : {format_hours(span_totals['net_without_seconds'])}")
         
         save_multiple_dates_to_csv(results)
 
@@ -503,8 +517,8 @@ def calculate_total_difference_from_csv(csv_file: str, start_date: datetime.date
 
 if __name__ == "__main__":
     # file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
-    # file_path = r'c:\Users\Subin-PC\Downloads\chippy.xlsx'
-    file_path = r'c:\Users\Subin-PC\Downloads\aswin.xlsx'
+    file_path = r'c:\Users\Subin-PC\Downloads\chippy.xlsx'
+    # file_path = r'c:\Users\Subin-PC\Downloads\aswin.xlsx'
     year = 2025
     month = 11
     start_day = 1
