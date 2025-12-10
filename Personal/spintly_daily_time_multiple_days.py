@@ -195,7 +195,7 @@ def calculate_leave_time(office_time: float, break_time: float, analyzed_date: d
             return None, False, "Target not met", difference
 
 def generate_summary_table(time_spent: Dict[str, Dict[str, float]], analyzed_date: datetime.date, use_seconds: bool = True) -> str:
-    headers = ['Name', 'Total Time', 'Office Hours Time', 'Break Time', 'Working Time', 'Target', 'Difference', 'Last Exit', 'Status']
+    headers = ['Name', 'Total Time', 'Span Extra (raw)', 'Office Hours Time', 'Break Time', 'Working Time', 'Target', 'Difference', 'Last Exit', 'Status']
     table = []
 
     for name, times in time_spent.items():
@@ -211,6 +211,8 @@ def generate_summary_table(time_spent: Dict[str, Dict[str, float]], analyzed_dat
         
         # Calculate actual working time (office time minus break time)
         working_time = times['office'] - times['break']
+        # Raw span extra based only on first punch in / last punch out
+        span_extra = times['total'] - TARGET_TIME
 
         difference_str = format_time(abs(difference.total_seconds()))
         
@@ -236,9 +238,13 @@ def generate_summary_table(time_spent: Dict[str, Dict[str, float]], analyzed_dat
             time_left_str = f"-{difference_str}"
             status_color = Fore.RED
 
+        span_extra_str = format_time(abs(span_extra)) if span_extra != 0 else "00:00:00"
+        span_extra_str = f"{'+' if span_extra >= 0 else '-'}{span_extra_str}"
+
         table.append([
             name,
             format_time(times['total']),
+            span_extra_str,
             format_time(times['office']),
             format_time(times['break']),
             format_time(working_time),  # Add working time column
@@ -280,6 +286,8 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
             'Break Time Without Seconds': '00:00:00',
             'Working Time With Seconds': '00:00:00',
             'Working Time Without Seconds': '00:00:00',
+            'Span Extra With Seconds': '00:00:00',
+            'Span Extra Without Seconds': '00:00:00',
             'Sign With Seconds': '+',
             'Difference With Seconds': '00:00:00',
             'Sign Without Seconds': '+',
@@ -301,6 +309,8 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
         break_time_without_seconds = time_spent[f"{name}_no_seconds"]['break']
         has_open_entry_with_seconds = time_spent[name].get('has_open_entry', False)
         has_open_entry_without_seconds = time_spent[f"{name}_no_seconds"].get('has_open_entry', False)
+        span_extra_with_seconds = time_spent[name]['total'] - TARGET_TIME
+        span_extra_without_seconds = time_spent[f"{name}_no_seconds"]['total'] - TARGET_TIME
 
         # Pass has_open_entry and first_entry_time to calculate_leave_time
         leave_time_with_seconds, target_met_with_seconds, status_with_seconds, difference_with_seconds = calculate_leave_time(
@@ -336,6 +346,8 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
             'Break Time Without Seconds': format_time(break_time_without_seconds),
             'Working Time With Seconds': format_time(working_time_with_seconds),
             'Working Time Without Seconds': format_time(working_time_without_seconds),
+            'Span Extra With Seconds': f"{'+' if span_extra_with_seconds >= 0 else '-'}{format_time(abs(span_extra_with_seconds))}",
+            'Span Extra Without Seconds': f"{'+' if span_extra_without_seconds >= 0 else '-'}{format_time(abs(span_extra_without_seconds))}",
             'Sign With Seconds': sign_with_seconds,
             'Difference With Seconds': diff_with_seconds,
             'Sign Without Seconds': sign_without_seconds,
@@ -368,6 +380,7 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
     df = df[['Date', 'Name', 'Office Time With Seconds', 'Office Time Without Seconds',
              'Break Time With Seconds', 'Break Time Without Seconds',
              'Working Time With Seconds', 'Working Time Without Seconds',
+             'Span Extra With Seconds', 'Span Extra Without Seconds',
              'Sign With Seconds', 'Difference With Seconds', 
              'Sign Without Seconds', 'Difference Without Seconds',
              'Status', 'Message With Seconds', 'Message Without Seconds']]
