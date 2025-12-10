@@ -268,8 +268,28 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
     """Save time differences to CSV file."""
     if csv_file is None:
         csv_file = CSV_FILE_NAME
-        
-    data = []
+
+    # If there is no data for this date, record a single informational row
+    if not time_spent:
+        data = [{
+            'Date': analyzed_date,
+            'Name': 'No data',
+            'Office Time With Seconds': '00:00:00',
+            'Office Time Without Seconds': '00:00:00',
+            'Break Time With Seconds': '00:00:00',
+            'Break Time Without Seconds': '00:00:00',
+            'Working Time With Seconds': '00:00:00',
+            'Working Time Without Seconds': '00:00:00',
+            'Sign With Seconds': '+',
+            'Difference With Seconds': '00:00:00',
+            'Sign Without Seconds': '+',
+            'Difference Without Seconds': '00:00:00',
+            'Status': 'No data',
+            'Message With Seconds': 'No entries for this date (holiday/absent/no scans)',
+            'Message Without Seconds': 'No entries for this date (holiday/absent/no scans)'
+        }]
+    else:
+        data = []
 
     for name in time_spent:
         if "_no_seconds" in name:
@@ -331,10 +351,15 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
     try:
         # Try to read existing CSV
         df = pd.read_csv(csv_file)
-        # Remove any existing rows for the same Date and Name (to avoid duplicates)
-        df = df[~((df['Date'] == str(analyzed_date)) & (df['Name'].isin(new_df['Name'])))]
-        # Append new data
-        df = pd.concat([df, new_df]).reset_index(drop=True)
+        required_cols = set(new_df.columns)
+        # Reset to new data if existing CSV is missing expected columns
+        if not required_cols.issubset(set(df.columns)):
+            df = new_df
+        else:
+            # Remove any existing rows for the same Date and Name (to avoid duplicates)
+            df = df[~((df['Date'] == str(analyzed_date)) & (df['Name'].isin(new_df['Name'])))]
+            # Append new data
+            df = pd.concat([df, new_df]).reset_index(drop=True)
     except (FileNotFoundError, pd.errors.EmptyDataError):
         # If file doesn't exist or is empty, use only the new data
         df = new_df
@@ -434,8 +459,8 @@ def calculate_total_difference_from_csv(csv_file: str, start_date: datetime.date
 if __name__ == "__main__":
     file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
     year = 2025
-    month = 10
-    start_day = 27
-    end_day = 31
+    month = 11
+    start_day = 1
+    end_day = 28
     main(file_path, year, month, start_day, end_day)
     calculate_total_difference_from_csv(CSV_FILE_NAME)
