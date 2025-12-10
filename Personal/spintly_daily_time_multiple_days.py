@@ -147,6 +147,10 @@ def format_time(seconds: float) -> str:
     """Format time from seconds to HH:MM:SS"""
     return str(timedelta(seconds=int(seconds)))
 
+def format_hours(seconds: float) -> str:
+    """Format time in hours with two decimal places."""
+    return f"{seconds / 3600:.2f} hrs"
+
 def analyze_time_spent(df: pd.DataFrame, date: datetime.date, current_time: datetime = None) -> Tuple[Dict[str, Dict[str, float]], datetime.date]:
     """Analyze and calculate time spent for each user on the specified date"""
     time_spent = {}
@@ -408,6 +412,30 @@ def generate_summary_tables(results: Dict[datetime.date, Dict[str, Dict[str, flo
         summary += "\n\n"
     return summary
 
+def summarize_span_extras(results: Dict[datetime.date, Dict[str, Dict[str, float]]]) -> Dict[str, float]:
+    """
+    Aggregate total positive span extras (first punch in to last punch out minus target)
+    across all dates.
+    """
+    total_with_seconds = 0
+    total_without_seconds = 0
+
+    for _, time_spent in results.items():
+        for name, times in time_spent.items():
+            if "_no_seconds" in name:
+                continue
+            span_extra_with = times['total'] - TARGET_TIME
+            span_extra_without = time_spent.get(f"{name}_no_seconds", {}).get('total', 0) - TARGET_TIME
+            if span_extra_with > 0:
+                total_with_seconds += span_extra_with
+            if span_extra_without > 0:
+                total_without_seconds += span_extra_without
+
+    return {
+        'with_seconds': total_with_seconds,
+        'without_seconds': total_without_seconds
+    }
+
 def main(file_path: str, year: int, month: int, start_day: int, end_day: int) -> None:
     sheet_name = 'Access History'
     skip_rows = 5
@@ -421,6 +449,10 @@ def main(file_path: str, year: int, month: int, start_day: int, end_day: int) ->
         results = process_multiple_dates(df, selected_dates, current_time)
         
         print(generate_summary_tables(results))
+        span_totals = summarize_span_extras(results)
+        print("\nAggregate span extras (first-in to last-out, uncapped):")
+        print(f"  With seconds   : {format_hours(span_totals['with_seconds'])}")
+        print(f"  Without seconds: {format_hours(span_totals['without_seconds'])}")
         
         save_multiple_dates_to_csv(results)
 
@@ -470,7 +502,9 @@ def calculate_total_difference_from_csv(csv_file: str, start_date: datetime.date
         return None
 
 if __name__ == "__main__":
-    file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
+    # file_path = r'c:\Users\Subin-PC\Downloads\subin.xlsx'
+    # file_path = r'c:\Users\Subin-PC\Downloads\chippy.xlsx'
+    file_path = r'c:\Users\Subin-PC\Downloads\aswin.xlsx'
     year = 2025
     month = 11
     start_day = 1
