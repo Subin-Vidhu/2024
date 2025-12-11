@@ -199,7 +199,7 @@ def calculate_leave_time(office_time: float, break_time: float, analyzed_date: d
             return None, False, "Target not met", difference
 
 def generate_summary_table(time_spent: Dict[str, Dict[str, float]], analyzed_date: datetime.date, use_seconds: bool = True) -> str:
-    headers = ['Name', 'Total Time', 'Span Extra (raw)', 'Office Hours Time', 'Break Time', 'Working Time', 'Target', 'Difference', 'Last Exit', 'Status']
+    headers = ['Name', 'Total Time', 'Span Extra', 'Office Hours Time', 'Break Time', 'Working Time', 'Target', 'Difference', 'Last Exit', 'Status']
     table = []
 
     for name, times in time_spent.items():
@@ -215,8 +215,8 @@ def generate_summary_table(time_spent: Dict[str, Dict[str, float]], analyzed_dat
         
         # Calculate actual working time (office time minus break time)
         working_time = times['office'] - times['break']
-        # Raw span extra based only on first punch in / last punch out
-        span_extra = times['total'] - TARGET_TIME
+        # Span extra: first punch in to last punch out MINUS break time (actual time in office span)
+        span_extra = (times['total'] - times['break']) - TARGET_TIME
 
         difference_str = format_time(abs(difference.total_seconds()))
         
@@ -313,8 +313,9 @@ def save_differences_to_csv(time_spent: Dict[str, Dict[str, float]], analyzed_da
         break_time_without_seconds = time_spent[f"{name}_no_seconds"]['break']
         has_open_entry_with_seconds = time_spent[name].get('has_open_entry', False)
         has_open_entry_without_seconds = time_spent[f"{name}_no_seconds"].get('has_open_entry', False)
-        span_extra_with_seconds = time_spent[name]['total'] - TARGET_TIME
-        span_extra_without_seconds = time_spent[f"{name}_no_seconds"]['total'] - TARGET_TIME
+        # Span extra: first punch in to last punch out MINUS break time (actual time in office span)
+        span_extra_with_seconds = (time_spent[name]['total'] - break_time_with_seconds) - TARGET_TIME
+        span_extra_without_seconds = (time_spent[f"{name}_no_seconds"]['total'] - break_time_without_seconds) - TARGET_TIME
 
         # Pass has_open_entry and first_entry_time to calculate_leave_time
         leave_time_with_seconds, target_met_with_seconds, status_with_seconds, difference_with_seconds = calculate_leave_time(
@@ -414,7 +415,7 @@ def generate_summary_tables(results: Dict[datetime.date, Dict[str, Dict[str, flo
 
 def summarize_span_extras(results: Dict[datetime.date, Dict[str, Dict[str, float]]]) -> Dict[str, float]:
     """
-    Aggregate total span extras (first punch in to last punch out minus target)
+    Aggregate total span extras (first punch in to last punch out MINUS break time, minus target)
     across all dates, keeping positives and negatives separate.
     """
     pos_with_seconds = 0
@@ -426,8 +427,11 @@ def summarize_span_extras(results: Dict[datetime.date, Dict[str, Dict[str, float
         for name, times in time_spent.items():
             if "_no_seconds" in name:
                 continue
-            span_extra_with = times['total'] - TARGET_TIME
-            span_extra_without = time_spent.get(f"{name}_no_seconds", {}).get('total', 0) - TARGET_TIME
+            # Span extra: first punch in to last punch out MINUS break time (actual time in office span)
+            break_time_with = times.get('break', 0)
+            break_time_without = time_spent.get(f"{name}_no_seconds", {}).get('break', 0)
+            span_extra_with = (times['total'] - break_time_with) - TARGET_TIME
+            span_extra_without = (time_spent.get(f"{name}_no_seconds", {}).get('total', 0) - break_time_without) - TARGET_TIME
             if span_extra_with > 0:
                 pos_with_seconds += span_extra_with
             elif span_extra_with < 0:
@@ -460,7 +464,7 @@ def main(file_path: str, year: int, month: int, start_day: int, end_day: int) ->
         
         print(generate_summary_tables(results))
         span_totals = summarize_span_extras(results)
-        print("\nAggregate span extras (first-in to last-out, uncapped):")
+        print("\nAggregate span extras (first-in to last-out MINUS break time, uncapped):")
         print(f"  Positives with seconds   : {format_hours(span_totals['pos_with_seconds'])}")
         print(f"  Negatives with seconds   : {format_hours(span_totals['neg_with_seconds'])}")
         print(f"  Net with seconds         : {format_hours(span_totals['net_with_seconds'])}")
