@@ -79,6 +79,71 @@ def normalize_case_id(case_id):
     
     return case_id
 
+def extract_numeric_part(case_id):
+    """Extract numeric part from case ID (e.g., '088' from 'A-088' or 'N-088')."""
+    if pd.isna(case_id) or case_id == '':
+        return None
+    
+    case_id = str(case_id).strip()
+    match = re.search(r'[NA]-(\d+)', case_id)
+    if match:
+        return match.group(1)
+    
+    return None
+
+def create_numeric_mapping(data_dict):
+    """
+    Create mapping from numeric part to all case IDs with that number.
+    Returns: {numeric_part: [list of case_ids]}
+    """
+    mapping = {}
+    for case_id in data_dict.keys():
+        numeric = extract_numeric_part(case_id)
+        if numeric:
+            if numeric not in mapping:
+                mapping[numeric] = []
+            mapping[numeric].append(case_id)
+    return mapping
+
+def merge_case_data(data_dict, numeric_mapping):
+    """
+    Merge data from cases that match by numeric part.
+    Returns: {numeric_part: merged_data}
+    """
+    merged = {}
+    for numeric, case_ids in numeric_mapping.items():
+        # Combine all case IDs
+        combined_case_ids = ' / '.join(sorted(case_ids))
+        
+        # Merge data from all matching case IDs
+        merged_data = None
+        for case_id in case_ids:
+            if case_id in data_dict:
+                if merged_data is None:
+                    # Initialize with first case's data structure (deep copy)
+                    if isinstance(data_dict[case_id], dict):
+                        import copy
+                        merged_data = copy.deepcopy(data_dict[case_id])
+                    else:
+                        merged_data = data_dict[case_id]
+                else:
+                    # Merge additional data (prefer non-None values, deep merge for nested dicts)
+                    if isinstance(data_dict[case_id], dict) and isinstance(merged_data, dict):
+                        for key in data_dict[case_id].keys():
+                            if key not in merged_data or merged_data[key] is None:
+                                merged_data[key] = data_dict[case_id][key]
+                            elif isinstance(merged_data[key], dict) and isinstance(data_dict[case_id][key], dict):
+                                # Deep merge nested dictionaries
+                                for sub_key in data_dict[case_id][key].keys():
+                                    if sub_key not in merged_data[key] or merged_data[key][sub_key] is None:
+                                        merged_data[key][sub_key] = data_dict[case_id][key][sub_key]
+        
+        if merged_data is not None:
+            merged[numeric] = merged_data
+            merged[numeric]['_case_ids'] = combined_case_ids  # Store combined case IDs
+    
+    return merged
+
 def calculate_volume_difference(true_vol, pred_vol):
     """Calculate absolute volume difference in cm³."""
     if pd.isna(true_vol) or pd.isna(pred_vol):
@@ -316,7 +381,7 @@ def parse_aira_csv(aira_csv_path):
 # COMPARISON FUNCTIONS
 # ============================================================================
 
-def create_comparison_dataframe(aira_data, fda_data, annotator='gt01'):
+def create_comparison_dataframe(aira_data_merged, fda_data_merged, annotator='gt01'):
     """
     Create comparison DataFrame for AIRA vs specified annotator.
     
@@ -340,25 +405,38 @@ def create_comparison_dataframe(aira_data, fda_data, annotator='gt01'):
     """
     comparison_rows = []
     
-    # Get all unique case IDs
-    all_case_ids = set(aira_data.keys()) | set(fda_data.keys())
+    # Get all unique numeric parts
+    all_numeric_parts = set(aira_data_merged.keys()) | set(fda_data_merged.keys())
     
-    for case_id in sorted(all_case_ids):
-        aira_vols = aira_data.get(case_id, {})
-        fda_vols = fda_data.get(case_id, {}).get(annotator, {})
-        inter_metrics = fda_data.get(case_id, {}).get('inter_annotator_dice', {})
-        inter_diff = fda_data.get(case_id, {}).get('inter_annotator_diff_percent', {})
+    for numeric_part in sorted(all_numeric_parts, key=lambda x: int(x) if x.isdigit() else 999):
+        aira_vols = aira_data_merged.get(numeric_part, {})
+        fda_case_data = fda_data_merged.get(numeric_part, {})
+        fda_vols = fda_case_data.get(annotator, {}) if isinstance(fda_case_data, dict) else {}
+        inter_metrics = fda_case_data.get('inter_annotator_dice', {}) if isinstance(fda_case_data, dict) else {}
+        inter_diff = fda_case_data.get('inter_annotator_diff_percent', {}) if isinstance(fda_case_data, dict) else {}
+        
+        # Get combined case IDs
+        aira_case_ids = aira_vols.get('_case_ids', '') if isinstance(aira_vols, dict) else ''
+        fda_case_ids = fda_case_data.get('_case_ids', '') if isinstance(fda_case_data, dict) else ''
+        
+        # Combine case IDs
+        all_case_ids = []
+        if aira_case_ids:
+            all_case_ids.extend(aira_case_ids.split(' / '))
+        if fda_case_ids:
+            all_case_ids.extend(fda_case_ids.split(' / '))
+        combined_case_ids = ' / '.join(sorted(set(all_case_ids))) if all_case_ids else numeric_part
         
         # Right Kidney
-        aira_right = aira_vols.get('right')
-        fda_right = fda_vols.get('right')
+        aira_right = aira_vols.get('right') if isinstance(aira_vols, dict) else None
+        fda_right = fda_vols.get('right') if isinstance(fda_vols, dict) else None
         
         right_diff = calculate_volume_difference(fda_right, aira_right) if (fda_right is not None and aira_right is not None) else np.nan
         right_diff_percent = calculate_volume_percentage_diff(fda_right, aira_right) if (fda_right is not None and aira_right is not None) else np.nan
         
         # Left Kidney
-        aira_left = aira_vols.get('left')
-        fda_left = fda_vols.get('left')
+        aira_left = aira_vols.get('left') if isinstance(aira_vols, dict) else None
+        fda_left = fda_vols.get('left') if isinstance(fda_vols, dict) else None
         
         left_diff = calculate_volume_difference(fda_left, aira_left) if (fda_left is not None and aira_left is not None) else np.nan
         left_diff_percent = calculate_volume_percentage_diff(fda_left, aira_left) if (fda_left is not None and aira_left is not None) else np.nan
@@ -370,7 +448,7 @@ def create_comparison_dataframe(aira_data, fda_data, annotator='gt01'):
         total_diff_percent = calculate_volume_percentage_diff(fda_total, aira_total) if fda_total > 0 else np.nan
         
         row = {
-            'Case_ID': case_id,
+            'Case_ID': combined_case_ids,
             'AIRA_Right_Kidney_Vol_cm3': round(aira_right, 2) if aira_right is not None else '',
             'FDA_Right_Kidney_Vol_cm3': round(fda_right, 2) if fda_right is not None else '',
             'Right_Kidney_Diff_cm3': round(right_diff, 2) if not np.isnan(right_diff) else '',
@@ -557,28 +635,38 @@ def main():
     fda_data = parse_fda_csv(FDA_CSV_PATH)
     aira_data = parse_aira_csv(AIRA_CSV_PATH)
     
-    # Find matching cases and missing cases
-    matching_cases = set(aira_data.keys()) & set(fda_data.keys())
-    aira_only = set(aira_data.keys()) - set(fda_data.keys())
-    fda_only = set(fda_data.keys()) - set(aira_data.keys())
+    # Create numeric mappings and merge cases by numeric part
+    print("\n🔄 Matching cases by numeric part (ignoring A-/N- prefix)...")
+    aira_numeric_mapping = create_numeric_mapping(aira_data)
+    fda_numeric_mapping = create_numeric_mapping(fda_data)
     
-    print(f"\n✓ Found {len(matching_cases)} matching cases")
-    print(f"  Cases only in AIRA CSV: {len(aira_only)}")
-    print(f"  Cases only in FDA CSV: {len(fda_only)}")
+    # Merge data by numeric part
+    aira_data_merged = merge_case_data(aira_data, aira_numeric_mapping)
+    fda_data_merged = merge_case_data(fda_data, fda_numeric_mapping)
     
-    if len(matching_cases) == 0:
+    # Find matching cases by numeric part
+    matching_numeric = set(aira_data_merged.keys()) & set(fda_data_merged.keys())
+    aira_only_numeric = set(aira_data_merged.keys()) - set(fda_data_merged.keys())
+    fda_only_numeric = set(fda_data_merged.keys()) - set(aira_data_merged.keys())
+    
+    print(f"\n✓ Found {len(matching_numeric)} matching cases (by numeric part)")
+    print(f"  Cases only in AIRA CSV: {len(aira_only_numeric)}")
+    print(f"  Cases only in FDA CSV: {len(fda_only_numeric)}")
+    
+    if len(matching_numeric) == 0:
         print("❌ ERROR: No matching cases found between AIRA and FDA CSVs!")
         print("   Please check case ID formats in both files.")
         return
     
-    # Create missing cases report
+    # Create missing cases report (by numeric part)
     missing_cases_data = []
-    if aira_only:
-        print(f"\n  Cases only in AIRA CSV: {sorted(aira_only)}")
-        for case_id in sorted(aira_only):
-            aira_vols = aira_data[case_id]
+    if aira_only_numeric:
+        print(f"\n  Cases only in AIRA CSV (numeric): {sorted(aira_only_numeric, key=lambda x: int(x) if x.isdigit() else 999)}")
+        for numeric_part in sorted(aira_only_numeric, key=lambda x: int(x) if x.isdigit() else 999):
+            aira_vols = aira_data_merged[numeric_part]
+            case_ids = aira_vols.get('_case_ids', numeric_part)
             missing_cases_data.append({
-                'Case_ID': case_id,
+                'Case_ID': case_ids,
                 'Source': 'AIRA Only',
                 'AIRA_Right_Vol_cm3': round(aira_vols.get('right', 0), 2) if aira_vols.get('right') is not None else '',
                 'AIRA_Left_Vol_cm3': round(aira_vols.get('left', 0), 2) if aira_vols.get('left') is not None else '',
@@ -588,13 +676,15 @@ def main():
                 'FDA_GT02_Left_Vol_cm3': ''
             })
     
-    if fda_only:
-        print(f"  Cases only in FDA CSV: {sorted(fda_only)}")
-        for case_id in sorted(fda_only):
-            gt01 = fda_data[case_id].get('gt01', {})
-            gt02 = fda_data[case_id].get('gt02', {})
+    if fda_only_numeric:
+        print(f"  Cases only in FDA CSV (numeric): {sorted(fda_only_numeric, key=lambda x: int(x) if x.isdigit() else 999)}")
+        for numeric_part in sorted(fda_only_numeric, key=lambda x: int(x) if x.isdigit() else 999):
+            fda_case_data = fda_data_merged[numeric_part]
+            case_ids = fda_case_data.get('_case_ids', numeric_part)
+            gt01 = fda_case_data.get('gt01', {})
+            gt02 = fda_case_data.get('gt02', {})
             missing_cases_data.append({
-                'Case_ID': case_id,
+                'Case_ID': case_ids,
                 'Source': 'FDA Only',
                 'AIRA_Right_Vol_cm3': '',
                 'AIRA_Left_Vol_cm3': '',
@@ -615,13 +705,13 @@ def main():
     
     # AIRA vs GT01
     print("\n📊 Creating AIRA vs GT01 comparison...")
-    df_gt01 = create_comparison_dataframe(aira_data, fda_data, annotator='gt01')
+    df_gt01 = create_comparison_dataframe(aira_data_merged, fda_data_merged, annotator='gt01')
     stats_gt01 = create_summary_statistics(df_gt01, 'GT01')
     print("✓ Generated AIRA vs GT01 data")
     
     # AIRA vs GT02
     print("\n📊 Creating AIRA vs GT02 comparison...")
-    df_gt02 = create_comparison_dataframe(aira_data, fda_data, annotator='gt02')
+    df_gt02 = create_comparison_dataframe(aira_data_merged, fda_data_merged, annotator='gt02')
     stats_gt02 = create_summary_statistics(df_gt02, 'GT02')
     print("✓ Generated AIRA vs GT02 data")
     
@@ -647,7 +737,7 @@ def main():
     print("\n" + "=" * 80)
     print("SUMMARY")
     print("=" * 80)
-    print(f"Total matching cases: {len(matching_cases)}")
+    print(f"Total matching cases: {len(matching_numeric)}")
     print(f"\n📁 Output file saved to: {OUTPUT_DIR}")
     print(f"   • AIRA_vs_Annotators_{timestamp}.xlsx")
     print(f"     - Sheet 1: AIRA_vs_GT01 (detailed comparison)")
