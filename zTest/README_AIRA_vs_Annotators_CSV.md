@@ -17,25 +17,36 @@ This script compares AIRA volume predictions with FDA annotator volumes using pr
    - Contains AIRA predicted volumes
    - Volumes in cm³
 
-## Output Files
+## Output File
 
-For each comparison (GT01 and GT02), the script generates:
+The script generates a **single Excel file** (`AIRA_vs_Annotators_*.xlsx`) with **4 sheets**:
 
-1. **Comparison CSV** (`AIRA_vs_GT01_*.csv` / `AIRA_vs_GT02_*.csv`):
-   - Case-by-case volume comparisons
+1. **Sheet 1: AIRA_vs_GT01** - Detailed case-by-case comparison
    - Columns include:
      - Case_ID
      - AIRA volumes (Right, Left, Total)
-     - FDA annotator volumes (Right, Left, Total)
+     - FDA GT01 annotator volumes (Right, Left, Total)
      - Volume differences (absolute and percentage)
      - Inter-annotator agreement metrics (Dice scores between GT01 and GT02)
 
-2. **Statistics CSV** (`AIRA_vs_GT01_Statistics_*.csv` / `AIRA_vs_GT02_Statistics_*.csv`):
+2. **Sheet 2: AIRA_vs_GT01_Stats** - Summary statistics
    - Summary statistics
    - Regression metrics (MAE, RMSE, MAPE, R², Correlation, MBE)
    - Clinical agreement rates
    - 95% confidence intervals
    - Inter-annotator agreement summary
+
+3. **Sheet 3: AIRA_vs_GT02** - Detailed case-by-case comparison
+   - Same structure as Sheet 1, but comparing AIRA vs GT02
+
+4. **Sheet 4: AIRA_vs_GT02_Stats** - Summary statistics
+   - Same structure as Sheet 2, but for GT02 comparison
+
+## Requirements
+
+```bash
+pip install pandas numpy scipy openpyxl
+```
 
 ## Usage
 
@@ -64,6 +75,8 @@ OUTPUT_DIR = r'd:\2024\zTest\results\aira_vs_annotators_csv'
 ## Output Location
 
 Results are saved to: `d:\2024\zTest\results\aira_vs_annotators_csv\`
+
+The output is a single Excel file (`.xlsx`) with 4 sheets, making it easy to navigate and compare results.
 
 ## Notes
 

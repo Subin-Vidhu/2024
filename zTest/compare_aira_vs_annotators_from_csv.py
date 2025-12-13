@@ -4,14 +4,19 @@ Compare AIRA vs FDA Annotators from CSV Data
 ============================================
 
 This script compares AIRA volume predictions with FDA annotator volumes
-using pre-calculated CSV data. It generates separate comparisons for:
-- AIRA vs Annotator 1 (GT01)
-- AIRA vs Annotator 2 (GT02)
+using pre-calculated CSV data. It generates a single Excel file with 4 sheets:
+- Sheet 1: AIRA vs Annotator 1 (GT01) - detailed comparison
+- Sheet 2: AIRA vs Annotator 1 (GT01) - statistics
+- Sheet 3: AIRA vs Annotator 2 (GT02) - detailed comparison
+- Sheet 4: AIRA vs Annotator 2 (GT02) - statistics
 
 The script includes:
 - Volume comparisons (absolute and percentage differences)
 - Inter-annotator agreement metrics from FDA CSV (Dice scores between GT01 and GT02)
 - Comprehensive statistics and summary reports
+
+Requirements:
+    pip install pandas numpy scipy openpyxl
 
 Usage:
     python compare_aira_vs_annotators_from_csv.py
@@ -562,40 +567,37 @@ def main():
     print("\n📊 Creating AIRA vs GT01 comparison...")
     df_gt01 = create_comparison_dataframe(aira_data, fda_data, annotator='gt01')
     stats_gt01 = create_summary_statistics(df_gt01, 'GT01')
-    
-    gt01_output = os.path.join(OUTPUT_DIR, f'AIRA_vs_GT01_{timestamp}.csv')
-    gt01_stats_output = os.path.join(OUTPUT_DIR, f'AIRA_vs_GT01_Statistics_{timestamp}.csv')
-    
-    df_gt01.to_csv(gt01_output, index=False)
-    stats_gt01.to_csv(gt01_stats_output, index=False)
-    
-    print(f"✓ Saved: {os.path.basename(gt01_output)}")
-    print(f"✓ Saved: {os.path.basename(gt01_stats_output)}")
+    print("✓ Generated AIRA vs GT01 data")
     
     # AIRA vs GT02
     print("\n📊 Creating AIRA vs GT02 comparison...")
     df_gt02 = create_comparison_dataframe(aira_data, fda_data, annotator='gt02')
     stats_gt02 = create_summary_statistics(df_gt02, 'GT02')
+    print("✓ Generated AIRA vs GT02 data")
     
-    gt02_output = os.path.join(OUTPUT_DIR, f'AIRA_vs_GT02_{timestamp}.csv')
-    gt02_stats_output = os.path.join(OUTPUT_DIR, f'AIRA_vs_GT02_Statistics_{timestamp}.csv')
+    # Create single Excel file with 4 sheets
+    excel_output = os.path.join(OUTPUT_DIR, f'AIRA_vs_Annotators_{timestamp}.xlsx')
+    print(f"\n💾 Saving to Excel file: {os.path.basename(excel_output)}")
     
-    df_gt02.to_csv(gt02_output, index=False)
-    stats_gt02.to_csv(gt02_stats_output, index=False)
+    with pd.ExcelWriter(excel_output, engine='openpyxl') as writer:
+        df_gt01.to_excel(writer, sheet_name='AIRA_vs_GT01', index=False)
+        stats_gt01.to_excel(writer, sheet_name='AIRA_vs_GT01_Stats', index=False)
+        df_gt02.to_excel(writer, sheet_name='AIRA_vs_GT02', index=False)
+        stats_gt02.to_excel(writer, sheet_name='AIRA_vs_GT02_Stats', index=False)
     
-    print(f"✓ Saved: {os.path.basename(gt02_output)}")
-    print(f"✓ Saved: {os.path.basename(gt02_stats_output)}")
+    print(f"✓ Saved Excel file with 4 sheets")
     
     # Print summary
     print("\n" + "=" * 80)
     print("SUMMARY")
     print("=" * 80)
     print(f"Total matching cases: {len(matching_cases)}")
-    print(f"\n📁 Output files saved to: {OUTPUT_DIR}")
-    print(f"   • AIRA_vs_GT01_{timestamp}.csv")
-    print(f"   • AIRA_vs_GT01_Statistics_{timestamp}.csv")
-    print(f"   • AIRA_vs_GT02_{timestamp}.csv")
-    print(f"   • AIRA_vs_GT02_Statistics_{timestamp}.csv")
+    print(f"\n📁 Output file saved to: {OUTPUT_DIR}")
+    print(f"   • AIRA_vs_Annotators_{timestamp}.xlsx")
+    print(f"     - Sheet 1: AIRA_vs_GT01 (detailed comparison)")
+    print(f"     - Sheet 2: AIRA_vs_GT01_Stats (statistics)")
+    print(f"     - Sheet 3: AIRA_vs_GT02 (detailed comparison)")
+    print(f"     - Sheet 4: AIRA_vs_GT02_Stats (statistics)")
     print("=" * 80)
     
     # Print quick statistics
