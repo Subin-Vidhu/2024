@@ -320,6 +320,11 @@ def create_comparison_dataframe(aira_data, fda_data, annotator='gt01'):
     """
     Create comparison DataFrame for AIRA vs specified annotator.
     
+    NOTE: Dice scores cannot be calculated from volume data alone.
+    Dice scores require the actual segmentation mask files to compute
+    spatial overlap. Volume data only provides size information, not
+    spatial location information needed for Dice calculation.
+    
     Parameters:
     -----------
     aira_data : dict
@@ -378,7 +383,12 @@ def create_comparison_dataframe(aira_data, fda_data, annotator='gt01'):
             'FDA_Total_Kidney_Vol_cm3': round(fda_total, 2) if fda_total > 0 else '',
             'Total_Kidney_Diff_cm3': round(total_diff, 2) if not np.isnan(total_diff) else '',
             'Total_Kidney_Diff_%': round(total_diff_percent, 2) if not np.isnan(total_diff_percent) else '',
-            # Inter-annotator metrics (GT01 vs GT02)
+            # Dice scores - NOTE: Cannot be calculated from volume data alone
+            # Requires actual mask files to compute spatial overlap
+            'AIRA_vs_Annotator_Dice_Right': 'N/A - Requires mask files',
+            'AIRA_vs_Annotator_Dice_Left': 'N/A - Requires mask files',
+            'AIRA_vs_Annotator_Dice_Average': 'N/A - Requires mask files',
+            # Inter-annotator metrics (GT01 vs GT02) - from FDA CSV
             'Inter_Annotator_Dice_Right': round(inter_metrics.get('right'), 6) if inter_metrics.get('right') is not None else '',
             'Inter_Annotator_Dice_Left': round(inter_metrics.get('left'), 6) if inter_metrics.get('left') is not None else '',
             'Inter_Annotator_Dice_Average': round(inter_metrics.get('average'), 6) if inter_metrics.get('average') is not None else '',
@@ -547,14 +557,54 @@ def main():
     fda_data = parse_fda_csv(FDA_CSV_PATH)
     aira_data = parse_aira_csv(AIRA_CSV_PATH)
     
-    # Find matching cases
+    # Find matching cases and missing cases
     matching_cases = set(aira_data.keys()) & set(fda_data.keys())
+    aira_only = set(aira_data.keys()) - set(fda_data.keys())
+    fda_only = set(fda_data.keys()) - set(aira_data.keys())
+    
     print(f"\n✓ Found {len(matching_cases)} matching cases")
+    print(f"  Cases only in AIRA CSV: {len(aira_only)}")
+    print(f"  Cases only in FDA CSV: {len(fda_only)}")
     
     if len(matching_cases) == 0:
         print("❌ ERROR: No matching cases found between AIRA and FDA CSVs!")
         print("   Please check case ID formats in both files.")
         return
+    
+    # Create missing cases report
+    missing_cases_data = []
+    if aira_only:
+        print(f"\n  Cases only in AIRA CSV: {sorted(aira_only)}")
+        for case_id in sorted(aira_only):
+            aira_vols = aira_data[case_id]
+            missing_cases_data.append({
+                'Case_ID': case_id,
+                'Source': 'AIRA Only',
+                'AIRA_Right_Vol_cm3': round(aira_vols.get('right', 0), 2) if aira_vols.get('right') is not None else '',
+                'AIRA_Left_Vol_cm3': round(aira_vols.get('left', 0), 2) if aira_vols.get('left') is not None else '',
+                'FDA_GT01_Right_Vol_cm3': '',
+                'FDA_GT01_Left_Vol_cm3': '',
+                'FDA_GT02_Right_Vol_cm3': '',
+                'FDA_GT02_Left_Vol_cm3': ''
+            })
+    
+    if fda_only:
+        print(f"  Cases only in FDA CSV: {sorted(fda_only)}")
+        for case_id in sorted(fda_only):
+            gt01 = fda_data[case_id].get('gt01', {})
+            gt02 = fda_data[case_id].get('gt02', {})
+            missing_cases_data.append({
+                'Case_ID': case_id,
+                'Source': 'FDA Only',
+                'AIRA_Right_Vol_cm3': '',
+                'AIRA_Left_Vol_cm3': '',
+                'FDA_GT01_Right_Vol_cm3': round(gt01.get('right', 0), 2) if gt01.get('right') is not None else '',
+                'FDA_GT01_Left_Vol_cm3': round(gt01.get('left', 0), 2) if gt01.get('left') is not None else '',
+                'FDA_GT02_Right_Vol_cm3': round(gt02.get('right', 0), 2) if gt02.get('right') is not None else '',
+                'FDA_GT02_Left_Vol_cm3': round(gt02.get('left', 0), 2) if gt02.get('left') is not None else ''
+            })
+    
+    df_missing = pd.DataFrame(missing_cases_data) if missing_cases_data else pd.DataFrame()
     
     # Create comparisons
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -575,7 +625,7 @@ def main():
     stats_gt02 = create_summary_statistics(df_gt02, 'GT02')
     print("✓ Generated AIRA vs GT02 data")
     
-    # Create single Excel file with 4 sheets
+    # Create single Excel file with 5 sheets (4 comparison + 1 missing cases)
     excel_output = os.path.join(OUTPUT_DIR, f'AIRA_vs_Annotators_{timestamp}.xlsx')
     print(f"\n💾 Saving to Excel file: {os.path.basename(excel_output)}")
     
@@ -584,8 +634,14 @@ def main():
         stats_gt01.to_excel(writer, sheet_name='AIRA_vs_GT01_Stats', index=False)
         df_gt02.to_excel(writer, sheet_name='AIRA_vs_GT02', index=False)
         stats_gt02.to_excel(writer, sheet_name='AIRA_vs_GT02_Stats', index=False)
+        
+        # Add missing cases sheet if there are any
+        if len(df_missing) > 0:
+            df_missing.to_excel(writer, sheet_name='Missing_Cases', index=False)
+            print(f"✓ Added missing cases sheet ({len(df_missing)} cases)")
     
-    print(f"✓ Saved Excel file with 4 sheets")
+    num_sheets = 5 if len(df_missing) > 0 else 4
+    print(f"✓ Saved Excel file with {num_sheets} sheets")
     
     # Print summary
     print("\n" + "=" * 80)
@@ -598,6 +654,11 @@ def main():
     print(f"     - Sheet 2: AIRA_vs_GT01_Stats (statistics)")
     print(f"     - Sheet 3: AIRA_vs_GT02 (detailed comparison)")
     print(f"     - Sheet 4: AIRA_vs_GT02_Stats (statistics)")
+    if len(df_missing) > 0:
+        print(f"     - Sheet 5: Missing_Cases ({len(df_missing)} cases not in both CSVs)")
+    print("\n⚠️  NOTE: Dice scores between AIRA and annotators cannot be calculated")
+    print("   from volume data alone. Dice scores require actual mask files (.nii)")
+    print("   to compute spatial overlap. Use fda_multiple_case_dice.py for Dice calculations.")
     print("=" * 80)
     
     # Print quick statistics
