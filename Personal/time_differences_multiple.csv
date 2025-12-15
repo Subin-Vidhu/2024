@@ -1,24 +1,78 @@
-Date,Name,Office Time With Seconds,Office Time Without Seconds,Break Time With Seconds,Break Time Without Seconds,Working Time With Seconds,Working Time Without Seconds,Sign With Seconds,Difference With Seconds,Sign Without Seconds,Difference Without Seconds,Status,Message With Seconds,Message Without Seconds
-2025-07-21,Subin,9:31:11,9:31:00,,,,,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
-2025-07-22,Subin,8:30:48,8:30:00,,,,,+,0:00:48,+,0:00:00,Target met,,
-2025-07-23,Subin,9:35:34,9:35:00,,,,,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
-2025-07-24,Subin,9:39:34,9:39:00,,,,,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
-2025-07-25,Subin,6:24:28,6:23:00,,,,,-,2:05:32,-,2:07:00,Target not met,,
-2025-08-01,Subin,8:44:11,8:44:00,,,,,+,0:14:11,+,0:14:00,Target met,,
-2025-07-28,Subin,10:18:25,10:17:00,,,,,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
-2025-07-29,Subin,9:14:19,9:14:00,,,,,+,0:44:19,+,0:44:00,Target met,,
-2025-07-30,Subin,9:00:14,9:00:00,,,,,+,0:30:14,+,0:30:00,Target met,,
-2025-07-31,Subin,8:53:18,8:53:00,,,,,+,0:23:18,+,0:23:00,Target met,,
-2025-08-04,Subin,4:19:23,4:19:00,,,,,-,4:10:37,-,4:11:00,Target not met,,
-2025-08-05,Subin,8:50:31,8:51:00,,,,,+,0:20:31,+,0:21:00,Target met,,
-2025-08-06,Subin,7:14:00,7:13:00,,,,,-,1:16:00,-,1:17:00,Target not met,,
-2025-08-07,Subin,9:34:38,9:34:00,,,,,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
-2025-08-08,Subin,7:08:10,7:08:00,,,,,-,1:21:49,-,1:22:00,Leave by 04:00:00 PM,,
-2025-08-11,Subin,9:46:28,9:46:00,0:11:53,0:12:00,9:34:35,9:34:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
-2025-08-12,Subin,9:42:11,9:42:00,0:05:58,0:06:00,9:36:13,9:36:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
-2025-08-13,Subin,1:12:30,1:12:00,0:00:00,0:00:00,1:12:30,1:12:00,-,7:17:29,-,7:18:00,Leave by 04:00:00 PM,,
-2025-10-27,Subin,10:10:54,10:10:00,0:00:00,0:00:00,10:10:54,10:10:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
-2025-10-28,Subin,9:35:06,9:35:00,0:00:00,0:00:00,9:35:06,9:35:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
-2025-10-29,Subin,9:28:59,9:28:00,0:00:00,0:00:00,9:28:59,9:28:00,+,0:58:59,+,0:58:00,Target met,,
-2025-10-30,Subin,9:27:20,9:27:00,0:00:00,0:00:00,9:27:20,9:27:00,+,0:57:20,+,0:57:00,Target met,,
-2025-10-31,Subin,3:09:27,3:09:00,0:00:00,0:00:00,3:09:27,3:09:00,-,5:20:32,-,5:21:00,Leave by 04:00:00 PM,,
+Date,Name,Office Time With Seconds,Office Time Without Seconds,Break Time With Seconds,Break Time Without Seconds,Working Time With Seconds,Working Time Without Seconds,Span Extra With Seconds,Span Extra Without Seconds,Sign With Seconds,Difference With Seconds,Sign Without Seconds,Difference Without Seconds,Status,Message With Seconds,Message Without Seconds
+2025-11-01,Subin,8:42:19,8:42:00,0:00:00,0:00:00,8:42:19,8:42:00,+0:37:47,+0:38:00,+,0:12:19,+,0:12:00,Target met,,
+2025-11-03,Subin,9:05:27,9:05:00,0:00:00,0:00:00,9:05:27,9:05:00,+0:57:19,+0:57:00,+,0:35:27,+,0:35:00,Target met,,
+2025-11-04,Subin,9:50:31,9:50:00,0:00:00,0:00:00,9:50:31,9:50:00,+1:47:07,+1:47:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-05,Subin,9:39:09,9:39:00,0:37:34,0:38:00,9:01:35,9:01:00,+0:52:49,+0:53:00,+,0:31:35,+,0:31:00,Target met,,
+2025-11-06,Subin,9:56:36,9:56:00,0:00:00,0:00:00,9:56:36,9:56:00,+1:46:48,+1:47:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-07,Subin,6:50:04,6:50:00,0:06:42,0:07:00,6:43:22,6:43:00,-1:22:13,-1:22:00,-,1:46:38,-,1:47:00,Target not met,,
+2025-11-08,Subin,8:52:05,8:52:00,0:00:00,0:00:00,8:52:05,8:52:00,+0:48:46,+0:49:00,+,0:22:05,+,0:22:00,Target met,,
+2025-11-09,Subin,9:18:34,9:18:00,0:25:35,0:24:00,8:52:59,8:54:00,+0:47:26,+0:49:00,+,0:22:59,+,0:24:00,Target met,,
+2025-11-10,Subin,9:20:04,9:20:00,0:00:00,0:00:00,9:20:04,9:20:00,+1:17:19,+1:18:00,+,0:50:04,+,0:50:00,Target met,,
+2025-11-11,Subin,9:27:56,9:27:00,0:00:00,0:00:00,9:27:56,9:27:00,+1:28:51,+1:28:00,+,0:57:56,+,0:57:00,Target met,,
+2025-11-12,Subin,9:52:44,9:52:00,0:00:00,0:00:00,9:52:44,9:52:00,+1:47:21,+1:47:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-13,Subin,9:15:21,9:15:00,0:00:00,0:00:00,9:15:21,9:15:00,+1:10:32,+1:11:00,+,0:45:21,+,0:45:00,Target met,,
+2025-11-14,Subin,4:23:18,4:23:00,0:00:00,0:00:00,4:23:18,4:23:00,-3:39:24,-3:39:00,-,4:06:42,-,4:07:00,Target not met,,
+2025-11-16,Subin,9:01:17,9:01:00,0:28:33,0:28:00,8:32:44,8:33:00,+0:24:35,+0:25:00,+,0:02:44,+,0:03:00,Target met,,
+2025-11-17,Subin,9:30:11,9:30:00,0:00:00,0:00:00,9:30:11,9:30:00,+1:11:40,+1:12:00,+,01:00:00,+,1:00:00,Target met,Only 1 hour/day can be considered extra,
+2025-11-18,Subin,10:07:54,10:07:00,0:00:00,0:00:00,10:07:54,10:07:00,+2:04:17,+2:04:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-19,Subin,9:52:52,9:52:00,0:00:00,0:00:00,9:52:52,9:52:00,+1:46:10,+1:46:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-20,Subin,9:17:30,9:17:00,0:00:00,0:00:00,9:17:30,9:17:00,+1:10:24,+1:10:00,+,0:47:30,+,0:47:00,Target met,,
+2025-11-21,Subin,8:41:43,8:41:00,0:00:00,0:00:00,8:41:43,8:41:00,+0:37:12,+0:37:00,+,0:11:43,+,0:11:00,Target met,,
+2025-11-22,Subin,10:55:40,10:55:00,0:28:29,0:28:00,10:27:11,10:27:00,+2:13:09,+2:13:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-23,Subin,9:29:59,9:29:00,0:35:16,0:35:00,8:54:43,8:54:00,+0:31:13,+0:31:00,+,0:24:43,+,0:24:00,Target met,,
+2025-11-24,Subin,9:28:59,9:28:00,0:00:00,0:00:00,9:28:59,9:28:00,+1:17:24,+1:17:00,+,0:58:59,+,0:58:00,Target met,,
+2025-11-25,Subin,11:57:02,11:57:00,0:09:00,0:09:00,11:48:02,11:48:00,+3:37:01,+3:37:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-26,Subin,11:43:10,11:43:00,0:00:00,0:00:00,11:43:10,11:43:00,+3:36:30,+3:37:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-27,Subin,9:47:37,9:47:00,0:00:00,0:00:00,9:47:37,9:47:00,+1:37:39,+1:38:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-28,Subin,10:07:54,10:07:00,0:00:00,0:00:00,10:07:54,10:07:00,+1:59:44,+1:59:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-01,No data,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,+,00:00:00,+,00:00:00,No data,No entries for this date (holiday/absent/no scans),No entries for this date (holiday/absent/no scans)
+2025-11-03,No data,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,+,00:00:00,+,00:00:00,No data,No entries for this date (holiday/absent/no scans),No entries for this date (holiday/absent/no scans)
+2025-11-04,Aswin Thulasi R,7:51:46,7:52:00,0:00:00,0:00:00,7:51:46,7:52:00,-0:38:14,-0:38:00,-,0:38:14,-,0:38:00,Target not met,,
+2025-11-05,No data,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,+,00:00:00,+,00:00:00,No data,No entries for this date (holiday/absent/no scans),No entries for this date (holiday/absent/no scans)
+2025-11-06,Aswin Thulasi R,10:48:38,10:49:00,0:41:23,0:41:00,10:07:15,10:08:00,+1:37:15,+1:38:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-07,Aswin Thulasi R,10:05:30,10:05:00,0:37:46,0:38:00,9:27:44,9:27:00,+0:57:44,+0:57:00,+,0:57:44,+,0:57:00,Target met,,
+2025-11-10,Aswin Thulasi R,7:10:15,7:11:00,0:00:00,0:00:00,7:10:15,7:11:00,-1:19:45,-1:19:00,-,1:19:45,-,1:19:00,Target not met,,
+2025-11-11,Aswin Thulasi R,10:07:45,10:08:00,0:41:09,0:41:00,9:26:36,9:27:00,+0:56:36,+0:57:00,+,0:56:36,+,0:57:00,Target met,,
+2025-11-12,Aswin Thulasi R,9:59:52,10:00:00,0:26:45,0:27:00,9:33:07,9:33:00,+1:21:34,+1:21:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-13,Aswin Thulasi R,9:52:58,9:53:00,0:30:17,0:30:00,9:22:41,9:23:00,+0:52:41,+0:53:00,+,0:52:41,+,0:53:00,Target met,,
+2025-11-14,Aswin Thulasi R,9:00:45,9:01:00,0:14:14,0:14:00,8:46:31,8:47:00,+0:16:31,+0:17:00,+,0:16:31,+,0:17:00,Target met,,
+2025-11-17,Aswin Thulasi R,6:47:00,6:47:00,0:00:37,0:01:00,6:46:23,6:46:00,-1:43:37,-1:44:00,-,1:43:37,-,1:44:00,Target not met,,
+2025-11-18,Aswin Thulasi R,8:51:35,8:52:00,0:00:00,0:00:00,8:51:35,8:52:00,+0:21:35,+0:22:00,+,0:21:35,+,0:22:00,Target met,,
+2025-11-19,Aswin Thulasi R,10:34:28,10:35:00,0:31:24,0:31:00,10:03:04,10:04:00,+1:46:52,+1:47:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-20,Aswin Thulasi R,10:15:58,10:16:00,0:43:47,0:44:00,9:32:11,9:32:00,+1:02:11,+1:02:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-21,Aswin Thulasi R,9:19:02,9:19:00,0:27:24,0:27:00,8:51:38,8:52:00,+0:21:38,+0:22:00,+,0:21:38,+,0:22:00,Target met,,
+2025-11-22,Aswin Thulasi R,9:17:09,9:17:00,0:00:00,0:00:00,9:17:09,9:17:00,+0:47:09,+0:47:00,+,0:47:09,+,0:47:00,Target met,,
+2025-11-23,Aswin Thulasi R,9:30:08,9:30:00,0:52:00,0:51:00,8:38:08,8:39:00,+0:30:32,+0:32:00,+,0:08:08,+,0:09:00,Target met,,
+2025-11-24,Aswin Thulasi R,7:55:19,7:55:00,0:00:00,0:00:00,7:55:19,7:55:00,-0:34:41,-0:35:00,-,0:34:41,-,0:35:00,Target not met,,
+2025-11-25,Aswin Thulasi R,9:50:31,9:50:00,0:08:56,0:09:00,9:41:35,9:41:00,+1:11:35,+1:11:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-26,Aswin Thulasi R,11:15:13,11:15:00,0:08:53,0:08:00,11:06:20,11:07:00,+2:36:20,+2:37:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-27,Aswin Thulasi R,9:51:20,9:52:00,0:38:46,0:39:00,9:12:34,9:13:00,+0:42:34,+0:43:00,+,0:42:34,+,0:43:00,Target met,,
+2025-11-28,Aswin Thulasi R,7:46:26,7:46:00,0:00:00,0:00:00,7:46:26,7:46:00,-0:43:34,-0:44:00,-,0:43:34,-,0:44:00,Target not met,,
+2025-11-01,Chippy Ravindran,8:42:21,8:42:00,0:00:00,0:00:00,8:42:21,8:42:00,+0:37:44,+0:38:00,+,0:12:21,+,0:12:00,Target met,,
+2025-11-02,No data,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,+,00:00:00,+,00:00:00,No data,No entries for this date (holiday/absent/no scans),No entries for this date (holiday/absent/no scans)
+2025-11-03,Chippy Ravindran,9:05:31,9:05:00,0:00:00,0:00:00,9:05:31,9:05:00,+0:57:17,+0:57:00,+,0:35:31,+,0:35:00,Target met,,
+2025-11-04,Chippy Ravindran,9:50:23,9:50:00,0:00:00,0:00:00,9:50:23,9:50:00,+1:46:55,+1:47:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-05,Chippy Ravindran,9:39:12,9:39:00,1:38:49,1:39:00,8:00:23,8:00:00,-0:08:31,-0:08:00,-,0:29:37,-,0:30:00,Target not met,,
+2025-11-06,Chippy Ravindran,9:56:39,9:56:00,0:00:00,0:00:00,9:56:39,9:56:00,+1:46:47,+1:47:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-07,Chippy Ravindran,6:50:08,6:50:00,0:00:00,0:00:00,6:50:08,6:50:00,-1:15:32,-1:15:00,-,1:39:52,-,1:40:00,Target not met,,
+2025-11-08,No data,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,+,00:00:00,+,00:00:00,No data,No entries for this date (holiday/absent/no scans),No entries for this date (holiday/absent/no scans)
+2025-11-09,No data,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,+,00:00:00,+,00:00:00,No data,No entries for this date (holiday/absent/no scans),No entries for this date (holiday/absent/no scans)
+2025-11-10,No data,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,+,00:00:00,+,00:00:00,No data,No entries for this date (holiday/absent/no scans),No entries for this date (holiday/absent/no scans)
+2025-11-11,No data,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,+,00:00:00,+,00:00:00,No data,No entries for this date (holiday/absent/no scans),No entries for this date (holiday/absent/no scans)
+2025-11-12,No data,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,+,00:00:00,+,00:00:00,No data,No entries for this date (holiday/absent/no scans),No entries for this date (holiday/absent/no scans)
+2025-11-13,No data,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,+,00:00:00,+,00:00:00,No data,No entries for this date (holiday/absent/no scans),No entries for this date (holiday/absent/no scans)
+2025-11-14,No data,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,+,00:00:00,+,00:00:00,No data,No entries for this date (holiday/absent/no scans),No entries for this date (holiday/absent/no scans)
+2025-11-15,No data,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,+,00:00:00,+,00:00:00,No data,No entries for this date (holiday/absent/no scans),No entries for this date (holiday/absent/no scans)
+2025-11-16,No data,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,00:00:00,+,00:00:00,+,00:00:00,No data,No entries for this date (holiday/absent/no scans),No entries for this date (holiday/absent/no scans)
+2025-11-17,Chippy Ravindran,9:30:15,9:30:00,0:00:00,0:00:00,9:30:15,9:30:00,+1:11:40,+1:12:00,+,01:00:00,+,1:00:00,Target met,Only 1 hour/day can be considered extra,
+2025-11-18,Chippy Ravindran,10:07:57,10:07:00,0:00:00,0:00:00,10:07:57,10:07:00,+2:04:13,+2:04:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-19,Chippy Ravindran,9:52:58,9:52:00,0:00:00,0:00:00,9:52:58,9:52:00,+1:46:11,+1:46:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-20,Chippy Ravindran,9:17:33,9:17:00,0:00:08,0:00:00,9:17:25,9:17:00,+1:10:13,+1:10:00,+,0:47:25,+,0:47:00,Target met,,
+2025-11-21,Chippy Ravindran,8:41:52,8:41:00,0:00:00,0:00:00,8:41:52,8:41:00,+0:37:16,+0:37:00,+,0:11:52,+,0:11:00,Target met,,
+2025-11-22,Chippy Ravindran,10:55:32,10:55:00,0:00:00,0:00:00,10:55:32,10:55:00,+2:41:17,+2:41:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-23,Chippy Ravindran,9:30:04,9:30:00,0:35:23,0:35:00,8:54:41,8:55:00,+0:31:04,+0:32:00,+,0:24:41,+,0:25:00,Target met,,
+2025-11-24,Chippy Ravindran,9:28:54,9:28:00,0:00:00,0:00:00,9:28:54,9:28:00,+1:17:15,+1:17:00,+,0:58:54,+,0:58:00,Target met,,
+2025-11-25,Chippy Ravindran,10:51:29,10:51:00,0:08:59,0:09:00,10:42:30,10:42:00,+2:31:25,+2:31:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-26,Chippy Ravindran,11:43:07,11:43:00,0:00:00,0:00:00,11:43:07,11:43:00,+3:36:22,+3:37:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-27,Chippy Ravindran,9:47:34,9:47:00,0:06:51,0:07:00,9:40:43,9:40:00,+1:30:38,+1:30:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
+2025-11-28,Chippy Ravindran,10:07:49,10:07:00,0:00:00,0:00:00,10:07:49,10:07:00,+1:59:37,+1:59:00,+,01:00:00,+,01:00:00,Target met,Only 1 hour/day can be considered extra,Only 1 hour/day can be considered extra
