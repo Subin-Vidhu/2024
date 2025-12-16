@@ -78,7 +78,7 @@ OUTPUT_DIR = r'd:\2024\zTest\results\fda_ground_truth_comparison'
 # ============================================================================
 # Set to None to process all cases
 # Set to a number (5, 10, 20, etc.) to process only that many cases for debugging
-MAX_CASES_TO_PROCESS = 3  # Change to 5, 10, or any number for testing
+MAX_CASES_TO_PROCESS = None  # Change to 5, 10, or any number for testing
 
 # Set to True to print detailed file search information
 DEBUG_FILE_SEARCH = False
