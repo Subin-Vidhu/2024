@@ -82,7 +82,7 @@ from fda_utils import extract_case_from_filename
 BATCH_ROOT_DIR = r'J:\FDA_GROUND_TRUTH_TRIAL_119\Aramis Truther Masks\Aramis Truther Masks'
 
 # Output directory for results
-OUTPUT_DIR = r'd:\2024\zTest\results\fda_ground_truth_comparison'
+OUTPUT_DIR = r'D:\2024\zTest\FDA_TRIAL_119\results\fda_ground_truth_comparison'
 
 # ============================================================================
 # DEBUG MODE CONFIGURATION
