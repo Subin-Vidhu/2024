@@ -6,6 +6,8 @@ FDA Ground Truth Batch Comparison - GT01 vs GT02
 This script processes all 119 FDA trial cases and compares GT01 vs GT02 
 annotator segmentation masks to calculate inter-observer agreement metrics.
 
+Uses shared utilities from fda_utils.py for consistent case ID extraction.
+
 Directory Structure:
 --------------------
 J:\FDA_GROUND_TRUTH_TRIAL_119\Aramis Truther Masks\Aramis Truther Masks\
@@ -70,6 +72,7 @@ import numpy as np
 import nibabel as nib
 import pandas as pd
 from datetime import datetime
+from fda_utils import extract_case_from_filename
 
 # ============================================================================
 # CONFIGURATION - EDIT THESE PATHS
@@ -185,6 +188,8 @@ def find_case_folders(root_dir):
 def find_gt_files(case_folder, case_id):
     """
     Find GT01 and GT02 files in a case folder with flexible naming.
+    
+    Uses shared extract_case_from_filename() for consistent case ID extraction.
     
     Handles various naming patterns:
     - Standard: N-001-GT01.nii, A-005-GT02.nii
