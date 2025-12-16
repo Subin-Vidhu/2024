@@ -22,27 +22,49 @@ print(f"\nOur kidney rows: {len(our_kidney_rows)}")
 print(f"FDA kidney rows: {len(fda_kidney_rows)}")
 
 # Extract case IDs for matching
-def extract_case_id(filename):
-    """Extract case ID from filename"""
+def extract_case_id_from_filename(filename):
+    """Extract case ID from filename (e.g., 'N-001_GT01.nii' -> '001')"""
     import re
     # Match patterns like N-001, A-003, N-227, etc.
-    match = re.search(r'([AN]-?\d+)', str(filename))
+    match = re.search(r'[AN]-?(\d+)', str(filename))
+    if match:
+        return match.group(1)  # Just the number part
+    return None
+
+def normalize_case_id(patient_id):
+    """Normalize patient ID (e.g., '001', 'N-001', 'A-003' -> '001', '001', '003')"""
+    import re
+    # Extract just the numeric part
+    match = re.search(r'(\d+)', str(patient_id))
     if match:
         return match.group(1)
     return None
 
-our_kidney_rows['CaseID'] = our_kidney_rows['Patient'].apply(extract_case_id)
-fda_kidney_rows['CaseID'] = fda_kidney_rows['Mask1'].apply(extract_case_id)
+our_kidney_rows['CaseID'] = our_kidney_rows['Patient'].apply(normalize_case_id)
+fda_kidney_rows['CaseID'] = fda_kidney_rows['Mask1'].apply(extract_case_id_from_filename)
+
+# Debug: Check for duplicates
+print(f"\nOur unique CaseID + Organ: {our_kidney_rows[['CaseID', 'Organ']].drop_duplicates().shape[0]}")
+print(f"FDA unique CaseID + Organ: {fda_kidney_rows[['CaseID', 'Organ']].drop_duplicates().shape[0]}")
+
+# Drop any duplicate rows before merging
+our_kidney_rows_unique = our_kidney_rows.drop_duplicates(subset=['CaseID', 'Organ'])
+fda_kidney_rows_unique = fda_kidney_rows.drop_duplicates(subset=['CaseID', 'Organ'])
+
+print(f"\nAfter deduplication:")
+print(f"Our unique rows: {len(our_kidney_rows_unique)}")
+print(f"FDA unique rows: {len(fda_kidney_rows_unique)}")
 
 # Merge on CaseID and Organ
 merged = pd.merge(
-    our_kidney_rows[['CaseID', 'Organ', 'DiceCoefficient', 'GT01_Volume_mm3', 'GT02_Volume_mm3', 'DiffPercent', 'LargerMask']],
-    fda_kidney_rows[['CaseID', 'Organ', 'DiceCoefficient', 'Mask1_Volume_mm3', 'Mask2_Volume_mm3', 'DiffPercent', 'LargerMask']],
+    our_kidney_rows_unique[['CaseID', 'Organ', 'DiceCoefficient', 'GT01_Volume_mm3', 'GT02_Volume_mm3', 'DiffPercent', 'LargerMask']],
+    fda_kidney_rows_unique[['CaseID', 'Organ', 'DiceCoefficient', 'Mask1_Volume_mm3', 'Mask2_Volume_mm3', 'DiffPercent', 'LargerMask']],
     on=['CaseID', 'Organ'],
-    suffixes=('_ours', '_fda')
+    suffixes=('_ours', '_fda'),
+    how='inner'
 )
 
-print(f"\nMatched rows: {len(merged)}")
+print(f"\nMatched rows after merge: {len(merged)}")
 
 # Calculate different DiffPercent formulas
 def calc_diffpercent_methods(row):
@@ -69,11 +91,22 @@ merged[['Method1_Avg', 'Method2_Max', 'Method3_Vol1', 'Method4_Vol2']] = merged.
     lambda row: pd.Series(calc_diffpercent_methods(row)), axis=1
 )
 
+# Parse DiffPercent strings (remove % sign if present)
+def parse_diffpercent(val):
+    if pd.isna(val):
+        return np.nan
+    if isinstance(val, str):
+        return float(val.strip('%'))
+    return float(val)
+
+merged['DiffPercent_fda_numeric'] = merged['DiffPercent_fda'].apply(parse_diffpercent)
+merged['DiffPercent_ours_numeric'] = merged['DiffPercent_ours'].apply(parse_diffpercent)
+
 # Compare each method with FDA's values
-merged['Method1_Match'] = np.isclose(merged['Method1_Avg'], merged['DiffPercent_fda'], atol=0.01)
-merged['Method2_Match'] = np.isclose(merged['Method2_Max'], merged['DiffPercent_fda'], atol=0.01)
-merged['Method3_Match'] = np.isclose(merged['Method3_Vol1'], merged['DiffPercent_fda'], atol=0.01)
-merged['Method4_Match'] = np.isclose(merged['Method4_Vol2'], merged['DiffPercent_fda'], atol=0.01)
+merged['Method1_Match'] = np.isclose(merged['Method1_Avg'], merged['DiffPercent_fda_numeric'], atol=0.01)
+merged['Method2_Match'] = np.isclose(merged['Method2_Max'], merged['DiffPercent_fda_numeric'], atol=0.01)
+merged['Method3_Match'] = np.isclose(merged['Method3_Vol1'], merged['DiffPercent_fda_numeric'], atol=0.01)
+merged['Method4_Match'] = np.isclose(merged['Method4_Vol2'], merged['DiffPercent_fda_numeric'], atol=0.01)
 
 # Count matches for each method
 print("\n" + "=" * 80)
@@ -105,8 +138,8 @@ if len(mismatch_cases) > 0:
     print("\nFirst 10 mismatches:")
     for idx, row in mismatch_cases.head(10).iterrows():
         print(f"\n{row['CaseID']} - {row['Organ']}:")
-        print(f"  FDA DiffPercent: {row['DiffPercent_fda']:.2f}%")
-        print(f"  Our DiffPercent (Avg): {row['DiffPercent_ours']:.2f}%")
+        print(f"  FDA DiffPercent: {row['DiffPercent_fda_numeric']:.2f}%")
+        print(f"  Our DiffPercent (Avg): {row['DiffPercent_ours_numeric']:.2f}%")
         print(f"  Method1 (Avg): {row['Method1_Avg']:.2f}%")
         print(f"  Method2 (Max): {row['Method2_Max']:.2f}%")
         print(f"  Vol1: {row['Mask1_Volume_mm3']:.2f} mm³")
@@ -130,9 +163,10 @@ print("\n" + "=" * 80)
 print("DETAILED COMPARISON - FIRST 5 CASES")
 print("=" * 80)
 
-for case_id in ['N-001', 'N-002', 'A-003', 'A-004', 'N-005']:
+for case_id in ['001', '002', '003', '004', '005']:
     case_data = merged[merged['CaseID'] == case_id]
     if len(case_data) == 0:
+        print(f"\n⚠️ Case {case_id} not found in merged data")
         continue
     
     print(f"\n{'=' * 40}")
@@ -149,8 +183,8 @@ for case_id in ['N-001', 'N-002', 'A-003', 'A-004', 'N-005']:
         print(f"  Volume2: {row['Mask2_Volume_mm3']:.2f} mm³")
         print(f"  Larger: {row['LargerMask_fda']}")
         
-        print(f"\n  DiffPercent (Ours): {row['DiffPercent_ours']:.2f}%")
-        print(f"  DiffPercent (FDA):  {row['DiffPercent_fda']:.2f}%")
+        print(f"\n  DiffPercent (Ours): {row['DiffPercent_ours_numeric']:.2f}%")
+        print(f"  DiffPercent (FDA):  {row['DiffPercent_fda_numeric']:.2f}%")
         print(f"  Method1 (Avg):      {row['Method1_Avg']:.2f}% {'✅' if row['Method1_Match'] else '❌'}")
         print(f"  Method2 (Max):      {row['Method2_Max']:.2f}% {'✅' if row['Method2_Match'] else '❌'}")
 
