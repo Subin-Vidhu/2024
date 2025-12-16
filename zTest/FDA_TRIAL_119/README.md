@@ -12,14 +12,20 @@
 ```
 FDA_TRIAL_119/
 ├── README.md                              # This file
-├── batch_compare_fda_ground_truth.py      # Main processing script
+├── batch_compare_fda_ground_truth.py      # GT01 vs GT02 Dice comparison
+├── compare_aira_vs_ground_truth.py        # AIRA vs GT Dice comparison
+├── compute_hausdorff_distances.py         # Hausdorff distance computation
 ├── fda_utils.py                           # Shared utility functions
 ├── final_filename_validation.py           # Validation script
 ├── FDA_Ground_Truth_Formulas.md          # Complete formula documentation
 └── results/                               # Output directory
-    └── fda_ground_truth_comparison/
-        ├── FDA_GT01_vs_GT02_Comparison_YYYYMMDD_HHMMSS.csv
-        └── Aramis Dice Sample - DICE Run.csv  # FDA reference data
+    ├── fda_ground_truth_comparison/
+    │   ├── FDA_GT01_vs_GT02_Comparison_YYYYMMDD_HHMMSS.csv
+    │   └── Aramis Dice Sample - DICE Run.csv
+    ├── aira_vs_ground_truth/
+    │   └── AIRA_vs_Ground_Truth_YYYYMMDD_HHMMSS.xlsx
+    └── hausdorff_distances/
+        └── Hausdorff_Distances_YYYYMMDD_HHMMSS.xlsx
 ```
 
 ---
@@ -114,7 +120,79 @@ fda_csv = 'results/fda_ground_truth_comparison/Aramis Dice Sample - DICE Run.csv
 
 ---
 
-### 4. **FDA_Ground_Truth_Formulas.md** 📖 DOCUMENTATION
+### 4. **compare_aira_vs_ground_truth.py** 🤖 AIRA MODEL COMPARISON
+**Purpose:** Compare AIRA model predictions against GT01 and GT02 annotators.
+
+**What it does:**
+- Loads AIRA prediction masks from K: drive
+- Finds corresponding GT01 and GT02 files
+- Calculates same metrics as GT comparison (Dice, volumes, DiffPercent)
+- Handles dual-labeled cases (A-088_N-191, etc.) with fallback logic
+- Creates Excel file with 2 sheets (AIRA vs GT01, AIRA vs GT02)
+
+**Input Data Locations:**
+```
+AIRA: K:\AIRA_FDA_Models\DATA\batch_storage\ARAMIS_RAS_LPI\ARAMIS_AIRA_Mask
+GT: J:\FDA_GROUND_TRUTH_TRIAL_119\Aramis Truther Masks\Aramis Truther Masks
+```
+
+**When to run:**
+- To evaluate AIRA model performance
+- After retraining or updating the model
+- For FDA submission documentation
+
+**How to run:**
+```bash
+python compare_aira_vs_ground_truth.py
+```
+
+**Output:** Creates timestamped Excel in `results/aira_vs_ground_truth/`
+
+---
+
+### 5. **compute_hausdorff_distances.py** 📏 SURFACE DISTANCE ANALYSIS
+**Purpose:** Compute Hausdorff distances (HD and HD95) for surface-based evaluation.
+
+**What it does:**
+- Extracts surface points from segmentation masks
+- Computes Hausdorff distance (maximum surface distance)
+- Computes HD95 (95th percentile, more robust to outliers)
+- Processes both kidneys separately (left and right)
+- Handles empty masks with informative messages
+- Creates Excel file with 4 sheets:
+  - GT01 vs GT02
+  - AIRA vs GT01
+  - AIRA vs GT02
+  - Statistics (summary metrics)
+
+**Hausdorff Distance:**
+- **HD**: Maximum distance from any point on one surface to nearest point on other surface
+- **HD95**: 95th percentile distance (less sensitive to outliers)
+- Measured in mm (uses voxel spacing)
+- Complements Dice coefficient (volume overlap vs surface distance)
+
+**When to run:**
+- When Dice scores are similar but visual differences exist
+- For detailed boundary accuracy assessment
+- For FDA submission (comprehensive metrics)
+- After model updates to check surface quality
+
+**How to run:**
+```bash
+python compute_hausdorff_distances.py
+```
+
+**Output:** Creates timestamped Excel in `results/hausdorff_distances/`
+
+**Statistics provided:**
+- Mean, Median, Std, Min, Max HD and HD95
+- Count of cases with HD > 15mm, 20mm, 25mm
+- Separate stats for left and right kidneys
+- Comparison across GT01 vs GT02, AIRA vs GT01, AIRA vs GT02
+
+---
+
+### 6. **FDA_Ground_Truth_Formulas.md** 📖 DOCUMENTATION
 **Purpose:** Comprehensive documentation of all formulas and conventions.
 
 **Contains:**
