@@ -633,19 +633,201 @@ def main():
         output_filename = f"AIRA_vs_Ground_Truth_{timestamp}.xlsx"
         output_path = os.path.join(OUTPUT_DIR, output_filename)
         
-        # Create Excel writer
+        # Create dataframes
+        df_gt01 = pd.DataFrame(aira_vs_gt01_rows)
+        df_gt02 = pd.DataFrame(aira_vs_gt02_rows)
+        
+        # ====================================================================
+        # CALCULATE STATISTICS
+        # ====================================================================
+        
+        def calculate_statistics(df, comparison_name):
+            """Calculate mean statistics for Dice scores and DiffPercent."""
+            # Filter out error rows and average rows
+            kidney_rows = df[df['Organ'].str.contains('Kidney', na=False)]
+            right_rows = kidney_rows[kidney_rows['Organ'] == 'Right Kidney']
+            left_rows = kidney_rows[kidney_rows['Organ'] == 'Left Kidney']
+            avg_rows = df[df['Organ'].str.contains('Average', na=False)]
+            
+            # Convert Dice scores to numeric
+            right_dice = pd.to_numeric(right_rows['DiceCoefficient'], errors='coerce').dropna()
+            left_dice = pd.to_numeric(left_rows['DiceCoefficient'], errors='coerce').dropna()
+            avg_dice = pd.to_numeric(avg_rows['DiceCoefficient'], errors='coerce').dropna()
+            
+            # Parse DiffPercent (remove % sign)
+            def parse_percent(val):
+                if pd.isna(val) or val == 'N/A' or val == '':
+                    return np.nan
+                return float(str(val).strip('%'))
+            
+            right_diff = right_rows['DiffPercent'].apply(parse_percent).dropna()
+            left_diff = left_rows['DiffPercent'].apply(parse_percent).dropna()
+            
+            stats = {
+                'Comparison': comparison_name,
+                'Right_Kidney_Dice_Mean': right_dice.mean() if len(right_dice) > 0 else np.nan,
+                'Right_Kidney_Dice_Std': right_dice.std() if len(right_dice) > 0 else np.nan,
+                'Left_Kidney_Dice_Mean': left_dice.mean() if len(left_dice) > 0 else np.nan,
+                'Left_Kidney_Dice_Std': left_dice.std() if len(left_dice) > 0 else np.nan,
+                'Average_Dice_Mean': avg_dice.mean() if len(avg_dice) > 0 else np.nan,
+                'Average_Dice_Std': avg_dice.std() if len(avg_dice) > 0 else np.nan,
+                'Right_Kidney_DiffPercent_Mean': right_diff.mean() if len(right_diff) > 0 else np.nan,
+                'Right_Kidney_DiffPercent_Std': right_diff.std() if len(right_diff) > 0 else np.nan,
+                'Left_Kidney_DiffPercent_Mean': left_diff.mean() if len(left_diff) > 0 else np.nan,
+                'Left_Kidney_DiffPercent_Std': left_diff.std() if len(left_diff) > 0 else np.nan,
+                'Total_Cases': len(avg_dice)
+            }
+            return stats
+        
+        stats_gt01 = calculate_statistics(df_gt01, 'AIRA_vs_GT01')
+        stats_gt02 = calculate_statistics(df_gt02, 'AIRA_vs_GT02')
+        df_statistics = pd.DataFrame([stats_gt01, stats_gt02])
+        
+        # ====================================================================
+        # FILTER CASES BY DICE THRESHOLDS
+        # ====================================================================
+        
+        def filter_by_dice(df, threshold, comparison_name):
+            """Filter cases with Dice < threshold."""
+            kidney_rows = df[df['Organ'].str.contains('Kidney', na=False)]
+            kidney_rows = kidney_rows.copy()
+            kidney_rows['DiceNumeric'] = pd.to_numeric(kidney_rows['DiceCoefficient'], errors='coerce')
+            
+            filtered = kidney_rows[kidney_rows['DiceNumeric'] < threshold]
+            filtered = filtered[['Patient', 'Organ', 'DiceCoefficient', 'DiffPercent', 'AIRA_File', 'GT_File']].copy()
+            filtered['Comparison'] = comparison_name
+            filtered['Threshold'] = f'< {threshold}'
+            
+            return filtered
+        
+        # Filter for different thresholds
+        dice_88_gt01 = filter_by_dice(df_gt01, 0.88, 'AIRA_vs_GT01')
+        dice_88_gt02 = filter_by_dice(df_gt02, 0.88, 'AIRA_vs_GT02')
+        
+        dice_80_gt01 = filter_by_dice(df_gt01, 0.80, 'AIRA_vs_GT01')
+        dice_80_gt02 = filter_by_dice(df_gt02, 0.80, 'AIRA_vs_GT02')
+        
+        dice_75_gt01 = filter_by_dice(df_gt01, 0.75, 'AIRA_vs_GT01')
+        dice_75_gt02 = filter_by_dice(df_gt02, 0.75, 'AIRA_vs_GT02')
+        
+        # Combine all filtered results
+        df_dice_88 = pd.concat([dice_88_gt01, dice_88_gt02], ignore_index=True)
+        df_dice_80 = pd.concat([dice_80_gt01, dice_80_gt02], ignore_index=True)
+        df_dice_75 = pd.concat([dice_75_gt01, dice_75_gt02], ignore_index=True)
+        
+        # ====================================================================
+        # FILTER CASES BY DIFFPERCENT > 25%
+        # ====================================================================
+        
+        def filter_by_diffpercent(df, threshold, comparison_name):
+            """Filter cases with DiffPercent > threshold."""
+            kidney_rows = df[df['Organ'].str.contains('Kidney', na=False)]
+            kidney_rows = kidney_rows.copy()
+            
+            def parse_percent(val):
+                if pd.isna(val) or val == 'N/A' or val == '':
+                    return np.nan
+                return float(str(val).strip('%'))
+            
+            kidney_rows['DiffPercentNumeric'] = kidney_rows['DiffPercent'].apply(parse_percent)
+            
+            filtered = kidney_rows[kidney_rows['DiffPercentNumeric'] > threshold]
+            filtered = filtered[['Patient', 'Organ', 'DiceCoefficient', 'DiffPercent', 'AIRA_File', 'GT_File']].copy()
+            filtered['Comparison'] = comparison_name
+            filtered['Threshold'] = f'> {threshold}%'
+            
+            return filtered
+        
+        diff_25_gt01 = filter_by_diffpercent(df_gt01, 25, 'AIRA_vs_GT01')
+        diff_25_gt02 = filter_by_diffpercent(df_gt02, 25, 'AIRA_vs_GT02')
+        
+        df_diff_25 = pd.concat([diff_25_gt01, diff_25_gt02], ignore_index=True)
+        
+        # ====================================================================
+        # SAVE TO EXCEL WITH MULTIPLE SHEETS
+        # ====================================================================
+        
         with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
-            # Sheet 1: AIRA vs GT01
-            df_gt01 = pd.DataFrame(aira_vs_gt01_rows)
+            # Sheet 1: AIRA vs GT01 (main results)
             df_gt01.to_excel(writer, sheet_name='AIRA_vs_GT01', index=False)
             
-            # Sheet 2: AIRA vs GT02
-            df_gt02 = pd.DataFrame(aira_vs_gt02_rows)
+            # Sheet 2: AIRA vs GT02 (main results)
             df_gt02.to_excel(writer, sheet_name='AIRA_vs_GT02', index=False)
+            
+            # Sheet 3: Statistics Summary
+            df_statistics.to_excel(writer, sheet_name='Statistics', index=False)
+            
+            # Sheet 4: Dice < 0.88
+            df_dice_88.to_excel(writer, sheet_name='Dice_Below_88', index=False)
+            
+            # Sheet 5: Dice < 0.80
+            df_dice_80.to_excel(writer, sheet_name='Dice_Below_80', index=False)
+            
+            # Sheet 6: Dice < 0.75
+            df_dice_75.to_excel(writer, sheet_name='Dice_Below_75', index=False)
+            
+            # Sheet 7: DiffPercent > 25%
+            df_diff_25.to_excel(writer, sheet_name='DiffPercent_Above_25', index=False)
         
         print(f"✓ Results saved to: {output_path}")
-        print(f"\nSheet 1 (AIRA_vs_GT01): {len(df_gt01)} rows")
-        print(f"Sheet 2 (AIRA_vs_GT02): {len(df_gt02)} rows")
+        print(f"\n📊 Excel Sheets Created:")
+        print(f"  1. AIRA_vs_GT01: {len(df_gt01)} rows")
+        print(f"  2. AIRA_vs_GT02: {len(df_gt02)} rows")
+        print(f"  3. Statistics: Mean Dice & DiffPercent for both comparisons")
+        print(f"  4. Dice_Below_88: {len(df_dice_88)} cases")
+        print(f"  5. Dice_Below_80: {len(df_dice_80)} cases")
+        print(f"  6. Dice_Below_75: {len(df_dice_75)} cases")
+        print(f"  7. DiffPercent_Above_25: {len(df_diff_25)} cases")
+        
+        # ====================================================================
+        # PRINT STATISTICS TO CONSOLE
+        # ====================================================================
+        
+        print(f"\n{'='*80}")
+        print("STATISTICS SUMMARY")
+        print(f"{'='*80}\n")
+        
+        print("AIRA vs GT01:")
+        print(f"  Right Kidney Dice:    {stats_gt01['Right_Kidney_Dice_Mean']:.4f} ± {stats_gt01['Right_Kidney_Dice_Std']:.4f}")
+        print(f"  Left Kidney Dice:     {stats_gt01['Left_Kidney_Dice_Mean']:.4f} ± {stats_gt01['Left_Kidney_Dice_Std']:.4f}")
+        print(f"  Average Dice:         {stats_gt01['Average_Dice_Mean']:.4f} ± {stats_gt01['Average_Dice_Std']:.4f}")
+        print(f"  Right DiffPercent:    {stats_gt01['Right_Kidney_DiffPercent_Mean']:.2f}% ± {stats_gt01['Right_Kidney_DiffPercent_Std']:.2f}%")
+        print(f"  Left DiffPercent:     {stats_gt01['Left_Kidney_DiffPercent_Mean']:.2f}% ± {stats_gt01['Left_Kidney_DiffPercent_Std']:.2f}%")
+        
+        print(f"\nAIRA vs GT02:")
+        print(f"  Right Kidney Dice:    {stats_gt02['Right_Kidney_Dice_Mean']:.4f} ± {stats_gt02['Right_Kidney_Dice_Std']:.4f}")
+        print(f"  Left Kidney Dice:     {stats_gt02['Left_Kidney_Dice_Mean']:.4f} ± {stats_gt02['Left_Kidney_Dice_Std']:.4f}")
+        print(f"  Average Dice:         {stats_gt02['Average_Dice_Mean']:.4f} ± {stats_gt02['Average_Dice_Std']:.4f}")
+        print(f"  Right DiffPercent:    {stats_gt02['Right_Kidney_DiffPercent_Mean']:.2f}% ± {stats_gt02['Right_Kidney_DiffPercent_Std']:.2f}%")
+        print(f"  Left DiffPercent:     {stats_gt02['Left_Kidney_DiffPercent_Mean']:.2f}% ± {stats_gt02['Left_Kidney_DiffPercent_Std']:.2f}%")
+        
+        # ====================================================================
+        # PRINT FILTERED CASES SUMMARY
+        # ====================================================================
+        
+        print(f"\n{'='*80}")
+        print("FILTERED CASES SUMMARY")
+        print(f"{'='*80}\n")
+        
+        print(f"Cases with Dice < 0.88:  {len(df_dice_88)} kidneys")
+        print(f"Cases with Dice < 0.80:  {len(df_dice_80)} kidneys")
+        print(f"Cases with Dice < 0.75:  {len(df_dice_75)} kidneys")
+        print(f"Cases with DiffPercent > 25%:  {len(df_diff_25)} kidneys")
+        
+        # Show breakdown by organ type for Dice < 0.88
+        if len(df_dice_88) > 0:
+            print(f"\nDice < 0.88 Breakdown:")
+            for organ in ['Right Kidney', 'Left Kidney']:
+                organ_count = len(df_dice_88[df_dice_88['Organ'] == organ])
+                print(f"  {organ}: {organ_count} cases")
+        
+        # Show breakdown by organ type for DiffPercent > 25%
+        if len(df_diff_25) > 0:
+            print(f"\nDiffPercent > 25% Breakdown:")
+            for organ in ['Right Kidney', 'Left Kidney']:
+                organ_count = len(df_diff_25[df_diff_25['Organ'] == organ])
+                print(f"  {organ}: {organ_count} cases")
+        
     else:
         print("❌ No results to save!")
     
