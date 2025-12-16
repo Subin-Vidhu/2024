@@ -34,20 +34,18 @@ Uses FDA-COMPLIANT enhanced dice coefficient with:
   - Proper edge case handling
   - Value clamping to [0,1] range
 
-"BOTH KIDNEYS" CALCULATION:
-----------------------------
-Row 3 (Both Kidneys) uses the UNION METHOD:
-  - Combines all kidney voxels: (Right ∪ Left) for both annotators
-  - Then calculates Dice on the combined regions
-  - Formula: Dice = 2 × |A_Both ∩ B_Both| / (|A_Both| + |B_Both|)
+AVERAGE CALCULATION (FDA CONVENTION):
+--------------------------------------
+Row 3 (Average) uses ARITHMETIC MEAN:
+  - Formula: Average = (Dice_Right + Dice_Left) / 2
+  - This matches FDA's convention for inter-observer agreement reporting
 
 OUTPUT:
 -------
-Single CSV file with 4 rows per case:
+Single CSV file with 3 rows per case (matching FDA format):
   1. Right Kidney Dice + volumes
   2. Left Kidney Dice + volumes
-  3. Both Kidneys Dice + volumes
-  4. Average (same as Both Kidneys using union method)
+  3. Average Dice (arithmetic mean: (Right + Left) / 2)
 
 Usage:
     python batch_compare_fda_ground_truth.py
@@ -80,10 +78,10 @@ OUTPUT_DIR = r'd:\2024\zTest\results\fda_ground_truth_comparison'
 # ============================================================================
 # Set to None to process all cases
 # Set to a number (5, 10, 20, etc.) to process only that many cases for debugging
-MAX_CASES_TO_PROCESS = 10  # Change to 5, 10, or any number for testing
+MAX_CASES_TO_PROCESS = 3  # Change to 5, 10, or any number for testing
 
 # Set to True to print detailed file search information
-DEBUG_FILE_SEARCH = True
+DEBUG_FILE_SEARCH = False
 
 # ============================================================================
 # CORE FUNCTIONS
@@ -328,11 +326,14 @@ def process_single_case(case_id, gt01_path, gt02_path):
         left_larger = larger_mask(left_vol_cm3_gt01, left_vol_cm3_gt02)
         both_larger = larger_mask(both_vol_cm3_gt01, both_vol_cm3_gt02)
         
+        # Calculate arithmetic mean for average (FDA convention)
+        dice_average = (dice_right + dice_left) / 2
+        
         # Get filenames
         gt01_filename = os.path.basename(gt01_path)
         gt02_filename = os.path.basename(gt02_path)
         
-        # Create CSV rows (4 rows per case)
+        # Create CSV rows (3 rows per case - matching FDA format)
         rows = [
             # Row 1: Right Kidney
             {
@@ -364,34 +365,19 @@ def process_single_case(case_id, gt01_path, gt02_path):
                 'LargerMask': left_larger,
                 'Error': ''
             },
-            # Row 3: Both Kidneys
+            # Row 3: Average (FDA convention: arithmetic mean of Right and Left Dice)
             {
                 'Patient': case_id,
                 'GT01_File': gt01_filename,
                 'GT02_File': gt02_filename,
-                'Organ': 'Both Kidneys',
-                'DiceCoefficient': f"{dice_both:.6f}",
-                'GT01_Volume_mm3': f"{both_vol_mm3_gt01:.2f}",
-                'GT02_Volume_mm3': f"{both_vol_mm3_gt02:.2f}",
-                'GT01_Volume_cm3': f"{both_vol_cm3_gt01:.2f}",
-                'GT02_Volume_cm3': f"{both_vol_cm3_gt02:.2f}",
-                'DiffPercent': both_diff,
-                'LargerMask': both_larger,
-                'Error': ''
-            },
-            # Row 4: Average (using union method - same as Both Kidneys)
-            {
-                'Patient': case_id,
-                'GT01_File': gt01_filename,
-                'GT02_File': gt02_filename,
-                'Organ': 'XXX Average',
-                'DiceCoefficient': f"{dice_both:.6f}",
-                'GT01_Volume_mm3': f"{both_vol_mm3_gt01:.2f}",
-                'GT02_Volume_mm3': f"{both_vol_mm3_gt02:.2f}",
-                'GT01_Volume_cm3': f"{both_vol_cm3_gt01:.2f}",
-                'GT02_Volume_cm3': f"{both_vol_cm3_gt02:.2f}",
-                'DiffPercent': both_diff,
-                'LargerMask': both_larger,
+                'Organ': f'{case_id} Average',
+                'DiceCoefficient': f"{dice_average:.6f}",
+                'GT01_Volume_mm3': '',
+                'GT02_Volume_mm3': '',
+                'GT01_Volume_cm3': '',
+                'GT02_Volume_cm3': '',
+                'DiffPercent': '',
+                'LargerMask': '',
                 'Error': ''
             }
         ]
