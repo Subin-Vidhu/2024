@@ -667,6 +667,88 @@ def add_statistics_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02):
     
     # Write to Excel
     stats_df.to_excel(writer, sheet_name='Statistics', index=False)
+    
+    # Add detailed case lists for high HD values
+    add_high_hd_cases_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02)
+
+def add_high_hd_cases_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02):
+    """Add sheets listing specific cases with high Hausdorff distances (HD and HD95)."""
+    
+    # Helper function to extract high HD cases
+    def extract_high_hd_cases(df, comparison_name, threshold=15.0):
+        cases = []
+        
+        for _, row in df.iterrows():
+            hd = pd.to_numeric(row.get('HD_mm'), errors='coerce')
+            hd95 = pd.to_numeric(row.get('HD95_mm'), errors='coerce')
+            
+            if pd.notna(hd) and hd > threshold:
+                cases.append({
+                    'Comparison': comparison_name,
+                    'Patient': row.get('Patient', ''),
+                    'Organ': row.get('Organ', ''),
+                    'HD_mm': hd,
+                    'HD95_mm': hd95 if pd.notna(hd95) else np.nan,
+                    'Severity': 'Very High (>25mm)' if hd > 25 else 'High (>20mm)' if hd > 20 else 'Moderate (>15mm)',
+                    'File1': row.get('Mask1_File', row.get('AIRA_File', '')),
+                    'File2': row.get('Mask2_File', row.get('GT_File', '')),
+                    'Message': row.get('Message', '')
+                })
+        
+        return cases
+    
+    # Helper function to extract high HD95 cases
+    def extract_high_hd95_cases(df, comparison_name, threshold=10.0):
+        cases = []
+        
+        for _, row in df.iterrows():
+            hd = pd.to_numeric(row.get('HD_mm'), errors='coerce')
+            hd95 = pd.to_numeric(row.get('HD95_mm'), errors='coerce')
+            
+            if pd.notna(hd95) and hd95 > threshold:
+                cases.append({
+                    'Comparison': comparison_name,
+                    'Patient': row.get('Patient', ''),
+                    'Organ': row.get('Organ', ''),
+                    'HD_mm': hd if pd.notna(hd) else np.nan,
+                    'HD95_mm': hd95,
+                    'Severity': 'Very High (>15mm)' if hd95 > 15 else 'High (>12mm)' if hd95 > 12 else 'Moderate (>10mm)',
+                    'File1': row.get('Mask1_File', row.get('AIRA_File', '')),
+                    'File2': row.get('Mask2_File', row.get('GT_File', '')),
+                    'Message': row.get('Message', '')
+                })
+        
+        return cases
+    
+    # Extract HD cases (threshold: 15mm)
+    hd_case_rows = []
+    hd_case_rows.extend(extract_high_hd_cases(df_gt, 'GT01_vs_GT02', threshold=15.0))
+    hd_case_rows.extend(extract_high_hd_cases(df_aira_gt01, 'AIRA_vs_GT01', threshold=15.0))
+    hd_case_rows.extend(extract_high_hd_cases(df_aira_gt02, 'AIRA_vs_GT02', threshold=15.0))
+    
+    if hd_case_rows:
+        # Sort by HD descending
+        hd_case_rows = sorted(hd_case_rows, key=lambda x: x['HD_mm'], reverse=True)
+        cases_df = pd.DataFrame(hd_case_rows)
+        cases_df.to_excel(writer, sheet_name='High_HD_Cases', index=False)
+    else:
+        empty_df = pd.DataFrame([{'Message': 'No cases with HD > 15mm found'}])
+        empty_df.to_excel(writer, sheet_name='High_HD_Cases', index=False)
+    
+    # Extract HD95 cases (threshold: 10mm)
+    hd95_case_rows = []
+    hd95_case_rows.extend(extract_high_hd95_cases(df_gt, 'GT01_vs_GT02', threshold=10.0))
+    hd95_case_rows.extend(extract_high_hd95_cases(df_aira_gt01, 'AIRA_vs_GT01', threshold=10.0))
+    hd95_case_rows.extend(extract_high_hd95_cases(df_aira_gt02, 'AIRA_vs_GT02', threshold=10.0))
+    
+    if hd95_case_rows:
+        # Sort by HD95 descending
+        hd95_case_rows = sorted(hd95_case_rows, key=lambda x: x['HD95_mm'], reverse=True)
+        cases_hd95_df = pd.DataFrame(hd95_case_rows)
+        cases_hd95_df.to_excel(writer, sheet_name='High_HD95_Cases', index=False)
+    else:
+        empty_df = pd.DataFrame([{'Message': 'No cases with HD95 > 10mm found'}])
+        empty_df.to_excel(writer, sheet_name='High_HD95_Cases', index=False)
 
 # ============================================================================
 # MAIN FUNCTION
@@ -749,6 +831,8 @@ def main():
     print(f"  Sheet 2 (AIRA_vs_GT01): {len(df_aira_gt01)} rows")
     print(f"  Sheet 3 (AIRA_vs_GT02): {len(df_aira_gt02)} rows")
     print(f"  Sheet 4 (Statistics): Summary metrics")
+    print(f"  Sheet 5 (High_HD_Cases): Cases with HD > 15mm (with patient IDs)")
+    print(f"  Sheet 6 (High_HD95_Cases): Cases with HD95 > 10mm (with patient IDs)")
     
     print("\n" + "="*80)
     print("✅ HAUSDORFF DISTANCE COMPUTATION COMPLETE")
