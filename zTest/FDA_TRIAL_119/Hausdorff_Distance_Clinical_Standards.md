@@ -75,6 +75,34 @@ Imagine two kidney boundaries drawn by different radiologists:
 
 ---
 
+## Why HD95 Can Be Zero (or Very Small)
+
+### Explanation
+**HD95 = 0** means that **95% of all surface points are perfectly aligned** (or within sub-millimeter distance).
+
+This happens when:
+1. ✅ **Excellent segmentation agreement** - Both masks are nearly identical
+2. ✅ **Perfect overlap** - 95% of surface voxels match exactly
+3. ⚠️ **Small disagreement at edges** - The 5% outliers (ignored by HD95) have all the error
+
+### Example from Your Data (N-001)
+```
+Patient: N-001
+Right Kidney: HD = 1.99mm, HD95 = 0mm
+Left Kidney: HD = 2.93mm, HD95 = 0mm
+```
+
+**Interpretation:**
+- **HD95 = 0**: 95% of surface points match perfectly between GT01 and GT02
+- **HD = 1.99mm**: The worst 5% of points differ by up to 1.99mm (likely at kidney poles)
+- **Clinical meaning**: Excellent agreement! Minor edge differences only.
+
+### When to Be Concerned
+- HD95 = 0 with HD < 5mm → **Excellent** ✅
+- HD95 = 0 with HD > 20mm → **Check for errors** ⚠️ (might indicate a few outlier voxels)
+
+---
+
 ## Clinical Standards
 
 ### Hausdorff Distance (HD) Thresholds
@@ -209,6 +237,210 @@ where `P₉₅` is the 95th percentile.
    HD = max(max(minA→B), max(minB→A))
    HD95 = max(percentile(minA→B, 95), percentile(minB→A, 95))
    ```
+
+---
+
+## Detailed Example: Step-by-Step HD Calculation
+
+Let's trace through a real example to understand **exactly** how HD is computed.
+
+### Example Case: Right Kidney Segmentation
+
+**Setup:**
+- CT scan: 512×512×86 slices
+- Voxel spacing: 0.78 mm × 0.78 mm × 1.0 mm (x, y, z)
+- Two masks: GT01 and GT02 (label 1 = right kidney)
+
+### Step 1: Extract 3D Surface Voxels (NOT slice-by-slice)
+
+**Important:** HD is computed on the **entire 3D surface**, not slice-by-slice!
+
+```
+GT01 Right Kidney Volume: ~50,000 voxels
+Surface extraction (binary erosion):
+  - Remove interior voxels
+  - Keep only boundary voxels
+  
+GT01 Surface Points: ~8,000 voxels (x, y, z coordinates)
+GT02 Surface Points: ~8,200 voxels
+```
+
+**Example Surface Points (voxel indices):**
+```
+GT01_surface = [
+  [245, 312, 42],  # Voxel at slice 42
+  [246, 312, 42],  # Adjacent voxel, same slice
+  [245, 313, 42],
+  [245, 312, 43],  # Voxel at slice 43
+  ...
+  [8,000 total points across ALL 86 slices]
+]
+
+GT02_surface = [
+  [245, 312, 42],  # Same as GT01
+  [246, 313, 42],  # Slightly different
+  [245, 312, 43],
+  ...
+  [8,200 total points]
+]
+```
+
+### Step 2: Convert to Physical Coordinates (mm)
+
+**Multiply voxel indices by spacing:**
+```
+GT01_surface_mm = GT01_surface × [0.78, 0.78, 1.0]
+
+Example:
+Voxel [245, 312, 42] → [191.1mm, 243.4mm, 42.0mm]
+Voxel [246, 312, 42] → [191.9mm, 243.4mm, 42.0mm]
+```
+
+Now we have two 3D point clouds in millimeters representing the kidney surfaces.
+
+### Step 3: Compute Distance Matrix (8,000 × 8,200)
+
+For every point in GT01, find distance to every point in GT02:
+
+```
+Distance Matrix D[i, j] = Euclidean distance between GT01[i] and GT02[j]
+
+Example for first GT01 point [191.1, 243.4, 42.0]:
+  Distance to GT02[0] = sqrt((191.1-191.1)² + (243.4-243.4)² + (42.0-42.0)²) = 0.00mm ✅ Perfect match!
+  Distance to GT02[1] = sqrt((191.1-191.9)² + (243.4-243.4)² + (42.0-42.0)²) = 0.80mm
+  Distance to GT02[2] = sqrt((191.1-191.1)² + (243.4-244.2)² + (42.0-42.0)²) = 0.80mm
+  ...
+  Distance to GT02[8200] = sqrt((191.1-195.6)² + (243.4-250.1)² + (42.0-55.0)²) = 14.8mm
+```
+
+This creates an 8,000 × 8,200 matrix = 65.6 million distance calculations!
+
+### Step 4: Find Minimum Distances (Directed Hausdorff)
+
+**For each GT01 point, find nearest GT02 point:**
+```
+minA→B = [
+  0.00mm,  # GT01 point 1: nearest GT02 point is 0.00mm away (perfect match)
+  0.00mm,  # GT01 point 2: nearest GT02 point is 0.00mm away
+  0.00mm,  # GT01 point 3: nearest GT02 point is 0.00mm away
+  0.00mm,  # ... (most interior points match perfectly)
+  0.78mm,  # GT01 point 500: nearest GT02 point is 0.78mm away (1 voxel off)
+  0.78mm,
+  ...
+  1.99mm,  # GT01 point 7990: nearest GT02 point is 1.99mm away (at kidney pole)
+  1.85mm,  # GT01 point 7991: near the edge
+]
+→ 8,000 distances
+```
+
+**For each GT02 point, find nearest GT01 point:**
+```
+minB→A = [
+  0.00mm,  # GT02 point 1: nearest GT01 point is 0.00mm away
+  0.00mm,
+  ...
+  2.50mm,  # GT02 point 8100: nearest GT01 point is 2.50mm away
+  2.93mm,  # GT02 point 8200: WORST disagreement (at left kidney pole)
+]
+→ 8,200 distances
+```
+
+### Step 5: Calculate HD and HD95
+
+**Hausdorff Distance (HD):**
+```
+HD = max(max(minA→B), max(minB→A))
+   = max(1.99mm, 2.93mm)
+   = 2.93mm ← This is the WORST point across all 16,200 surface points!
+```
+
+**HD95 (95th Percentile):**
+```
+Sort minA→B: [0.00, 0.00, 0.00, ..., 0.78, 0.78, 1.20, ..., 1.99] (8,000 values)
+95th percentile of minA→B = 0.00mm (because 95% of values are 0.00)
+
+Sort minB→A: [0.00, 0.00, 0.00, ..., 0.78, 0.85, 1.10, ..., 2.93] (8,200 values)
+95th percentile of minB→A = 0.00mm (because 95% of values are 0.00)
+
+HD95 = max(0.00mm, 0.00mm) = 0.00mm ← 95% of points are perfect!
+```
+
+### Step 6: Interpretation
+
+**Results for N-001 Left Kidney:**
+- **HD = 2.93mm**: Worst disagreement is at 1 point out of 16,200 (likely kidney pole)
+- **HD95 = 0.00mm**: 95% of all surface points match perfectly (within 1 voxel)
+
+**Clinical Meaning:**
+✅ **Excellent agreement!** Both annotators drew nearly identical boundaries.
+✅ Only minor differences at edges (normal for kidney segmentation).
+✅ Suitable for clinical use.
+
+---
+
+## Key Points About HD Calculation
+
+### 1. **3D Calculation (Not Slice-by-Slice)**
+- ❌ **NOT**: Calculate HD for slice 1, slice 2, ..., then average
+- ✅ **YES**: Extract entire 3D surface, compute distances in 3D space
+
+**Why 3D?**
+- Kidney boundaries span multiple slices
+- Errors at poles (top/bottom) affect 3D continuity
+- True surface distance considers neighbors across slices
+
+### 2. **Surface-Only (Not Volume)**
+- Only boundary voxels are used
+- Interior voxels are ignored
+- Focuses on localization accuracy
+
+### 3. **Symmetric Calculation**
+- Compute distances from A→B **and** B→A
+- Catches cases where one mask is larger/smaller
+- Example:
+  - A→B might be small (B contains A)
+  - B→A might be large (B extends beyond A)
+  - HD takes the maximum
+
+### 4. **Why HD95 Can Be Zero**
+If 95% of surface voxels overlap perfectly:
+- Most of kidney boundary matches exactly
+- Only edges/poles differ
+- HD95 = 0 is **good news**, not an error!
+
+### 5. **Voxel Spacing Matters**
+```
+Same voxel disagreement:
+- Spacing 0.5mm → HD = 0.5mm (high resolution)
+- Spacing 2.0mm → HD = 2.0mm (low resolution)
+```
+
+Always report spacing when comparing HD values!
+
+---
+
+## Common Misconceptions
+
+### ❌ Misconception 1: "HD = average surface distance"
+**Truth:** HD is the **maximum** distance, not average!
+- Mean Surface Distance (MSD) computes the average
+- HD is the worst-case outlier
+
+### ❌ Misconception 2: "HD is computed slice-by-slice and averaged"
+**Truth:** HD is a **single 3D calculation** across the entire volume.
+- All surface points from all slices are processed together
+- No per-slice averaging
+
+### ❌ Misconception 3: "HD95 = 0 means something is wrong"
+**Truth:** HD95 = 0 means **95% perfect agreement** - this is excellent!
+- Indicates high-quality segmentation
+- Only the worst 5% of points have any error
+
+### ❌ Misconception 4: "If Dice = 0.95, HD must be low"
+**Truth:** High Dice doesn't guarantee low HD!
+- Dice measures volume overlap (global)
+- HD measures boundary distance (local)
+- Can have Dice = 0.98 but HD = 30mm (if boundaries shifted uniformly)
 
 ---
 
