@@ -1,0 +1,1239 @@
+
+================================================================================
+DICE SCORE COMPARISON REPORT
+================================================================================
+Comparison Tolerance: ±1e-06
+
+SUMMARY
+--------------------------------------------------------------------------------
+Total Comparisons Attempted: 230
+  ✓ Matches (within tolerance): 227
+  ✗ Mismatches (exceeds tolerance): 3
+  ? Missing in AIRA files: 0
+  ? Missing in WCG file: 238
+  ⚠ Errors encountered: 0
+
+Match Rate: 98.70%
+
+================================================================================
+MISMATCHES (DICE values differ beyond tolerance)
+================================================================================
+
+1. Patient: A-071, Organ: left kidney
+   GT Version: GT01
+   WCG DICE:  0.883840
+   AIRA DICE: 0.883796
+   Difference: 0.000044
+   Source: AIRA_vs_GT01
+
+2. Patient: A-075, Organ: right kidney
+   GT Version: GT01
+   WCG DICE:  0.860023
+   AIRA DICE: 0.000000
+   Difference: 0.860023
+   Source: AIRA_vs_GT01
+
+3. Patient: A-075, Organ: left kidney
+   GT Version: GT01
+   WCG DICE:  0.822367
+   AIRA DICE: 0.000000
+   Difference: 0.822367
+   Source: AIRA_vs_GT01
+
+================================================================================
+MISSING IN WCG FILE (present in AIRA but not in WCG)
+================================================================================
+
+1. Patient: A-004, Organ: right kidney
+   GT Version: GT01
+   AIRA DICE: 0.779321
+   Source: AIRA_vs_GT01
+
+2. Patient: A-006, Organ: right kidney
+   GT Version: GT01
+   AIRA DICE: 0.000000
+   Source: AIRA_vs_GT01
+
+3. Patient: A-006, Organ: left kidney
+   GT Version: GT01
+   AIRA DICE: 0.669909
+   Source: AIRA_vs_GT01
+
+4. Patient: A-013, Organ: right kidney
+   GT Version: GT01
+   AIRA DICE: 0.896730
+   Source: AIRA_vs_GT01
+
+5. Patient: A-014, Organ: right kidney
+   GT Version: GT01
+   AIRA DICE: 0.907725
+   Source: AIRA_vs_GT01
+
+6. Patient: A-016, Organ: right kidney
+   GT Version: GT01
+   AIRA DICE: 0.895772
+   Source: AIRA_vs_GT01
+
+7. Patient: A-023, Organ: right kidney
+   GT Version: GT01
+   AIRA DICE: 0.919809
+   Source: AIRA_vs_GT01
+
+8. Patient: A-024, Organ: right kidney
+   GT Version: GT01
+   AIRA DICE: 0.881335
+   Source: AIRA_vs_GT01
+
+9. Patient: A-024, Organ: left kidney
+   GT Version: GT01
+   AIRA DICE: 0.856096
+   Source: AIRA_vs_GT01
+
+10. Patient: A-092, Organ: left kidney
+   GT Version: GT01
+   AIRA DICE: 0.926038
+   Source: AIRA_vs_GT01
+
+11. Patient: N-001, Organ: right kidney
+   GT Version: GT01
+   AIRA DICE: 0.916363
+   Source: AIRA_vs_GT01
+
+12. Patient: N-001, Organ: left kidney
+   GT Version: GT01
+   AIRA DICE: 0.938652
+   Source: AIRA_vs_GT01
+
+13. Patient: N-023, Organ: left kidney
+   GT Version: GT01
+   AIRA DICE: 0.915597
+   Source: AIRA_vs_GT01
+
+14. Patient: N-026, Organ: right kidney
+   GT Version: GT01
+   AIRA DICE: 0.927565
+   Source: AIRA_vs_GT01
+
+15. Patient: N-026, Organ: left kidney
+   GT Version: GT01
+   AIRA DICE: 0.922547
+   Source: AIRA_vs_GT01
+
+16. Patient: N-029, Organ: right kidney
+   GT Version: GT01
+   AIRA DICE: 0.933386
+   Source: AIRA_vs_GT01
+
+17. Patient: N-029, Organ: left kidney
+   GT Version: GT01
+   AIRA DICE: 0.941930
+   Source: AIRA_vs_GT01
+
+18. Patient: N-034, Organ: left kidney
+   GT Version: GT01
+   AIRA DICE: 0.944597
+   Source: AIRA_vs_GT01
+
+19. Patient: N-070, Organ: right kidney
+   GT Version: GT01
+   AIRA DICE: 0.932219
+   Source: AIRA_vs_GT01
+
+20. Patient: N-196, Organ: left kidney
+   GT Version: GT01
+   AIRA DICE: 0.925778
+   Source: AIRA_vs_GT01
+
+21. Patient: N-203, Organ: right kidney
+   GT Version: GT01
+   AIRA DICE: 0.905499
+   Source: AIRA_vs_GT01
+
+22. Patient: A-003, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.898451
+   Source: AIRA_vs_GT02
+
+23. Patient: A-003, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.932381
+   Source: AIRA_vs_GT02
+
+24. Patient: A-004, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.937226
+   Source: AIRA_vs_GT02
+
+25. Patient: A-005, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.904187
+   Source: AIRA_vs_GT02
+
+26. Patient: A-005, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.856283
+   Source: AIRA_vs_GT02
+
+27. Patient: A-006, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.000000
+   Source: AIRA_vs_GT02
+
+28. Patient: A-006, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.692812
+   Source: AIRA_vs_GT02
+
+29. Patient: A-011, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.943443
+   Source: AIRA_vs_GT02
+
+30. Patient: A-011, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.937114
+   Source: AIRA_vs_GT02
+
+31. Patient: A-012, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.844798
+   Source: AIRA_vs_GT02
+
+32. Patient: A-012, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.898952
+   Source: AIRA_vs_GT02
+
+33. Patient: A-013, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.907548
+   Source: AIRA_vs_GT02
+
+34. Patient: A-014, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.926985
+   Source: AIRA_vs_GT02
+
+35. Patient: A-015, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.913523
+   Source: AIRA_vs_GT02
+
+36. Patient: A-015, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.907874
+   Source: AIRA_vs_GT02
+
+37. Patient: A-016, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.900841
+   Source: AIRA_vs_GT02
+
+38. Patient: A-021, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.863383
+   Source: AIRA_vs_GT02
+
+39. Patient: A-021, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.886649
+   Source: AIRA_vs_GT02
+
+40. Patient: A-023, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.651421
+   Source: AIRA_vs_GT02
+
+41. Patient: A-030, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.807539
+   Source: AIRA_vs_GT02
+
+42. Patient: A-030, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.912793
+   Source: AIRA_vs_GT02
+
+43. Patient: A-033, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.756285
+   Source: AIRA_vs_GT02
+
+44. Patient: A-033, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.912721
+   Source: AIRA_vs_GT02
+
+45. Patient: A-062, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.900458
+   Source: AIRA_vs_GT02
+
+46. Patient: A-062, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.892520
+   Source: AIRA_vs_GT02
+
+47. Patient: A-065, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.898055
+   Source: AIRA_vs_GT02
+
+48. Patient: A-065, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.851695
+   Source: AIRA_vs_GT02
+
+49. Patient: A-068, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.402936
+   Source: AIRA_vs_GT02
+
+50. Patient: A-068, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.707919
+   Source: AIRA_vs_GT02
+
+51. Patient: A-069, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.824772
+   Source: AIRA_vs_GT02
+
+52. Patient: A-069, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.844361
+   Source: AIRA_vs_GT02
+
+53. Patient: A-070, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.928538
+   Source: AIRA_vs_GT02
+
+54. Patient: A-070, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.896764
+   Source: AIRA_vs_GT02
+
+55. Patient: A-071, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.827889
+   Source: AIRA_vs_GT02
+
+56. Patient: A-071, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.887654
+   Source: AIRA_vs_GT02
+
+57. Patient: A-072, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.901634
+   Source: AIRA_vs_GT02
+
+58. Patient: A-072, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.893925
+   Source: AIRA_vs_GT02
+
+59. Patient: A-073, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.907444
+   Source: AIRA_vs_GT02
+
+60. Patient: A-073, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.903034
+   Source: AIRA_vs_GT02
+
+61. Patient: A-074, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.894983
+   Source: AIRA_vs_GT02
+
+62. Patient: A-074, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.932404
+   Source: AIRA_vs_GT02
+
+63. Patient: A-075, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.000000
+   Source: AIRA_vs_GT02
+
+64. Patient: A-075, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.000000
+   Source: AIRA_vs_GT02
+
+65. Patient: A-076, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.915616
+   Source: AIRA_vs_GT02
+
+66. Patient: A-076, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.926281
+   Source: AIRA_vs_GT02
+
+67. Patient: A-078, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.911253
+   Source: AIRA_vs_GT02
+
+68. Patient: A-078, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.861177
+   Source: AIRA_vs_GT02
+
+69. Patient: A-082, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.879821
+   Source: AIRA_vs_GT02
+
+70. Patient: A-082, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.873442
+   Source: AIRA_vs_GT02
+
+71. Patient: A-083, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.894893
+   Source: AIRA_vs_GT02
+
+72. Patient: A-083, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.934636
+   Source: AIRA_vs_GT02
+
+73. Patient: A-085, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.801724
+   Source: AIRA_vs_GT02
+
+74. Patient: A-085, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.835157
+   Source: AIRA_vs_GT02
+
+75. Patient: A-087, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.934884
+   Source: AIRA_vs_GT02
+
+76. Patient: A-087, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.914239
+   Source: AIRA_vs_GT02
+
+77. Patient: A-089, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.906109
+   Source: AIRA_vs_GT02
+
+78. Patient: A-089, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.912959
+   Source: AIRA_vs_GT02
+
+79. Patient: A-092, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.926254
+   Source: AIRA_vs_GT02
+
+80. Patient: N-002, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.931431
+   Source: AIRA_vs_GT02
+
+81. Patient: N-002, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.947222
+   Source: AIRA_vs_GT02
+
+82. Patient: N-005, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.929619
+   Source: AIRA_vs_GT02
+
+83. Patient: N-005, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.938931
+   Source: AIRA_vs_GT02
+
+84. Patient: N-006, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.932695
+   Source: AIRA_vs_GT02
+
+85. Patient: N-006, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.940123
+   Source: AIRA_vs_GT02
+
+86. Patient: N-007, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.925163
+   Source: AIRA_vs_GT02
+
+87. Patient: N-007, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.943585
+   Source: AIRA_vs_GT02
+
+88. Patient: N-008, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.955461
+   Source: AIRA_vs_GT02
+
+89. Patient: N-008, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.947520
+   Source: AIRA_vs_GT02
+
+90. Patient: N-010, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.905012
+   Source: AIRA_vs_GT02
+
+91. Patient: N-010, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.923467
+   Source: AIRA_vs_GT02
+
+92. Patient: N-011, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.944343
+   Source: AIRA_vs_GT02
+
+93. Patient: N-011, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.947953
+   Source: AIRA_vs_GT02
+
+94. Patient: N-012, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.931604
+   Source: AIRA_vs_GT02
+
+95. Patient: N-012, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.928429
+   Source: AIRA_vs_GT02
+
+96. Patient: N-013, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.905974
+   Source: AIRA_vs_GT02
+
+97. Patient: N-013, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.893836
+   Source: AIRA_vs_GT02
+
+98. Patient: N-014, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.930909
+   Source: AIRA_vs_GT02
+
+99. Patient: N-014, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.944539
+   Source: AIRA_vs_GT02
+
+100. Patient: N-015, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.938308
+   Source: AIRA_vs_GT02
+
+101. Patient: N-015, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.927758
+   Source: AIRA_vs_GT02
+
+102. Patient: N-016, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.869884
+   Source: AIRA_vs_GT02
+
+103. Patient: N-016, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.899145
+   Source: AIRA_vs_GT02
+
+104. Patient: N-023, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.915142
+   Source: AIRA_vs_GT02
+
+105. Patient: N-027, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.936813
+   Source: AIRA_vs_GT02
+
+106. Patient: N-027, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.950616
+   Source: AIRA_vs_GT02
+
+107. Patient: N-029, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.934953
+   Source: AIRA_vs_GT02
+
+108. Patient: N-029, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.941746
+   Source: AIRA_vs_GT02
+
+109. Patient: N-034, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.944190
+   Source: AIRA_vs_GT02
+
+110. Patient: N-035, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.928193
+   Source: AIRA_vs_GT02
+
+111. Patient: N-035, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.928294
+   Source: AIRA_vs_GT02
+
+112. Patient: N-036, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.932662
+   Source: AIRA_vs_GT02
+
+113. Patient: N-036, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.929204
+   Source: AIRA_vs_GT02
+
+114. Patient: N-051, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.887351
+   Source: AIRA_vs_GT02
+
+115. Patient: N-051, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.909304
+   Source: AIRA_vs_GT02
+
+116. Patient: N-056, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.920202
+   Source: AIRA_vs_GT02
+
+117. Patient: N-056, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.936155
+   Source: AIRA_vs_GT02
+
+118. Patient: N-058, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.906167
+   Source: AIRA_vs_GT02
+
+119. Patient: N-058, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.926924
+   Source: AIRA_vs_GT02
+
+120. Patient: N-067, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.883095
+   Source: AIRA_vs_GT02
+
+121. Patient: N-067, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.904650
+   Source: AIRA_vs_GT02
+
+122. Patient: N-068, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.949346
+   Source: AIRA_vs_GT02
+
+123. Patient: N-068, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.954741
+   Source: AIRA_vs_GT02
+
+124. Patient: N-069, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.927703
+   Source: AIRA_vs_GT02
+
+125. Patient: N-069, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.948149
+   Source: AIRA_vs_GT02
+
+126. Patient: N-070, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.937868
+   Source: AIRA_vs_GT02
+
+127. Patient: N-071, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.928593
+   Source: AIRA_vs_GT02
+
+128. Patient: N-071, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.912647
+   Source: AIRA_vs_GT02
+
+129. Patient: N-072, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.905283
+   Source: AIRA_vs_GT02
+
+130. Patient: N-072, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.924165
+   Source: AIRA_vs_GT02
+
+131. Patient: N-073, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.944324
+   Source: AIRA_vs_GT02
+
+132. Patient: N-073, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.925164
+   Source: AIRA_vs_GT02
+
+133. Patient: N-085, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.920947
+   Source: AIRA_vs_GT02
+
+134. Patient: N-085, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.922351
+   Source: AIRA_vs_GT02
+
+135. Patient: N-092, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.897318
+   Source: AIRA_vs_GT02
+
+136. Patient: N-092, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.893020
+   Source: AIRA_vs_GT02
+
+137. Patient: N-094, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.907595
+   Source: AIRA_vs_GT02
+
+138. Patient: N-094, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.898810
+   Source: AIRA_vs_GT02
+
+139. Patient: N-095, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.926176
+   Source: AIRA_vs_GT02
+
+140. Patient: N-095, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.928172
+   Source: AIRA_vs_GT02
+
+141. Patient: N-097, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.933356
+   Source: AIRA_vs_GT02
+
+142. Patient: N-097, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.911773
+   Source: AIRA_vs_GT02
+
+143. Patient: N-099, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.937013
+   Source: AIRA_vs_GT02
+
+144. Patient: N-099, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.926351
+   Source: AIRA_vs_GT02
+
+145. Patient: N-100, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.931207
+   Source: AIRA_vs_GT02
+
+146. Patient: N-100, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.925244
+   Source: AIRA_vs_GT02
+
+147. Patient: N-101, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.918157
+   Source: AIRA_vs_GT02
+
+148. Patient: N-101, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.921576
+   Source: AIRA_vs_GT02
+
+149. Patient: N-103, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.925483
+   Source: AIRA_vs_GT02
+
+150. Patient: N-103, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.936447
+   Source: AIRA_vs_GT02
+
+151. Patient: N-105, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.928133
+   Source: AIRA_vs_GT02
+
+152. Patient: N-105, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.937310
+   Source: AIRA_vs_GT02
+
+153. Patient: N-108, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.920496
+   Source: AIRA_vs_GT02
+
+154. Patient: N-108, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.927849
+   Source: AIRA_vs_GT02
+
+155. Patient: N-113, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.939769
+   Source: AIRA_vs_GT02
+
+156. Patient: N-113, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.930111
+   Source: AIRA_vs_GT02
+
+157. Patient: N-118, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.937721
+   Source: AIRA_vs_GT02
+
+158. Patient: N-118, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.939052
+   Source: AIRA_vs_GT02
+
+159. Patient: N-124, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.942045
+   Source: AIRA_vs_GT02
+
+160. Patient: N-124, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.940317
+   Source: AIRA_vs_GT02
+
+161. Patient: N-126, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.929401
+   Source: AIRA_vs_GT02
+
+162. Patient: N-126, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.925130
+   Source: AIRA_vs_GT02
+
+163. Patient: N-129, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.941400
+   Source: AIRA_vs_GT02
+
+164. Patient: N-129, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.941677
+   Source: AIRA_vs_GT02
+
+165. Patient: N-132, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.908685
+   Source: AIRA_vs_GT02
+
+166. Patient: N-132, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.918657
+   Source: AIRA_vs_GT02
+
+167. Patient: N-138, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.938099
+   Source: AIRA_vs_GT02
+
+168. Patient: N-138, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.937039
+   Source: AIRA_vs_GT02
+
+169. Patient: N-139, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.931912
+   Source: AIRA_vs_GT02
+
+170. Patient: N-139, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.932143
+   Source: AIRA_vs_GT02
+
+171. Patient: N-140, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.942965
+   Source: AIRA_vs_GT02
+
+172. Patient: N-140, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.942132
+   Source: AIRA_vs_GT02
+
+173. Patient: N-171, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.938905
+   Source: AIRA_vs_GT02
+
+174. Patient: N-171, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.932116
+   Source: AIRA_vs_GT02
+
+175. Patient: N-173, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.831503
+   Source: AIRA_vs_GT02
+
+176. Patient: N-173, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.921968
+   Source: AIRA_vs_GT02
+
+177. Patient: N-174, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.919748
+   Source: AIRA_vs_GT02
+
+178. Patient: N-174, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.907184
+   Source: AIRA_vs_GT02
+
+179. Patient: N-177, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.898073
+   Source: AIRA_vs_GT02
+
+180. Patient: N-177, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.870404
+   Source: AIRA_vs_GT02
+
+181. Patient: N-196, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.918360
+   Source: AIRA_vs_GT02
+
+182. Patient: N-197, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.935476
+   Source: AIRA_vs_GT02
+
+183. Patient: N-197, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.913636
+   Source: AIRA_vs_GT02
+
+184. Patient: N-198, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.918535
+   Source: AIRA_vs_GT02
+
+185. Patient: N-198, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.815952
+   Source: AIRA_vs_GT02
+
+186. Patient: N-199, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.912240
+   Source: AIRA_vs_GT02
+
+187. Patient: N-199, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.920332
+   Source: AIRA_vs_GT02
+
+188. Patient: N-200, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.913688
+   Source: AIRA_vs_GT02
+
+189. Patient: N-200, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.917826
+   Source: AIRA_vs_GT02
+
+190. Patient: N-201, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.917680
+   Source: AIRA_vs_GT02
+
+191. Patient: N-201, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.922920
+   Source: AIRA_vs_GT02
+
+192. Patient: N-203, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.910881
+   Source: AIRA_vs_GT02
+
+193. Patient: N-204, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.893827
+   Source: AIRA_vs_GT02
+
+194. Patient: N-204, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.901207
+   Source: AIRA_vs_GT02
+
+195. Patient: N-205, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.916271
+   Source: AIRA_vs_GT02
+
+196. Patient: N-205, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.913552
+   Source: AIRA_vs_GT02
+
+197. Patient: N-206, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.896148
+   Source: AIRA_vs_GT02
+
+198. Patient: N-206, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.856481
+   Source: AIRA_vs_GT02
+
+199. Patient: N-208, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.921518
+   Source: AIRA_vs_GT02
+
+200. Patient: N-208, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.933152
+   Source: AIRA_vs_GT02
+
+201. Patient: N-211, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.897576
+   Source: AIRA_vs_GT02
+
+202. Patient: N-211, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.908134
+   Source: AIRA_vs_GT02
+
+203. Patient: N-212, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.927166
+   Source: AIRA_vs_GT02
+
+204. Patient: N-212, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.919904
+   Source: AIRA_vs_GT02
+
+205. Patient: N-213, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.939936
+   Source: AIRA_vs_GT02
+
+206. Patient: N-213, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.941425
+   Source: AIRA_vs_GT02
+
+207. Patient: N-214, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.935154
+   Source: AIRA_vs_GT02
+
+208. Patient: N-214, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.935107
+   Source: AIRA_vs_GT02
+
+209. Patient: N-215, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.936783
+   Source: AIRA_vs_GT02
+
+210. Patient: N-215, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.932658
+   Source: AIRA_vs_GT02
+
+211. Patient: N-216, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.921151
+   Source: AIRA_vs_GT02
+
+212. Patient: N-216, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.916735
+   Source: AIRA_vs_GT02
+
+213. Patient: N-219, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.922952
+   Source: AIRA_vs_GT02
+
+214. Patient: N-219, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.929115
+   Source: AIRA_vs_GT02
+
+215. Patient: N-220, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.919934
+   Source: AIRA_vs_GT02
+
+216. Patient: N-220, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.931124
+   Source: AIRA_vs_GT02
+
+217. Patient: N-221, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.938435
+   Source: AIRA_vs_GT02
+
+218. Patient: N-221, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.940352
+   Source: AIRA_vs_GT02
+
+219. Patient: N-223, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.910763
+   Source: AIRA_vs_GT02
+
+220. Patient: N-223, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.923070
+   Source: AIRA_vs_GT02
+
+221. Patient: N-224, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.935713
+   Source: AIRA_vs_GT02
+
+222. Patient: N-224, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.934253
+   Source: AIRA_vs_GT02
+
+223. Patient: N-225, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.935819
+   Source: AIRA_vs_GT02
+
+224. Patient: N-225, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.936443
+   Source: AIRA_vs_GT02
+
+225. Patient: N-227, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.925871
+   Source: AIRA_vs_GT02
+
+226. Patient: N-227, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.928096
+   Source: AIRA_vs_GT02
+
+227. Patient: N-228, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.916147
+   Source: AIRA_vs_GT02
+
+228. Patient: N-228, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.926652
+   Source: AIRA_vs_GT02
+
+229. Patient: N-230, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.926322
+   Source: AIRA_vs_GT02
+
+230. Patient: N-230, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.917526
+   Source: AIRA_vs_GT02
+
+231. Patient: N-231, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.924815
+   Source: AIRA_vs_GT02
+
+232. Patient: N-231, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.926375
+   Source: AIRA_vs_GT02
+
+233. Patient: N-237, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.928849
+   Source: AIRA_vs_GT02
+
+234. Patient: N-237, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.913354
+   Source: AIRA_vs_GT02
+
+235. Patient: N-238, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.923317
+   Source: AIRA_vs_GT02
+
+236. Patient: N-238, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.924007
+   Source: AIRA_vs_GT02
+
+237. Patient: N-240, Organ: right kidney
+   GT Version: GT02
+   AIRA DICE: 0.922737
+   Source: AIRA_vs_GT02
+
+238. Patient: N-240, Organ: left kidney
+   GT Version: GT02
+   AIRA DICE: 0.927892
+   Source: AIRA_vs_GT02
+
+================================================================================
+END OF REPORT
+================================================================================
