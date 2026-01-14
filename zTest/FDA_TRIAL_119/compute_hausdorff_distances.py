@@ -167,6 +167,29 @@ def hausdorff_distance_from_pointsets(A_pts, B_pts):
     
     return float(hd), float(hd95)
 
+def compute_kidney_volume(mask_data, label, zooms):
+    """
+    Compute volume of a kidney in cubic millimeters.
+    
+    Parameters:
+    -----------
+    mask_data : np.ndarray
+        Mask data (label 1=right, label 2=left)
+    label : int
+        1 for right kidney, 2 for left kidney
+    zooms : np.ndarray (3,)
+        Voxel spacing
+    
+    Returns:
+    --------
+    volume : float
+        Volume in mm³
+    """
+    kidney_mask = (mask_data == label).astype(bool)
+    voxel_count = np.sum(kidney_mask)
+    voxel_volume = np.prod(zooms)  # mm³ per voxel
+    return voxel_count * voxel_volume
+
 def compute_hausdorff_for_kidneys(mask1_data, mask2_data, zooms):
     """
     Compute Hausdorff distances for left and right kidneys separately.
@@ -608,7 +631,217 @@ def process_aira_vs_gt(aira_files, gt_type='GT01'):
     
     return rows
 
-def add_statistics_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02):
+def process_aira_vs_larger_gt(aira_files):
+    """
+    Process AIRA vs Larger GT comparisons.
+    For each kidney, compare AIRA against the GT (GT01 or GT02) with larger volume.
+    """
+    print("\n" + "="*80)
+    print("PROCESSING: AIRA vs Larger GT (per kidney)")
+    print("="*80 + "\n")
+    
+    rows = []
+    
+    for idx, (aira_filename, aira_path) in enumerate(aira_files, 1):
+        print(f"[{idx}/{len(aira_files)}] Processing: {aira_filename}")
+        
+        # Find GT files
+        case_id, gt01_path, gt02_path, find_error = find_gt_files_with_fallback(aira_filename, GT_ROOT_DIR)
+        
+        if find_error or not gt01_path or not gt02_path:
+            error_msg = find_error or "GT files not found"
+            print(f"  ⚠️  {error_msg}")
+            rows.append({
+                'Patient': case_id,
+                'AIRA_File': aira_filename,
+                'Organ': 'Right Kidney',
+                'GT_Selected': '',
+                'GT_File': '',
+                'AIRA_Volume_mm3': np.nan,
+                'GT01_Volume_mm3': np.nan,
+                'GT02_Volume_mm3': np.nan,
+                'Selected_GT_Volume_mm3': np.nan,
+                'HD_mm': np.nan,
+                'HD95_mm': np.nan,
+                'Message': error_msg
+            })
+            rows.append({
+                'Patient': case_id,
+                'AIRA_File': aira_filename,
+                'Organ': 'Left Kidney',
+                'GT_Selected': '',
+                'GT_File': '',
+                'AIRA_Volume_mm3': np.nan,
+                'GT01_Volume_mm3': np.nan,
+                'GT02_Volume_mm3': np.nan,
+                'Selected_GT_Volume_mm3': np.nan,
+                'HD_mm': np.nan,
+                'HD95_mm': np.nan,
+                'Message': error_msg
+            })
+            continue
+        
+        try:
+            # Load all masks
+            aira_img = load_nifti(aira_path)
+            gt01_img = load_nifti(gt01_path)
+            gt02_img = load_nifti(gt02_path)
+            
+            # Check orientation and reorient if needed
+            if get_orientation_string(gt01_img) != get_orientation_string(aira_img):
+                gt01_img = reorient_to_match(aira_img, gt01_img)
+            if get_orientation_string(gt02_img) != get_orientation_string(aira_img):
+                gt02_img = reorient_to_match(aira_img, gt02_img)
+            
+            aira_data = aira_img.get_fdata()
+            gt01_data = gt01_img.get_fdata()
+            gt02_data = gt02_img.get_fdata()
+            
+            # Check shape compatibility
+            if aira_data.shape != gt01_data.shape or aira_data.shape != gt02_data.shape:
+                error_msg = f"Shape mismatch: AIRA {aira_data.shape} vs GT01 {gt01_data.shape} vs GT02 {gt02_data.shape}"
+                print(f"  ❌ {error_msg}")
+                rows.append({
+                    'Patient': case_id,
+                    'AIRA_File': aira_filename,
+                    'Organ': 'Right Kidney',
+                    'GT_Selected': '',
+                    'GT_File': '',
+                    'AIRA_Volume_mm3': np.nan,
+                    'GT01_Volume_mm3': np.nan,
+                    'GT02_Volume_mm3': np.nan,
+                    'Selected_GT_Volume_mm3': np.nan,
+                    'HD_mm': np.nan,
+                    'HD95_mm': np.nan,
+                    'Message': error_msg
+                })
+                rows.append({
+                    'Patient': case_id,
+                    'AIRA_File': aira_filename,
+                    'Organ': 'Left Kidney',
+                    'GT_Selected': '',
+                    'GT_File': '',
+                    'AIRA_Volume_mm3': np.nan,
+                    'GT01_Volume_mm3': np.nan,
+                    'GT02_Volume_mm3': np.nan,
+                    'Selected_GT_Volume_mm3': np.nan,
+                    'HD_mm': np.nan,
+                    'HD95_mm': np.nan,
+                    'Message': error_msg
+                })
+                continue
+            
+            # Get voxel spacing
+            zooms = np.array(aira_img.header.get_zooms()[:3], dtype=float)
+            
+            # Compute volumes for right kidney (label 1)
+            gt01_right_vol = compute_kidney_volume(gt01_data, label=1, zooms=zooms)
+            gt02_right_vol = compute_kidney_volume(gt02_data, label=1, zooms=zooms)
+            
+            # Select larger GT for right kidney
+            if gt01_right_vol >= gt02_right_vol:
+                right_gt_data = gt01_data
+                right_gt_selected = 'GT01'
+                right_gt_file = os.path.basename(gt01_path)
+            else:
+                right_gt_data = gt02_data
+                right_gt_selected = 'GT02'
+                right_gt_file = os.path.basename(gt02_path)
+            
+            # Compute volumes for left kidney (label 2)
+            gt01_left_vol = compute_kidney_volume(gt01_data, label=2, zooms=zooms)
+            gt02_left_vol = compute_kidney_volume(gt02_data, label=2, zooms=zooms)
+            
+            # Select larger GT for left kidney
+            if gt01_left_vol >= gt02_left_vol:
+                left_gt_data = gt01_data
+                left_gt_selected = 'GT01'
+                left_gt_file = os.path.basename(gt01_path)
+            else:
+                left_gt_data = gt02_data
+                left_gt_selected = 'GT02'
+                left_gt_file = os.path.basename(gt02_path)
+            
+            # Compute AIRA kidney volumes for reference
+            aira_right_vol = compute_kidney_volume(aira_data, label=1, zooms=zooms)
+            aira_left_vol = compute_kidney_volume(aira_data, label=2, zooms=zooms)
+            
+            # Compute Hausdorff for right kidney
+            right_results = compute_hausdorff_for_kidneys(aira_data, right_gt_data, zooms)
+            
+            # Compute Hausdorff for left kidney
+            left_results = compute_hausdorff_for_kidneys(aira_data, left_gt_data, zooms)
+            
+            # Add right kidney row
+            rows.append({
+                'Patient': case_id,
+                'AIRA_File': aira_filename,
+                'Organ': 'Right Kidney',
+                'GT_Selected': right_gt_selected,
+                'GT_File': right_gt_file,
+                'AIRA_Volume_mm3': aira_right_vol,
+                'GT01_Volume_mm3': gt01_right_vol,
+                'GT02_Volume_mm3': gt02_right_vol,
+                'Selected_GT_Volume_mm3': gt01_right_vol if right_gt_selected == 'GT01' else gt02_right_vol,
+                'HD_mm': right_results['right_hd'],
+                'HD95_mm': right_results['right_hd95'],
+                'Message': right_results['right_msg']
+            })
+            
+            # Add left kidney row
+            rows.append({
+                'Patient': case_id,
+                'AIRA_File': aira_filename,
+                'Organ': 'Left Kidney',
+                'GT_Selected': left_gt_selected,
+                'GT_File': left_gt_file,
+                'AIRA_Volume_mm3': aira_left_vol,
+                'GT01_Volume_mm3': gt01_left_vol,
+                'GT02_Volume_mm3': gt02_left_vol,
+                'Selected_GT_Volume_mm3': gt01_left_vol if left_gt_selected == 'GT01' else gt02_left_vol,
+                'HD_mm': left_results['left_hd'],
+                'HD95_mm': left_results['left_hd95'],
+                'Message': left_results['left_msg']
+            })
+            
+            print(f"  ✓ Right (using {right_gt_selected}, vol={gt01_right_vol if right_gt_selected=='GT01' else gt02_right_vol:.0f}mm³): HD={right_results['right_hd']:.2f}mm, HD95={right_results['right_hd95']:.2f}mm" if not np.isnan(right_results['right_hd']) else f"  ⚠️  Right: {right_results['right_msg']}")
+            print(f"  ✓ Left (using {left_gt_selected}, vol={gt01_left_vol if left_gt_selected=='GT01' else gt02_left_vol:.0f}mm³): HD={left_results['left_hd']:.2f}mm, HD95={left_results['left_hd95']:.2f}mm" if not np.isnan(left_results['left_hd']) else f"  ⚠️  Left: {left_results['left_msg']}")
+            
+        except Exception as e:
+            error_msg = f"ERROR: {str(e)}"
+            print(f"  ❌ {error_msg}")
+            rows.append({
+                'Patient': case_id,
+                'AIRA_File': aira_filename,
+                'Organ': 'Right Kidney',
+                'GT_Selected': '',
+                'GT_File': '',
+                'AIRA_Volume_mm3': np.nan,
+                'GT01_Volume_mm3': np.nan,
+                'GT02_Volume_mm3': np.nan,
+                'Selected_GT_Volume_mm3': np.nan,
+                'HD_mm': np.nan,
+                'HD95_mm': np.nan,
+                'Message': error_msg
+            })
+            rows.append({
+                'Patient': case_id,
+                'AIRA_File': aira_filename,
+                'Organ': 'Left Kidney',
+                'GT_Selected': '',
+                'GT_File': '',
+                'AIRA_Volume_mm3': np.nan,
+                'GT01_Volume_mm3': np.nan,
+                'GT02_Volume_mm3': np.nan,
+                'Selected_GT_Volume_mm3': np.nan,
+                'HD_mm': np.nan,
+                'HD95_mm': np.nan,
+                'Message': error_msg
+            })
+    
+    return rows
+
+def add_statistics_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02, df_aira_larger_gt):
     """Add statistics summary sheet to Excel file."""
     stats_rows = []
     
@@ -661,6 +894,7 @@ def add_statistics_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02):
     stats_rows.extend(compute_stats(df_gt, 'GT01_vs_GT02'))
     stats_rows.extend(compute_stats(df_aira_gt01, 'AIRA_vs_GT01'))
     stats_rows.extend(compute_stats(df_aira_gt02, 'AIRA_vs_GT02'))
+    stats_rows.extend(compute_stats(df_aira_larger_gt, 'AIRA_vs_Larger_GT'))
     
     # Create dataframe
     stats_df = pd.DataFrame(stats_rows)
@@ -669,9 +903,9 @@ def add_statistics_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02):
     stats_df.to_excel(writer, sheet_name='Statistics', index=False)
     
     # Add detailed case lists for high HD values
-    add_high_hd_cases_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02)
+    add_high_hd_cases_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02, df_aira_larger_gt)
 
-def add_high_hd_cases_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02):
+def add_high_hd_cases_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02, df_aira_larger_gt):
     """Add sheets listing specific cases with high Hausdorff distances (HD and HD95)."""
     
     # Helper function to extract high HD cases
@@ -691,7 +925,7 @@ def add_high_hd_cases_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02):
                     'HD95_mm': hd95 if pd.notna(hd95) else np.nan,
                     'Severity': 'Very High (>25mm)' if hd > 25 else 'High (>20mm)' if hd > 20 else 'Moderate (>15mm)',
                     'File1': row.get('Mask1_File', row.get('AIRA_File', '')),
-                    'File2': row.get('Mask2_File', row.get('GT_File', '')),
+                    'File2': row.get('Mask2_File', row.get('GT_File', row.get('GT_Selected', ''))),
                     'Message': row.get('Message', '')
                 })
         
@@ -714,7 +948,7 @@ def add_high_hd_cases_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02):
                     'HD95_mm': hd95,
                     'Severity': 'Very High (>15mm)' if hd95 > 15 else 'High (>12mm)' if hd95 > 12 else 'Moderate (>10mm)',
                     'File1': row.get('Mask1_File', row.get('AIRA_File', '')),
-                    'File2': row.get('Mask2_File', row.get('GT_File', '')),
+                    'File2': row.get('Mask2_File', row.get('GT_File', row.get('GT_Selected', ''))),
                     'Message': row.get('Message', '')
                 })
         
@@ -725,6 +959,7 @@ def add_high_hd_cases_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02):
     hd_case_rows.extend(extract_high_hd_cases(df_gt, 'GT01_vs_GT02', threshold=15.0))
     hd_case_rows.extend(extract_high_hd_cases(df_aira_gt01, 'AIRA_vs_GT01', threshold=15.0))
     hd_case_rows.extend(extract_high_hd_cases(df_aira_gt02, 'AIRA_vs_GT02', threshold=15.0))
+    hd_case_rows.extend(extract_high_hd_cases(df_aira_larger_gt, 'AIRA_vs_Larger_GT', threshold=15.0))
     
     if hd_case_rows:
         # Sort by HD descending
@@ -740,6 +975,7 @@ def add_high_hd_cases_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02):
     hd95_case_rows.extend(extract_high_hd95_cases(df_gt, 'GT01_vs_GT02', threshold=10.0))
     hd95_case_rows.extend(extract_high_hd95_cases(df_aira_gt01, 'AIRA_vs_GT01', threshold=10.0))
     hd95_case_rows.extend(extract_high_hd95_cases(df_aira_gt02, 'AIRA_vs_GT02', threshold=10.0))
+    hd95_case_rows.extend(extract_high_hd95_cases(df_aira_larger_gt, 'AIRA_vs_Larger_GT', threshold=10.0))
     
     if hd95_case_rows:
         # Sort by HD95 descending
@@ -796,7 +1032,8 @@ def main():
         aira_files = aira_files[:MAX_CASES_TO_PROCESS]
         print(f"⚠️  Limited to {MAX_CASES_TO_PROCESS} cases")
     
-    # Process each comparison type
+    # Process each comparison type (AIRA vs Larger GT first)
+    aira_larger_gt_rows = process_aira_vs_larger_gt(aira_files)
     gt_rows = process_gt01_vs_gt02(case_folders)
     aira_gt01_rows = process_aira_vs_gt(aira_files, 'GT01')
     aira_gt02_rows = process_aira_vs_gt(aira_files, 'GT02')
@@ -807,32 +1044,59 @@ def main():
     print("="*80 + "\n")
     
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    output_filename = f"Hausdorff_Distances_{timestamp}.xlsx"
-    output_path = os.path.join(OUTPUT_DIR, output_filename)
     
-    with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
-        # Sheet 1: GT01 vs GT02
-        df_gt = pd.DataFrame(gt_rows)
-        df_gt.to_excel(writer, sheet_name='GT01_vs_GT02', index=False)
+    # Create dataframes
+    df_gt = pd.DataFrame(gt_rows)
+    df_aira_gt01 = pd.DataFrame(aira_gt01_rows)
+    df_aira_gt02 = pd.DataFrame(aira_gt02_rows)
+    df_aira_larger_gt = pd.DataFrame(aira_larger_gt_rows)
+    
+    # Save as Excel
+    output_filename_xlsx = f"Hausdorff_Distances_{timestamp}.xlsx"
+    output_path_xlsx = os.path.join(OUTPUT_DIR, output_filename_xlsx)
+    
+    with pd.ExcelWriter(output_path_xlsx, engine='openpyxl') as writer:
+        # Sheet 1: AIRA vs Larger GT (most important - first!)
+        df_aira_larger_gt.to_excel(writer, sheet_name='AIRA_vs_Larger_GT', index=False)
         
         # Sheet 2: AIRA vs GT01
-        df_aira_gt01 = pd.DataFrame(aira_gt01_rows)
         df_aira_gt01.to_excel(writer, sheet_name='AIRA_vs_GT01', index=False)
         
         # Sheet 3: AIRA vs GT02
-        df_aira_gt02 = pd.DataFrame(aira_gt02_rows)
         df_aira_gt02.to_excel(writer, sheet_name='AIRA_vs_GT02', index=False)
         
-        # Sheet 4: Statistics
-        add_statistics_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02)
+        # Sheet 4: GT01 vs GT02
+        df_gt.to_excel(writer, sheet_name='GT01_vs_GT02', index=False)
+        
+        # Sheet 5: Statistics
+        add_statistics_sheet(writer, df_gt, df_aira_gt01, df_aira_gt02, df_aira_larger_gt)
     
-    print(f"✓ Results saved to: {output_path}")
-    print(f"\n  Sheet 1 (GT01_vs_GT02): {len(df_gt)} rows")
+    print(f"✓ Excel results saved to: {output_path_xlsx}")
+    print(f"\n  Sheet 1 (AIRA_vs_Larger_GT): {len(df_aira_larger_gt)} rows")
     print(f"  Sheet 2 (AIRA_vs_GT01): {len(df_aira_gt01)} rows")
     print(f"  Sheet 3 (AIRA_vs_GT02): {len(df_aira_gt02)} rows")
-    print(f"  Sheet 4 (Statistics): Summary metrics")
-    print(f"  Sheet 5 (High_HD_Cases): Cases with HD > 15mm (with patient IDs)")
-    print(f"  Sheet 6 (High_HD95_Cases): Cases with HD95 > 10mm (with patient IDs)")
+    print(f"  Sheet 4 (GT01_vs_GT02): {len(df_gt)} rows")
+    print(f"  Sheet 5 (Statistics): Summary metrics for all 4 comparisons")
+    print(f"  Sheet 6 (High_HD_Cases): Cases with HD > 15mm (with patient IDs)")
+    print(f"  Sheet 7 (High_HD95_Cases): Cases with HD95 > 10mm (with patient IDs)")
+    
+    # Save individual CSV files
+    print("\n📄 Saving individual CSV files...")
+    csv_dir = os.path.join(OUTPUT_DIR, f"CSV_{timestamp}")
+    os.makedirs(csv_dir, exist_ok=True)
+    
+    csv_aira_gt01 = os.path.join(csv_dir, f"AIRA_vs_GT01_{timestamp}.csv")
+    csv_aira_gt02 = os.path.join(csv_dir, f"AIRA_vs_GT02_{timestamp}.csv")
+    csv_aira_larger_gt = os.path.join(csv_dir, f"AIRA_vs_Larger_GT_{timestamp}.csv")
+    
+    df_aira_gt01.to_csv(csv_aira_gt01, index=False)
+    df_aira_gt02.to_csv(csv_aira_gt02, index=False)
+    df_aira_larger_gt.to_csv(csv_aira_larger_gt, index=False)
+    
+    print(f"✓ CSV files saved to: {csv_dir}")
+    print(f"  - AIRA_vs_GT01_{timestamp}.csv")
+    print(f"  - AIRA_vs_GT02_{timestamp}.csv")
+    print(f"  - AIRA_vs_Larger_GT_{timestamp}.csv")
     
     print("\n" + "="*80)
     print("✅ HAUSDORFF DISTANCE COMPUTATION COMPLETE")
